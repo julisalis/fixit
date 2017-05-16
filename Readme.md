@@ -16,7 +16,7 @@ Java8, Spring Boot, Maven, MySql, Hibernate
 - - Agregar una nueva entrada (NO borrar todo lo que ya hay) en la variable path que apunte a %JAVA_HOME%\bin
   
 ###### Maven
-- https://maven.apache.org/download.cgi
+- https://maven.apache.org/download.cgi (Bin / Link)
 - Descomprimir (Haganlo en alguna carpeta Maven en C:)
 - Mi equipo -> configuracion avanzada del sistema -> variables de entorno
 - - Agregar variable MAVEN_HOME que apunte a la carpeta donde esta maven instalado
