@@ -1,5 +1,7 @@
 # FixIt
 
+<img src="https://github.com/julisalis/fixit/blob/master/src/main/resources/static/images/logo.png" width="100">
+
 ## Desarrollo:
 
 Java8, Spring Boot, Maven, MySql, Hibernate
@@ -23,7 +25,13 @@ Java8, Spring Boot, Maven, MySql, Hibernate
 - - Agregar una nueva entrada (NO borrar todo lo que ya hay) en la variable path que apunte a %MAVEN_HOME%\bin
   
 ###### MySql
-- https://dev.mysql.com/downloads/mysql/
+- https://dev.mysql.com/downloads/windows/installer/5.7.html (bajan el primero de los dos que aparecen con download)
+- Instalar. Dar todo ok, cuando pide password, poner root.
+- Ya instalado, abrir cmd, ir a C:\Program Files\MySQL\MySQL Server 5.7\bin y poner: mysql -u root -p
+- - Va a pedir contraseña, poner root. Ahi entra a la consola de MySQL.
+- - poner: create user 'springuser'@'localhost' identified by 'spring'; (Le creamos un user a la app)
+- - poner: CREATE DATABASE fixit; (crean la base)
+- - poner: grant all on fixit.* to 'springuser'@'localhost'; (Le dan permisos al usuario creado)
 
 ###### Github con IntelliJ
 - https://www.jetbrains.com/help/idea/2017.1/registering-github-account-in-intellij-idea.html
