@@ -1,16 +1,18 @@
 package ar.com.utn.controllers;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * Created by julis on 13/5/2017.
+ * Created by julis on 17/5/2017.
  */
-@RestController
-public class HomeController {
+
+@Controller
+public class IndexController {
 
     @RequestMapping("/")
-    public String home(){
-        return "Hello World";
+    String index() {
+        return "index";
     }
 }
