@@ -25,7 +25,7 @@
                     </form>
                     <div sec:authorize="isAuthenticated()"> Welcome <span sec:authentication="name">Guest</span></div>
                     <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="form-inline">
-                        | <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Cerrar Sesión</a>
+                        &nbsp;| <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Cerrar Sesión</a>
                     </form>
                 </div>
             </div>

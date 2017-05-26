@@ -2,3 +2,8 @@
     width: 25%;
     margin: 0 auto;
 }
+
+.navbar-right{
+    display: inline-flex;
+    margin-right: 0px;
+}
