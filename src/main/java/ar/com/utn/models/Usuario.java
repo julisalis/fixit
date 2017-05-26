@@ -1,20 +1,39 @@
 package ar.com.utn.models;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by julis on 17/5/2017.
  */
 @Entity
 @Table(name = "usuarios")
-public class Usuario extends PersistentEntity{
+public class Usuario extends PersistentEntity {
 
+    @Column(unique = true, nullable = false)
     private String username;
+
+    @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
+
     private String name;
+
     private String lastName;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "usuarios_roles",
+            joinColumns = {@JoinColumn(name = "usuario_id")},
+            inverseJoinColumns = {@JoinColumn(name = "rol_id")}
+    )
+    private Set<Rol> roles = new HashSet<Rol>();
+
+    public Usuario() {
+    }
 
     public String getUsername() {
         return username;
@@ -24,9 +43,7 @@ public class Usuario extends PersistentEntity{
         this.username = username;
     }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getEmail() { return email; }
 
     public void setEmail(String email) {
         this.email = email;
@@ -55,4 +72,8 @@ public class Usuario extends PersistentEntity{
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
+    public Set<Rol> getRoles() { return roles; }
+
+    public void setRoles(Set<Rol> roles) { this.roles = roles; }
 }

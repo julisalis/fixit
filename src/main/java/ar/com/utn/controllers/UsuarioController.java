@@ -38,6 +38,6 @@ public class UsuarioController {
     @GetMapping(path="/all")
     public @ResponseBody List<Usuario> getAllUsers() {
         // This returns a JSON or XML with the users
-        return usuarioRepository.findAll();
+        return (List<Usuario>) usuarioRepository.findAll();
     }
 }

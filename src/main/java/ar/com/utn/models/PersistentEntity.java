@@ -11,15 +11,21 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public class PersistentEntity {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    protected Integer id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
 
     /* Setter methods */
-    public void    setId(Integer id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     /* Getter methods */
-    public Integer getId()           { return id; }
+    public Long getId() {
+        return id;
+    }
 
-    public boolean isNew()           { return id == null; }
+    public boolean isNew() {
+        return id == null;
+    }
 
 }

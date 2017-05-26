@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+    <title>FixIt - Iniciar Sesión</title>
+
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+
+</head>
+<body>
+    <div class="container">
+
+        <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+        <form name="f" th:action="@{/login}" method="post" class="form-signin">
+            <h2 class="form-signin-heading">Inciar Sesión</h2>
+            <div th:if="${param.error}" class="alert alert-danger">
+                Usuario o contraseña invalidos.
+            </div>
+            <div th:if="${param.logout}" class="alert alert-success">
+                Has cerrado sesión.
+            </div>
+            <label for="username" class="sr-only">Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario" required="true"/>
+            <label for="password" class="sr-only">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña"
+                   required="true"/>
+            <div class="checkbox">
+                <label>
+                    <input id="remember-me" name="remember-me" type="checkbox"/> Recuerdame
+                </label>
+            </div>
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
+        </form>
+
+    </div>
+</body>
+</html>
