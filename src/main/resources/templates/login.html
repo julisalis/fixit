@@ -12,7 +12,7 @@
 
         <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-        <form name="f" th:action="@{/login}" method="post" class="form-signin">
+        <form name="f" th:action="@{/login}" method="post" class="form-signin" >
             <h2 class="form-signin-heading">Inciar Sesión</h2>
             <div th:if="${param.error}" class="alert alert-danger">
                 Usuario o contraseña invalidos.
@@ -21,7 +21,8 @@
                 Has cerrado sesión.
             </div>
             <label for="username" class="sr-only">Username</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario" required="true"/>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario" required="true" />
+            <p></p>
             <label for="password" class="sr-only">Password</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña"
                    required="true"/>
