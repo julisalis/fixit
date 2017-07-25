@@ -1,5 +1,4 @@
 .form-signin{
-    width: 25%;
     margin: 0 auto;
 }
 
@@ -7,3 +6,102 @@
     display: inline-flex;
     margin-right: 0px;
 }
+
+.container{
+    margin-top: 80px;
+    padding-right: 15px;
+    padding-left: 15px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#signin .container .col-lg-7{
+    float: none;
+    margin: 0 auto;
+}
+#signin .container h3.form-signin-heading{
+    font-size: 40px;
+    font-weight: 600;
+    color: #a5a39d;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+#signin .container .form-signin input#username {
+    background-image: url(../images/input-ic-user.png);
+    background-size: auto 20px;
+    background-position: 98% 50%;
+    background-repeat: no-repeat;
+}
+
+#signin .container .form-signin input#password{
+
+    background-image: url(../images/input-ic-pass.svg);
+    background-size: auto 20px;
+    background-position: 98% 50%;
+    background-repeat: no-repeat;
+}
+
+
+#signin .container .form-signin input{
+    width: 100%;
+    background: transparent;
+    border: 1px solid #b1aeae;
+    border-radius: 5px;
+    padding: 12px;
+    font-size: 14px;
+    color: #000;
+    margin-top: 15px;
+    height: 44px;
+}
+#signin .container .form-signin .checkbox{
+    padding: 15px 0 25px;
+}
+
+#signin .container .form-signin .checkbox input[type=checkbox].css-checkbox {
+    display: none;
+}
+
+#signin .container .form-signin .checkbox  input[type=checkbox].css-checkbox:checked + label.css-label {
+    background-image: url(../images/check-square.svg);
+    background-position: 3px 3px;
+    overflow: visible;
+    background-size: 15px 15px;
+    height: 22px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-bottom: 0;
+}
+
+#signin .container .form-signin .checkbox label.square {
+    height: 22px;
+    width: 22px;
+    border: 1px solid #9a999d;
+    border-radius: 7px;
+}
+
+#signin .container .form-signin .checkbox span {
+    text-align: left;
+    width: auto;
+    top: inherit;
+    position: inherit;
+    left: inherit;
+    right: inherit;
+    background: transparent;
+    padding-left: 5px;
+    display: inline-block;
+    color: #86858a;
+}
+
+#signin .container .form-signin .btn-primary{
+ background-color: #3ac58f;
+    border-color: #3ac58f;
+}
+
+#signin .container .form-signin .btn-primary:hover{
+    background-color: #34cbb3;
+    border-color: #34cbb3;
+}
+

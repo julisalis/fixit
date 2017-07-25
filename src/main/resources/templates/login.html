@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head lang="en">
     <title>FixIt - Iniciar Sesión</title>
 
@@ -8,32 +7,29 @@
 
 </head>
 <body>
-    <div class="container">
-
-        <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-
-        <form name="f" th:action="@{/login}" method="post" class="form-signin" >
-            <h2 class="form-signin-heading">Inciar Sesión</h2>
-            <div th:if="${param.error}" class="alert alert-danger">
-                Usuario o contraseña invalidos.
+    <section id="signin">
+        <div class="container">
+            <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+            <h3 class="form-signin-heading">Inciar Sesión</h3>
+            <div class="col-lg-7">
+                <div th:if="${param.error}" class="error-msg alert alert-danger">
+                    <p>Usuario o contraseña invalidos.</p>
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success">
+                    <p >Has cerrado sesión.</p>
+                </div>
+                <form name="f" th:action="@{/login}" method="post" class="form-signin"  >
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario" required="true" />
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required="true"/>
+                    <div class=" col-lg-6 checkbox">
+                        <input type="checkbox" name="remember-me" class="css-checkbox" id="remember-me" checked="checked"/>
+                        <label for="remember-me" name="checkbox1_lbl" class="css-label square"></label>
+                        <span class="span">Recuerdame</span>
+                    </div>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
+                </form>
             </div>
-            <div th:if="${param.logout}" class="alert alert-success">
-                Has cerrado sesión.
-            </div>
-            <label for="username" class="sr-only">Usuario</label>
-            <input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario" required="true" />
-            <p></p>
-            <label for="password" class="sr-only">Password</label>
-            <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña"
-                   required="true"/>
-            <div class="checkbox">
-                <label>
-                    <input id="remember-me" name="remember-me" type="checkbox"/> Recuerdame
-                </label>
-            </div>
-            <button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar Sesión</button>
-        </form>
-
-    </div>
+        </div>
+    </section>
 </body>
 </html>
