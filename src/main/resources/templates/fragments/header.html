@@ -5,32 +5,45 @@
 
 </head>
 <body>
-<div class="container">
-    <div th:fragment="header">
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">FixIt</a>
-                </div>
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Mi Perfil</a></li>
-                    <li><a href="#">Mis Publicaciones</a></li>
-                    <li><a href="#">Mis Trabajos</a></li>
-                </ul>
+<div th:fragment="header">
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
 
-                <div class="navbar-text navbar-right">
-                    <form sec:authorize="isAnonymous()" id="frmlogin" th:action="@{/login}" method="get" class="form-inline">
-                        <a href="javascript:{}" onclick="document.getElementById('frmlogin').submit(); return false;">Iniciar Sesión</a>
-                    </form>
-                    <div sec:authorize="isAuthenticated()"> Welcome <span sec:authentication="name">Guest</span></div>
-                    <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="form-inline">
-                        &nbsp;| <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Cerrar Sesión</a>
-                    </form>
-                </div>
+            <a class="navbar-brand" href="index.html">
+                <img alt="brand" id="logo-nav" src="./images/logo.png" />
+                <img alt="brand" id="logo-nav-white" src="./images/logo-white.png" />
+                <span>FixIt</span>
+            </a>
+
+        </div>
+
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Mi Perfil</a></li>
+                <li><a href="#about">Postulaciones</a></li>
+                <li><a href="#contact">Trabajos</a></li>
+            </ul>
+
+            <div class="navbar-text navbar-right">
+                <form sec:authorize="isAnonymous()" id="frmlogin" th:action="@{/login}" method="get" class="form-inline">
+                    <a href="javascript:{}" onclick="document.getElementById('frmlogin').submit(); return false;">Iniciar Sesión</a>
+                </form>
+                <div sec:authorize="isAuthenticated()"><span sec:authentication="name">Guest</span></div>
+                <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="form-inline">
+                    &nbsp;| <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Cerrar Sesión</a>
+                </form>
             </div>
-        </nav>
+        </div>
     </div>
+</nav>
 </div>
 </body>
 </html>
