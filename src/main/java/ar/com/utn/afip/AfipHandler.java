@@ -5,7 +5,7 @@ import ar.com.utn.afip.enums.AfipWs;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import sr.puc.server.ws.soap.a10.*;
+//import sr.puc.server.ws.soap.a10.*;
 
 /**
  * Created by scamisay on 16/06/17.
@@ -80,9 +80,9 @@ public class AfipHandler {
         return autenticador.obtenerTA(loginTicketResponse);
     }
 
-    public PersonaReturn getPersona(Integer idPersona) {
+    /*public PersonaReturn getPersona(Integer idPersona) {
         return null;
-    }
+    }*/
 
     /*public ArrayCodigosDescripcionesType consultarTiposComprobante() {
         ConsultarTiposComprobanteResponseType r = new ConsultarTiposComprobanteResponseType();
