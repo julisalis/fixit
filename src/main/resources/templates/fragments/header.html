@@ -20,22 +20,24 @@
             <a class="navbar-brand" href="index.html">
                 <img alt="brand" id="logo-nav" src="./images/logo.png" />
                 <img alt="brand" id="logo-nav-white" src="./images/logo-white.png" />
-                <span>FixIt</span>
+                <span>FixIT</span>
             </a>
 
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li><a href="#">Mi Perfil</a></li>
-                <li><a href="#about">Postulaciones</a></li>
-                <li><a href="#contact">Trabajos</a></li>
+                <li sec:authorize="isAuthenticated()"><a href="#">Mi Perfil</a></li>
+                <li sec:authorize="isAuthenticated()" ><a href="#about">Postulaciones</a></li>
+                <li sec:authorize="isAuthenticated()" ><a href="#contact">Trabajos</a></li>
             </ul>
 
             <div class="navbar-text navbar-right">
-                <form sec:authorize="isAnonymous()" id="frmlogin" th:action="@{/login}" method="get" class="form-inline">
-                    <a href="javascript:{}" onclick="document.getElementById('frmlogin').submit(); return false;">Iniciar Sesión</a>
-                </form>
+
+                <div sec:authorize="isAnonymous()" id="frmlogin" th:action="@{/login}" method="get" class="form-inline">
+                    <a type="button" class="login" data-toggle="modal" data-target="#login">Iniciar Sesión</a>
+                    <!--<a href="javascript:{}" onclick="document.getElementById('frmlogin').submit(); return false;">Iniciar Sesión</a>-->
+                </div>
                 <div sec:authorize="isAuthenticated()"><span sec:authentication="name">Guest</span></div>
                 <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="form-inline">
                     &nbsp;| <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Cerrar Sesión</a>
@@ -45,5 +47,6 @@
     </div>
 </nav>
 </div>
+
 </body>
 </html>

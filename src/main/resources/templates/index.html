@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head lang="en">
-    <title>FixIt</title>
+    <title>FixIT</title>
 
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
 
@@ -13,6 +13,28 @@
     <div class="jumbotron text-center">
         <div class="container">
             <h1>Conseguí la ayuda que necesitas</h1>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="login" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Iniciar Sesión</h4>
+                </div>
+                <div class="modal-body">
+
+                    <!--/*/ <th:block th:include="fragments/login :: login"></th:block> /*/-->
+                </div>
+                <!--<div class="modal-footer">-->
+                    <!--<button type="button" class="btn btn-default" data-dismiss="modal">Ingresar</button>-->
+                <!--</div>-->
+            </div>
+
         </div>
     </div>
 </body>

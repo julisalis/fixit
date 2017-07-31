@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head lang="en">
-    <title>FixIt - Iniciar Sesión</title>
-    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+
 </head>
-<body class="body-background">
-    <section id="signin">
+<body>
+<div th:fragment="login">
+    <section id="signin" class="modal-signin">
         <div class="container">
-            <h3 class="form-signin-heading">Inciar Sesión</h3>
-            <div class="col-lg-7">
+            <div class="col-lg-12">
                 <div th:if="${param.error}" class="error-msg alert alert-danger">
                     <p>Usuario o contraseña invalidos.</p>
                 </div>
@@ -19,12 +19,12 @@
                     <input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario" required="true" />
                     <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required="true"/>
                     <!--<div class=" col-lg-6 checkbox">-->
-                    <!--<input type="checkbox" name="remember-me" class="css-checkbox" id="remember-me" checked="checked"/>-->
-                    <!--<label for="remember-me" name="checkbox1_lbl" class="css-label square"></label>-->
-                    <!--<span class="span">Recuerdame</span>-->
+                        <!--<input type="checkbox" name="remember-me" class="css-checkbox" id="remember-me" checked="checked"/>-->
+                        <!--<label for="remember-me" name="checkbox1_lbl" class="css-label square"></label>-->
+                        <!--<span class="span">Recuerdame</span>-->
                     <!--</div>-->
 
-                    <button class="btn btn-lg btn-primary btn-block btn-login" type="submit">Ingresar</button>
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
                     <div class=" col-lg-12 link-login forgot-password">
                         <a href="#">¿Olvidó su contraseña?</a>
                     </div>
@@ -38,5 +38,7 @@
             </div>
         </div>
     </section>
+</div>
+
 </body>
 </html>
