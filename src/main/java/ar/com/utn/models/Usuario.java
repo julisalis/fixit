@@ -47,7 +47,8 @@ public class Usuario extends PersistentEntity {
     )
     private Set<Rol> roles = new HashSet<Rol>();
 
-    public Usuario() {
+    public Usuario(){
+
     }
 
     public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Date fechaNacimiento, String telefono, Long cuit, Prestador prestador) {
@@ -65,7 +66,7 @@ public class Usuario extends PersistentEntity {
         //falta el rol
     }
 
-    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Date fechaNacimiento, String telefono, String cuit, Tomador tomador) {
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Date fechaNacimiento, String telefono) {
         super();
         this.username = username;
         this.nombre = nombre;
@@ -75,7 +76,7 @@ public class Usuario extends PersistentEntity {
         this.password= password;
         this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
-        this.tomador = tomador;
+        this.tomador = new Tomador();
         this.fechaCreacion = new Date();
         //falta el rol
     }

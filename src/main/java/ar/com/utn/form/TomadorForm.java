@@ -31,6 +31,10 @@ public class TomadorForm {
     private String documento;
     @NotBlank
     private String telefono;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd-MM-yyyy")
+    @NotNull
+    private Date fechaNacimiento;
 
 
     public String getUsername() {
@@ -97,4 +101,11 @@ public class TomadorForm {
         this.telefono = telefono;
     }
 
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
 }

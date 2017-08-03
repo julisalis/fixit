@@ -3,6 +3,7 @@ package ar.com.utn.services.implementation;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.Prestador;
+import ar.com.utn.models.Tomador;
 import ar.com.utn.models.Usuario;
 import ar.com.utn.repositories.UsuarioRepository;
 import ar.com.utn.services.UsuarioService;
@@ -34,7 +35,8 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
     @Override
     public void registrarTomador(TomadorForm tomadorForm) {
-
+        new Usuario(tomadorForm.getUsername(),tomadorForm.getNombre(),tomadorForm.getApellido(),tomadorForm.getDocumento(),
+                tomadorForm.getTipoDoc(),tomadorForm.getPassword(),tomadorForm.getFechaNacimiento(),tomadorForm.getTelefono());
     }
 
     @Override
