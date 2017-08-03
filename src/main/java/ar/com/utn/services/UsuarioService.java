@@ -12,7 +12,7 @@ public interface UsuarioService {
 
     public Usuario findByUsername(String username);
 
-    void registrarPrestador(PrestadorForm prestadorForm, Prestador prestador);
+    Usuario registrarPrestador(PrestadorForm prestadorForm, Prestador prestador);
 
-    void registrarTomador(TomadorForm tomadorForm);
+    Usuario registrarTomador(TomadorForm tomadorForm);
 }

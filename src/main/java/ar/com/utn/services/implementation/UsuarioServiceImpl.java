@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 /**
  * Created by julis on 26/5/2017.
  */
@@ -28,15 +30,21 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     }
 
     @Override
-    public void registrarPrestador(PrestadorForm prestadorForm, Prestador prestador) {
-        new Usuario(prestadorForm.getUsername(),prestadorForm.getNombre(),prestadorForm.getApellido(),prestadorForm.getDocumento(),
+    @Transactional
+    public Usuario registrarPrestador(PrestadorForm prestadorForm, Prestador prestador) {
+        Usuario usuario = new Usuario(prestadorForm.getUsername(),prestadorForm.getNombre(),prestadorForm.getApellido(),prestadorForm.getDocumento(),
                 prestadorForm.getTipoDoc(),prestadorForm.getPassword(),prestadorForm.getFechaNacimiento(),prestadorForm.getTelefono(),prestadorForm.getCuit(),prestador);
+        usuarioRepository.save(usuario);
+        return usuario;
     }
 
     @Override
-    public void registrarTomador(TomadorForm tomadorForm) {
-        new Usuario(tomadorForm.getUsername(),tomadorForm.getNombre(),tomadorForm.getApellido(),tomadorForm.getDocumento(),
+    @Transactional
+    public Usuario registrarTomador(TomadorForm tomadorForm) {
+        Usuario usuario = new Usuario(tomadorForm.getUsername(),tomadorForm.getNombre(),tomadorForm.getApellido(),tomadorForm.getDocumento(),
                 tomadorForm.getTipoDoc(),tomadorForm.getPassword(),tomadorForm.getFechaNacimiento(),tomadorForm.getTelefono());
+        usuarioRepository.save(usuario);
+        return usuario;
     }
 
     @Override
