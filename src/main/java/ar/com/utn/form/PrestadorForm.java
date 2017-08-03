@@ -15,7 +15,7 @@ import java.util.Date;
  */
 public class PrestadorForm {
 
-    private String CUIT;
+    private Long cuit;
     @NotBlank
     private String username;
     @NotBlank
@@ -112,12 +112,12 @@ public class PrestadorForm {
             this.telefono = telefono;
         }
 
-        public String getCUIT() {
-            return CUIT;
+        public Long getCuit() {
+            return cuit;
         }
 
-        public void setCUIT(String CUIT) {
-            this.CUIT = CUIT;
+        public void setCuit(Long cuit) {
+            this.cuit = cuit;
         }
 
 }

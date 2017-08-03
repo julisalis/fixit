@@ -1,5 +1,8 @@
 package ar.com.utn.services.implementation;
 
+import ar.com.utn.form.PrestadorForm;
+import ar.com.utn.form.TomadorForm;
+import ar.com.utn.models.Prestador;
 import ar.com.utn.models.Usuario;
 import ar.com.utn.repositories.UsuarioRepository;
 import ar.com.utn.services.UsuarioService;
@@ -21,6 +24,17 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     @Override
     public Usuario findByUsername(String username) {
         return usuarioRepository.findByUsernameIgnoreCase(username);
+    }
+
+    @Override
+    public void registrarPrestador(PrestadorForm prestadorForm, Prestador prestador) {
+        new Usuario(prestadorForm.getUsername(),prestadorForm.getNombre(),prestadorForm.getApellido(),prestadorForm.getDocumento(),
+                prestadorForm.getTipoDoc(),prestadorForm.getPassword(),prestadorForm.getFechaNacimiento(),prestadorForm.getTelefono(),prestadorForm.getCuit(),prestador);
+    }
+
+    @Override
+    public void registrarTomador(TomadorForm tomadorForm) {
+
     }
 
     @Override

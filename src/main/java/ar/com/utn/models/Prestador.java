@@ -16,6 +16,12 @@ public class Prestador extends PersistentEntity {
     @OneToMany(mappedBy = "prestador")
     private List<Postulacion> postulaciones;
 
+    public Prestador(Long cuit, Double validationResult) {
+        super();
+        this.cuit = cuit;
+        this.validado = validationResult;
+    }
+
     public Long getCuit() {
         return cuit;
     }

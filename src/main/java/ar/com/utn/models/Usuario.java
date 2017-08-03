@@ -24,12 +24,13 @@ public class Usuario extends PersistentEntity {
     private String nombre;
     private String apellido;
     private Date fechaNacimiento;
+    private Date fechaCreacion;
 
     @Enumerated (EnumType.STRING)
     private TipoDoc tipoDoc;
 
     private String documento;
-    private Long telefono;
+    private String telefono;
     private Double calificacionPromedio;
 
     @OneToOne(mappedBy = "usuario")
@@ -47,6 +48,36 @@ public class Usuario extends PersistentEntity {
     private Set<Rol> roles = new HashSet<Rol>();
 
     public Usuario() {
+    }
+
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Date fechaNacimiento, String telefono, Long cuit, Prestador prestador) {
+        super();
+        this.username = username;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.documento = documento;
+        this.tipoDoc = tipoDoc;
+        this.password= password;
+        this.fechaNacimiento = fechaNacimiento;
+        this.telefono = telefono;
+        this.prestador = prestador;
+        this.fechaCreacion = new Date();
+        //falta el rol
+    }
+
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Date fechaNacimiento, String telefono, String cuit, Tomador tomador) {
+        super();
+        this.username = username;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.documento = documento;
+        this.tipoDoc = tipoDoc;
+        this.password= password;
+        this.fechaNacimiento = fechaNacimiento;
+        this.telefono = telefono;
+        this.tomador = tomador;
+        this.fechaCreacion = new Date();
+        //falta el rol
     }
 
     public String getUsername() {
@@ -115,11 +146,11 @@ public class Usuario extends PersistentEntity {
         this.documento = documento;
     }
 
-    public Long getTelefono() {
+    public String getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(Long telefono) {
+    public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 

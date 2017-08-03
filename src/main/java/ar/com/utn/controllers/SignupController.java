@@ -2,8 +2,8 @@ package ar.com.utn.controllers;
 
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.TomadorForm;
-import ar.com.utn.services.PrestadorService;
-import ar.com.utn.services.TomadorService;
+import ar.com.utn.models.Prestador;
+import ar.com.utn.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,10 +26,8 @@ import java.util.Map;
 public class SignupController {
 
     @Autowired
-    private PrestadorService prestadorService;
+    private UsuarioService usuarioService;
 
-    @Autowired
-    private TomadorService tomadorService;
 
 
     @GetMapping(value="/prestador")
@@ -50,9 +48,11 @@ public class SignupController {
     public String signupPrestador(@Valid @ModelAttribute("prestadorForm") PrestadorForm prestadorForm, BindingResult result, Model model){
         HashMap<String,Object> map = new HashMap<>();
         try{
-//            userFormValidator.validateWithLocal(registerUser, result,locale);
             if(!result.hasErrors()){
-                prestadorService.registrarPrestador(prestadorForm);
+                //validar cuit si completo ese campo PORQUE ES DOUBLE?
+                Double validationResult=null;
+                Prestador prestador = new Prestador(prestadorForm.getCuit(),validationResult);
+                usuarioService.registrarPrestador(prestadorForm,prestador);
             }else{
                 return "signup-prestador";
             }
@@ -67,7 +67,7 @@ public class SignupController {
         HashMap<String,Object> map = new HashMap<>();
         try{
             if(!result.hasErrors()){
-                tomadorService.registrarTomador(tomadorForm);
+                usuarioService.registrarTomador(tomadorForm);
             }else{
                 return "signup-tomador";
             }
