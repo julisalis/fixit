@@ -33,7 +33,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
- * Created by scamisay on 16/06/17.
+ * Created by jsalischiker on 16/06/17.
  */
 public class Autenticador {
 

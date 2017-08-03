@@ -3,12 +3,13 @@ package ar.com.utn.afip;
 import java.time.LocalDateTime;
 
 /**
- * Created by scamisay on 16/06/17.
+ * Created by jsalischiker on 16/06/17.
  */
 public class TicketAcceso {
 
     private String token;
     private String sign;
+    private Long cuitRepresentada;
     private LocalDateTime vencimiento;
 
     public TicketAcceso(String token, String sign) {
@@ -29,5 +30,13 @@ public class TicketAcceso {
 
     public LocalDateTime getVencimiento() {
         return vencimiento;
+    }
+
+    public Long getCuitRepresentada() {
+        return cuitRepresentada;
+    }
+
+    public void setCuitRepresentada(Long cuitRepresentada) {
+        this.cuitRepresentada = cuitRepresentada;
     }
 }

@@ -1,7 +1,7 @@
 package ar.com.utn.afip.exceptions;
 
 /**
- * Created by nico on 14/07/17.
+ * Created by jsalischiker on 14/07/17.
  */
 public class AfipWsaaException extends RuntimeException {
 

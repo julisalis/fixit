@@ -1,7 +1,7 @@
 package ar.com.utn.afip;
 
 /**
- * Created by scamisay on 16/06/17.
+ * Created by jsalischiker on 16/06/17.
  */
 public class AutenticadorConfig {
 

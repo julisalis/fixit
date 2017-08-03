@@ -5,10 +5,10 @@ import ar.com.utn.afip.enums.AfipWs;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-//import sr.puc.server.ws.soap.a10.*;
+import sr.puc.server.ws.soap.a10.*;
 
 /**
- * Created by scamisay on 16/06/17.
+ * Created by jsalischiker on 16/06/17.
  */
 public class AfipHandler {
 
@@ -20,6 +20,7 @@ public class AfipHandler {
     public TicketAcceso getTicketAcceso() {
         if (this.ta == null){
             TicketAcceso taNuevo = this.autenticar();
+            taNuevo.setCuitRepresentada(cuit);
             this.setTicketAcceso(taNuevo);
         }
         return ta;
@@ -34,16 +35,6 @@ public class AfipHandler {
         this.service = service;
         this.cuit = cuitRepresentada;
     }
-
-    /*private AuthRequestType getAuthRequest() {
-        AuthRequestType art = new AuthRequestType();
-        TicketAcceso ticketAcceso = this.getTicketAcceso();
-        art.setSign(ticketAcceso.getSign());
-        art.setToken(ticketAcceso.getToken());
-        art.setCuitRepresentada(this.cuit);
-
-        return art;
-    }*/
 
     private TicketAcceso autenticar(){
 
@@ -80,9 +71,18 @@ public class AfipHandler {
         return autenticador.obtenerTA(loginTicketResponse);
     }
 
-    /*public PersonaReturn getPersona(Integer idPersona) {
+    public PersonaReturn getPersona(Long idPersona) {
+        PersonaReturn personaReturn = new PersonaReturn();
+
+        GetPersona personaRequest = new GetPersona();
+        personaRequest.setSign(ta.getSign());
+        personaRequest.setToken(ta.getToken());
+        personaRequest.setCuitRepresentada(ta.getCuitRepresentada());
+        personaRequest.setIdPersona(idPersona);
+
         return null;
-    }*/
+
+    }
 
     /*public ArrayCodigosDescripcionesType consultarTiposComprobante() {
         ConsultarTiposComprobanteResponseType r = new ConsultarTiposComprobanteResponseType();

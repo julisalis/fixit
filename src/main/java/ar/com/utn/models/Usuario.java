@@ -32,6 +32,12 @@ public class Usuario extends PersistentEntity {
     private Long telefono;
     private Double calificacionPromedio;
 
+    @OneToOne(mappedBy = "usuario")
+    private Tomador tomador;
+
+    @OneToOne(mappedBy = "usuario")
+    private Prestador prestador;
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(
             name = "usuarios_roles",
