@@ -33,10 +33,10 @@ public class Usuario extends PersistentEntity {
     private String telefono;
     private Double calificacionPromedio;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne
     private Tomador tomador;
 
-    @OneToOne(mappedBy = "usuario")
+    @OneToOne
     private Prestador prestador;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

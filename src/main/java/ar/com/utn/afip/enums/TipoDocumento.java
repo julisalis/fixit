@@ -24,6 +24,15 @@ public enum TipoDocumento {
         this.codigo = codigo;this.nombre = nombre;
     }
 
+    public static TipoDocumento getByCodigo(String c) {
+        for(TipoDocumento td : TipoDocumento.values()){
+                if(td.getCodigo().equalsIgnoreCase(c)){
+                    return td;
+                }
+        }
+        return null;
+    }
+
     public String getCodigo() {
         return codigo;
     }

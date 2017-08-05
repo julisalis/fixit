@@ -13,6 +13,15 @@ public enum TipoPersona {
         this.nombre = nombre;
     }
 
+    public static TipoPersona getByNombre(String n) {
+        for(TipoPersona tp : TipoPersona.values()){
+            if(tp.getNombre().equalsIgnoreCase(n)){
+                return tp;
+            }
+        }
+        return null;
+    }
+
     public String getNombre() {
         return nombre;
     }

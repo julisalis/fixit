@@ -1,5 +1,6 @@
 package ar.com.utn.afip;
 
+import ar.com.utn.afip.domain.Persona;
 import ar.com.utn.afip.enums.AfipWs;
 
 import java.io.FileInputStream;
@@ -71,7 +72,7 @@ public class AfipHandler {
         return autenticador.obtenerTA(loginTicketResponse);
     }
 
-    public PersonaReturn getPersona(Long idPersona) {
+    public Persona getPersona(Long idPersona) {
         PersonaReturn personaReturn = new PersonaReturn();
 
         GetPersona personaRequest = new GetPersona();
@@ -79,6 +80,17 @@ public class AfipHandler {
         personaRequest.setToken(ta.getToken());
         personaRequest.setCuitRepresentada(ta.getCuitRepresentada());
         personaRequest.setIdPersona(idPersona);
+
+        Persona persona = new Persona();
+
+        try {
+            PersonaServiceA10Impl ws = new PersonaServiceA10Impl();
+            personaReturn = ws.getPersona(personaRequest.getToken(), personaRequest.getSign(), personaRequest.getCuitRepresentada(), personaRequest.getIdPersona());
+            persona.buildPersonaFromAfip(personaReturn);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 
         return null;
 
