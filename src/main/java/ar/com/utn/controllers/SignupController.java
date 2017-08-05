@@ -3,6 +3,7 @@ package ar.com.utn.controllers;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.Prestador;
+import ar.com.utn.models.Telefono;
 import ar.com.utn.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -46,13 +47,13 @@ public class SignupController {
 
     @PostMapping(path="/prestador")
     public String signupPrestador(@Valid @ModelAttribute("prestadorForm") PrestadorForm prestadorForm, BindingResult result, Model model){
-        HashMap<String,Object> map = new HashMap<>();
+        Telefono telefono=validarTelefono(prestadorForm.getCodPais(),prestadorForm.getCodArea(),prestadorForm.getTelefono());
         try{
             if(!result.hasErrors()){
                 //validar cuit si completo ese campo PORQUE ES DOUBLE?
                 boolean validationResult=false;
                 Prestador prestador = new Prestador(prestadorForm.getCuit(),validationResult);
-                usuarioService.registrarPrestador(prestadorForm,prestador);
+                usuarioService.registrarPrestador(prestadorForm,prestador,telefono);
             }else{
                 return "signup-prestador";
             }
@@ -62,12 +63,16 @@ public class SignupController {
         return "signup-prestador";
     }
 
+    private Telefono validarTelefono(String codPais, String codArea, String codTelefono) {
+        return new Telefono(codPais,codArea,codTelefono);
+    }
+
     @PostMapping(path="/tomador")
     public String signupTomador(@Valid @ModelAttribute("tomadorForm") TomadorForm tomadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
-        HashMap<String,Object> map = new HashMap<>();
+        Telefono telefono=validarTelefono(tomadorForm.getCodPais(),tomadorForm.getCodArea(),tomadorForm.getTelefono());
         try{
             if(!result.hasErrors()){
-                usuarioService.registrarTomador(tomadorForm);
+                usuarioService.registrarTomador(tomadorForm,telefono);
             }else{
                 return "signup-tomador";
             }
@@ -76,4 +81,6 @@ public class SignupController {
         }
         return "signup-tomador";
     }
+
+
 }
