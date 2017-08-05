@@ -11,12 +11,12 @@ import java.util.List;
 public class Prestador extends PersistentEntity {
 
     private Long cuit;
-    private Double validado;
+    private boolean validado;
 
     @OneToMany(mappedBy = "prestador")
     private List<Postulacion> postulaciones;
 
-    public Prestador(Long cuit, Double validationResult) {
+    public Prestador(Long cuit, boolean validationResult) {
         super();
         this.cuit = cuit;
         this.validado = validationResult;
@@ -30,11 +30,11 @@ public class Prestador extends PersistentEntity {
         this.cuit = cuit;
     }
 
-    public Double getValidado() {
+    public boolean getValidado() {
         return validado;
     }
 
-    public void setValidado(Double validado) {
+    public void setValidado(boolean validado) {
         this.validado = validado;
     }
 

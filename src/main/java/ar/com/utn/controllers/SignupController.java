@@ -50,7 +50,7 @@ public class SignupController {
         try{
             if(!result.hasErrors()){
                 //validar cuit si completo ese campo PORQUE ES DOUBLE?
-                Double validationResult=null;
+                boolean validationResult=false;
                 Prestador prestador = new Prestador(prestadorForm.getCuit(),validationResult);
                 usuarioService.registrarPrestador(prestadorForm,prestador);
             }else{
