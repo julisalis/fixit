@@ -6,8 +6,8 @@ import javax.persistence.Table;
 /**
  * Created by iaruedel on 05/08/17.
  */
-@Entity(name="telefono")
-@Table
+@Entity
+@Table(name="telefono")
 public class Telefono extends PersistentEntity{
     private String codPais;
     private String codArea;
