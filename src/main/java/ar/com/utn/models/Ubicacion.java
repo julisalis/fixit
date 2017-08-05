@@ -3,6 +3,8 @@ package ar.com.utn.models;
 import org.springframework.security.access.method.P;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -11,7 +13,11 @@ import javax.persistence.Table;
 @Entity
 @Table (name="ubicacion")
 public class Ubicacion extends PersistentEntity{
+    @ManyToOne
+    @JoinColumn(name="id_provincia",nullable = false)
     private Provincia provincia;
+    @ManyToOne
+    @JoinColumn(name="id_localidad",nullable = false)
     private Localidad localidad;
 
     public Ubicacion(Provincia provincia, Localidad localidad) {

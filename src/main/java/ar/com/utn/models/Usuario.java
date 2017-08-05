@@ -30,11 +30,14 @@ public class Usuario extends PersistentEntity {
     private TipoDoc tipoDoc;
 
     private String documento;
+
+    @ManyToOne
+    @JoinColumn(name="id_telefono",nullable = false)
     private Telefono telefono;
     private Double calificacionPromedio;
 
     @ManyToOne
-    @JoinColumn(name="id_ubicacion")
+    @JoinColumn(name="id_ubicacion",nullable = false)
     private Ubicacion ubicacion;
 
     @OneToOne

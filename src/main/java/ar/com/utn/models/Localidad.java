@@ -9,7 +9,7 @@ import javax.persistence.Table;
  * Created by iaruedel on 05/08/17.
  */
 @Entity
-@Table(name="ubicacion")
+@Table(name="localidad")
 public class Localidad extends PersistentEntity{
     @ManyToOne
     @JoinColumn(name="id_provincia",nullable=false)
