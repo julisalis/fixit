@@ -30,8 +30,12 @@ public class Usuario extends PersistentEntity {
     private TipoDoc tipoDoc;
 
     private String documento;
-    private String telefono;
+    private Telefono telefono;
     private Double calificacionPromedio;
+
+    @ManyToOne
+    @JoinColumn(name="id_ubicacion")
+    private Ubicacion ubicacion;
 
     @OneToOne
     private Tomador tomador;
@@ -39,19 +43,14 @@ public class Usuario extends PersistentEntity {
     @OneToOne
     private Prestador prestador;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-            name = "usuarios_roles",
-            joinColumns = {@JoinColumn(name = "usuario_id")},
-            inverseJoinColumns = {@JoinColumn(name = "rol_id")}
-    )
-    private Set<Rol> roles = new HashSet<Rol>();
+    @Enumerated(EnumType.STRING)
+    private Rol rol = Rol.USER;
 
     public Usuario(){
 
     }
 
-    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Date fechaNacimiento, String telefono, Long cuit, Prestador prestador) {
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Date fechaNacimiento, Telefono telefono, Long cuit, Prestador prestador, Ubicacion ubicacion) {
         super();
         this.username = username;
         this.nombre = nombre;
@@ -63,10 +62,11 @@ public class Usuario extends PersistentEntity {
         this.telefono = telefono;
         this.prestador = prestador;
         this.fechaCreacion = new Date();
+        this.ubicacion=ubicacion;
         //falta el rol
     }
 
-    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Date fechaNacimiento, String telefono) {
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Date fechaNacimiento, Telefono telefono, Ubicacion ubicacion) {
         super();
         this.username = username;
         this.nombre = nombre;
@@ -78,6 +78,7 @@ public class Usuario extends PersistentEntity {
         this.telefono = telefono;
         this.tomador = new Tomador();
         this.fechaCreacion = new Date();
+        this.ubicacion=ubicacion;
         //falta el rol
     }
 
@@ -119,10 +120,6 @@ public class Usuario extends PersistentEntity {
         this.apellido = apellido;
     }
 
-    public Set<Rol> getRoles() { return roles; }
-
-    public void setRoles(Set<Rol> roles) { this.roles = roles; }
-
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
@@ -147,11 +144,11 @@ public class Usuario extends PersistentEntity {
         this.documento = documento;
     }
 
-    public String getTelefono() {
+    public Telefono getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(Telefono telefono) {
         this.telefono = telefono;
     }
 
@@ -161,5 +158,21 @@ public class Usuario extends PersistentEntity {
 
     public void setCalificacionPromedio(Double calificacionPromedio) {
         this.calificacionPromedio = calificacionPromedio;
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 }

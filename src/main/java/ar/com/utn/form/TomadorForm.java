@@ -30,11 +30,19 @@ public class TomadorForm {
     @NotBlank
     private String documento;
     @NotBlank
+    private String codPais;
+    @NotBlank
+    private String codArea;
+    @NotBlank
     private String telefono;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd-MM-yyyy")
     @NotNull
     private Date fechaNacimiento;
+    @NotBlank
+    private Long provincia;
+    @NotBlank
+    private Long localidad;
 
 
     public String getUsername() {
@@ -107,5 +115,38 @@ public class TomadorForm {
 
     public void setFechaNacimiento(Date fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
+    }
+
+    public Long getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Long provincia) {
+        this.provincia = provincia;
+    }
+
+    public Long getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(Long localidad) {
+        this.localidad = localidad;
+    }
+
+
+    public String getCodPais() {
+        return codPais;
+    }
+
+    public void setCodPais(String codPais) {
+        this.codPais = codPais;
+    }
+
+    public String getCodArea() {
+        return codArea;
+    }
+
+    public void setCodArea(String codArea) {
+        this.codArea = codArea;
     }
 }

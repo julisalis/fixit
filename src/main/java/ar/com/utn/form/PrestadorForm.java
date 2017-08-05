@@ -1,5 +1,6 @@
 package ar.com.utn.form;
 
+import ar.com.utn.models.Provincia;
 import ar.com.utn.models.TipoDoc;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -29,14 +30,22 @@ public class PrestadorForm {
     private String apellido;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd-MM-yyyy")
-    @NotNull
+    @NotBlank
     private Date fechaNacimiento;
-    @NotNull
+    @NotBlank
     private TipoDoc tipoDoc;
     @NotBlank
     private String documento;
     @NotBlank
+    private String codPais;
+    @NotBlank
+    private String codArea;
+    @NotBlank
     private String telefono;
+    @NotBlank
+    private Long provincia;
+    @NotBlank
+    private Long localidad;
 
 
     public String getUsername() {
@@ -119,4 +128,36 @@ public class PrestadorForm {
         this.cuit = cuit;
     }
 
+    public Long getProvincia() {
+        return provincia;
+    }
+
+    public void setProvincia(Long provincia) {
+        this.provincia = provincia;
+    }
+
+    public Long getLocalidad() {
+        return localidad;
+    }
+
+    public void setLocalidad(Long localidad) {
+        this.localidad = localidad;
+    }
+
+
+    public String getCodPais() {
+        return codPais;
+    }
+
+    public void setCodPais(String codPais) {
+        this.codPais = codPais;
+    }
+
+    public String getCodArea() {
+        return codArea;
+    }
+
+    public void setCodArea(String codArea) {
+        this.codArea = codArea;
+    }
 }
