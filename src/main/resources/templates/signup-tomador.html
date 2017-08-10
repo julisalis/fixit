@@ -67,17 +67,25 @@
                     </div>
                     <!-- Prepended text-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="telefono">Teléfono</label>
+                        <label class="col-md-4 control-label" for="telefono">Celular</label>
                         <div class="col-md-3">
                             <div class="input-group">
-                                <span id="codPais" th:field="*{codPais}" class="input-group-addon" type="text" value="+54">+54</span>
-                                <input  placeholder="011" id="codArea" maxlength="4" th:field="*{codArea}" class="form-control" type="text" required="" onkeypress="return isNumber(event)"/>
+                                <span id="codPais" name="codPais" class="input-group-addon" type="text" value="+54">+54</span>
+                                <input  placeholder="011" id="codArea" maxlength="4" th:field="*{telefono.codArea}" class="form-control" type="text" required="" onkeypress="return isNumber(event)"/>
                             </div>
                         </div>
                         <div class="col-md-3" style="padding-left: 0px;" >
-                            <input placeholder="4444-4444" id="telefono" th:field="*{telefono}" maxlength="9" class="form-control" type="text" required="" onkeypress="return isNumber(event)"/>
+                            <input placeholder="4444-4444" id="telefono" th:field="*{telefono.telefono}" maxlength="9" class="form-control" type="text" required="" onkeypress="return isNumber(event)"/>
                         </div>
+                    </div>
 
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="tipodoc">Tipo documento</label>
+                        <div class="col-md-3">
+                            <select  th:field="*{tipoDoc}" id="tipodoc" class="form-control">
+                                <option value="DNI">DNI</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div class="form-group">

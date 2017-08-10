@@ -1,5 +1,6 @@
 package ar.com.utn.form;
 
+import ar.com.utn.models.Telefono;
 import ar.com.utn.models.TipoDoc;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -29,16 +30,7 @@ public class TomadorForm {
     private TipoDoc tipoDoc;
     @NotBlank
     private String documento;
-    @NotBlank
-    private String codPais;
-    @NotBlank
-    private String codArea;
-    @NotBlank
-    private String telefono;
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd-MM-yyyy")
-    @NotNull
-    private Date fechaNacimiento;
+    private TelefonoForm telefono;
     @NotBlank
     private Long provincia;
     @NotBlank
@@ -101,20 +93,12 @@ public class TomadorForm {
         this.documento = documento;
     }
 
-    public String getTelefono() {
+    public TelefonoForm getTelefono() {
         return telefono;
     }
 
-    public void setTelefono(String telefono) {
+    public void setTelefono(TelefonoForm telefono) {
         this.telefono = telefono;
-    }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
     }
 
     public Long getProvincia() {
@@ -134,19 +118,4 @@ public class TomadorForm {
     }
 
 
-    public String getCodPais() {
-        return codPais;
-    }
-
-    public void setCodPais(String codPais) {
-        this.codPais = codPais;
-    }
-
-    public String getCodArea() {
-        return codArea;
-    }
-
-    public void setCodArea(String codArea) {
-        this.codArea = codArea;
-    }
 }

@@ -13,6 +13,9 @@ public class Telefono extends PersistentEntity{
     private String codArea;
     private String telefono;
 
+    public Telefono(){
+
+    }
     public Telefono(String codPais, String codArea, String telefono) {
         this.codPais = codPais;
         this.codArea = codArea;

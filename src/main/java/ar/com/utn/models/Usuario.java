@@ -23,7 +23,7 @@ public class Usuario extends PersistentEntity {
 
     private String nombre;
     private String apellido;
-    private Date fechaNacimiento;
+
     private Date fechaCreacion;
 
     @Enumerated (EnumType.STRING)
@@ -34,6 +34,7 @@ public class Usuario extends PersistentEntity {
     @ManyToOne
     @JoinColumn(name="id_telefono",nullable = false)
     private Telefono telefono;
+
     private Double calificacionPromedio;
 
     @ManyToOne
@@ -53,7 +54,7 @@ public class Usuario extends PersistentEntity {
 
     }
 
-    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Date fechaNacimiento, Telefono telefono, Long cuit, Prestador prestador, Ubicacion ubicacion) {
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Long cuit, Prestador prestador, Ubicacion ubicacion) {
         super();
         this.username = username;
         this.nombre = nombre;
@@ -61,7 +62,6 @@ public class Usuario extends PersistentEntity {
         this.documento = documento;
         this.tipoDoc = tipoDoc;
         this.password= password;
-        this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.prestador = prestador;
         this.fechaCreacion = new Date();
@@ -69,7 +69,7 @@ public class Usuario extends PersistentEntity {
         //falta el rol
     }
 
-    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Date fechaNacimiento, Telefono telefono, Ubicacion ubicacion) {
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion) {
         super();
         this.username = username;
         this.nombre = nombre;
@@ -77,7 +77,6 @@ public class Usuario extends PersistentEntity {
         this.documento = documento;
         this.tipoDoc = tipoDoc;
         this.password= password;
-        this.fechaNacimiento = fechaNacimiento;
         this.telefono = telefono;
         this.tomador = new Tomador();
         this.fechaCreacion = new Date();
@@ -121,14 +120,6 @@ public class Usuario extends PersistentEntity {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
-    }
-
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
     }
 
     public TipoDoc getTipoDoc() {

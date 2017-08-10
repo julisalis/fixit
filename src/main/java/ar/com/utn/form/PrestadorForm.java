@@ -1,6 +1,7 @@
 package ar.com.utn.form;
 
 import ar.com.utn.models.Provincia;
+import ar.com.utn.models.Telefono;
 import ar.com.utn.models.TipoDoc;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -28,20 +29,12 @@ public class PrestadorForm {
     private String nombre;
     @NotBlank
     private String apellido;
-    @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd-MM-yyyy")
-    @NotBlank
-    private Date fechaNacimiento;
     @NotBlank
     private TipoDoc tipoDoc;
     @NotBlank
     private String documento;
-    @NotBlank
-    private String codPais;
-    @NotBlank
-    private String codArea;
-    @NotBlank
-    private String telefono;
+    @NotNull
+    private TelefonoForm telefono;
     @NotBlank
     private Long provincia;
     @NotBlank
@@ -88,14 +81,6 @@ public class PrestadorForm {
         this.apellido = apellido;
     }
 
-    public Date getFechaNacimiento() {
-        return fechaNacimiento;
-    }
-
-    public void setFechaNacimiento(Date fechaNacimiento) {
-        this.fechaNacimiento = fechaNacimiento;
-    }
-
     public TipoDoc getTipoDoc() {
         return tipoDoc;
     }
@@ -110,14 +95,6 @@ public class PrestadorForm {
 
     public void setDocumento(String documento) {
         this.documento = documento;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
     }
 
     public Long getCuit() {
@@ -145,19 +122,8 @@ public class PrestadorForm {
     }
 
 
-    public String getCodPais() {
-        return codPais;
+    public TelefonoForm getTelefono() {
+        return telefono;
     }
 
-    public void setCodPais(String codPais) {
-        this.codPais = codPais;
-    }
-
-    public String getCodArea() {
-        return codArea;
-    }
-
-    public void setCodArea(String codArea) {
-        this.codArea = codArea;
-    }
 }

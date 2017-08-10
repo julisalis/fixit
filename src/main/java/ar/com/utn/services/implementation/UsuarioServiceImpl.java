@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by julis on 26/5/2017.
@@ -37,26 +38,33 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
 
     @Override
     @Transactional
-    public Usuario registrarPrestador(PrestadorForm prestadorForm, Prestador prestador,Telefono telefono) {
+    public Usuario registrarPrestador(PrestadorForm prestadorForm, Prestador prestador) {
         Provincia provincia=provinciaRepository.findOne(prestadorForm.getProvincia());
         Localidad localidad=localidadRepository.findOne(prestadorForm.getLocalidad());
+        Telefono telefono= new Telefono(prestadorForm.getTelefono().getCodPais(),prestadorForm.getTelefono().getCodArea(),prestadorForm.getTelefono().getTelefono());
         Ubicacion ubicacion=new Ubicacion(provincia,localidad);
         Usuario usuario = new Usuario(prestadorForm.getUsername(),prestadorForm.getNombre(),prestadorForm.getApellido(),prestadorForm.getDocumento(),
-                prestadorForm.getTipoDoc(),prestadorForm.getPassword(),prestadorForm.getFechaNacimiento(),telefono,prestadorForm.getCuit(),prestador,ubicacion);
+                prestadorForm.getTipoDoc(),prestadorForm.getPassword(),telefono,prestadorForm.getCuit(),prestador,ubicacion);
         usuarioRepository.save(usuario);
         return usuario;
     }
 
     @Override
     @Transactional
-    public Usuario registrarTomador(TomadorForm tomadorForm,Telefono telefono) {
+    public Usuario registrarTomador(TomadorForm tomadorForm) {
         Provincia provincia=provinciaRepository.findOne(tomadorForm.getProvincia());
         Localidad localidad=localidadRepository.findOne(tomadorForm.getLocalidad());
         Ubicacion ubicacion=new Ubicacion(provincia,localidad);
+        Telefono telefono= new Telefono(tomadorForm.getTelefono().getCodPais(),tomadorForm.getTelefono().getCodArea(),tomadorForm.getTelefono().getTelefono());
         Usuario usuario = new Usuario(tomadorForm.getUsername(),tomadorForm.getNombre(),tomadorForm.getApellido(),tomadorForm.getDocumento(),
-                tomadorForm.getTipoDoc(),tomadorForm.getPassword(),tomadorForm.getFechaNacimiento(),telefono,ubicacion);
+                tomadorForm.getTipoDoc(),tomadorForm.getPassword(),telefono,ubicacion);
         usuarioRepository.save(usuario);
         return usuario;
+    }
+
+    @Override
+    public List<Provincia> getProvincias() {
+        return provinciaRepository.findAllProvincias();
     }
 
     @Override

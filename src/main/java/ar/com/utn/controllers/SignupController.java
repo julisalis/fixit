@@ -1,6 +1,8 @@
 package ar.com.utn.controllers;
 
 import ar.com.utn.form.PrestadorForm;
+import ar.com.utn.form.SelectorForm;
+import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.Prestador;
 import ar.com.utn.models.Telefono;
@@ -16,8 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by julian on 30/07/17.
@@ -39,21 +44,26 @@ public class SignupController {
 
     @GetMapping(value="/tomador")
     public String signupTomador(WebRequest request,Model model) {
+        model.addAttribute("provincia",generarProvicias());
         model.addAttribute("tomadorForm",new TomadorForm());
+        model.addAttribute("telefono",new TelefonoForm());
         return "signup-tomador";
     }
 
+    private List<SelectorForm> generarProvicias() {
+       return usuarioService.getProvincias().stream().map(provincia -> new SelectorForm(provincia.getId(),provincia.getNombre())).collect(Collectors.toList());
+    }
 
 
     @PostMapping(path="/prestador")
     public String signupPrestador(@Valid @ModelAttribute("prestadorForm") PrestadorForm prestadorForm, BindingResult result, Model model){
-        Telefono telefono=validarTelefono(prestadorForm.getCodPais(),prestadorForm.getCodArea(),prestadorForm.getTelefono());
+        validarTelefono(prestadorForm.getTelefono());
         try{
             if(!result.hasErrors()){
                 //validar cuit si completo ese campo PORQUE ES DOUBLE?
                 boolean validationResult=false;
                 Prestador prestador = new Prestador(prestadorForm.getCuit(),validationResult);
-                usuarioService.registrarPrestador(prestadorForm,prestador,telefono);
+                usuarioService.registrarPrestador(prestadorForm,prestador);
             }else{
                 return "signup-prestador";
             }
@@ -63,16 +73,16 @@ public class SignupController {
         return "signup-prestador";
     }
 
-    private Telefono validarTelefono(String codPais, String codArea, String codTelefono) {
-        return new Telefono(codPais,codArea,codTelefono);
+    private boolean validarTelefono(TelefonoForm telefono) {
+        return true;
     }
 
     @PostMapping(path="/tomador")
     public String signupTomador(@Valid @ModelAttribute("tomadorForm") TomadorForm tomadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
-        Telefono telefono=validarTelefono(tomadorForm.getCodPais(),tomadorForm.getCodArea(),tomadorForm.getTelefono());
+        validarTelefono(tomadorForm.getTelefono());
         try{
             if(!result.hasErrors()){
-                usuarioService.registrarTomador(tomadorForm,telefono);
+                usuarioService.registrarTomador(tomadorForm);
             }else{
                 return "signup-tomador";
             }
