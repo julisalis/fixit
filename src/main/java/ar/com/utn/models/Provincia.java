@@ -11,6 +11,9 @@ import javax.persistence.Table;
 public class Provincia extends PersistentEntity {
     private String nombre;
 
+    public Provincia(){
+
+    }
     public Provincia(String nombre) {
         this.nombre = nombre;
     }

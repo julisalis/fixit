@@ -1,6 +1,7 @@
 package ar.com.utn.services.implementation;
 
 import ar.com.utn.form.PrestadorForm;
+import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.LocalidadRepository;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by julis on 26/5/2017.
@@ -65,6 +67,14 @@ public class UsuarioServiceImpl implements UsuarioService, UserDetailsService {
     @Override
     public List<Provincia> getProvincias() {
         return provinciaRepository.findAllProvincias();
+    }
+
+    @Override
+    public List<SelectorForm> findAllLocalidadByProvince(Long provinceId) {
+        Provincia provincia = provinciaRepository.findOne(provinceId);
+        return localidadRepository.findAllByProvinciaOrderByNombre(provincia).stream()
+                .map(localidad -> new SelectorForm(localidad.getId(),localidad.getNombre()))
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -3,6 +3,11 @@ $(function () {
         var $nav = $(".navbar-fixed-top");
         $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
     });
+
+    $("#localidad").load('/signup/ajax/localidad', $("#provincia").serialize());
+    $('#provincia').on('change', function() {
+        $("#localidad").load('/signup/ajax/localidad', $("#provincia").serialize());
+    });
 });
 
 function isNumber(evt) {

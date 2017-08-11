@@ -1,5 +1,4 @@
 INSERT INTO provincia (nombre) VALUES('Buenos Aires'),('Buenos Aires-GBA'),('Capital Federal'),('Catamarca'),('Chaco'),('Chubut'),('Córdoba'),('Corrientes'),('Entre Rios'),('Formosa'),('Jujuy'),('La Pampa'),('La Rioja'),('Mendoza'),('Misiones'),('Neuquén'),('Rio Negro'),('Salta'),('San Juan'),('San Luis'),('Santa Cruz'),('Santa Fe'),('Santiago del Estero'),('Tierra del Fuego'),('Tucuman');
-
 INSERT INTO localidad (id_provincia, nombre) VALUES (1, '25 de Mayo');
 INSERT INTO localidad (id_provincia, nombre) VALUES (1, '3 de febrero');
 INSERT INTO localidad (id_provincia, nombre) VALUES (1, 'A. Alsina');
@@ -2381,4 +2380,3 @@ INSERT INTO localidad (id_provincia, nombre) VALUES ( 25, 'Villa de Leales');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 25, 'Villa Quinteros');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 25, 'Yánima');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 25, 'Yerba Buena');
-INSERT INTO localidad (id_provincia, nombre) VALUES ( 25, 'Yerba Buena (S)');

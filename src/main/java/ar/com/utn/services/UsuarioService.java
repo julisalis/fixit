@@ -1,6 +1,7 @@
 package ar.com.utn.services;
 
 import ar.com.utn.form.PrestadorForm;
+import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.Prestador;
 import ar.com.utn.models.Provincia;
@@ -20,4 +21,6 @@ public interface UsuarioService {
     Usuario registrarTomador(TomadorForm tomadorForm);
 
     List<Provincia> getProvincias();
+
+    List<SelectorForm> findAllLocalidadByProvince(Long provinceId);
 }

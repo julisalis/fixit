@@ -16,6 +16,9 @@ public class Localidad extends PersistentEntity{
     private Provincia provincia;
     private String nombre;
 
+    public Localidad(){
+
+    }
     public Localidad(Provincia idProvincia, String nombre) {
         this.provincia = idProvincia;
         this.nombre = nombre;

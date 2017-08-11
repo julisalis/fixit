@@ -54,6 +54,12 @@ public class SignupController {
        return usuarioService.getProvincias().stream().map(provincia -> new SelectorForm(provincia.getId(),provincia.getNombre())).collect(Collectors.toList());
     }
 
+    @RequestMapping("/ajax/localidad")
+    public String ajaxBrands(@RequestParam("provincia") String provinceId, Model model) {
+        List<SelectorForm> models = usuarioService.findAllLocalidadByProvince(Long.parseLong(provinceId));
+        model.addAttribute("localidades", models);
+        return "signup-tomador :: localidad-fragment ";
+    }
 
     @PostMapping(path="/prestador")
     public String signupPrestador(@Valid @ModelAttribute("prestadorForm") PrestadorForm prestadorForm, BindingResult result, Model model){

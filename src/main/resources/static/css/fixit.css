@@ -295,7 +295,11 @@ div.signup, #signin .container{
     font-weight: 600;
     color: #a5a39d;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 20px;
+}
+
+#signup .form-group {
+    margin-bottom: 8px;
 }
 .body-background{
 background-color:#a5a39d;
