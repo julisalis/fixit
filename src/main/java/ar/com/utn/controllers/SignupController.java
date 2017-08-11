@@ -44,7 +44,7 @@ public class SignupController {
 
     @GetMapping(value="/tomador")
     public String signupTomador(WebRequest request,Model model) {
-        model.addAttribute("provincia",generarProvicias());
+        model.addAttribute("provincias",generarProvicias());
         model.addAttribute("tomadorForm",new TomadorForm());
         model.addAttribute("telefono",new TelefonoForm());
         return "signup-tomador";

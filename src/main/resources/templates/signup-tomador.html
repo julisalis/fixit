@@ -80,13 +80,23 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="tipodoc">Tipo documento</label>
+                        <label class="col-md-4 control-label" for="province">Provincia</label>
                         <div class="col-md-3">
-                            <select  th:field="*{tipoDoc}" id="tipodoc" class="form-control">
-                                <option value="DNI">DNI</option>
+                            <select th:field="*{provincia}" id="province" class="form-control">
+                                <option th:each="province : ${provincias}"  th:value="${province.id}" th:text="${province.label}"></option>
                             </select>
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="localidad">Localidad</label>
+                        <div class="col-md-3">
+                            <select th:field="*{localidad}" id="localidad" class="form-control">
+                                <option></option>
+                            </select>
+                        </div>
+                    </div>
+
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="username">Nombre de Usuario</label>
