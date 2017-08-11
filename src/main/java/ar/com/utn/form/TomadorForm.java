@@ -31,9 +31,9 @@ public class TomadorForm {
     @NotBlank
     private String documento;
     private TelefonoForm telefono;
-    @NotBlank
+    @NotNull
     private Long provincia;
-    @NotBlank
+    @NotNull
     private Long localidad;
 
 

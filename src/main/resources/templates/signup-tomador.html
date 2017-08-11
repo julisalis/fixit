@@ -53,7 +53,7 @@
                         <label class="col-md-4 control-label" for="tipodoc">Tipo documento</label>
                         <div class="col-md-3">
                             <select  th:field="*{tipoDoc}" id="tipodoc" class="form-control">
-                                <option value="DNI">DNI</option>
+                                <option th:each="doc : ${documentos}" th:value="${doc}" th:text="${doc}" ></option>
                             </select>
                         </div>
                     </div>

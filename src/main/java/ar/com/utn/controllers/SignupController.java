@@ -6,6 +6,7 @@ import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.Prestador;
 import ar.com.utn.models.Telefono;
+import ar.com.utn.models.TipoDoc;
 import ar.com.utn.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +48,7 @@ public class SignupController {
         model.addAttribute("provincias",generarProvicias());
         model.addAttribute("tomadorForm",new TomadorForm());
         model.addAttribute("telefono",new TelefonoForm());
+        model.addAttribute("documentos", TipoDoc.values());
         return "signup-tomador";
     }
 
