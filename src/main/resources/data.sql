@@ -2059,7 +2059,7 @@ INSERT INTO localidad (id_provincia, nombre) VALUES ( 22, 'Miguel Torres');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 22, 'Moisés Ville');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 22, 'Monigotes');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 22, 'Monje');
-INSERT INTO localidad (id_provincia, nombre) VALUES (| 22, 'Monte Obscuridad');
+INSERT INTO localidad (id_provincia, nombre) VALUES ( 22, 'Monte Obscuridad');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 22, 'Monte Vera');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 22, 'Montefiore');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 22, 'Montes de Oca');
