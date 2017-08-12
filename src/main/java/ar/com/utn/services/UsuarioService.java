@@ -23,4 +23,8 @@ public interface UsuarioService {
     List<Provincia> getProvincias();
 
     List<SelectorForm> findAllLocalidadByProvince(Long provinceId);
+
+    boolean usernameUnique(String username);
+
+    boolean emailUnique(String email);
 }

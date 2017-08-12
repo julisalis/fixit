@@ -13,6 +13,9 @@ public class Tomador extends PersistentEntity {
     @OneToMany(mappedBy = "tomador")
     private List<Publicacion> publicaciones;
 
+    public Tomador() {
+    }
+
     public List<Publicacion> getPublicaciones() {
         return publicaciones;
     }

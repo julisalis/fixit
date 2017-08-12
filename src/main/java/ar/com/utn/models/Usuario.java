@@ -54,7 +54,7 @@ public class Usuario extends PersistentEntity {
 
     }
 
-    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Long cuit, Prestador prestador, Ubicacion ubicacion) {
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Long cuit, Prestador prestador, Ubicacion ubicacion,String emails) {
         super();
         this.username = username;
         this.nombre = nombre;
@@ -66,10 +66,11 @@ public class Usuario extends PersistentEntity {
         this.prestador = prestador;
         this.fechaCreacion = new Date();
         this.ubicacion=ubicacion;
+        this.email = email;
         //falta el rol
     }
 
-    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion) {
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion,String email,Tomador tomador) {
         super();
         this.username = username;
         this.nombre = nombre;
@@ -78,9 +79,10 @@ public class Usuario extends PersistentEntity {
         this.tipoDoc = tipoDoc;
         this.password= password;
         this.telefono = telefono;
-        this.tomador = new Tomador();
+        this.tomador = tomador;
         this.fechaCreacion = new Date();
         this.ubicacion=ubicacion;
+        this.email = email;
         //falta el rol
     }
 

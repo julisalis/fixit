@@ -8,6 +8,7 @@ $(function () {
     $('#provincia').on('change', function() {
         $("#localidad").load('/signup/ajax/localidad', $("#provincia").serialize());
     });
+
 });
 
 function isNumber(evt) {
@@ -18,3 +19,4 @@ function isNumber(evt) {
     }
     return true;
 }
+

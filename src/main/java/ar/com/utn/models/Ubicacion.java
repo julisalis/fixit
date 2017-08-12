@@ -16,11 +16,15 @@ public class Ubicacion extends PersistentEntity{
     @ManyToOne
     @JoinColumn(name="id_provincia",nullable = false)
     private Provincia provincia;
+
     @ManyToOne
     @JoinColumn(name="id_localidad",nullable = false)
     private Localidad localidad;
 
-    public Ubicacion(Provincia provincia, Localidad localidad) {
+    public Ubicacion() {
+    }
+
+    public Ubicacion(Provincia provincia, Localidad localidad){
         this.provincia = provincia;
         this.localidad = localidad;
     }

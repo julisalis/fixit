@@ -28,14 +28,14 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="nombre">Nombre</label>
                         <div class="col-md-6">
-                            <input type="text" th:field="*{nombre}" id="nombre" class="form-control input-md" required=""/>
+                            <input type="text" th:field="*{nombre}" id="nombre" class="form-control input-md" required="required"/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="apellido">Apellido</label>
                         <div class="col-md-6">
-                            <input type="text" th:field="*{apellido}" id="apellido" class="form-control input-md" required=""/>
+                            <input type="text" th:field="*{apellido}" id="apellido" class="form-control input-md" required="required"/>
                         </div>
                     </div>
 
@@ -43,8 +43,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="email">Email</label>
                         <div class="col-md-6">
-                            <input type="text" th:field="*{email}" id="email" class="form-control input-md" required=""
-                                   data-validation-url="./user/emailUnique"/>
+                            <input type="text" th:field="*{email}" id="email" class="form-control input-md" required="required"/>
                         </div>
                     </div>
 
@@ -70,6 +69,7 @@
                         <label class="col-md-4 control-label" for="telefono">Celular</label>
                         <div class="col-md-3">
                             <div class="input-group">
+                                <input type="hidden" value="+54" th:field="*{telefono.codPais}" />
                                 <span id="codPais" name="codPais" class="input-group-addon" type="text" value="+54">+54</span>
                                 <input  placeholder="011" id="codArea" maxlength="4" th:field="*{telefono.codArea}" class="form-control" type="text" required="required" onkeypress="return isNumber(event)"/>
                             </div>
@@ -101,7 +101,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="username">Nombre de Usuario</label>
                         <div class="col-md-6">
-                            <input id="username" type="text" th:field="*{username}" class="form-control" required="required" data-validation-url="./user/usernameUnique"/>
+                            <input id="username" type="text" th:field="*{username}" class="form-control" required="required"/>
                         </div>
                     </div>
 

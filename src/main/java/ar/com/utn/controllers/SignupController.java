@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
@@ -66,19 +67,21 @@ public class SignupController {
     @PostMapping(path="/prestador")
     public String signupPrestador(@Valid @ModelAttribute("prestadorForm") PrestadorForm prestadorForm, BindingResult result, Model model){
         validarTelefono(prestadorForm.getTelefono());
+
         try{
             if(!result.hasErrors()){
                 //validar cuit si completo ese campo PORQUE ES DOUBLE?
                 boolean validationResult=false;
                 Prestador prestador = new Prestador(prestadorForm.getCuit(),validationResult);
                 usuarioService.registrarPrestador(prestadorForm,prestador);
+                return "/";
             }else{
                 return "signup-prestador";
             }
         }catch (Exception e) {
-
+            return "signup-prestador";
         }
-        return "signup-prestador";
+
     }
 
     private boolean validarTelefono(TelefonoForm telefono) {
@@ -88,16 +91,24 @@ public class SignupController {
     @PostMapping(path="/tomador")
     public String signupTomador(@Valid @ModelAttribute("tomadorForm") TomadorForm tomadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
         validarTelefono(tomadorForm.getTelefono());
+        boolean userUnique = usuarioService.usernameUnique(tomadorForm.getUsername());
+        boolean mailUnique = usuarioService.emailUnique(tomadorForm.getEmail());
+        if(!userUnique){
+            result.addError(new ObjectError("username","El nombre de usuario ingresado ya existe"));
+        }
+        if (!mailUnique){
+            result.addError(new ObjectError("email","El email ingresado ya existe"));
+        }
         try{
             if(!result.hasErrors()){
                 usuarioService.registrarTomador(tomadorForm);
+                return "index";
             }else{
                 return "signup-tomador";
             }
         }catch (Exception e) {
-
+            return "signup-tomador";
         }
-        return "signup-tomador";
     }
 
 
