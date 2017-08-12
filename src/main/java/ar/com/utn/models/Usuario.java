@@ -50,6 +50,12 @@ public class Usuario extends PersistentEntity {
     @Enumerated(EnumType.STRING)
     private Rol rol = Rol.USER;
 
+    @Column(columnDefinition="boolean default false", nullable = false)
+    private  boolean activado= false;
+
+    @Column(name="activation_token")
+    private String activationToken;
+
     public Usuario(){
 
     }
@@ -170,5 +176,21 @@ public class Usuario extends PersistentEntity {
 
     public void setRol(Rol rol) {
         this.rol = rol;
+    }
+
+    public String getActivationToken() {
+        return activationToken;
+    }
+
+    public void setActivationToken(String activationToken) {
+        this.activationToken = activationToken;
+    }
+
+    public boolean isActivado() {
+        return activado;
+    }
+
+    public void setActivado(boolean activado) {
+        this.activado = activado;
     }
 }

@@ -61,7 +61,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="documento">Número de documento</label>
                         <div class="col-md-6">
-                            <input type="text" th:field="*{documento}" id="documento" class="form-control input-md" required="required"/>
+                            <input type="text" th:field="*{documento}" maxlength="11" id="documento" class="form-control input-md" required="required"/>
                         </div>
                     </div>
                     <!-- Prepended text-->
@@ -75,14 +75,14 @@
                             </div>
                         </div>
                         <div class="col-md-3" style="padding-left: 0px;" >
-                            <input placeholder="4444-4444" id="telefono" th:field="*{telefono.telefono}" maxlength="9" class="form-control" type="text" required="required" onkeypress="return isNumber(event)"/>
+                            <input placeholder="36329860" id="telefono" th:field="*{telefono.telefono}" maxlength="8" class="form-control" type="text" required="required" onkeypress="return isNumber(event)"/>
                         </div>
                     </div>
 
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="provincia">Provincia</label>
                         <div class="col-md-6">
-                            <select required="required" th:field="*{provincia}" class="form-control">
+                            <select required="required" th:field="*{provincia}" class="form-control" id="provincia">
                                 <option th:each="prov : ${provincias}"  th:value="${prov.value}" th:text="${prov.label}"></option>
                             </select>
                         </div>
@@ -91,7 +91,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="localidad">Localidad</label>
                         <div class="col-md-6">
-                            <select required="required" th:field="*{localidad}" class="form-control">
+                            <select required="required" th:field="*{localidad}" class="form-control" id="localidad">
                                 <option th:fragment="localidad-fragment" th:each="loca : ${localidades}"  th:value="${loca.value}" th:text="${loca.label}"></option>
                             </select>
                         </div>

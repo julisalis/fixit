@@ -27,4 +27,6 @@ public interface UsuarioService {
     boolean usernameUnique(String username);
 
     boolean emailUnique(String email);
+
+    void activateUser(String token);
 }

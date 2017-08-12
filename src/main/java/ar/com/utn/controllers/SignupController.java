@@ -7,6 +7,7 @@ import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.Prestador;
 import ar.com.utn.models.Telefono;
 import ar.com.utn.models.TipoDoc;
+import ar.com.utn.models.Usuario;
 import ar.com.utn.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -104,11 +105,22 @@ public class SignupController {
                 usuarioService.registrarTomador(tomadorForm);
                 return "index";
             }else{
+                model.addAttribute("provincias",generarProvicias());
+                model.addAttribute("documentos", TipoDoc.values());
                 return "signup-tomador";
             }
         }catch (Exception e) {
             return "signup-tomador";
         }
+    }
+
+    @GetMapping(value="/activate/{token}")
+    public String activateAccount(@PathVariable("token") String token){
+        try{
+            usuarioService.activateUser(token);
+        }catch (Exception e) {
+        }
+        return "redirect:/";
     }
 
 

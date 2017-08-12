@@ -5,7 +5,9 @@ import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.*;
+import ar.com.utn.services.MailService;
 import ar.com.utn.services.UsuarioService;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -47,6 +49,9 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
     @Autowired
     private BCryptPasswordEncoder encoder;
 
+    @Autowired
+    private MailService mailService;
+
     @Override
     public Usuario findByUsername(String username) {
         return usuarioRepository.findByUsernameIgnoreCase(username);
@@ -77,7 +82,10 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         Tomador tomador = tomadorRepository.save(new Tomador());
         Usuario usuario = new Usuario(tomadorForm.getUsername(),tomadorForm.getNombre(),tomadorForm.getApellido(),tomadorForm.getDocumento(),
                 tomadorForm.getTipoDoc(),encoder.encode(tomadorForm.getPassword()),telefono,ubicacion,tomadorForm.getEmail(),tomador);
-        usuarioRepository.save(usuario);
+        Usuario usuarioGenerado = usuarioRepository.save(usuario);
+
+        String token = RandomStringUtils.random(50, 64, 168, true, true);
+        usuarioGenerado.setActivationToken(token);
         return usuario;
     }
 
@@ -122,5 +130,10 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
             return userlogged.equals(user);
         }
         return user == null;
+    }
+
+    @Override
+    public void activateUser(String token) {
+
     }
 }
