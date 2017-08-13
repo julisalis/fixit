@@ -15,7 +15,7 @@ public class Publicacion extends PersistentEntity{
     private String descripcion;
     private Double presupMax;
 
-    @Enumerated(EnumType.STRING)
+    @OneToOne
     private TipoTrabajo tipo;
 
     @OneToMany(mappedBy = "publicacion")
