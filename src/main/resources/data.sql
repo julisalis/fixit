@@ -2380,3 +2380,16 @@ INSERT INTO localidad (id_provincia, nombre) VALUES ( 25, 'Villa de Leales');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 25, 'Villa Quinteros');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 25, 'Yánima');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 25, 'Yerba Buena');
+
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Plomería','plomeria','plomeria.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Pintura','pintura','pintura.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Electricidad','electricidad','electricidad.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Gas','gas','gas.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Electrodomésticos','electrodomesticos','electrodomesticos.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Climatización','climatizacion','climatizacion.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Artefactos de baño','baño','baño.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Pisos','pisos','pisos.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Carpintería','carpinteria','carpinteria.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Alfombras, cortinas y tapizados','alfobras','alfombras.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Servicio técnico de computación','computacion','computacion.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Trabajos varios','varios','varios.png');

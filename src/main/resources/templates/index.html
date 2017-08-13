@@ -7,12 +7,13 @@
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
 
 </head>
-<body>
+<body class = "body-index">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
     <div class="jumbotron text-center">
         <div class="container">
-            <h1>Conseguí la ayuda que necesitas</h1>
+            <h1 class="titulo-prin">La solución que necesitas al alcance de un click</h1>
+            <h2 class="subtitulo">Garantizando seguridad y agilidad</h2>
         </div>
     </div>
 
@@ -35,6 +36,24 @@
                 <!--</div>-->
             </div>
 
+        </div>
+    </div>
+    <!-- Job Options -->
+    <div class="container">
+        <div class="section category-items job-category-items  text-center">
+            <h3 class="subtitulo-jobs">¿QUÉ ESTAS BUSCANDO?</h3>
+            <ul class="category-list" th:each="item: ${tipotrabajos}">
+                <li class="category-item">
+                    <a th:href="'/publicaciones/'+${item.slug}">
+                        <div class="category-icon">
+                            <img th:src="'images/'+${item.imagen}" alt="images" class="img-responsive"/>
+                        </div>
+                        <span class="category-title" th:text="${item.nombre}">
+                        </span>
+                        <span class="category-quantity">(1298)</span>
+                    </a>
+                </li><!-- category-item -->
+            </ul>
         </div>
     </div>
 </body>
