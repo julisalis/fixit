@@ -89,7 +89,7 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         Usuario usuarioGenerado = usuarioRepository.save(usuario);
 
         String token = RandomStringUtils.random(50, 64, 168, true, true);
-        String link = urlBuilder.makeOfflineAbsolutePathLink(token);
+        String link = urlBuilder.makeOfflineAbsolutePathLink("/signup/activate/"+token);
         usuarioGenerado.setActivationToken(token);
         mailService.sendRegistrationMailTomador(tomadorForm,link);
         return usuario;

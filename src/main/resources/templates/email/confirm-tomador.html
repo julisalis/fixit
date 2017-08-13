@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -18,13 +19,9 @@
         <table cellspacing="0" class="outer" align="center" style="background-color: #d0d0d0; border-spacing: 0; font-family: sans-serif; color: #000; margin: 40px auto 0px; width: 100%; max-width: 600px; border-collapse: collapse; text-align: center; font-family: Helvetica, Arial, sans-serif">
             <tr>
                 <td>
-                    <img th:src="${urlImages}+'/logo.png'">
-                    <h1 style="font-size: 70px; line-height: 70px; color: #0b2266; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 600; margin-top: 45px;">
-                        Bienvenido</br>
-                        <span style="color: #69a2ce" th:text="${name}">Nombre</span>
-                    </h1>
-                    <p style="font-size: 32px; color: #636363; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400; margin-top: 45px;">
-                        Gracias por registrarte en Fixit.
+                    <img th:src="${urlImages}+'/logo.png'"/>
+                    <h1 style="font-size: 70px; line-height: 70px; color: #0b2266; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 600; margin-top: 45px;">Bienvenido</br><span style="color: #69a2ce" th:text="${name}">Nombre</span></h1>
+                    <p style="font-size: 32px; color: #636363; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400; margin-top: 45px;">Gracias por registrarte en Fixit.
                     </p>
                 </td>
             </tr>
