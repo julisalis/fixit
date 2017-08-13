@@ -108,13 +108,6 @@
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
 
-		<!-- DISEÑO DE MAILS -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-freemarker</artifactId>
-		</dependency>
-
-
 		<!-- https://mvnrepository.com/artifact/com.itextpdf/itextpdf -->
 		<dependency>
 			<groupId>com.itextpdf</groupId>

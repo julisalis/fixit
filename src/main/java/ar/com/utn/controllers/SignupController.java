@@ -110,6 +110,8 @@ public class SignupController {
                 return "signup-tomador";
             }
         }catch (Exception e) {
+            model.addAttribute("provincias",generarProvicias());
+            model.addAttribute("documentos", TipoDoc.values());
             return "signup-tomador";
         }
     }

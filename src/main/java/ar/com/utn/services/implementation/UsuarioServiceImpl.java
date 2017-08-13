@@ -7,6 +7,7 @@ import ar.com.utn.models.*;
 import ar.com.utn.repositories.*;
 import ar.com.utn.services.MailService;
 import ar.com.utn.services.UsuarioService;
+import ar.com.utn.utils.URLBuilder;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -52,6 +53,9 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
     @Autowired
     private MailService mailService;
 
+    @Autowired
+    private URLBuilder urlBuilder;
+
     @Override
     public Usuario findByUsername(String username) {
         return usuarioRepository.findByUsernameIgnoreCase(username);
@@ -85,7 +89,9 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         Usuario usuarioGenerado = usuarioRepository.save(usuario);
 
         String token = RandomStringUtils.random(50, 64, 168, true, true);
+        String link = urlBuilder.makeOfflineAbsolutePathLink(token);
         usuarioGenerado.setActivationToken(token);
+        mailService.sendRegistrationMailTomador(tomadorForm,link);
         return usuario;
     }
 

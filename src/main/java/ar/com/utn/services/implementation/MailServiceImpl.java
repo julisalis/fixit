@@ -2,14 +2,17 @@ package ar.com.utn.services.implementation;
 
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.services.MailService;
-import ar.com.utn.utils.Mailer;
-import ar.com.utn.utils.MailsModelMapper;
+import ar.com.utn.utils.EmailApi;
 import ar.com.utn.utils.URLBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.context.Context;
 
-import java.util.Map;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import static org.apache.axis.i18n.MessagesConstants.locale;
@@ -21,27 +24,44 @@ import static org.apache.axis.i18n.MessagesConstants.locale;
 public class MailServiceImpl implements MailService {
 
     @Autowired
-    private Mailer mailer;
+    private EmailApi emailApi;
+
     @Autowired
-    private URLBuilder urlBuilder;
-//    @Autowired
-//    private MailsModelMapper mailsModelMapper;
+    private TemplateEngine templateEngine;
+
     @Autowired
     private Environment environment;
 
+    public String getDate(){
+        Calendar calendar = Calendar.getInstance();
+        String year = Integer.toString(calendar.get(Calendar.YEAR));
+        String month = Integer.toString(calendar.get(Calendar.MONTH)+1);
+        String day = Integer.toString(calendar.get(Calendar.DAY_OF_MONTH));
+        return day+"/"+month+"/"+year;
+    }
+
     @Override
+    @Transactional(readOnly=true)
     public void sendRegistrationMailTomador(TomadorForm user, String link) {
-//        Map<String, Object> model = mailsModelMapper.genericModelSetter();
-//        model.put("user", user);
-//        model.put("domain", link);
-//        sendMailWithHeaderAndFooter(user.getEmail(), "register-mail.html", model, "Bienvenido a FixIT","Hola como estas","register");
 
+        final Context ctx = new Context(new Locale("es","AR"));
+        ctx.setVariable("name", user.getUsername());
+        ctx.setVariable("linkConfirm", link);
+
+        String dest=user.getEmail();
+        if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
+            dest =(environment.getProperty("mail.info"));
+        }
+
+        sendBasicMail("Bienvenido a FixIT", dest, "email/confirm-tomador",ctx);
     }
 
-    public void sendMailWithHeaderAndFooter(String to, String templateFile, Map<String, Object> model, String title,String footer,String property){
-        model.put("title",title);
-        model.put("header_img_file", environment.getProperty("mail."+property+".header-img-file"));
-        model.put("footer_msg",footer);
-        mailer.sendMail(to,title,templateFile,model);
+    public void sendBasicMail(String subject,String dest,String html,Context ctx) {
+        ctx.setVariable("appDomain", environment.getProperty("application.url"));
+        ctx.setVariable("urlImages", environment.getProperty("application.url"));
+        final String htmlContent = this.templateEngine.process(html, ctx);
+        String from = environment.getProperty("mail.from");
+        emailApi.sendMessage(subject, dest, from, htmlContent);
     }
+
 }

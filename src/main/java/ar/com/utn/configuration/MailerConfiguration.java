@@ -1,4 +1,4 @@
-package ar.com.utn.utils;
+package ar.com.utn.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -9,10 +9,10 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import java.util.Properties;
 
 /**
- * Created by mjarabroviski on 12/08/2017.
+ * Created by julian on 13/08/17.
  */
 @Configuration
-public class MailerConfig {
+public class MailerConfiguration {
 
     @Value("${mail.smtp.port}")
     private Integer port;
