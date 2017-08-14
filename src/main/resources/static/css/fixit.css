@@ -430,7 +430,7 @@ background-color:#a5a39d;
 .ifix-carousel-controls .carousel-control {
     color: #333;
     text-shadow: none;
-    top: 5%;
+    top: 35%;
     width: 5%;
 }
 
@@ -449,5 +449,68 @@ background-color:#a5a39d;
     -webkit-font-smoothing: antialiased;
 }
 
+.carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    z-index: 15;
+    width: 60%;
+    margin-left: -30%;
+    padding-left: 0;
+    list-style: none;
+    text-align: center;
+    margin-bottom: 0;
+    bottom: -40px;
+}
 
+.ol {
+    display: block;
+    list-style-type: decimal;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+
+ .carousel-indicators li.active {
+     background: #ccc;
+     margin: 0 5px;
+     width: 15px;
+     height: 15px;
+ }
+
+.carousel-indicators li {
+    display: inline-block;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #ffffff;
+    border-color: #ccc;
+    margin: 0 5px;
+    width: 15px;
+    height: 15px;
+}
+
+.fa-angle-down:before {
+    content: "\f107";
+}
+.scroll-down-link {
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+    animation: fade_move_down 2s ease-in-out infinite;
+}
+
+.scroll-icon {
+    color: white;
+    font-size: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+}
+
+.center-block {
+    display: block;
+}
 
