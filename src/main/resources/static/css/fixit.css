@@ -434,6 +434,10 @@ background-color:#a5a39d;
     width: 5%;
 }
 
+.fa-angle-left:before {
+    content: "\f104";
+}
+
 .fa-3x {
     font-size: 3em;
 }
@@ -445,7 +449,5 @@ background-color:#a5a39d;
     -webkit-font-smoothing: antialiased;
 }
 
-.fa-angle-left:before {
-    content: "\f104";
-}
+
 
