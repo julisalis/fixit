@@ -302,6 +302,40 @@ div.signup, #signin .container{
     margin-bottom: 20px;
 }
 
+.has-error p{
+    color: darkred;
+    text-transform: capitalize;
+}
+
+#modalSuccess .modal-body img{
+    max-width: 100px;
+    display: block;
+    margin: 0 auto;
+}
+
+#modalSuccess .modal-body{
+    text-align: center;
+}
+
+#modalSuccess .modal-body a.btn-close{
+    background: #4a97e7;
+    color: #fff;
+    font-weight: 800;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    padding: 10px 12px;
+    width: 100%;
+    margin-top: 30px;
+
+}
+
+#modalSuccess .modal-body a.btn-close:hover{
+    background-color: #295382;
+    box-shadow: none;
+    outline: 0;
+}
+
 #signup .form-group {
     margin-bottom: 8px;
 }

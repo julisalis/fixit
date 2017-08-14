@@ -115,7 +115,7 @@ public class SignupController {
         }
     }
 
-    @PostMapping(path="/tomador-json")
+    @RequestMapping(path="/tomador-json")
     public  @ResponseBody Map<String,Object> signupTomadorJson(@Valid @ModelAttribute("tomadorForm") TomadorForm tomadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
         HashMap<String,Object> map = new HashMap<>();
         try{
