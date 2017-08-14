@@ -71,7 +71,6 @@ public class SignupController {
 
         try{
             if(!result.hasErrors()){
-                //validar cuit si completo ese campo PORQUE ES DOUBLE?
                 boolean validationResult=false;
                 Prestador prestador = new Prestador(prestadorForm.getCuit(),validationResult);
                 usuarioService.registrarPrestador(prestadorForm,prestador);
@@ -91,16 +90,16 @@ public class SignupController {
 
     @PostMapping(path="/tomador")
     public String signupTomador(@Valid @ModelAttribute("tomadorForm") TomadorForm tomadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
-        validarTelefono(tomadorForm.getTelefono());
-        boolean userUnique = usuarioService.usernameUnique(tomadorForm.getUsername());
-        boolean mailUnique = usuarioService.emailUnique(tomadorForm.getEmail());
-        if(!userUnique){
-            result.addError(new ObjectError("username","El nombre de usuario ingresado ya existe"));
-        }
-        if (!mailUnique){
-            result.addError(new ObjectError("email","El email ingresado ya existe"));
-        }
         try{
+            validarTelefono(tomadorForm.getTelefono());
+            boolean userUnique = usuarioService.usernameUnique(tomadorForm.getUsername());
+            boolean mailUnique = usuarioService.emailUnique(tomadorForm.getEmail());
+            if(!userUnique){
+                result.addError(new ObjectError("username","El nombre de usuario ingresado ya existe"));
+            }
+            if (!mailUnique){
+                result.addError(new ObjectError("email","El email ingresado ya existe"));
+            }
             if(!result.hasErrors()){
                 usuarioService.registrarTomador(tomadorForm);
                 return "index";
@@ -115,6 +114,37 @@ public class SignupController {
             return "signup-tomador";
         }
     }
+
+    @PostMapping(path="/tomador-json")
+    public  @ResponseBody Map<String,Object> signupTomadorJson(@Valid @ModelAttribute("tomadorForm") TomadorForm tomadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
+        HashMap<String,Object> map = new HashMap<>();
+        try{
+            validarTelefono(tomadorForm.getTelefono());
+            boolean userUnique = usuarioService.usernameUnique(tomadorForm.getUsername());
+            boolean mailUnique = usuarioService.emailUnique(tomadorForm.getEmail());
+            if(!userUnique){
+                result.addError(new ObjectError("username","El nombre de usuario ingresado ya existe"));
+            }
+            if (!mailUnique){
+                result.addError(new ObjectError("email","El email ingresado ya existe"));
+            }
+
+            if(!result.hasErrors()){
+                usuarioService.registrarTomador(tomadorForm);
+                map.put("success", true);
+                map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
+            }else{
+                map.put("success", false);
+                map.put("errors", result.getAllErrors());
+            }
+        }catch (Exception e) {
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
+        }
+
+        return map;
+    }
+
 
     @GetMapping(value="/activate/{token}")
     public String activateAccount(@PathVariable("token") String token){

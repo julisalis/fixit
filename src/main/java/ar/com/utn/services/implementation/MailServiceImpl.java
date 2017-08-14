@@ -32,6 +32,9 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private Environment environment;
 
+    @Autowired
+    private URLBuilder urlBuilder;
+
     public String getDate(){
         Calendar calendar = Calendar.getInstance();
         String year = Integer.toString(calendar.get(Calendar.YEAR));
@@ -47,6 +50,7 @@ public class MailServiceImpl implements MailService {
         final Context ctx = new Context(new Locale("es","AR"));
         ctx.setVariable("name", user.getUsername());
         ctx.setVariable("linkConfirm", link);
+        ctx.setVariable("title", "Bienvenido a FixIT");
 
         String dest=user.getEmail();
         if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
@@ -57,8 +61,11 @@ public class MailServiceImpl implements MailService {
     }
 
     public void sendBasicMail(String subject,String dest,String html,Context ctx) {
-        ctx.setVariable("appDomain", environment.getProperty("application.url"));
-        ctx.setVariable("urlImages", environment.getProperty("application.url"));
+        ctx.setVariable("principal_url", environment.getProperty("application.url"));
+        ctx.setVariable("facebook_url", environment.getProperty("facebook.url"));
+        ctx.setVariable("instagram_url", environment.getProperty("instagram.url"));
+        ctx.setVariable("images_url", environment.getProperty("application.url"));
+        ctx.setVariable("terms_cond_url", urlBuilder.makeOfflineAbsolutePathLink(environment.getProperty("termscond.url")));
         final String htmlContent = this.templateEngine.process(html, ctx);
         String from = environment.getProperty("mail.from");
         emailApi.sendMessage(subject, dest, from, htmlContent);

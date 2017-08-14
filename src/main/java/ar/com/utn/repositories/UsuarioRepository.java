@@ -18,4 +18,6 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
     public Usuario findByEmail(String email);
 
     public Usuario findByUsernameIgnoreCase(String username);
+
+    Usuario findByActivationToken(String token);
 }
