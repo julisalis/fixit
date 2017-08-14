@@ -393,3 +393,124 @@ background-color:#a5a39d;
 .category-quantity {
     color: #b5b5b5;
 }
+
+.row {
+    display: inline-block;
+    background-color: #ffffff;
+    width: 100%;
+    margin-left: -20px;
+    margin-right: -20px;
+}
+
+.carousel-controls {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 5%;
+    font-size: 20px;
+    color: #ffffff;
+    text-align: center;
+    background-color: #ffffff;
+    opacity: .0;
+}
+
+.carousel-control.left {
+    background-image: linear-gradient(to right,rgba(0,0,0,.0) 0,rgba(0,0,0,.0001) 100%);
+    background-repeat: repeat-x;
+    opacity: .100;
+}
+
+.carousel-control.right {
+    background-image: linear-gradient(to right,rgba(0,0,0,.0) 0,rgba(0,0,0,.0001) 100%);
+    background-repeat: repeat-x;
+    opacity: .100;
+}
+
+.ifix-carousel-controls .carousel-control {
+    color: #333;
+    text-shadow: none;
+    top: 35%;
+    width: 5%;
+}
+
+.fa-angle-left:before {
+    content: "\f104";
+}
+
+.fa-3x {
+    font-size: 3em;
+}
+
+.fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+}
+
+.carousel-indicators {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    z-index: 15;
+    width: 60%;
+    margin-left: -30%;
+    padding-left: 0;
+    list-style: none;
+    text-align: center;
+    margin-bottom: 0;
+    bottom: -40px;
+}
+
+.ol {
+    display: block;
+    list-style-type: decimal;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+
+ .carousel-indicators li.active {
+     background: #ccc;
+     margin: 0 5px;
+     width: 15px;
+     height: 15px;
+ }
+
+.carousel-indicators li {
+    display: inline-block;
+    text-indent: -999px;
+    cursor: pointer;
+    background-color: #ffffff;
+    border-color: #ccc;
+    margin: 0 5px;
+    width: 15px;
+    height: 15px;
+}
+
+.fa-angle-down:before {
+    content: "\f107";
+}
+.scroll-down-link {
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.4);
+    animation: fade_move_down 2s ease-in-out infinite;
+}
+
+.scroll-icon {
+    color: white;
+    font-size: 5rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+}
+
+.center-block {
+    display: block;
+}
+
