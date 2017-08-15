@@ -1,5 +1,7 @@
 package ar.com.utn.services.implementation;
 
+import ar.com.utn.exception.TokenNotFoundException;
+import ar.com.utn.exception.UserNotActiveException;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TomadorForm;
@@ -120,6 +122,9 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         if (usuario == null) {
             throw new UsernameNotFoundException(username);
         }
+        if(!usuario.isActivado()){
+            throw new UserNotActiveException("El usuario se encuentra inactivo");
+        }
         return new UserDetailsImpl(usuario);
     }
 
@@ -153,6 +158,7 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
             logInUser(user.getUsername());
             return;
         }
+        throw new TokenNotFoundException("The token does not exists");
     }
 
     private void logInUser(String username) {
