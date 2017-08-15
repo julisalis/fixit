@@ -317,6 +317,12 @@ background-color:#a5a39d;
     width: 50%;
 }
 
+.btn-primary.btn-block.btn-login .btn.focus, .btn:focus, .btn:hover {
+    background-color: #3ac58f;
+    text-decoration: blink;
+    color: white;
+}
+
 .text-center .container .titulo-prin{
     visibility: visible;
     animation-delay: 0.1s;
@@ -347,7 +353,7 @@ background-color:#a5a39d;
 
 .container .section.category-items.job-category-items.text-center{
     margin-top: 35px;
-    padding: 50px 25px 20px;
+    padding: 50px 25px 35px;
     display: inline-block;
     background-color: #ffffff;
     width: 100%;
@@ -459,7 +465,7 @@ background-color:#a5a39d;
     padding-left: 0;
     list-style: none;
     text-align: center;
-    margin-bottom: 0;
+    margin-bottom: 10px;
     bottom: -40px;
 }
 
@@ -534,8 +540,6 @@ background-color:#a5a39d;
     padding: 9px 10px;
 }
 
-
-
 .list-inline>li {
     display: inline-block;
     padding-left: 5px;
@@ -551,8 +555,8 @@ background-color:#a5a39d;
 
 .ifix-howitworks-image .ifix-howitworks-phone img {
     margin: auto;
-    padding-top: 24%;
-    width: 100%;
+    padding-top: 12%;
+    heigh: 250px;
 }
 
 .img-responsive {
@@ -560,3 +564,28 @@ background-color:#a5a39d;
     max-width: 100%;
     height: auto;
 }
+
+.col-sm-5 h5 {
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: 32px;
+    text-transform: none;
+    min-height: 20px;
+}
+
+.col-sm-5 p{
+    font-size: 18px;
+}
+
+.col-sm-5 p.cierre-prestador{
+    font-size: 20px;
+    text-transform: uppercase;
+    font-weight:bold;
+    color: #3ac58f;
+}
+
+.frame-img-light img {
+    width: 45%;
+}
+
