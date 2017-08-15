@@ -148,7 +148,8 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         }
         return user == null;
     }
-
+    
+    @Transactional
     @Override
     public void activateUser(String token) {
         Usuario user = usuarioRepository.findByActivationToken(token);
