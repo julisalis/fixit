@@ -1,5 +1,7 @@
 package ar.com.utn.services.implementation;
 
+import ar.com.utn.exception.TokenNotFoundException;
+import ar.com.utn.exception.UserNotActiveException;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TomadorForm;
@@ -7,8 +9,11 @@ import ar.com.utn.models.*;
 import ar.com.utn.repositories.*;
 import ar.com.utn.services.MailService;
 import ar.com.utn.services.UsuarioService;
+import ar.com.utn.utils.CurrentSession;
 import ar.com.utn.utils.URLBuilder;
+import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.omg.IOP.ExceptionDetailMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -55,6 +60,9 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
 
     @Autowired
     private URLBuilder urlBuilder;
+
+    @Autowired
+    private CurrentSession currentSession;
 
     @Override
     public Usuario findByUsername(String username) {
@@ -114,6 +122,9 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         if (usuario == null) {
             throw new UsernameNotFoundException(username);
         }
+        if(!usuario.isActivado()){
+            throw new UserNotActiveException("El usuario se encuentra inactivo");
+        }
         return new UserDetailsImpl(usuario);
     }
 
@@ -137,9 +148,23 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         }
         return user == null;
     }
-
+    
+    @Transactional
     @Override
     public void activateUser(String token) {
+        Usuario user = usuarioRepository.findByActivationToken(token);
+        if(user != null){
+            user.setActivado(true);
+            user.setActivationToken(null);
+            logInUser(user.getUsername());
+            return;
+        }
+        throw new TokenNotFoundException("The token does not exists");
+    }
 
+    private void logInUser(String username) {
+        UserDetails userDetails = loadUserByUsername(username);
+        currentSession.logInUser(userDetails);
     }
 }
+

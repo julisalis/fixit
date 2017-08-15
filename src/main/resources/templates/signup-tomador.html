@@ -10,9 +10,9 @@
 
             <h3 class="title">Registrate</h3>
 
-            <form th:action="@{/signup/tomador}" th:object="${tomadorForm}" method="post" role="form" class="form-horizontal">
+            <form th:action="@{/signup/tomador-json}" th:object="${tomadorForm}" method="post" role="form" class="form-horizontal">
 
-                <div th:if="${#fields.hasErrors()}" class="alert alert-danger" role="alert">
+                <div th:if="${#fields.hasErrors()}" class="alert alert-danger error-msg" role="alert">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                     <span>Error:</span>
                     <ul>
@@ -61,7 +61,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="documento">Número de documento</label>
                         <div class="col-md-6">
-                            <input type="text" th:field="*{documento}" maxlength="11" id="documento" class="form-control input-md" required="required"/>
+                            <input type="text" th:field="*{documento}" maxlength="11" id="documento" class="form-control input-md" required="required" onkeypress="return isNumber(event)"/>
                         </div>
                     </div>
                     <!-- Prepended text-->
@@ -117,7 +117,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="submit"></label>
                         <div class="col-md-6">
-                            <button class="submit button button-block btn btn-primary btn-aceptar" type="submit" id="submit">Registrar</button>
+                            <button class="submit button button-block btn btn-primary btn-aceptar" id="submit">Registrar</button>
                         </div>
                     </div>
 
@@ -128,6 +128,24 @@
                 <p>¿Ya tenés una cuenta? <a href="/login" >Iniciar sesión</a></p>
             </div>
 
+        </div>
+
+        <div class="modal fade get-back" id="modalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Confirmar Registro</h5>
+                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+                    </div>
+                    <div class="modal-body">
+                        <img src="/images/check-congrats.svg">
+                        <h3></h3>
+                        <a href="/" data-dismiss="modal" class="btn btn-uppercase btn-close">Aceptar</a>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 
