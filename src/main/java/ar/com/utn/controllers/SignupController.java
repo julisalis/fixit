@@ -8,6 +8,7 @@ import ar.com.utn.models.Prestador;
 import ar.com.utn.models.Telefono;
 import ar.com.utn.models.TipoDoc;
 import ar.com.utn.models.Usuario;
+import ar.com.utn.services.PrestadorService;
 import ar.com.utn.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,11 +38,16 @@ public class SignupController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private PrestadorService prestadorService;
 
 
     @GetMapping(value="/prestador")
     public String signupPrestador(WebRequest request,Model model) {
         model.addAttribute("prestadorForm",new PrestadorForm());
+        model.addAttribute("provincias",generarProvicias());
+        model.addAttribute("telefono",new TelefonoForm());
+        model.addAttribute("documentos", TipoDoc.values());
         return "signup-prestador";
     }
 
@@ -72,8 +78,8 @@ public class SignupController {
         try{
             if(!result.hasErrors()){
                 boolean validationResult=false;
-                Prestador prestador = new Prestador(prestadorForm.getCuit(),validationResult);
-                usuarioService.registrarPrestador(prestadorForm,prestador);
+                //Prestador prestador = new Prestador(prestadorForm.getCuit(),validationResult);
+                usuarioService.registrarPrestador(prestadorForm);
                 return "/";
             }else{
                 return "signup-prestador";
@@ -81,7 +87,41 @@ public class SignupController {
         }catch (Exception e) {
             return "signup-prestador";
         }
+    }
 
+    @RequestMapping(path="/prestador-json")
+    public  @ResponseBody Map<String,Object> signupPrestadorJson(@Valid @ModelAttribute("prestadorForm") PrestadorForm prestadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
+        HashMap<String,Object> map = new HashMap<>();
+        try{
+            validarTelefono(prestadorForm.getTelefono());
+            boolean userUnique = usuarioService.usernameUnique(prestadorForm.getUsername());
+            boolean mailUnique = usuarioService.emailUnique(prestadorForm.getEmail());
+            boolean cuitUnique = prestadorService.cuitUnique(prestadorForm.getCuit());
+            if(!userUnique){
+                result.addError(new ObjectError("username","El nombre de usuario ingresado ya existe"));
+            }
+            if (!mailUnique){
+                result.addError(new ObjectError("email","El email ingresado ya existe"));
+            }
+
+            if (!cuitUnique){
+                result.addError(new ObjectError("cuit","El cuit ingresado ya existe"));
+            }
+
+            if(!result.hasErrors()){
+                usuarioService.registrarPrestador(prestadorForm);
+                map.put("success", true);
+                map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
+            }else{
+                map.put("success", false);
+                map.put("errors", result.getAllErrors());
+            }
+        }catch (Exception e) {
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
+        }
+
+        return map;
     }
 
     private boolean validarTelefono(TelefonoForm telefono) {
