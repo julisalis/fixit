@@ -1,9 +1,7 @@
 package ar.com.utn.models;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by julis on 17/5/2017.
@@ -56,6 +54,11 @@ public class Usuario extends PersistentEntity {
     @Column(name="activation_token")
     private String activationToken;
 
+    @PrePersist
+	protected void onCreate() {
+        this.fechaCreacion = new Date();
+    }
+    
     public Usuario(){
 
     }
@@ -70,7 +73,6 @@ public class Usuario extends PersistentEntity {
         this.password= password;
         this.telefono = telefono;
         this.prestador = prestador;
-        this.fechaCreacion = new Date();
         this.ubicacion=ubicacion;
         this.email = email;
         //falta el rol
@@ -86,7 +88,6 @@ public class Usuario extends PersistentEntity {
         this.password= password;
         this.telefono = telefono;
         this.tomador = tomador;
-        this.fechaCreacion = new Date();
         this.ubicacion=ubicacion;
         this.email = email;
         //falta el rol
@@ -192,5 +193,21 @@ public class Usuario extends PersistentEntity {
 
     public void setActivado(boolean activado) {
         this.activado = activado;
+    }
+
+    public Tomador getTomador() {
+        return tomador;
+    }
+
+    public void setTomador(Tomador tomador) {
+        this.tomador = tomador;
+    }
+
+    public Prestador getPrestador() {
+        return prestador;
+    }
+
+    public void setPrestador(Prestador prestador) {
+        this.prestador = prestador;
     }
 }
