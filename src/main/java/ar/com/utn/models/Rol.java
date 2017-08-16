@@ -6,5 +6,5 @@ package ar.com.utn.models;
  */
 
 public enum Rol{
-    USER,ADMIN;
+    USER,ADMIN,TOMADOR,PRESTADOR;
 }

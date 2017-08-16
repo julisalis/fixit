@@ -67,24 +67,18 @@ body {
     padding-left: 20px;
 }
 
-.navbar-nav>li>a{
+.navbar-nav>li>a,.navbar-right a{
     color: rgba(255,255,255,0.6) !important;
     text-shadow: 1px 1px 10px rgba(255,255,255,0.1);
     transition: all 200ms linear;
 }
-.navbar-text.navbar-right a.login:hover{
+.navbar-text.navbar-right a:hover{
     text-decoration: none!important;
     cursor: pointer;
 }
 
-.navbar-text.navbar-right a.login{
-    color: rgba(255,255,255,0.6) !important;
-    text-shadow: 1px 1px 10px rgba(255,255,255,0.1);
-    transition: all 200ms linear;
-}
 
-
-.navbar-nav>li>a:hover ,  .navbar-text.navbar-right a.login:hover{
+.navbar-nav>li>a:hover ,.navbar-right a:hover{
     color: rgba(255,255,255,1) !important;
 }
 
@@ -92,9 +86,6 @@ body {
     background-color: rgba(2,58,143,1) !important;
     padding: 5px;
     transition: all 200ms linear;
-}
-
-.navbar-fixed-top.scrolled>.container>.navbar-header {
 }
 
 .navbar-fixed-top.scrolled>.container>.navbar-header>a>#logo-nav-white {
@@ -112,12 +103,14 @@ body {
     transition: all 200ms linear;
 }
 
-.navbar-fixed-top.scrolled>.container>#navbar>.navbar-nav>li>a{
+.navbar-fixed-top.scrolled>.container>#navbar>.navbar-nav>li>a,.navbar-fixed-top.scrolled>.container>#navbar>.navbar-text.navbar-right a{
     color: #fff !important;
+    text-decoration: none;
 }
 
-.navbar-fixed-top.scrolled>.container>#navbar>.navbar-nav>li>a:hover {
-    color: rgb(50,111,205) !important;
+.navbar-fixed-top.scrolled>.container>#navbar>.navbar-nav>li>a:hover,
+.navbar-fixed-top.scrolled>.container>#navbar>.navbar-text.navbar-right a:hover {
+    color: #afbdc5 !important;
     transition: all 200ms linear;
 }
 
