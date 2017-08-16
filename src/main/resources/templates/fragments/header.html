@@ -17,7 +17,7 @@
                 <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#index">
+            <a class="navbar-brand searchbychar" href="#section-foto" data-target="section-foto">
                 <img alt="brand" id="logo-nav" src="/images/logo.png" />
                 <img alt="brand" id="logo-nav-white" src="/images/logo-white.png" />
                 <span>FixIT</span>
@@ -25,13 +25,13 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li sec:authorize="!isAuthenticated()"><a href="#section-Categorias">Categorias</a></li>
-                <li sec:authorize="!isAuthenticated()" ><a href="#section-Clientes">Clientes</a></li>
-                <li sec:authorize="!isAuthenticated()" ><a href="#section-Profesionales">Profesionales</a></li>
-                <li sec:authorize="!isAuthenticated()" ><a href="#Destacados">Trabajos Destacados</a></li>
+                <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Categorias" data-target="section-Categorias">Categorias</a></li>
+                <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Clientes" data-target="section-Clientes">Clientes</a></li>
+                <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Profesionales" data-target="section-Profesionales">Profesionales</a></li>
+                <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Destacados" data-target="section-Destacados">Trabajos Destacados</a></li>
                 <!--Tomador AGREGAR HASROLE-->
                 <li sec:authorize="isAuthenticated()"><a href="/publicacion/list">Publicaciones</a></li>
-                <!--Prestado AGREGAR HASROLEr-->
+                <!--Prestador AGREGAR HASROLE-->
                 <li sec:authorize="isAuthenticated()"><a href="#about">Postulaciones</a></li>
                 <li sec:authorize="isAuthenticated()"><a href="#contact">Trabajos</a></li>
             </ul>

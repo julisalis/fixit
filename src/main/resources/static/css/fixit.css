@@ -721,3 +721,8 @@ background-color:#a5a39d;
     margin-right: 3px;
     margin-bottom: 5px;
 }
+
+.register-buttons .btn-secondary-alt {
+    margin-top: 5%;
+    margin-right: 2%;
+}
