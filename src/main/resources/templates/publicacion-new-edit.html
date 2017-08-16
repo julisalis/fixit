@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+    <title>FixIT</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+
+</head>
+<body>
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+<!-- Profesionales -->
+<section id="section-nuevaPublicacion">
+    <div class="container">
+        <div class="section text-center">
+            <h3>Nueva Publicación</h3>
+            <div class="row">
+
+                <form th:action="@{/publicacion/${form_action}}" th:object="${publicacion}" method="post" role="form" class="form-horizontal">
+
+                    <div th:if="${#fields.hasErrors()}" class="alert alert-danger error-msg" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span>Error:</span>
+                        <ul>
+                            <li th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">
+                                <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span>
+                                <span th:text="${e.message}">The error message</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <fieldset>
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="titulo">Título</label>
+                            <div class="col-md-6">
+                                <input type="text" th:field="*{titulo}" id="titulo" class="form-control input-md" required="required"/>
+                            </div>
+                        </div>
+
+
+                        <!-- Select Basic -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="tipoTrabajo">Categoría</label>
+                            <div class="col-md-3">
+                                <select  th:field="*{tipoTrabajo}" id="tipoTrabajo" class="form-control">
+                                    <option th:each="tipo : ${tipoTrabajos}" th:value="${tipo.id}" th:text="${tipo.nombre}" ></option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="provincia">Provincia</label>
+                            <div class="col-md-6">
+                                <select required="required" th:field="*{provincia}" class="form-control" id="provincia">
+                                    <option th:each="prov : ${provincias}"  th:value="${prov.value}" th:text="${prov.label}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="localidad">Localidad</label>
+                            <div class="col-md-6">
+                                <select required="required" th:field="*{localidad}" class="form-control" id="localidad">
+                                    <option th:fragment="localidad-fragment" th:each="loca : ${localidades}"  th:value="${loca.value}" th:text="${loca.label}"></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Button -->
+                        <div class="form-group">
+                            <label class="col-md-4 control-label" for="submit"></label>
+                            <div class="col-md-6">
+                                <button type="submit" class="submit button button-block btn btn-primary btn-aceptar" id="submit">Registrar</button>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>

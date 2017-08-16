@@ -1,6 +1,7 @@
 package ar.com.utn.models;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -8,25 +9,31 @@ import java.util.Set;
  * Created by julis on 13/7/2017.
  */
 @Entity
-@Table(name="publicaciones")
+@Table(name="publicacion")
 public class Publicacion extends PersistentEntity{
 
     private String titulo;
     private String descripcion;
-    private Double presupMax;
-
+    private BigDecimal presupMax;
     @OneToOne
-    private TipoTrabajo tipo;
-
+    private TipoTrabajo tipoTrabajo;
+    @ManyToOne
+    @JoinColumn(name="ubicacion_fk",nullable = false)
+    private Ubicacion ubicacion;
+    @Enumerated
+    private TipoPublicacion tipoPublicacion = TipoPublicacion.REGULAR;
     @OneToMany(mappedBy = "publicacion")
     private Set<Postulacion> postulaciones;
-
     @OneToMany(mappedBy = "publicacion")
     private List<Mensaje> mensajes;
-
     @ManyToOne
     @JoinColumn(name = "tomador", nullable = false)
     private Tomador tomador;
+    @Embedded
+    private PublicacionMultimedia multimedia;
+
+    public Publicacion() {
+    }
 
     public String getTitulo() {
         return titulo;
@@ -44,11 +51,11 @@ public class Publicacion extends PersistentEntity{
         this.descripcion = descripcion;
     }
 
-    public Double getPresupMax() {
+    public BigDecimal getPresupMax() {
         return presupMax;
     }
 
-    public void setPresupMax(Double presupMax) {
+    public void setPresupMax(BigDecimal presupMax) {
         this.presupMax = presupMax;
     }
 
@@ -60,12 +67,12 @@ public class Publicacion extends PersistentEntity{
         this.postulaciones = postulaciones;
     }
 
-    public TipoTrabajo getTipo() {
-        return tipo;
+    public TipoTrabajo getTipoTrabajo() {
+        return tipoTrabajo;
     }
 
-    public void setTipo(TipoTrabajo tipo) {
-        this.tipo = tipo;
+    public void setTipoTrabajo(TipoTrabajo tipoTrabajo) {
+        this.tipoTrabajo = tipoTrabajo;
     }
 
     public List<Mensaje> getMensajes() {
@@ -82,5 +89,13 @@ public class Publicacion extends PersistentEntity{
 
     public void setTomador(Tomador tomador) {
         this.tomador = tomador;
+    }
+
+    public TipoPublicacion getTipoPublicacion() {
+        return tipoPublicacion;
+    }
+
+    public void setTipoPublicacion(TipoPublicacion tipoPublicacion) {
+        this.tipoPublicacion = tipoPublicacion;
     }
 }
