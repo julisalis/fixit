@@ -29,16 +29,17 @@ public class PrestadorForm {
     private String nombre;
     @NotBlank
     private String apellido;
-    @NotBlank
+    @NotNull
     private TipoDoc tipoDoc;
     @NotBlank
     private String documento;
-    @NotNull
     private TelefonoForm telefono;
-    @NotBlank
+    @NotNull
     private Long provincia;
-    @NotBlank
+    @NotNull
     private Long localidad;
+
+    private Boolean validar;
 
 
     public String getUsername() {
@@ -121,9 +122,20 @@ public class PrestadorForm {
         this.localidad = localidad;
     }
 
+    public Boolean getValidar() {
+        return validar;
+    }
+
+    public void setValidar(Boolean validar) {
+        this.validar = validar;
+    }
 
     public TelefonoForm getTelefono() {
         return telefono;
+    }
+
+    public void setTelefono(TelefonoForm telefono) {
+        this.telefono = telefono;
     }
 
 }

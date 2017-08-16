@@ -1,5 +1,6 @@
 package ar.com.utn.services.implementation;
 
+import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.services.MailService;
 import ar.com.utn.utils.EmailApi;
@@ -58,6 +59,23 @@ public class MailServiceImpl implements MailService {
         }
 
         sendBasicMail("Bienvenido a FixIT", dest, "email/confirm-tomador",ctx);
+    }
+
+    @Override
+    @Transactional(readOnly=true)
+    public void sendRegistrationMailPrestador(PrestadorForm user, String link) {
+
+        final Context ctx = new Context(new Locale("es","AR"));
+        ctx.setVariable("name", user.getUsername());
+        ctx.setVariable("linkConfirm", link);
+        ctx.setVariable("title", "Bienvenido a FixIT");
+
+        String dest=user.getEmail();
+        if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
+            dest =(environment.getProperty("mail.info"));
+        }
+
+        sendBasicMail("Bienvenido a FixIT", dest, "email/confirm-prestador",ctx);
     }
 
     public void sendBasicMail(String subject,String dest,String html,Context ctx) {

@@ -93,6 +93,22 @@ public class Usuario extends PersistentEntity {
         //falta el rol
     }
 
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion,String email,Prestador prestador) {
+        super();
+        this.username = username;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.documento = documento;
+        this.tipoDoc = tipoDoc;
+        this.password= password;
+        this.telefono = telefono;
+        this.prestador = prestador;
+        this.fechaCreacion = new Date();
+        this.ubicacion=ubicacion;
+        this.email = email;
+        //falta el rol
+    }
+
     public String getUsername() {
         return username;
     }

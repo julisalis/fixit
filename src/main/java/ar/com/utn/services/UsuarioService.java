@@ -16,7 +16,9 @@ public interface UsuarioService {
 
     public Usuario findByUsername(String username);
 
-    Usuario registrarPrestador(PrestadorForm prestadorForm, Prestador prestador);
+    //Usuario registrarPrestador(PrestadorForm prestadorForm, Prestador prestador);
+
+    Usuario registrarPrestador(PrestadorForm prestadorForm);
 
     Usuario registrarTomador(TomadorForm tomadorForm);
 

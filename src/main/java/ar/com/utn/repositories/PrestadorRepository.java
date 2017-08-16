@@ -7,4 +7,6 @@ import org.springframework.data.repository.CrudRepository;
  * Created by julis on 15/7/2017.
  */
 public interface PrestadorRepository extends CrudRepository<Prestador, Long> {
+
+    public Prestador findByCuit(Long cuit);
 }

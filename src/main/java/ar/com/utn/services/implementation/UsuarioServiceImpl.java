@@ -1,5 +1,6 @@
 package ar.com.utn.services.implementation;
 
+import ar.com.utn.afip.enums.AfipWs;
 import ar.com.utn.exception.TokenNotFoundException;
 import ar.com.utn.exception.UserNotActiveException;
 import ar.com.utn.form.PrestadorForm;
@@ -11,9 +12,7 @@ import ar.com.utn.services.MailService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
 import ar.com.utn.utils.URLBuilder;
-import com.sun.xml.internal.ws.api.message.ExceptionHasMessage;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.omg.IOP.ExceptionDetailMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -69,7 +68,7 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         return usuarioRepository.findByUsernameIgnoreCase(username);
     }
 
-    @Override
+    /*@Override
     @Transactional
     public Usuario registrarPrestador(PrestadorForm prestadorForm, Prestador prestador) {
         Provincia provincia=provinciaRepository.findOne(prestadorForm.getProvincia());
@@ -79,6 +78,34 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         Usuario usuario = new Usuario(prestadorForm.getUsername(),prestadorForm.getNombre(),prestadorForm.getApellido(),prestadorForm.getDocumento(),
                 prestadorForm.getTipoDoc(),prestadorForm.getPassword(),telefono,prestadorForm.getCuit(),prestador,ubicacion,prestadorForm.getEmail());
         usuarioRepository.save(usuario);
+        return usuario;
+    }*/
+
+    @Override
+    @Transactional
+    public Usuario registrarPrestador(PrestadorForm prestadorForm) {
+        Provincia provincia=provinciaRepository.findOne(prestadorForm.getProvincia());
+        Localidad localidad=localidadRepository.findOne(prestadorForm.getLocalidad());
+        Ubicacion ubicacion=new Ubicacion(provincia,localidad);
+        ubicacionRepository.save(ubicacion);
+        Telefono telefono= new Telefono(prestadorForm.getTelefono().getCodPais(),prestadorForm.getTelefono().getCodArea(),prestadorForm.getTelefono().getTelefono());
+        telefonoRepository.save(telefono);
+
+        //Validar AFIP
+        //TODO: Hacer Validacion AFIP
+        /*AfipHandler afipHandler = new AfipHandler(AfipWs.PADRON_DIEZ,20389962237L);
+        Boolean valido = afipHandler.validar(prestadorForm.getCuit());*/
+        Boolean valido = true;
+
+        Prestador prestador = prestadorRepository.save(new Prestador(prestadorForm.getCuit(),valido));
+        Usuario usuario = new Usuario(prestadorForm.getUsername(),prestadorForm.getNombre(),prestadorForm.getApellido(),prestadorForm.getDocumento(),
+                prestadorForm.getTipoDoc(),encoder.encode(prestadorForm.getPassword()),telefono,ubicacion,prestadorForm.getEmail(),prestador);
+        Usuario usuarioGenerado = usuarioRepository.save(usuario);
+
+        String token = RandomStringUtils.random(50, 64, 168, true, true);
+        String link = urlBuilder.makeOfflineAbsolutePathLink("/signup/activate/"+token);
+        usuarioGenerado.setActivationToken(token);
+        mailService.sendRegistrationMailPrestador(prestadorForm,link);
         return usuario;
     }
 

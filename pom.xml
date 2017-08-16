@@ -134,11 +134,6 @@
 			<artifactId>commons-lang3</artifactId>
 			<version>3.4</version>
 		</dependency>
-		<dependency>
-			<groupId>ar.com.utn</groupId>
-			<artifactId>fixit</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 
 	</dependencies>
 
