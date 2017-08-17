@@ -98,14 +98,14 @@ public class SignupController {
             boolean mailUnique = usuarioService.emailUnique(prestadorForm.getEmail());
             boolean cuitUnique = prestadorService.cuitUnique(prestadorForm.getCuit());
             if(!userUnique){
-                result.addError(new ObjectError("username","El nombre de usuario ingresado ya existe"));
+                result.rejectValue("username","username.repeat","El nombre de usuario ingresado ya existe");
             }
             if (!mailUnique){
-                result.addError(new ObjectError("email","El email ingresado ya existe"));
+                result.rejectValue("email","email.repeat","El email ingresado ya existe");
             }
 
-            if (!cuitUnique){
-                result.addError(new ObjectError("cuit","El cuit ingresado ya existe"));
+            if (prestadorForm.getCuit()!=null && !cuitUnique){
+                result.rejectValue("cuit","cuit.repeat","El cuit ingresado ya existe");
             }
 
             if(!result.hasErrors()){
@@ -135,10 +135,10 @@ public class SignupController {
             boolean userUnique = usuarioService.usernameUnique(tomadorForm.getUsername());
             boolean mailUnique = usuarioService.emailUnique(tomadorForm.getEmail());
             if(!userUnique){
-                result.addError(new ObjectError("username","El nombre de usuario ingresado ya existe"));
+                result.rejectValue("username","username.repeat","El nombre de usuario ingresado ya existe");
             }
             if (!mailUnique){
-                result.addError(new ObjectError("email","El email ingresado ya existe"));
+                result.rejectValue("email","email.repeat","El email ingresado ya existe");
             }
             if(!result.hasErrors()){
                 usuarioService.registrarTomador(tomadorForm);
@@ -163,12 +163,11 @@ public class SignupController {
             boolean userUnique = usuarioService.usernameUnique(tomadorForm.getUsername());
             boolean mailUnique = usuarioService.emailUnique(tomadorForm.getEmail());
             if(!userUnique){
-                result.addError(new ObjectError("username","El nombre de usuario ingresado ya existe"));
+                result.rejectValue("username","username.repeat","El nombre de usuario ingresado ya existe");
             }
             if (!mailUnique){
-                result.addError(new ObjectError("email","El email ingresado ya existe"));
+                result.rejectValue("email","email.repeat","El email ingresado ya existe");
             }
-
             if(!result.hasErrors()){
                 usuarioService.registrarTomador(tomadorForm);
                 map.put("success", true);

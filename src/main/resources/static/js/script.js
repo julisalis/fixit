@@ -45,7 +45,7 @@ $(function () {
                     if(typeof(data.url) != 'undefined'){
                         window.location=data.url;
                     }else if(typeof(data.msg) != 'undefined'){
-                        var msg_modal = $('.modal.get-back .modal-dialog .modal-content');
+                        var msg_modal = $('.modal .modal-dialog .modal-content');
                         $('h3',msg_modal).append(data.msg);
                         $('#modalSuccess .modal-dialog').append(msg_modal);
                         $('#modalSuccess').modal('toggle');
@@ -72,4 +72,5 @@ $(function () {
             });
 
     });
+
 });
