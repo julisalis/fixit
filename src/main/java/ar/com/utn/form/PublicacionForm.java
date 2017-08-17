@@ -1,5 +1,6 @@
 package ar.com.utn.form;
 
+import ar.com.utn.models.TiempoPublicacion;
 import ar.com.utn.models.TipoTrabajo;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -16,7 +17,6 @@ public class PublicacionForm {
     private String titulo;
     @NotBlank
     private String descripcion;
-    @NotNull
     private BigDecimal presupMax;
     @NotEmpty
     private List<TipoTrabajo> tiposTrabajo;
@@ -24,6 +24,19 @@ public class PublicacionForm {
     private Long provincia;
     @NotNull
     private Long localidad;
+    @NotNull
+    private TiempoPublicacion tiempoPublicacion;
+
+    public PublicacionForm() {
+    }
+
+    public TiempoPublicacion getTiempoPublicacion() {
+        return tiempoPublicacion;
+    }
+
+    public void setTiempoPublicacion(TiempoPublicacion tiempoPublicacion) {
+        this.tiempoPublicacion = tiempoPublicacion;
+    }
 
     public String getTitulo() {
         return titulo;
@@ -49,14 +62,6 @@ public class PublicacionForm {
         this.presupMax = presupMax;
     }
 
-    public List<TipoTrabajo> getTiposTrabajo() {
-        return tiposTrabajo;
-    }
-
-    public void setTiposTrabajo(List<TipoTrabajo> tiposTrabajo) {
-        tiposTrabajo = tiposTrabajo;
-    }
-
     public Long getProvincia() {
         return provincia;
     }
@@ -71,5 +76,13 @@ public class PublicacionForm {
 
     public void setLocalidad(Long localidad) {
         this.localidad = localidad;
+    }
+
+    public List<TipoTrabajo> getTiposTrabajo() {
+        return tiposTrabajo;
+    }
+
+    public void setTiposTrabajo(List<TipoTrabajo> tiposTrabajo) {
+        this.tiposTrabajo = tiposTrabajo;
     }
 }

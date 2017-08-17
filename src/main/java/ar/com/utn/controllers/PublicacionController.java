@@ -3,6 +3,7 @@ package ar.com.utn.controllers;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.form.SelectorForm;
+import ar.com.utn.models.TiempoPublicacion;
 import ar.com.utn.models.TipoPublicacion;
 import ar.com.utn.models.TipoTrabajo;
 import ar.com.utn.models.Usuario;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.WebRequest;
 
+import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,7 +49,8 @@ public class PublicacionController {
     public String newPublicacion(WebRequest request, Model model) {
         model.addAttribute("provincias",generarProvicias());
         model.addAttribute("publicacion",new PublicacionForm());
-        model.addAttribute("tipoTrabajos", publicacionService.getTipostrabajos());
+        model.addAttribute("tipos", publicacionService.getTipostrabajos());
+        model.addAttribute("tiempos", TiempoPublicacion.values());
         model.addAttribute("form_action","new");
         return "publicacion-new-edit";
     }
@@ -56,3 +59,4 @@ public class PublicacionController {
         return usuarioService.getProvincias().stream().map(provincia -> new SelectorForm(provincia.getId(),provincia.getNombre())).collect(Collectors.toList());
     }
 }
+
