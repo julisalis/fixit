@@ -6,19 +6,20 @@
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
 
 </head>
-<body>
+<body class="white-body">
 <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-<section id="section-nuevaPublicacion">
-    <div class="container">
-        <div class="section text-center">
-            <h3>Mis Publicaciones</h3>
-            <div class="row">
+<div id="publicacion">
 
+    <div class="container">
+            <h3>Mis Publicaciones</h3>
+        <div class="col-md-12 form-container">
+            <div class="">
+                <button href="/publicacion/new" class="button btn btn-primary">Nueva Publicación</button>
             </div>
         </div>
     </div>
-</section>
+</div>
 
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
