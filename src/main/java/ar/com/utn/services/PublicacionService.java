@@ -1,5 +1,6 @@
 package ar.com.utn.services;
 
+import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.models.TipoTrabajo;
 
 import java.util.List;
@@ -9,4 +10,6 @@ import java.util.List;
  */
 public interface PublicacionService {
     List<TipoTrabajo> getTipostrabajos();
+
+    void createPublicacion(PublicacionForm publicacionForm);
 }

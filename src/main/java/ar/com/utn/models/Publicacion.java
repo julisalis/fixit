@@ -19,7 +19,7 @@ public class Publicacion extends PersistentEntity{
     @JoinTable(name = "experiencia_tipotrabajo",
             joinColumns = {@JoinColumn(name = "publicacion_fk", nullable = false, updatable = false) },
             inverseJoinColumns = { @JoinColumn(name = "tipoTrabajo_fk", nullable = false, updatable = false) })
-    private List<TipoTrabajo> tipoTrabajo;
+    private List<TipoTrabajo> tiposTrabajo;
     @ManyToOne
     @JoinColumn(name="ubicacion_fk",nullable = false)
     private Ubicacion ubicacion;
@@ -38,6 +38,18 @@ public class Publicacion extends PersistentEntity{
     private PublicacionMultimedia multimedia;
 
     public Publicacion() {
+    }
+
+
+    public Publicacion(String titulo, String descripcion, BigDecimal presupMax, List<TipoTrabajo> tipoTrabajo, Ubicacion ubicacion, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia) {
+        this.titulo = titulo;
+        this.descripcion = descripcion;
+        this.presupMax = presupMax;
+        this.tiposTrabajo = tipoTrabajo;
+        this.ubicacion = ubicacion;
+        this.tiempoPublicacion = tiempoPublicacion;
+        this.tomador = tomador;
+        this.multimedia = multimedia;
     }
 
     public String getTitulo() {
@@ -72,12 +84,12 @@ public class Publicacion extends PersistentEntity{
         this.postulaciones = postulaciones;
     }
 
-    public List<TipoTrabajo> getTipoTrabajo() {
-        return tipoTrabajo;
+    public List<TipoTrabajo> getTiposTrabajo() {
+        return tiposTrabajo;
     }
 
-    public void setTipoTrabajo(List<TipoTrabajo>  tipoTrabajo) {
-        this.tipoTrabajo = tipoTrabajo;
+    public void setTiposTrabajo(List<TipoTrabajo>  tipoTrabajo) {
+        this.tiposTrabajo = tipoTrabajo;
     }
 
     public List<Mensaje> getMensajes() {
