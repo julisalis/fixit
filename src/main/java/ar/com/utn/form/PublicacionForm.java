@@ -2,9 +2,11 @@ package ar.com.utn.form;
 
 import ar.com.utn.models.TipoTrabajo;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by iaruedel on 16/08/17.
@@ -16,8 +18,8 @@ public class PublicacionForm {
     private String descripcion;
     @NotNull
     private BigDecimal presupMax;
-    @NotNull
-    private TipoTrabajo TipoTrabajo;
+    @NotEmpty
+    private List<TipoTrabajo> tiposTrabajo;
     @NotNull
     private Long provincia;
     @NotNull
@@ -47,12 +49,12 @@ public class PublicacionForm {
         this.presupMax = presupMax;
     }
 
-    public ar.com.utn.models.TipoTrabajo getTipoTrabajo() {
-        return TipoTrabajo;
+    public List<TipoTrabajo> getTiposTrabajo() {
+        return tiposTrabajo;
     }
 
-    public void setTipoTrabajo(ar.com.utn.models.TipoTrabajo tipoTrabajo) {
-        TipoTrabajo = tipoTrabajo;
+    public void setTiposTrabajo(List<TipoTrabajo> tiposTrabajo) {
+        tiposTrabajo = tiposTrabajo;
     }
 
     public Long getProvincia() {

@@ -23,6 +23,13 @@
             </ul>
         </div>
 
+        <div style="display: none;" class="alert alert-danger error-msg" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span>Errores:</span>
+            <ul>
+            </ul>
+        </div>
+
         <fieldset>
             <!-- Text input-->
             <div class="form-group">
@@ -63,13 +70,6 @@
                 <label class="col-md-4 control-label" for="documento">Número de documento*</label>
                 <div class="col-md-6">
                     <input type="text" th:field="*{documento}" id="documento" class="form-control input-md" data-validation="required"/>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="cuit">CUIT*</label>
-                <div class="col-md-6">
-                    <input type="text" th:field="*{cuit}" id="cuit" class="form-control input-md" data-validation="required"/>
                 </div>
             </div>
 
@@ -117,6 +117,13 @@
                 <label class="col-md-4 control-label" for="password">Contraseña*</label>
                 <div class="col-md-6">
                     <input type="password" id="password" th:field="*{password}" class="form-control" data-validation="required" autocomplete="new-password" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="cuit">CUIT</label>
+                <div class="col-md-6">
+                    <input type="text" th:field="*{cuit}" id="cuit" class="form-control input-md"/>
                 </div>
             </div>
 

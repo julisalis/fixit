@@ -60,7 +60,7 @@ $(function () {
                             div.append($("<p>").text(data.errors[i].defaultMessage));
                         }
                     }else{
-                        $("#signup div.error-msg").append("<p>Error en registro de usuario</p>");
+                        $("#signup div.error-msg ul").append("<li>Error en registro de usuario</li>");
                         $("#signup div.error-msg").show();
                     }
                     $("#signup form .btn-aceptar").prop('disabled',false);

@@ -15,13 +15,18 @@ public class Publicacion extends PersistentEntity{
     private String titulo;
     private String descripcion;
     private BigDecimal presupMax;
-    @OneToOne
-    private TipoTrabajo tipoTrabajo;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "experiencia_tipotrabajo",
+            joinColumns = {@JoinColumn(name = "publicacion_fk", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "tipoTrabajo_fk", nullable = false, updatable = false) })
+    private List<TipoTrabajo> tipoTrabajo;
     @ManyToOne
     @JoinColumn(name="ubicacion_fk",nullable = false)
     private Ubicacion ubicacion;
     @Enumerated
     private TipoPublicacion tipoPublicacion = TipoPublicacion.REGULAR;
+    @Enumerated
+    private TiempoPublicacion tiempoPublicacion;
     @OneToMany(mappedBy = "publicacion")
     private Set<Postulacion> postulaciones;
     @OneToMany(mappedBy = "publicacion")
@@ -67,11 +72,11 @@ public class Publicacion extends PersistentEntity{
         this.postulaciones = postulaciones;
     }
 
-    public TipoTrabajo getTipoTrabajo() {
+    public List<TipoTrabajo> getTipoTrabajo() {
         return tipoTrabajo;
     }
 
-    public void setTipoTrabajo(TipoTrabajo tipoTrabajo) {
+    public void setTipoTrabajo(List<TipoTrabajo>  tipoTrabajo) {
         this.tipoTrabajo = tipoTrabajo;
     }
 

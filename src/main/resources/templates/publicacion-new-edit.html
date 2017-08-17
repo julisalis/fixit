@@ -41,11 +41,16 @@
 
                         <!-- Select Basic -->
                         <div class="form-group">
-                            <label class="col-md-4 control-label" for="tipoTrabajo">Categoría</label>
+                            <label class="col-md-4 control-label" for="tipoTrabajo">Categorías</label>
                             <div class="col-md-3">
-                                <select  th:field="*{tipoTrabajo}" id="tipoTrabajo" class="form-control">
-                                    <option th:each="tipo : ${tipoTrabajos}" th:value="${tipo.id}" th:text="${tipo.nombre}" ></option>
-                                </select>
+                                <ul class="category-list" id="tipoTrabajo" th:field="*{tiposTrabajo}" th:each="item: ${tiposTrabajo}">
+                                    <li class="category-item">
+                                        <div class="category-icon">
+                                            <img th:src="'images/'+${item.imagen}" alt="images" class="img-responsive"/>
+                                        </div>
+                                        <span class="category-title" th:text="${item.nombre}"></span>
+                                    </li><!-- category-item -->
+                                </ul>
                             </div>
                         </div>
 
