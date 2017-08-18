@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+    <title>FixIT</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+
+</head>
+<body class="white-body">
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+<div id="publicacion">
+
+    <div class="container">
+        <h3>Perfil</h3>
+        <div class="col-md-12 form-container">
+            <div class="">
+                <ul>
+                    <li style="list-style-type:none;"><label>Usuario: </label>&nbsp;<input type="text" disabled th:value="${usuario.username}"></input></br></li>
+                    <li style="list-style-type:none;"><label>Nombre: </label>&nbsp;<input type="text" disabled th:value="${usuario.nombre}"></input></br></li>
+                    <li style="list-style-type:none;"><label>Apellido: </label>&nbsp;<input type="text" disabled th:value="${usuario.apellido}"></input></br></li>
+                    <li style="list-style-type:none;"><label>Documento: </label>&nbsp;<input type="text" disabled th:value="${usuario.documento}"></input></br></li>
+                    <li style="list-style-type:none;"><label>Celular: </label>&nbsp;<input type="text" disabled th:value="${usuario.telefono.codArea} + ' '  +${usuario.telefono.telefono}"></input></br></li>
+                    <li style="list-style-type:none;"><label>Email: </label>&nbsp;<input type="text" disabled th:value="${usuario.email}"></input></br></li>
+                </ul>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>

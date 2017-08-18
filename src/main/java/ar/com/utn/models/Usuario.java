@@ -3,6 +3,7 @@ package ar.com.utn.models;
 import javax.persistence.*;
 import java.util.*;
 
+
 /**
  * Created by julis on 17/5/2017.
  */
