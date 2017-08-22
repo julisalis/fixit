@@ -40,7 +40,16 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
     private LocalidadRepository localidadRepository;
 
     @Autowired
+    private UbicacionRepository ubicacionRepository;
+
+    @Autowired
+    private TomadorRepository tomadorRepository;
+
+    @Autowired
     private PrestadorRepository prestadorRepository;
+
+    @Autowired
+    private TelefonoRepository telefonoRepository;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -78,8 +87,9 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         Provincia provincia=provinciaRepository.findOne(prestadorForm.getProvincia());
         Localidad localidad=localidadRepository.findOne(prestadorForm.getLocalidad());
         Ubicacion ubicacion=new Ubicacion(provincia,localidad);
+        ubicacionRepository.save(ubicacion);
         Telefono telefono= new Telefono(prestadorForm.getTelefono().getCodPais(),prestadorForm.getTelefono().getCodArea(),prestadorForm.getTelefono().getTelefono());
-
+        telefonoRepository.save(telefono);
         //Validar AFIP
         //TODO: Hacer Validacion AFIP
         /*AfipHandler afipHandler = new AfipHandler(AfipWs.PADRON_DIEZ,20389962237L);
@@ -105,9 +115,10 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         Provincia provincia=provinciaRepository.findOne(tomadorForm.getProvincia());
         Localidad localidad=localidadRepository.findOne(tomadorForm.getLocalidad());
         Ubicacion ubicacion=new Ubicacion(provincia,localidad);
+        ubicacionRepository.save(ubicacion);
         Telefono telefono= new Telefono(tomadorForm.getTelefono().getCodPais(),tomadorForm.getTelefono().getCodArea(),tomadorForm.getTelefono().getTelefono());
-        Tomador tomador = new Tomador();
-
+        telefonoRepository.save(telefono);
+        Tomador tomador = tomadorRepository.save(new Tomador());
         Usuario usuario = new Usuario(tomadorForm.getUsername(),tomadorForm.getNombre(),tomadorForm.getApellido(),tomadorForm.getDocumento(),
                 tomadorForm.getTipoDoc(),encoder.encode(tomadorForm.getPassword()),telefono,ubicacion,tomadorForm.getEmail(),tomador);
         Usuario usuarioGenerado = usuarioRepository.save(usuario);

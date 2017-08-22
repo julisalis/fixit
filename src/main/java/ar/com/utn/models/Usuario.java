@@ -104,7 +104,6 @@ public class Usuario extends PersistentEntity {
         this.password= password;
         this.telefono = telefono;
         this.prestador = prestador;
-        this.fechaCreacion = new Date();
         this.ubicacion=ubicacion;
         this.email = email;
         //falta el rol
