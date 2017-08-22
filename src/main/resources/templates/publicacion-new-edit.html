@@ -4,6 +4,7 @@
 <head lang="en">
     <title>FixIT</title>
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <script type="text/javascript" th:src="@{/js/publicacion.js}"></script>
 
 </head>
 <body class="white-body">
@@ -33,24 +34,30 @@
                     <fieldset>
                         <div class="form-group">
                             <label for="titulo">Título</label>
-                            <input type="text" th:field="*{titulo}" id="titulo" class="form-control input-md" required="required"/>
+                            <input type="text" th:field="*{titulo}"
+                                   id="titulo" class="form-control input-md"
+                                   data-validation="required length"
+                                   data-validation-length="max40"/>
                         </div>
 
                         <div class="form-group">
                             <label for="descripcion">Descripción</label>
-                            <textarea class="form-control" th:field="*{descripcion}" id="descripcion" rows="5"></textarea>
+                            <textarea class="form-control" th:field="*{descripcion}"
+                                      id="descripcion" rows="5"
+                                      data-validation="required length"
+                                      data-validation-length="max100"/>
                         </div>
 
                         <div class="form-group">
                             <label for="provincia">Provincia</label>
-                            <select required="required" th:field="*{provincia}" class="form-control" id="provincia">
+                            <select th:field="*{provincia}" class="form-control" id="provincia">
                                 <option th:each="prov : ${provincias}"  th:value="${prov.value}" th:text="${prov.label}"></option>
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="localidad">Localidad</label>
-                            <select required="required" th:field="*{localidad}" class="form-control" id="localidad">
+                            <select th:field="*{localidad}" class="form-control" id="localidad">
                                 <option th:fragment="localidad-fragment" th:each="loca : ${localidades}"  th:value="${loca.value}" th:text="${loca.label}"></option>
                             </select>
                         </div>
@@ -64,7 +71,12 @@
 
                         <div class="form-group">
                             <label for="presupMax">Presupusto Máximo (ars)</label>
-                            <input type="text" th:field="*{presupMax}" maxlength="5" id="presupMax" class="form-control input-md" required="required" onkeypress="return isNumber(event)"/>
+                            <input type="text" th:field="*{presupMax}"
+                                   id="presupMax"
+                                   class="form-control input-md"
+                                   data-validation="required number"
+                                   data-validation-allowing="range[1;10000] float"
+                                   data-validation-decimal-separator=","/>
                         </div>
 
                         <div class="form-group">
