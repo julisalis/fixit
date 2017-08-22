@@ -15,7 +15,7 @@
                 <div th:if="${param.logout}" class="alert alert-success">
                     <p >Has cerrado sesión.</p>
                 </div>
-                <form name="f" th:action="@{/login}" method="post" class="form-signin"  >
+                <form name="f" th:action="@{/login}" method="post" class="form-signin">
                     <input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario" required="true" />
                     <input type="password" id="password" name="password" class="form-control" placeholder="Contraseña" required="true"/>
                     <!--<div class=" col-lg-6 checkbox">-->

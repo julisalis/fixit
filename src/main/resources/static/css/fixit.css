@@ -181,14 +181,14 @@ body {
 
 
 #signin .container .form-signin input{
-    width: 100%;
+    width: 80%;
     background: transparent;
     border: 1px solid #b1aeae;
     border-radius: 5px;
     padding: 12px;
     font-size: 14px;
     color: #000;
-    margin-top: 15px;
+    margin: 5% auto auto;
     height: 44px;
 }
 #signin .container .form-signin .checkbox{
@@ -233,16 +233,23 @@ body {
 }
 
 #signin .container .form-signin .btn-primary,.btn-primary{
- background-color: #3ac58f;
+    background-color: transparent;
     border-color: #3ac58f;
+    color: #3ac58f;
 }
 
 #signin .container .form-signin .btn-primary:hover,.btn-primary:hover{
-    background-color: #34cbb3;
-    border-color: #34cbb3;
+    background-color: #3ac58f;
+    color: #ffffff;
+    border-color: #3ac58f;
 }
+
 #signin.modal-signin{
     padding-top: 0px;
+}
+
+#login h4{
+    text-align: center;
 }
 
 #signin.modal-signin .container{
@@ -275,8 +282,7 @@ body {
 
 #login .form-signin .btn-primary.btn-block{
     width: 50%;
-    margin: 5% auto auto;
-
+    margin: 10% auto auto;
 }
 
 div.signup, #signin .container{

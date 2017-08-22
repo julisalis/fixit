@@ -41,7 +41,7 @@
                     <a type="button" class="login" data-toggle="modal" data-target="#login">Iniciar Sesión</a>
                     <!--<a href="javascript:{}" onclick="document.getElementById('frmlogin').submit(); return false;">Iniciar Sesión</a>-->
                 </div>
-                <div sec:authorize="isAuthenticated()"><a href="/user/perfil"><span sec:authentication="name">Guest</span></a></div>
+                <div sec:authorize="isAuthenticated()"><a href="/usuario/perfil"><span sec:authentication="name">Guest</span></a></div>
                 <form sec:authorize="isAuthenticated()" id="frmlogout" th:action="@{/logout}" method="post" class="form-inline">
                     &nbsp;| <a href="javascript:{}" onclick="document.getElementById('frmlogout').submit(); return false;">Cerrar Sesión</a>
                 </form>
