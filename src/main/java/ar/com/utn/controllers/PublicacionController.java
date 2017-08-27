@@ -39,13 +39,11 @@ public class PublicacionController {
     private UsuarioService usuarioService;
 
     @GetMapping(value="/list")
-    public String signupPrestador(WebRequest request, Model model) {
+    public String listPublicaciones(WebRequest request, Model model) {
+        //todo add en security permisos solo para el tomaddor
         Usuario user = currentSession.getUser();
-        if(user!=null && user.getTomador()!=null){
-            model.addAttribute("publicaciones",user.getTomador().getPublicaciones());
-            return "publicacion-list";
-        }
-        return "redirect:/";
+        model.addAttribute("publicaciones",user.getTomador().getPublicaciones());
+        return "publicacion-list";
     }
 
     @GetMapping(value="/new")
@@ -60,15 +58,13 @@ public class PublicacionController {
 
             if(!result.hasErrors()){
                 publicacionService.createPublicacion(publicacionForm);
-                //TODO CHANGE FOR return "redirect:lista";
-                return "publicacion-list";
+                return "redirect:/publicacion/list";
             }else{
                 addModelAttributes(model,publicacionForm);
                 return "publicacion-new";
             }
         }catch (Exception e) {
-            addModelAttributes(model,publicacionForm);
-            return "publicacion-list";
+            return "redirect:/publicacion/list";
         }
 
     }

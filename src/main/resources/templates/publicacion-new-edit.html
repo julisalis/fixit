@@ -82,18 +82,17 @@
                         <div class="form-group">
                             <label for="tiposTrabajo">Categorías</label>
                             <div class="section category-items job-category-items  text-center">
-                                <ul class="category-list" th:field="*{tiposTrabajo}" id="tiposTrabajo">
-                                    <li class="category-item" th:each="item: ${tipos}">
-                                        <div class="category-icon">
-                                            <img th:src="'/images/'+${item.imagen}" alt="images" class="img-responsive"/>
-                                        </div>
-                                        <span class="category-title" th:text="${item.nombre}"></span>
-                                    </li><!-- category-item -->
-                                </ul>
+                                <div data-toggle="buttons" class="btn-group category-list" id="tiposTrabajo">
+                                    <label class="category-item" th:each="item: ${tipos}">
+                                            <input type="radio" th:field="*{tiposTrabajo}" th:value="${item.id}" display="hidden" />
+                                            <div class="category-icon">
+                                                <img th:src="'/images/'+${item.imagen}" alt="images" class="img-responsive"/>
+                                            </div>
+                                            <span class="category-title" th:text="${item.nombre}"></span>
+                                    </label><!-- category-item -->
+                                </div>
                             </div>
                         </div>
-
-
 
                         <!-- Button -->
                         <div class="form-group">
