@@ -341,8 +341,13 @@ div.signup, #signin .container{
 #signup .form-group {
     margin-bottom: 8px;
 }
+
+#signup .form-group.submit {
+    text-align:center;
+}
+
 .body-background{
-background-color:#a5a39d;
+background-color:#f7f7f7;
 }
 #signup .login{
     text-align: center;

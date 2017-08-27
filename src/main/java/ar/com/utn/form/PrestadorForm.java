@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -33,6 +34,7 @@ public class PrestadorForm {
     private TipoDoc tipoDoc;
     @NotBlank
     private String documento;
+    @Valid
     private TelefonoForm telefono;
     @NotNull
     private Long provincia;

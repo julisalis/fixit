@@ -19,7 +19,12 @@ $(function () {
         var img = $(this).find(".img-selected");
         var name = img.attr("name");
         img.prop("src",'images/'+name+".png");
-    })
+    });
+
+    $.validate({
+        lang : 'es',
+        decimalSeparator : ',',
+    });
 });
 
 function isNumber(evt) {
