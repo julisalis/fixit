@@ -2390,6 +2390,6 @@ INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Climatización','climatiz
 INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Artefactos de baño','baño','baño.png');
 INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Pisos','pisos','pisos.png');
 INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Carpintería','carpinteria','carpinteria.png');
-INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Alfombras, cortinas y tapizados','alfobras','alfombras.png');
+INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Alfombras, cortinas y tapizados','alfombras','alfombras.png');
 INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Servicio técnico de computación','computacion','computacion.png');
 INSERT INTO tipotrabajo(nombre, slug, imagen) VALUES ('Trabajos varios','varios','varios.png');
