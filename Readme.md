@@ -39,3 +39,6 @@ Java8, Spring Boot, Maven, MySql, Hibernate
 ###### Tutorial Spring Boot
 - https://springframework.guru/spring-boot-web-application-part-1-spring-initializr/
 
+###### Jquery validator
+-https://jqueryvalidation.org/documentation/
+
