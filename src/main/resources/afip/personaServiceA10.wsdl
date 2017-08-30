@@ -1,5 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<wsdl:definitions name="PersonaServiceA10" targetNamespace="http://a10.soap.ws.server.puc.sr/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://a10.soap.ws.server.puc.sr/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions name="PersonaServiceA10" targetNamespace="http://a10.soap.ws.server.puc.sr/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://a10.soap.ws.server.puc.sr/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <wsdl:types>
 <xs:schema elementFormDefault="unqualified" targetNamespace="http://a10.soap.ws.server.puc.sr/" version="1.0" xmlns:tns="http://a10.soap.ws.server.puc.sr/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
 <xs:element name="dummy" type="tns:dummy"/>
@@ -137,7 +136,7 @@
   </wsdl:binding>
   <wsdl:service name="PersonaServiceA10">
     <wsdl:port binding="tns:PersonaServiceA10SoapBinding" name="PersonaServiceA10Port">
-      <soap:address location="http://awshomo.afip.gov.ar:8280/sr-padron/webservices/personaServiceA10"/>
+      <soap:address location="http://awshomo.afip.gov.ar/sr-padron/webservices/personaServiceA10"/>
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

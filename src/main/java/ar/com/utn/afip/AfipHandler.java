@@ -18,10 +18,10 @@ public class AfipHandler {
     private AfipWs service;
     private Long cuit;
 
-    /*public static void main(String[] args){
+    public static void main(String[] args){
         AfipHandler afip = new AfipHandler(AfipWs.PADRON_DIEZ,20389962237L);
         afip.getPersona(20389962237L);
-    }*/
+    }
 
     public TicketAcceso getTicketAcceso() {
         if (this.ta == null){
@@ -89,9 +89,13 @@ public class AfipHandler {
         Persona persona = new Persona();
 
         try {
-            PersonaServiceA10Impl ws = new PersonaServiceA10Impl();
-            personaReturn = ws.getPersona(personaRequest.getToken(), personaRequest.getSign(), personaRequest.getCuitRepresentada(), personaRequest.getIdPersona());
-            persona.buildPersonaFromAfip(personaReturn);
+            //PersonaServiceA10Impl ws = new PersonaServiceA10Impl();
+            PersonaServiceA10_Service s = new PersonaServiceA10_Service();
+            PersonaServiceA10 psa10 = s.getPersonaServiceA10Port();
+            psa10.dummy();
+            //ws.dummy();
+            //personaReturn = ws.getPersona(personaRequest.getToken(), personaRequest.getSign(), personaRequest.getCuitRepresentada(), personaRequest.getIdPersona());
+            //persona.buildPersonaFromAfip(personaReturn);
 
         }catch(Exception e){
             e.printStackTrace();
