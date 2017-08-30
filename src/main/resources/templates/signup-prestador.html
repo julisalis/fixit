@@ -8,7 +8,7 @@
 <body class="body-background">
 <div class="signup" id="signup">
 
-    <h3 class="title">Registrate</h3>
+    <h3 class="title">Registrate en FixIT</h3>
 
     <form th:action="@{/signup/prestador-json}" th:object="${prestadorForm}" method="post" role="form" class="form-horizontal">
 
@@ -135,11 +135,9 @@
             </div>
 
             <!-- Button -->
-            <div class="form-group">
-                <label class="col-md-4 control-label" for="submit"></label>
-                <div class="col-md-6">
+            <div class="form-group submit">
+                <label class="control-label" for="submit"></label>
                     <button class="submit button button-block btn btn-primary btn-aceptar" id="submit">Registrar</button>
-                </div>
             </div>
 
         </fieldset>

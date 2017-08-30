@@ -6,7 +6,6 @@ import org.hibernate.validator.constraints.NotBlank;
  * Created by julian on 10/08/17.
  */
 public class TelefonoForm {
-    @NotBlank
     private String codArea;
     @NotBlank
     private String telefono;

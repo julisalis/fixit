@@ -341,8 +341,13 @@ div.signup, #signin .container{
 #signup .form-group {
     margin-bottom: 8px;
 }
+
+#signup .form-group.submit {
+    text-align:center;
+}
+
 .body-background{
-background-color:#a5a39d;
+background-color:#f7f7f7;
 }
 #signup .login{
     text-align: center;
@@ -411,6 +416,16 @@ background-color:#a5a39d;
 .category-item .category-icon .img-responsive{
     max-width: 35%;
     display: inline-block;
+}
+
+.category-item.selected  span,.category-item a:hover{
+    text-decoration: none;
+    color: #3ac58f;
+}
+
+.category-item:hover {
+    cursor: pointer;
+    text-decoration: none;
 }
 
 .category-icon img {
@@ -746,6 +761,12 @@ background-color:#a5a39d;
     border: 1px solid #e7e7e7;
     background: white;
     transition: all .3s;
+}
+
+.shadow-box:hover {
+    transform: translateY(-15px);
+    box-shadow: 0 20px 40px 2px rgba(0,0,0,0.2);
+    cursor: pointer;
 }
 
 .ifix-product-box p {

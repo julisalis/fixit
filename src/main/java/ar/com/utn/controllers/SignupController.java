@@ -124,7 +124,7 @@ public class SignupController {
         return map;
     }
 
-    private boolean validarTelefono(TelefonoForm telefono) {
+    private boolean validarTelefono(@Valid TelefonoForm telefono) {
         return true;
     }
 
