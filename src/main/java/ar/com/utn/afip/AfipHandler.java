@@ -18,10 +18,10 @@ public class AfipHandler {
     private AfipWs service;
     private Long cuit;
 
-    public static void main(String[] args){
+    /*public static void main(String[] args){
         AfipHandler afip = new AfipHandler(AfipWs.PADRON_DIEZ,20389962237L);
         afip.getPersona(20389962237L);
-    }
+    }*/
 
     public TicketAcceso getTicketAcceso() {
         if (this.ta == null){
