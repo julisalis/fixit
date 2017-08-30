@@ -78,6 +78,7 @@ public class PublicacionController {
         model.addAttribute("publicacion",form);
         model.addAttribute("tipos", publicacionService.getTipostrabajos());
         model.addAttribute("tiempos", TiempoPublicacion.values());
+        model.addAttribute("urgencias", Urgencia.values());
         model.addAttribute("form_action","new");
     }
 }

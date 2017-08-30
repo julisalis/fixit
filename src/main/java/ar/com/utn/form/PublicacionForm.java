@@ -2,11 +2,17 @@ package ar.com.utn.form;
 
 import ar.com.utn.models.TiempoPublicacion;
 import ar.com.utn.models.TipoTrabajo;
+import ar.com.utn.models.Urgencia;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -26,6 +32,11 @@ public class PublicacionForm {
     private Long localidad;
     @NotNull
     private TiempoPublicacion tiempoPublicacion;
+    @NotNull
+    private Urgencia urgencia;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd-MM-yyyy")
+    private LocalDateTime fecha;
 
     public PublicacionForm() {
     }
@@ -84,5 +95,21 @@ public class PublicacionForm {
 
     public void setTiposTrabajo(List<TipoTrabajo> tiposTrabajo) {
         this.tiposTrabajo = tiposTrabajo;
+    }
+
+    public Urgencia getUrgencia() {
+        return urgencia;
+    }
+
+    public void setUrgencia(Urgencia urgencia) {
+        this.urgencia = urgencia;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
     }
 }

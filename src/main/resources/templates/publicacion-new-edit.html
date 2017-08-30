@@ -69,6 +69,20 @@
                                 </select>
                         </div>
 
+                        <div class="form-group col-md-6">
+                            <label for="urgencia">¿Cuándo querés hacer el trabajo?</label>
+                            <select  th:field="*{urgencia}" id="urgencia" class="form-control">
+                                <option th:each="u: ${urgencias}" th:id="${u.ordinal()}" th:value="${u}" th:text="${u.getNameUrgencia(u)}"></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="fecha">Fecha</label>
+                            <input type="text" th:field="*{fecha}"
+                                   id="fecha" class="datepicker form-control input-md"
+                                   />
+                        </div>
+
                         <div class="form-group">
                             <label for="presupMax">Presupusto Máximo (ars)</label>
                             <input type="text" th:field="*{presupMax}"
@@ -84,9 +98,9 @@
                             <div class="section category-items job-category-items  text-center">
                                 <div data-toggle="buttons" class="btn-group category-list" id="tiposTrabajo">
                                     <label class="category-item" th:each="item: ${tipos}">
-                                            <input type="radio" th:field="*{tiposTrabajo}" th:value="${item.id}" display="hidden" />
+                                            <input type="radio" class="input-radio" th:field="*{tiposTrabajo}" th:value="${item.id}"/>
                                             <div class="category-icon">
-                                                <img th:src="'/images/'+${item.imagen}" alt="images" class="img-responsive"/>
+                                                <img th:src="'/images/'+${item.imagen}" alt="images" class="image-radio img-responsive"/>
                                             </div>
                                             <span class="category-title" th:text="${item.nombre}"></span>
                                     </label><!-- category-item -->

@@ -6,7 +6,6 @@ package ar.com.utn.models;
 public enum TiempoPublicacion {
     SEMANA,MES,SEISMESES,ANUAL,ILIMITADO;
 
-//debinir
     public String getName(String code){
         code = code.trim();
         switch (code){

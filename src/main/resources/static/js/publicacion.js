@@ -2,13 +2,18 @@ $(function () {
     $.validate({
         lang : 'es',
         decimalSeparator : ',',
-        // onSuccess : function($form) {
-        //     if(!validateSelects()){
-        //         return false; // Will stop the submission of the form
-        //     }
-        //
-        // }
     });
+
+    $(".category-item").click(function(){
+        $(this).parent(".category-icon").parent(".category-item").find(".input-radio").attr('checked',true);
+    });
+
+    $('.datepicker').datepicker({
+        format: 'mm/dd/yyyy',
+        startDate: '-3d'
+    });
+
+
 });
 
 /**

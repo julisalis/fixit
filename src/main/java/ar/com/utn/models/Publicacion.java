@@ -2,6 +2,7 @@ package ar.com.utn.models;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -36,12 +37,20 @@ public class Publicacion extends PersistentEntity{
     private Tomador tomador;
     @Embedded
     private PublicacionMultimedia multimedia;
+    @Enumerated
+    private Urgencia urgencia;
+    private LocalDateTime fecha;
+    private LocalDateTime fechaCreacion;
 
     public Publicacion() {
     }
 
+    @PrePersist
+    protected void onCreate() {
+        fechaCreacion = LocalDateTime.now();
+    }
 
-    public Publicacion(String titulo, String descripcion, BigDecimal presupMax, List<TipoTrabajo> tipoTrabajo, Ubicacion ubicacion, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia) {
+    public Publicacion(String titulo, String descripcion, BigDecimal presupMax, List<TipoTrabajo> tipoTrabajo, Ubicacion ubicacion, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia,LocalDateTime fecha,Urgencia urgencia) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.presupMax = presupMax;
@@ -50,6 +59,8 @@ public class Publicacion extends PersistentEntity{
         this.tiempoPublicacion = tiempoPublicacion;
         this.tomador = tomador;
         this.multimedia = multimedia;
+        this.fecha=fecha;
+        this.urgencia=urgencia;
     }
 
     public String getTitulo() {
@@ -114,5 +125,45 @@ public class Publicacion extends PersistentEntity{
 
     public void setTipoPublicacion(TipoPublicacion tipoPublicacion) {
         this.tipoPublicacion = tipoPublicacion;
+    }
+
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
+
+    public void setUbicacion(Ubicacion ubicacion) {
+        this.ubicacion = ubicacion;
+    }
+
+    public TiempoPublicacion getTiempoPublicacion() {
+        return tiempoPublicacion;
+    }
+
+    public void setTiempoPublicacion(TiempoPublicacion tiempoPublicacion) {
+        this.tiempoPublicacion = tiempoPublicacion;
+    }
+
+    public Urgencia getUrgencia() {
+        return urgencia;
+    }
+
+    public void setUrgencia(Urgencia urgencia) {
+        this.urgencia = urgencia;
+    }
+
+    public PublicacionMultimedia getMultimedia() {
+        return multimedia;
+    }
+
+    public void setMultimedia(PublicacionMultimedia multimedia) {
+        this.multimedia = multimedia;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
     }
 }

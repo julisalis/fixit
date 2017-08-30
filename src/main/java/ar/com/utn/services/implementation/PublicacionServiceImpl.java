@@ -46,7 +46,7 @@ public class PublicacionServiceImpl implements PublicacionService {
             Tomador tomador = userlogged.getTomador();
             Publicacion publicacion = new Publicacion(publicacionForm.getTitulo(),publicacionForm.getDescripcion(),publicacionForm.getPresupMax(),
                     publicacionForm.getTiposTrabajo(),ubicacion,publicacionForm.getTiempoPublicacion(),
-                    tomador,null);
+                    tomador,null,publicacionForm.getFecha(),publicacionForm.getUrgencia());
             publicacionRepository.save(publicacion);
         }
 
