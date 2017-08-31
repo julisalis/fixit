@@ -29,6 +29,12 @@ $(function () {
         $(this).removeClass("hover");
     });
 
+    $("#urgencia").change(function () {
+        if($(this).val()=="FECHA"){
+            $("#fecha").attr("disabled",false);
+        }
+    });
+
 
     $('.datepicker').datepicker({
         format: 'mm/dd/yyyy',

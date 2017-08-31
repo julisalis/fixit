@@ -80,7 +80,7 @@
                             <label for="fecha">Fecha</label>
                             <input type="text" th:field="*{fecha}"
                                    id="fecha" class="datepicker form-control input-md"
-                                   />
+                                   th:disabled="${fecha == null}"/>
                         </div>
 
                         <div class="form-group">
