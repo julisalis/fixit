@@ -100,7 +100,7 @@
                                     <label class="category-item" th:each="item: ${tipos}">
                                             <input type="radio" class="input-radio" th:field="*{tiposTrabajo}" th:value="${item.id}"/>
                                             <div class="category-icon">
-                                                <img th:src="'/images/'+${item.imagen}" alt="images" class="image-radio img-responsive"/>
+                                                <img th:src="'/images/'+${item.imagen}" alt="images" th:name="${item.slug}" class="img-selected image-radio img-responsive"/>
                                             </div>
                                             <span class="category-title" th:text="${item.nombre}"></span>
                                     </label><!-- category-item -->
