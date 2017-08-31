@@ -418,7 +418,7 @@ background-color:#f7f7f7;
     display: inline-block;
 }
 
-.category-item.selected  span,.category-item a:hover{
+.category-item.selected  span,.category-item a:hover,.category-item.hover  span,.category-item.checked  span{
     text-decoration: none;
     color: #3ac58f;
 }

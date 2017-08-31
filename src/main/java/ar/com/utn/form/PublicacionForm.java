@@ -24,8 +24,10 @@ public class PublicacionForm {
     @NotBlank
     private String descripcion;
     private BigDecimal presupMax;
-    @NotEmpty
+    @NotNull
     private List<TipoTrabajo> tiposTrabajo;
+    @NotNull
+    private String currencyCode;
     @NotNull
     private Long provincia;
     @NotNull
@@ -111,5 +113,13 @@ public class PublicacionForm {
 
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+    }
+
+    public String getCurrencyCode() {
+        return currencyCode;
+    }
+
+    public void setCurrencyCode(String currencyCode) {
+        this.currencyCode = currencyCode;
     }
 }

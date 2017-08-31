@@ -1,5 +1,6 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.form.CurrencyCode;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.form.SelectorForm;
@@ -61,7 +62,7 @@ public class PublicacionController {
                 return "redirect:/publicacion/list";
             }else{
                 addModelAttributes(model,publicacionForm);
-                return "publicacion-new";
+                return "/publicacion/new";
             }
         }catch (Exception e) {
             return "redirect:/publicacion/list";
@@ -79,6 +80,7 @@ public class PublicacionController {
         model.addAttribute("tipos", publicacionService.getTipostrabajos());
         model.addAttribute("tiempos", TiempoPublicacion.values());
         model.addAttribute("urgencias", Urgencia.values());
+        model.addAttribute("currencies", CurrencyCode.values());
         model.addAttribute("form_action","new");
     }
 }

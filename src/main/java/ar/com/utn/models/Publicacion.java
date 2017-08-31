@@ -1,8 +1,11 @@
 package ar.com.utn.models;
 
+import org.hibernate.type.CurrencyType;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Currency;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +19,7 @@ public class Publicacion extends PersistentEntity{
     private String titulo;
     private String descripcion;
     private BigDecimal presupMax;
+    private Currency currency;
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "experiencia_tipotrabajo",
             joinColumns = {@JoinColumn(name = "publicacion_fk", nullable = false, updatable = false) },
@@ -165,5 +169,13 @@ public class Publicacion extends PersistentEntity{
 
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 }

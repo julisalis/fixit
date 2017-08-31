@@ -9,43 +9,12 @@ $(function () {
         $("#localidad").load('/signup/ajax/localidad', $("#provincia").serialize());
     });
 
-    $(".category-item").hover(function(){
-        $(this).addClass("selected");
-        var img = $(this).find(".img-selected");
-        var name = img.attr("name");
-        img.prop("src",'/images/'+name+"-selected.png");
-    }, function () {
-        $(this).removeClass("selected");
-        var img = $(this).find(".img-selected");
-        var name = img.attr("name");
-        img.prop("src",'/images/'+name+".png");
-    });
-
     $.validate({
         lang : 'es',
         decimalSeparator : ',',
     });
-});
 
-function isNumber(evt) {
-    evt = (evt) ? evt : window.event;
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
-        return false;
-    }
-    return true;
-}
-
-$(document).on('click','.searchbychar', function(event) {
-    event.preventDefault();
-    var target = "#" + this.getAttribute('data-target');
-    $('html, body').animate({
-        scrollTop: $(target).offset().top
-    }, 500);
-});
-
-//*******************Form de register***********************
-$(function () {
+    //*******************Form de register***********************
     $("#signup form .btn-aceptar").click(function(){
         $(this).prop('disabled',true);
         var form = $(this).closest( "form" );
@@ -88,5 +57,21 @@ $(function () {
             });
 
     });
+});
 
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+
+$(document).on('click','.searchbychar', function(event) {
+    event.preventDefault();
+    var target = "#" + this.getAttribute('data-target');
+    $('html, body').animate({
+        scrollTop: $(target).offset().top
+    }, 500);
 });

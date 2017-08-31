@@ -5,8 +5,30 @@ $(function () {
     });
 
     $(".category-item").click(function(){
-        $(this).parent(".category-icon").parent(".category-item").find(".input-radio").attr('checked',true);
+        if($(this).hasClass("checked")){
+            $(this).find(".category-checkbox").prop('checked',false);
+            $(this).removeClass("checked");
+            var img = $(this).find(".img-selected");
+            var name = img.attr("name");
+            img.prop("src",'/images/'+name+".png");
+        }
+        else{
+            $(this).find(".category-checkbox").prop('checked',true);
+            $(this).addClass("checked");
+            var img = $(this).find(".img-selected");
+            var name = img.attr("name");
+            img.prop("src",'/images/'+name+"-selected.png");
+        }
+
+
     });
+
+    $('.category-item').hover(function(){
+        $(this).addClass("hover");
+    }, function () {
+        $(this).removeClass("hover");
+    });
+
 
     $('.datepicker').datepicker({
         format: 'mm/dd/yyyy',
@@ -14,19 +36,6 @@ $(function () {
     });
 
 
+
 });
 
-/**
- * validates selects that are hidden because the chosen
- */
-function validateSelects(){
-    var valid = true
-    $.each($("form .chosen"),function(index,value){
-        if($(this).val() == null){
-            $(this).parent(".form-group").find(".form-error").remove();
-            $(this).parent(".form-group").append("<span class='help-block form-error'>Este campo es obligatorio</span>");
-            valid = false;
-        }
-    });
-    return valid;
-}
