@@ -42,3 +42,6 @@ Java8, Spring Boot, Maven, MySql, Hibernate
 ###### Jquery validator
 -https://jqueryvalidation.org/documentation/
 
+###### CUIT para WS AFIP
+En el entorno de testing de los ws de afip, la informacion que devuelve no es real. Usando el cuit 20000000516 devuelve info (falsa) de una persona fisica.
+

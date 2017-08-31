@@ -162,6 +162,20 @@
 										<extraarg>-verbose</extraarg>
 									</extraargs>
 								</wsdlOption>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/resources/afip/personaServiceA4.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-impl</extraarg>
+										<extraarg>-verbose</extraarg>
+									</extraargs>
+								</wsdlOption>
+								<wsdlOption>
+									<wsdl>${basedir}/src/main/resources/afip/personaServiceA5.wsdl</wsdl>
+									<extraargs>
+										<extraarg>-impl</extraarg>
+										<extraarg>-verbose</extraarg>
+									</extraargs>
+								</wsdlOption>
 							</wsdlOptions>
 						</configuration>
 						<goals>
