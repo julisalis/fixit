@@ -6,7 +6,7 @@ import ar.com.utn.afip.enums.AfipWs;
 import java.io.FileInputStream;
 import java.util.Properties;
 
-import sr.puc.server.ws.soap.a10.*;
+import sr.puc.server.ws.soap.a4.*;
 
 /**
  * Created by jsalischiker on 16/06/17.
@@ -19,7 +19,7 @@ public class AfipHandler {
     private Long cuit;
 
     /*public static void main(String[] args){
-        AfipHandler afip = new AfipHandler(AfipWs.PADRON_DIEZ,20389962237L);
+        AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237L);
         afip.getPersona(20389962237L);
     }*/
 
@@ -90,12 +90,12 @@ public class AfipHandler {
 
         try {
             //PersonaServiceA10Impl ws = new PersonaServiceA10Impl();
-            PersonaServiceA10_Service s = new PersonaServiceA10_Service();
-            PersonaServiceA10 psa10 = s.getPersonaServiceA10Port();
-            psa10.dummy();
+            PersonaServiceA4_Service s = new PersonaServiceA4_Service();
+            PersonaServiceA4 psa4 = s.getPersonaServiceA4Port();
+            //psa4.dummy();
             //ws.dummy();
-            //personaReturn = ws.getPersona(personaRequest.getToken(), personaRequest.getSign(), personaRequest.getCuitRepresentada(), personaRequest.getIdPersona());
-            //persona.buildPersonaFromAfip(personaReturn);
+            personaReturn = psa4.getPersona(personaRequest.getToken(), personaRequest.getSign(), personaRequest.getCuitRepresentada(), personaRequest.getIdPersona());
+            persona.buildPersonaFromAfip(personaReturn);
 
         }catch(Exception e){
             e.printStackTrace();

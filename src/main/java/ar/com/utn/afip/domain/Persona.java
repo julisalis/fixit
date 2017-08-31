@@ -1,19 +1,20 @@
 package ar.com.utn.afip.domain;
 
-import ar.com.utn.afip.enums.EstadoClave;
-import ar.com.utn.afip.enums.TipoClave;
-import ar.com.utn.afip.enums.TipoDocumento;
-import ar.com.utn.afip.enums.TipoPersona;
-import sr.puc.server.ws.soap.a10.Domicilio;
-import sr.puc.server.ws.soap.a10.PersonaReturn;
+import ar.com.utn.afip.enums.*;
+import sr.puc.server.ws.soap.a4.*;
+import sr.puc.server.ws.soap.a4.Actividad;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class Persona {
     private String apellido;
     private String nombre;
-    private String actividadPrincipal;
-    private Long idActividadPrincipal;
+    private Sexo sexo;
+    private LocalDate nacimiento;
+    //private String actividadPrincipal;
+    //private Long idActividadPrincipal;
+    private List<Actividad> actividades;
     private List<Domicilio> domicilio;
     private TipoClave tipoClave;
     private EstadoClave estadoClave;
@@ -22,22 +23,25 @@ public class Persona {
     private String numeroDocumento;
     private TipoPersona tipoPersona;
 
+    public Persona() {
+    }
+
     public void buildPersonaFromAfip(PersonaReturn pr) {
-        sr.puc.server.ws.soap.a10.Persona p = new sr.puc.server.ws.soap.a10.Persona();
+        sr.puc.server.ws.soap.a4.Persona p = new sr.puc.server.ws.soap.a4.Persona();
         p = pr.getPersona();
 
         this.setNombre(p.getNombre());
         this.setApellido(p.getApellido());
+        //Sexo
+        //Nacimiento
         this.setIdPersona(p.getIdPersona());
         this.setTipoDocumento(TipoDocumento.getByCodigo(p.getTipoDocumento()));
         this.setNumeroDocumento(p.getNumeroDocumento());
         this.setTipoPersona(TipoPersona.getByNombre(p.getTipoPersona()));
         this.setTipoClave(TipoClave.valueOf(p.getTipoClave()));
         this.setEstadoClave(EstadoClave.valueOf(p.getEstadoClave()));
-        this.setActividadPrincipal(p.getDescripcionActividadPrincipal());
-        this.setIdActividadPrincipal(p.getIdActividadPrincipal());
+        //Actividades
         this.setDomicilio(p.getDomicilio());
-
     }
 
     public String getApellido() {
@@ -54,22 +58,6 @@ public class Persona {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getActividadPrincipal() {
-        return actividadPrincipal;
-    }
-
-    public void setActividadPrincipal(String actividadPrincipal) {
-        this.actividadPrincipal = actividadPrincipal;
-    }
-
-    public Long getIdActividadPrincipal() {
-        return idActividadPrincipal;
-    }
-
-    public void setIdActividadPrincipal(Long idActividadPrincipal) {
-        this.idActividadPrincipal = idActividadPrincipal;
     }
 
     public List<Domicilio> getDomicilio() {
@@ -126,5 +114,29 @@ public class Persona {
 
     public void setTipoPersona(TipoPersona tipoPersona) {
         this.tipoPersona = tipoPersona;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
+
+    public LocalDate getNacimiento() {
+        return nacimiento;
+    }
+
+    public void setNacimiento(LocalDate nacimiento) {
+        this.nacimiento = nacimiento;
+    }
+
+    public List<Actividad> getActividades() {
+        return actividades;
+    }
+
+    public void setActividades(List<Actividad> actividades) {
+        this.actividades = actividades;
     }
 }

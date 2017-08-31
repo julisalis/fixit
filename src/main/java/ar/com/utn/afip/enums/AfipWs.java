@@ -6,6 +6,8 @@ package ar.com.utn.afip.enums;
 public enum AfipWs {
     FACTURA_ELECTRONICA_A_B("wsmtxca"),
     FACTURA_ELECTRONICA_E("wsfexv1"),
+    PADRON_CUATRO("ws_sr_padron_a4"),
+    PADRON_CINCO("ws_sr_padron_a5"),
     PADRON_DIEZ("ws_sr_padron_a10");
 
     private final String text;
