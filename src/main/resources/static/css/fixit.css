@@ -242,6 +242,7 @@ body {
     background-color: #3ac58f;
     color: #ffffff;
     border-color: #3ac58f;
+    transition: all 200ms linear;
 }
 
 #signin.modal-signin{
@@ -362,6 +363,7 @@ background-color:#f7f7f7;
     background-color: #3ac58f;
     text-decoration: blink;
     color: white;
+    transition: all 200ms linear;
 }
 
 .text-center .container .titulo-prin{
@@ -819,17 +821,17 @@ span {
     padding-bottom: 50px;
 }
 
-#publicacion .container h3{
-    font-size: 40px;
+#publicacion .container h2{
     letter-spacing: 12px;
-    margin-bottom: 50px;
+    margin-bottom: 15px;
     text-transform: uppercase;
     text-align: center;
-    margin-top: 50px;
+    margin-top: 15px;
 }
 
 .white-body .navbar-fixed-top.navbar-default{
     background-color: #252525;
+    padding: 15px;
 }
 
 .white-body .navbar-fixed-top.navbar-default .navbar-brand.searchbychar span{
