@@ -135,6 +135,20 @@ body {
     .category-item .category-icon .img-responsive {
         max-width:60% !important;
     }
+
+    .text-center .container .titulo-prin {
+        margin-top: 25px !important;
+        letter-spacing: 12px !important;
+    }
+
+    .text-center .container .subtitulo {
+        letter-spacing: 5px !important;
+    }
+
+}
+
+.navbar-toggle {
+    background-color: #fff !important;
 }
 
 .navbar-fixed-top.scrolled>.container>.navbar-header>a>#logo-nav-white {
@@ -862,7 +876,7 @@ span {
     margin-bottom: 6%;
 }
 #publicacion{
-    margin-top: 105px;
+    margin-top: 90px;
 }
 #publicacion .container .form-container{
     background-color: #f7f7f7;
