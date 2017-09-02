@@ -127,6 +127,14 @@ body {
         color: #afbdc5 !important;
         transition: all 200ms linear;
     }
+
+    .category-title {
+        display: none !important;
+    }
+
+    .category-item .category-icon .img-responsive {
+        max-width:60% !important;
+    }
 }
 
 .navbar-fixed-top.scrolled>.container>.navbar-header>a>#logo-nav-white {
