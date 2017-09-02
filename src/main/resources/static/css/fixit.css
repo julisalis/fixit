@@ -88,6 +88,47 @@ body {
     transition: all 200ms linear;
 }
 
+@media (max-width: 767px) {
+    .navbar-fixed-top {
+        background-color: rgba(2,58,143,1) !important;
+        padding: 15px;
+        transition: all 200ms linear;
+    }
+
+    .navbar-fixed-top.scrolled {
+        background-color: rgba(2,58,143,1) !important;
+        padding: 15px;
+        transition: all 200ms linear;
+    }
+
+    .navbar-fixed-top>.container>.navbar-header>a>#logo-nav-white {
+        display: inline-block;
+    }
+
+    .navbar-fixed-top>.container>.navbar-header>a>#logo-nav {
+        display: none;
+    }
+
+    .navbar-fixed-top>.container>.navbar-header>.navbar-brand>span {
+        font-family: 'Ubuntu';
+        font-size: 1.8em;
+        color: rgba(255,255,255,1);
+        transition: all 200ms linear;
+    }
+
+    .navbar-fixed-top>.container>#navbar>.navbar-nav>li>a,
+    .navbar-fixed-top>.container>#navbar>.navbar-text.navbar-right a{
+        color: #fff !important;
+        text-decoration: none;
+    }
+
+    .navbar-fixed-top>.container>#navbar>.navbar-nav>li>a:hover,
+    .navbar-fixed-top>.container>#navbar>.navbar-text.navbar-right a:hover {
+        color: #afbdc5 !important;
+        transition: all 200ms linear;
+    }
+}
+
 .navbar-fixed-top.scrolled>.container>.navbar-header>a>#logo-nav-white {
     display: inline-block;
 }
