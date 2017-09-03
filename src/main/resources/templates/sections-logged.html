@@ -12,7 +12,7 @@
             <div class="container">
                 <h1 class="titulo-prin">La solución que necesitas al alcance de un click</h1>
                 <div class="searchBar col-md-8 col-md-center" >
-                    <form>
+                    <form  th:action="@{/search}" >
                         <div class="dropdown-searchBar">
                             <div class="search-container">
                                 <input type="search" value="" autocomplete="off" role="combobox"
@@ -21,7 +21,6 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
                 <div class="categories">
                     <h3 class="banner-busqueda">
