@@ -9,70 +9,15 @@
 <body class = "body-index">
     <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-    <!-- Foto inicial -->
-    <section id="section-foto">
-    <div class="jumbotron text-center">
-        <div class="container">
-            <h1 class="titulo-prin">La solución que necesitas al alcance de un click</h1>
-            <h2 sec:authorize="!isAuthenticated()" class="subtitulo">Garantizando seguridad y agilidad</h2>
-
-            <div class="register-buttons" sec:authorize="!isAuthenticated()">
-                <a href="/signup/tomador" class="btn btn-secondary btn-secondary-alt btn-tiny hoverable">
-                    <span class="anim"></span>
-                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                    Registrarme como <br>
-                    cliente
-                </a>
-                <a href="/signup/prestador" class="btn btn-secondary btn-secondary-alt btn-tiny hoverable">
-                    <span class="anim"></span>
-                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                    Registrarme como <br>
-                    profesional
-                </a>
-            </div>
-
-            <div sec:authorize="isAuthenticated()">
-                <div class="searchBar col-md-8 col-md-center" >
-                    <form>
-                        <div class="dropdown-searchBar">
-                            <div class="search-container">
-                                <input type="search" value="" autocomplete="off" role="combobox"
-                                       aria-autocomplete="list" aria-owns="react-autowhatever-1"
-                                       aria-expanded="false"  id="search" placeholder="¿Qué estás buscando?">
-                            </div>
-                        </div>
-                    </form>
-
-                </div>
-                <div class="categories">
-                    <h3 class="banner-busqueda">
-                        <span>o elegí de algunas de las categorías de abajo.</span>
-                    </h3>
-                    <ul class="list-block">
-                        <li class="list-block__item"  th:each="item: ${tipotrabajos}">
-                            <a class="category-a" th:href="'/publicaciones/'+${item.slug}">
-                                <div class="category-description">
-                                    <h2 th:text="${item.nombre}"/>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <a class="scroll-icon center-block text-center scroll-down-link searchbychar" href="#section-Categorias" data-target="section-Categorias" >
-                <i class="fa fa-angle-down" aria-hidden="true"></i>
-            </a>
-        </div>
-    </div>
-    </section>
-
     <!-- Modal -->
     <!--/*/ <th:block th:include="modals/login :: login"></th:block> /*/-->
 
      <!--Sections-no-logged-->
-    <th:block th:include="sections-no-logged :: sections-no-logged"  sec:authorize="!isAuthenticated()" ></th:block>
+    <!--/*/<th:block th:include="sections-no-logged :: sections-no-logged"  sec:authorize="!isAuthenticated()" ></th:block>/*/-->
 
-    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+    <!--Sections-logged-->
+    <!--/*/<th:block th:include="sections-logged :: sections-logged"  sec:authorize="isAuthenticated()" ></th:block>/*/-->
+
+   <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 </html>
