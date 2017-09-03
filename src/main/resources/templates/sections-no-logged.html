@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="sections-no-logged">
+    <!-- Categorias -->
+    <section id="section-Categorias">
+        <div class="container">
+            <div class="section category-items job-category-items  text-center">
+                <h3 class="subtitulo-jobs">¿QUÉ ESTAS BUSCANDO?</h3>
+                <ul class="category-list" >
+                    <li class="category-item" th:each="item: ${tipotrabajos}">
+                        <a th:href="'/publicaciones/'+${item.slug}">
+                            <div class="category-icon">
+                                <img th:src="'images/'+${item.imagen}" th:name="${item.slug}" alt="images" class="img-responsive img-selected"/>
+                            </div>
+                            <span class="category-title" th:text="${item.nombre}">
+                                </span>
+                            <span class="category-quantity">(1298)</span>
+                        </a>
+                    </li><!-- category-item -->
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!-- Carrousel de clientes -->
+    <section id="section-Clientes">
+        <div class="container">
+            <div class="section category-items job-category-items  text-center">
+                <h3 class="subtitulo-jobs">¿CÓMO FUNCIONA?</h3>
+                <div class="row">
+                    <div id="ifix-carousel-howitworks" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <li data-target="#ifix-carousel-howitworks" data-slide-to="0" class="active"></li>
+                            <li data-target="#ifix-carousel-howitworks" data-slide-to="1"></li>
+                            <li data-target="#ifix-carousel-howitworks" data-slide-to="2"></li>
+                        </ol>
+                        <div class="carousel-inner" role="listbox">
+                            <div class="item active">
+                                <div class="row">
+                                    <div class="col-xs-10 col-xs-offset-1 col-sm-5">
+                                        <div class="ifix-howitworks-text">
+                                            <h4>Publicá tus trabajos</h4>
+                                            <p>Crea tus propias publicaciones de trabajos para que profesionales capacitados se puedan postular.</p>
+
+                                            <ul class="list-unstyled list-inline">
+                                                <li class="hidden-xs">
+                                                    <a href="/signup/tomador" class="btn btn-secondary btn-secondary-alt btn-tiny hoverable">
+                                                        <span class="anim"></span>
+                                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                                        Registrarme como cliente
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-10 col-xs-offset-1 col-sm-4">
+                                        <div class="ifix-howitworks-image">
+                                            <div class="ifix-howitworks-phone">
+                                                <img src="/images/laptop1.png" class="img-responsive" alt="como funciona">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-xs-10 col-xs-offset-1 col-sm-5">
+                                        <div class="ifix-howitworks-text">
+                                            <h4>Seleccioná al mejor profesional</h4>
+                                            <p>Evaluá entre las postulaciones recibidas qué profesional está más capacitado y elegilo. Nosotros nos encargamos del resto.</p>
+
+                                            <ul class="list-unstyled list-inline">
+                                                <li class="hidden-xs">
+                                                    <a href="/signup/tomador" class="btn btn-secondary btn-secondary-alt btn-tiny hoverable">
+                                                        <span class="anim"></span>
+                                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                                        Registrarme como cliente
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-10 col-xs-offset-1 col-sm-4">
+                                        <div class="ifix-howitworks-image">
+                                            <div class="ifix-howitworks-phone">
+                                                <img src="/images/laptop2.png" class="img-responsive" alt="como funciona">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="item">
+                                <div class="row">
+                                    <div class="col-xs-10 col-xs-offset-1 col-sm-5">
+                                        <div class="ifix-howitworks-text">
+                                            <h4>¡Listo!</h4>
+                                            <p>Realizá el pago online de manera segura. El profesional no recibe tu dinero hasta que no califiques el servicio.</p>
+
+                                            <ul class="list-unstyled list-inline">
+                                                <li class="hidden-xs">
+                                                    <a href="/signup/tomador" class="btn btn-secondary btn-secondary-alt btn-tiny hoverable">
+                                                        <span class="anim"></span>
+                                                        <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                                        Registrarme como cliente
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-10 col-xs-offset-1 col-sm-4">
+                                        <div class="ifix-howitworks-image">
+                                            <div class="ifix-howitworks-phone">
+                                                <img src="/images/laptop3.png" class="img-responsive" alt="como funciona">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="ifix-carousel-controls">
+                            <a class="left carousel-control" href="#ifix-carousel-howitworks" role="button" data-slide="prev">
+                                <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+                            </a>
+
+                            <a class="right carousel-control" href="#ifix-carousel-howitworks" role="button" data-slide="next">
+                                <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Profesionales -->
+    <section id="section-Profesionales">
+        <div class="container">
+            <div class="section category-items job-category-items  text-center">
+                <h3 class="subtitulo-jobs">¿SOS UN PROFESIONAL?</h3>
+                <div class="row">
+                    <div class="col-xs-10 col-xs-offset-1 col-sm-5">
+                        <h5>Sumate a nuestra red</h5>
+                        <p>Registrate como profesional y seleccioná tus áreas de trabajo.</p>
+                        <p>Buscá publicaciones de tu interés.</p>
+                        <p>Postulate y enviá tu presupuesto.</p>
+                        <br>
+                        <br>
+                        <p class="cierre-prestador">Cuantos más trabajos realices, mejor será tu reputación.</p>
+                        <br>
+                        <a href="/signup/prestador" class="btn btn-secondary btn-secondary-alt btn-tiny hoverable">
+                            <span class="anim"></span>
+                            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                            Registrarme como profesional
+                        </a>
+                    </div>
+                    <div class="col-xs-12 col-sm-6">
+                        <div class="frame-img-light">
+                            <img src="/images/obrero.png" alt="profesionales">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Trabajos Destacados -->
+    <section id="section-Destacados">
+        <div class="container">
+            <div class="section category-items job-category-items  text-center">
+                <h3 class="subtitulo-jobs">TRABAJOS DESTACADOS</h3>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="ifix-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/inodoro.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Plomería">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Instalación de inodoro</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="ifix-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/pintura.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Pintura">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Pintura habitación</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Colon, Entre Rios</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $10.599,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Normal</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="ifix-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/electricidad.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Electricidad">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Colocación lámpara</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> San Carlos de Bariloche, Rio Negro</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $6.000,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Apurado</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

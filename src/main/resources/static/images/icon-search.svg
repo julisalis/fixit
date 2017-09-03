@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="21px" height="22px" viewBox="0 0 21 22" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3.3 (12072) - http://www.bohemiancoding.com/sketch -->
+    <title>icon-search</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="mockup/layout-with-search-header" sketch:type="MSArtboardGroup" transform="translate(-809.000000, -45.000000)" stroke="#8A8A92">
+            <g id="icon-search" sketch:type="MSLayerGroup" transform="translate(809.000000, 46.000000)">
+                <g id="Group" transform="translate(0.735141, 0.045957)" sketch:type="MSShapeGroup">
+                    <path d="M13.7631497,12.2094493 L19.3889425,17.8023427 C19.7981384,18.2091457 19.7981384,18.8686675 19.3889425,19.2754705 L19.3889425,19.2754705 C18.9797465,19.6822735 18.3163452,19.6822735 17.9071492,19.2754705 L12.2813565,13.6825771" id="Shape"></path>
+                    <ellipse id="Oval" cx="7.66326304" cy="7.61836227" rx="7.65057426" ry="7.60583406"></ellipse>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

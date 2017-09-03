@@ -925,4 +925,104 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     border:2px solid transparent;
 }
 
+.searchBar {
+    white-space: nowrap;
+    float: none;
+    margin: 40px auto 0px auto;
+}
+
+
+.searchBar .dropdown-searchBar .search-container {
+    color: #999;
+    font-size: 16px;
+}
+
+.searchBar .dropdown-searchBar .search-container input {
+    padding: 0 4px 0 45px;
+    height: 45px;
+    line-height: 45px;
+    border: 1px solid #ddd;
+    border-width: 1px 0 1px 1px;
+    font-weight: normal;
+    box-shadow: none;
+    font-size: 1.1em;
+    border-radius: 20px 20px 20px 20px;
+    background: #fff url(/images/icon-search.svg) no-repeat 10px 50%;
+    cursor: text;
+    width: 55%;
+}
+
+.searchBar .dropdown-searchBar .search-container input:focus {
+    outline: none;
+}
+
+.categories h3.banner-busqueda{
+    margin-bottom: 30px;
+}
+.categories h3.banner-busqueda span{
+    color: #ddd;
+    font-size: 17px;
+
+}
+
+.categories{
+    width: 80%;
+    margin-top: 40px;
+    margin-right: auto;
+    margin-bottom: 20px;
+    margin-left: auto;
+}
+
+.categories .list-block{
+    display: inline-block;
+    list-style-type: none;
+    padding-left: 0px;
+}
+
+.categories .list-block .list-block__item{
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.categories .list-block .list-block__item a{
+    background-color: rgba(255, 255, 255, 0.22);
+    box-shadow: 0px 1px 0px 0px rgba(0,0,0,0.1);
+    border-radius: 50px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    width: 100%;
+    height: 35px;
+}
+
+.categories .list-block .list-block__item a:hover {
+    text-decoration: none;
+    box-shadow: 0px 4px 15px 2px rgba(0, 0, 0, 0.51);
+    transform: translateY(-2px);
+    border-color: #ddd;
+}
+
+
+.categories .list-block .list-block__item .category-a {
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0px;
+}
+
+.categories .list-block .list-block__item .category-a .category-description{
+    display: table-cell;
+    vertical-align: middle;
+    padding: 0px;
+}
+
+.categories .list-block .list-block__item .category-a .category-description h2 {
+    font-size: 14px;
+    color: #FFF;
+    line-height: 18px;
+    padding: 0 20px;
+    margin: 0;
+}
+
+
 
