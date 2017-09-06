@@ -41,11 +41,11 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="celular">Celular:</label>
-                        <div class="col-md-2">
+                        <label class="col-md-4 col-xs-12 control-label" for="celular">Celular:</label>
+                        <div class="col-md-2 col-xs-3">
                             <input type="text" th:value="${usuario.telefono.codArea}" id="celular" class="form-control input-md"/>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4 col-xs-9">
                             <input type="text" th:value="${usuario.telefono.telefono}" id="telefono" class="form-control input-md"/>
                         </div>
                     </div>
@@ -53,6 +53,14 @@
                         <label class="col-md-4 control-label" for="email">Email:</label>
                         <div class="col-md-6">
                             <input type="text" th:value="${usuario.email}" id="email" class="form-control input-md"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="provincia">Provincia:</label>
+                        <div class="col-md-6">
+                            <select required="required" id="provincia" class="form-control">
+                                <option th:each="unaProv:${provincias}" th:value="${unaProv.value}" th:text="${unaProv.label}" th:selected="${unaProv.value == usuario?.ubicacion.provincia.id}"></option>
+                            </select>
                         </div>
                     </div>
                     <!-- Button -->

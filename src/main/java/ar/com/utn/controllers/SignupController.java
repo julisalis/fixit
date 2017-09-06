@@ -60,11 +60,11 @@ import java.util.stream.Collectors;
             return "signup-tomador";
         }
 
-        private List<SelectorForm> generarProvicias() {
+        public List<SelectorForm> generarProvicias() {
             return usuarioService.getProvincias().stream().map(provincia -> new SelectorForm(provincia.getId(),provincia.getNombre())).collect(Collectors.toList());
         }
 
-        private List<SelectorForm> generarTiposTrabajos() {
+        public List<SelectorForm> generarTiposTrabajos() {
             return prestadorService.getTiposTrabajos().stream().map(tipoTrabajo -> new SelectorForm(tipoTrabajo.getId(),tipoTrabajo.getNombre())).collect(Collectors.toList());
         }
 

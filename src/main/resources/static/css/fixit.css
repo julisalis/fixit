@@ -85,13 +85,34 @@ body {
 .navbar-fixed-top.scrolled {
     background-color: rgba(2,58,143,1) !important;
     padding: 5px;
+    box-shadow: 0 3px 10px #555;
     transition: all 200ms linear;
 }
 
 @media (max-width: 767px) {
+    .jumbotron {
+        background-size: cover !important;
+        background-position: 45% !important;
+    }
+
+    .btn-secondary-alt {
+        margin-bottom: 10px !important;
+    }
+
+    .searchBar .dropdown-searchBar .search-container input {
+        width: 100% !important;
+        text-align: center !important;
+        padding:0 !important;
+    }
+
+    .categories .list-block .list-block__item {
+        margin: 0 3px 10px 3px !important;
+    }
+
     .navbar-fixed-top {
         background-color: rgba(2,58,143,1) !important;
         padding: 15px;
+        box-shadow: 0 3px 10px #555;
         transition: all 200ms linear;
     }
 
@@ -905,6 +926,7 @@ span {
 
 .white-body .navbar-fixed-top.navbar-default{
     background-color: #252525;
+    box-shadow: 0 3px 10px #555;
     padding: 15px;
 }
 
