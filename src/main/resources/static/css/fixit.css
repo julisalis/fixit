@@ -129,7 +129,10 @@ body {
     }
 
     .category-title {
-        display: none !important;
+        font-size: 10px !important;
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     .category-item .category-icon .img-responsive {
@@ -143,6 +146,10 @@ body {
 
     .text-center .container .subtitulo {
         letter-spacing: 5px !important;
+    }
+
+    .container .section.category-items.job-category-items.text-center .category-list .category-item {
+        width: 32% !important;
     }
 
 }
@@ -472,9 +479,8 @@ background-color:#f7f7f7;
 }
 
 .container .section.category-items.job-category-items.text-center .category-list .category-item{
-    width: 16.6%;
-    float: left;
-    min-height: 90px;
+    width: 16%;
+    display: inline-block;
     margin-bottom: 25px;
 }
 
@@ -508,8 +514,11 @@ background-color:#f7f7f7;
 
 .category-title {
     display: block;
-    font-size: 16px;
+    font-size: 13px;
     color: #505050;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .category-quantity {
@@ -713,7 +722,6 @@ background-color:#f7f7f7;
     text-align: left;
     font: bold 16px sans-serif;
     padding: 55px 50px;
-    margin-top: 80px;
     font-family: 'Varela', sans-serif;
 }
 
@@ -876,20 +884,23 @@ span {
     margin-bottom: 6%;
 }
 #publicacion{
-    margin-top: 90px;
+    padding-top: 90px;
+    background-color: rgba(211, 211, 211, 0.58);
+    padding-bottom: 50px;
 }
 #publicacion .container .form-container{
-    background-color: #f7f7f7;
+    background-color: white;
     padding-top: 50px;
     padding-bottom: 50px;
+    border-radius: 7px;
 }
 
 #publicacion .container h2{
     letter-spacing: 12px;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
     text-transform: uppercase;
     text-align: center;
-    margin-top: 15px;
+    margin-top: 30px;
 }
 
 .white-body .navbar-fixed-top.navbar-default{
@@ -1024,9 +1035,26 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     margin: 0;
 }
 
-.form-group.col-md-6{
-    padding: 0px;
-     margin-right: 0px;
-     margin-left: -15px;
+#publicacion .form-horizontal .form-group {
+    margin-right: 0px;
+    margin-left: 0px;
 }
 
+
+#publicacion .form-horizontal .form-group.price input{
+    width: 79%;
+    display: inline-block;
+}
+
+#publicacion .form-horizontal .form-group.price select{
+    width: 20%;
+    display: inline-block;
+}
+
+#publicacion .category-title{
+    display: block;
+    font-size: 13px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

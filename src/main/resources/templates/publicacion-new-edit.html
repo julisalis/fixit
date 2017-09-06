@@ -14,11 +14,11 @@
 
         <div class="container">
 
-            <h3>Nueva Publicación</h3>
+            <h2>Nueva Publicación</h2>
 
             <div class="col-md-12 form-container">
 
-                <form th:action="@{/publicacion/}+${form_action}" th:object="${publicacion}" method="post" role="form" class="form-horizontal col-md-10 col-md-offset-1">
+                <form th:action="@{/publicacion/}+${form_action}" th:object="${publicacion}" method="post" role="form" class="form-horizontal col-xs-12 col-md-10 col-md-offset-1">
 
                     <div th:if="${#fields.hasErrors()}" class="alert alert-danger error-msg" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -32,7 +32,7 @@
                     </div>
 
                     <fieldset>
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                             <label for="titulo">Título</label>
                             <input type="text" th:field="*{titulo}"
                                    id="titulo" class="form-control input-md"
@@ -40,7 +40,7 @@
                                    data-validation-length="max40"/>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                             <label for="descripcion">Descripción</label>
                             <textarea class="form-control" th:field="*{descripcion}"
                                       id="descripcion" rows="5"
@@ -48,42 +48,37 @@
                                       data-validation-length="max100"/>
                         </div>
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-6 col-xs-12">
                             <label for="provincia">Provincia</label>
                             <select th:field="*{provincia}" class="form-control" id="provincia">
                                 <option th:each="prov : ${provincias}"  th:value="${prov.value}" th:text="${prov.label}"></option>
                             </select>
                         </div>
 
-                        <div class="form-group col-md-6">
+                        <div class="form-group col-md-6 col-xs-12">
                             <label for="localidad">Localidad</label>
                             <select th:field="*{localidad}" class="form-control" id="localidad">
                                 <option th:fragment="localidad-fragment" th:each="loca : ${localidades}"  th:value="${loca.value}" th:text="${loca.label}"></option>
                             </select>
                         </div>
 
-                        <div class="form-group">
-                            <label for="tiempoPublicacion">Duración de la publicación</label>
-                                <select  th:field="*{tiempoPublicacion}" id="tiempoPublicacion" class="form-control">
-                                    <option th:each="t: ${tiempos}" th:value="${t}" th:text="${t.getName(t)}" ></option>
-                                </select>
-                        </div>
 
-                        <div class="form-group">
+
+                        <div class="form-group col-md-6">
                             <label for="urgencia">¿Cuándo querés hacer el trabajo?</label>
                             <select  th:field="*{urgencia}" id="urgencia" class="form-control">
                                 <option th:each="u: ${urgencias}" th:id="${u.ordinal()}" th:value="${u}" th:text="${u.getNameUrgencia(u)}"></option>
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
                             <label for="fecha">Fecha</label>
                             <input type="text" th:field="*{fecha}"
                                    id="fecha" class="datepicker form-control input-md"
                                    th:disabled="${fecha == null}"/>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-md-6 price">
                             <label for="presupMax">Presupusto Máximo </label>
                             <input type="text" th:field="*{presupMax}"
                                    id="presupMax"
@@ -97,12 +92,19 @@
                             </select>
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group col-md-6">
+                            <label for="tiempoPublicacion">Duración de la publicación</label>
+                            <select  th:field="*{tiempoPublicacion}" id="tiempoPublicacion" class="form-control">
+                                <option th:each="t: ${tiempos}" th:value="${t}" th:text="${t.getName(t)}" ></option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-12">
                             <label for="tiposTrabajo">Categorías</label>
                             <div class="section category-items job-category-items  text-center">
                                 <div data-toggle="buttons" class="btn-group category-list" id="tiposTrabajo">
                                     <label class="category-item" th:each="item: ${tipos}">
-                                        <input class="category-checkbox" type="checkbox" th:field="*{tiposTrabajo}" th:value="${item.id}" />
+                                        <input hidden class="category-checkbox" type="checkbox" th:field="*{tiposTrabajo}" th:value="${item.id}" />
                                         <div class="category-icon">
                                             <img th:src="'/images/'+${item.imagen}" alt="images" th:name="${item.slug}" class="img-selected image-radio img-responsive"/>
                                         </div>
@@ -113,7 +115,7 @@
                         </div>
 
                         <!-- Button -->
-                        <div class="form-group">
+                        <div class="form-group col-md-12">
                             <button type="submit" class="submit button button-block btn btn-primary btn-aceptar" id="submit">Crear</button>
                         </div>
 
