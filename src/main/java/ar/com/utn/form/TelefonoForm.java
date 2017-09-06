@@ -6,6 +6,7 @@ import org.hibernate.validator.constraints.NotBlank;
  * Created by julian on 10/08/17.
  */
 public class TelefonoForm {
+    @NotBlank
     private String codArea;
     @NotBlank
     private String telefono;
@@ -14,6 +15,7 @@ public class TelefonoForm {
 
 
     public TelefonoForm() {
+        this.codPais = "+54";
     }
 
     public TelefonoForm(String codArea, String codPais, String telefono) {

@@ -28,41 +28,45 @@ import java.util.Map;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-/**
- * Created by julian on 30/07/17.
- */
-@Controller
-@RequestMapping(path="/signup")
-public class SignupController {
+    /**
+     * Created by julian on 30/07/17.
+     */
+    @Controller
+    @RequestMapping(path="/signup")
+    public class SignupController {
 
-    @Autowired
-    private UsuarioService usuarioService;
+        @Autowired
+        private UsuarioService usuarioService;
 
-    @Autowired
-    private PrestadorService prestadorService;
+        @Autowired
+        private PrestadorService prestadorService;
 
+        @GetMapping(value="/prestador")
+        public String signupPrestador(WebRequest request,Model model) {
+            model.addAttribute("prestadorForm",new PrestadorForm());
+            model.addAttribute("provincias",generarProvicias());
+            model.addAttribute("telefono",new TelefonoForm());
+            model.addAttribute("documentos", TipoDoc.values());
+            model.addAttribute("tiposTrabajos", generarTiposTrabajos());
+            return "signup-prestador";
+        }
 
-    @GetMapping(value="/prestador")
-    public String signupPrestador(WebRequest request,Model model) {
-        model.addAttribute("prestadorForm",new PrestadorForm());
-        model.addAttribute("provincias",generarProvicias());
-        model.addAttribute("telefono",new TelefonoForm());
-        model.addAttribute("documentos", TipoDoc.values());
-        return "signup-prestador";
-    }
+        @GetMapping(value="/tomador")
+        public String signupTomador(WebRequest request,Model model) {
+            model.addAttribute("provincias",generarProvicias());
+            model.addAttribute("tomadorForm",new TomadorForm());
+            model.addAttribute("telefono",new TelefonoForm());
+            model.addAttribute("documentos", TipoDoc.values());
+            return "signup-tomador";
+        }
 
-    @GetMapping(value="/tomador")
-    public String signupTomador(WebRequest request,Model model) {
-        model.addAttribute("provincias",generarProvicias());
-        model.addAttribute("tomadorForm",new TomadorForm());
-        model.addAttribute("telefono",new TelefonoForm());
-        model.addAttribute("documentos", TipoDoc.values());
-        return "signup-tomador";
-    }
+        private List<SelectorForm> generarProvicias() {
+            return usuarioService.getProvincias().stream().map(provincia -> new SelectorForm(provincia.getId(),provincia.getNombre())).collect(Collectors.toList());
+        }
 
-    private List<SelectorForm> generarProvicias() {
-       return usuarioService.getProvincias().stream().map(provincia -> new SelectorForm(provincia.getId(),provincia.getNombre())).collect(Collectors.toList());
-    }
+        private List<SelectorForm> generarTiposTrabajos() {
+            return prestadorService.getTiposTrabajos().stream().map(tipoTrabajo -> new SelectorForm(tipoTrabajo.getId(),tipoTrabajo.getNombre())).collect(Collectors.toList());
+        }
 
     @RequestMapping("/ajax/localidad")
     public String ajaxBrands(@RequestParam("provincia") String provinceId, Model model) {

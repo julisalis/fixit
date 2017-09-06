@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="sections-logged">
+    <!-- Foto inicial -->
+    <section id="section-foto">
+        <div class="jumbotron text-center">
+            <div class="container">
+                <h1 class="titulo-prin">La solución que necesitas al alcance de un click</h1>
+                <div class="searchBar col-md-8 col-md-center" >
+                    <form  th:action="@{/search}" >
+                        <div class="dropdown-searchBar">
+                            <div class="search-container">
+                                <input type="search" value="" autocomplete="off" role="combobox"
+                                       aria-autocomplete="list" aria-owns="react-autowhatever-1"
+                                       aria-expanded="false"  id="search" placeholder="¿Qué estás buscando?">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="categories">
+                    <h3 class="banner-busqueda">
+                        <span>o elegí de algunas de las categorías de abajo.</span>
+                    </h3>
+                    <ul class="list-block">
+                        <li class="list-block__item"  th:each="item: ${tipotrabajos}">
+                            <a class="category-a" th:href="'/publicaciones/'+${item.slug}">
+                                <div class="category-description">
+                                    <h2 th:text="${item.nombre}"/>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <a class="scroll-icon center-block text-center scroll-down-link searchbychar" href="#section-Categorias" data-target="section-Categorias" >
+                    <i class="fa fa-angle-down" aria-hidden="true"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Trabajos Destacados -->
+    <section id="section-Destacados">
+        <div class="container">
+            <div class="section category-items job-category-items  text-center">
+                <h3 class="subtitulo-jobs">TRABAJOS DESTACADOS</h3>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="ifix-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/inodoro.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Plomería">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Instalación de inodoro</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="ifix-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/pintura.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Pintura">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Pintura habitación</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Colon, Entre Rios</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $10.599,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Normal</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-4">
+                        <div class="ifix-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/electricidad.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Electricidad">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Colocación lámpara</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> San Carlos de Bariloche, Rio Negro</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $6.000,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Apurado</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+</body>
+</html>

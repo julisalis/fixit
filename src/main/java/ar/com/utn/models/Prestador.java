@@ -1,6 +1,7 @@
 package ar.com.utn.models;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import java.util.List;
 
@@ -9,6 +10,9 @@ import java.util.List;
  */
 @Entity
 public class Prestador extends PersistentEntity {
+
+    @ManyToMany
+    private List<TipoTrabajo> tipos;
 
     private Long cuit;
     private boolean validado;
@@ -51,5 +55,13 @@ public class Prestador extends PersistentEntity {
 
     public void setPostulaciones(List<Postulacion> postulaciones) {
         this.postulaciones = postulaciones;
+    }
+
+    public List<TipoTrabajo> getTipos() {
+        return tipos;
+    }
+
+    public void setTipos(List<TipoTrabajo> tipos) {
+        this.tipos = tipos;
     }
 }
