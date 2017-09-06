@@ -3,8 +3,10 @@ package ar.com.utn.form;
 import ar.com.utn.models.Provincia;
 import ar.com.utn.models.Telefono;
 import ar.com.utn.models.TipoDoc;
+import ar.com.utn.models.TipoTrabajo;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Temporal;
@@ -12,6 +14,7 @@ import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by julian on 30/07/17.
@@ -40,6 +43,8 @@ public class PrestadorForm {
     private Long provincia;
     @NotNull
     private Long localidad;
+    @NotEmpty
+    private List<TipoTrabajo> tipos;
 
     private Boolean validar;
 
@@ -140,4 +145,11 @@ public class PrestadorForm {
         this.telefono = telefono;
     }
 
+    public List<TipoTrabajo> getTipos() {
+        return tipos;
+    }
+
+    public void setTipos(List<TipoTrabajo> tipos) {
+        this.tipos = tipos;
+    }
 }
