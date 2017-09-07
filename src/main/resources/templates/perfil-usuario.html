@@ -13,70 +13,126 @@
 
     <div class="container">
         <h2>Mi Perfil</h2>
-        <div class="col-md-12 form-container">
-            <form role="form" class="form-horizontal">
+        <div class="col-md-12 form-container" id="perfil">
+            <form th:action="@{/perfil/perfil-tomador-json}" th:object="${tomadorForm}" method="post" role="form" class="form-horizontal">
+
+                <div th:if="${#fields.hasErrors()}" class="alert alert-danger error-msg" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span>Error:</span>
+                    <ul>
+                        <li th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">
+                            <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span>
+                            <span th:text="${e.message}">The error message</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div style="display: none;" class="alert alert-danger error-msg" role="alert">
+                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                    <span>Errores:</span>
+                    <ul>
+                    </ul>
+                </div>
+
                 <fieldset>
+                    <!-- Text input-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="usuario">Usuario:</label>
+                        <label class="col-md-4 control-label" for="nombre">Nombre*</label>
                         <div class="col-md-6">
-                            <input type="text" th:value="${usuario.username}" id="usuario" class="form-control input-md" disabled/>
+                            <input type="text" th:value="${usuario.nombre}" th:field="*{nombre}" id="nombre" class="form-control input-md" required="required"/>
                         </div>
                     </div>
+
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="nombre">Nombre:</label>
+                        <label class="col-md-4 control-label" for="apellido">Apellido*</label>
                         <div class="col-md-6">
-                            <input type="text" th:value="${usuario.nombre}" id="nombre" class="form-control input-md"/>
+                            <input type="text" th:value="${usuario.apellido}" th:field="*{apellido}" id="apellido" class="form-control input-md" required="required"/>
                         </div>
                     </div>
+
+                    <!-- Text input-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="apellido">Apellido:</label>
+                        <label class="col-md-4 control-label" for="email">Email*</label>
                         <div class="col-md-6">
-                            <input type="text" th:value="${usuario.apellido}" id="apellido" class="form-control input-md"/>
+                            <input type="text" th:value="${usuario.email}" th:field="*{email}" id="email" class="form-control input-md" required="required"/>
                         </div>
                     </div>
+
+                    <!-- Select Basic -->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="documento">Documento:</label>
-                        <div class="col-md-6">
-                            <input type="text" th:value="${usuario.documento}" id="documento" class="form-control input-md"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-4 col-xs-12 control-label" for="celular">Celular:</label>
-                        <div class="col-md-2 col-xs-3">
-                            <input type="text" th:value="${usuario.telefono.codArea}" id="celular" class="form-control input-md"/>
-                        </div>
-                        <div class="col-md-4 col-xs-9">
-                            <input type="text" th:value="${usuario.telefono.telefono}" id="telefono" class="form-control input-md"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="email">Email:</label>
-                        <div class="col-md-6">
-                            <input type="text" th:value="${usuario.email}" id="email" class="form-control input-md"/>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label" for="provincia">Provincia:</label>
-                        <div class="col-md-6">
-                            <select required="required" id="provincia" class="form-control">
-                                <option th:each="unaProv:${provincias}" th:value="${unaProv.value}" th:text="${unaProv.label}" th:selected="${unaProv.value == usuario?.ubicacion.provincia.id}"></option>
+                        <label class="col-md-4 control-label" for="tipodoc">Tipo documento*</label>
+                        <div class="col-md-3">
+                            <select  th:field="${tipoDoc}" id="tipodoc" class="form-control">
+                                <option th:each="doc : ${documentos}" th:value="${doc}" th:text="${doc}" th:selected="${doc.value == usuario?.tipoDoc}"></option>
                             </select>
                         </div>
                     </div>
-                    <!-- Button -->
+
+                    <!-- Text input-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="submit"></label>
+                        <label class="col-md-4 control-label" for="documento">Número de documento*</label>
                         <div class="col-md-6">
-                            <button class="submit button button-block btn btn-primary btn-aceptar" id="submit">Guardar cambios</button>
+                            <input type="text" th:value="${usuario.documento}" th:field="*{documento}" maxlength="11" id="documento" class="form-control input-md" required="required" onkeypress="return isNumber(event)"/>
                         </div>
+                    </div>
+                    <!-- Prepended text-->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="telefono">Celular*</label>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input type="hidden" th:field="*{telefono.codPais}" />
+                                <span class="input-group-addon" type="text" value="+54">+54</span>
+                                <input  placeholder="011" id="codArea" maxlength="4" th:value="${usuario.telefono.codArea}" th:field="*{telefono.codArea}" class="form-control" type="text" required="required" onkeypress="return isNumber(event)"/>
+                            </div>
+                        </div>
+                        <div class="col-md-3" style="padding-left: 0px;" >
+                            <input placeholder="36329860" id="telefono" th:value="${usuario.telefono.telefono}" th:field="*{telefono.telefono}" maxlength="8" class="form-control" type="text" required="required" onkeypress="return isNumber(event)"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="provincia">Provincia*</label>
+                        <div class="col-md-6">
+                            <select required="required" th:field="*{provincia}" class="form-control" id="provincia">
+                                <option th:each="prov : ${provincias}"  th:value="${prov.value}" th:text="${prov.label}" th:selected="${prov.value == usuario?.ubicacion.provincia.id}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="localidad">Localidad*</label>
+                        <div class="col-md-6">
+                            <select required="required" th:field="*{localidad}" class="form-control" id="localidad">
+                                <option th:fragment="localidad-fragment" th:each="loca : ${localidades}"  th:value="${loca.value}" th:text="${loca.label}" th:selected="${loca.value == usuario?.ubicacion.localidad.id}"></option>
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="username">Nombre de Usuario*</label>
+                        <div class="col-md-6">
+                            <input id="username" type="text" th:value="${usuario.username}" th:field="*{username}" class="form-control" required="required"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="password">Nueva contraseña*</label>
+                        <div class="col-md-6">
+                            <input type="password" id="password" th:field="*{password}" class="form-control" autocomplete="new-password" />
+                        </div>
+                    </div>
+
+
+                    <!-- Button -->
+                    <div class="form-group submit">
+                        <label class="control-label" for="submit"></label>
+                        <button class="submit button button-block btn btn-primary btn-aceptar" id="submit">Guardar cambios</button>
                     </div>
 
                 </fieldset>
             </form>
-            <div class="">
 
-
-            </div>
         </div>
     </div>
 </div>

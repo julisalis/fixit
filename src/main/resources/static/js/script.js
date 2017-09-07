@@ -59,6 +59,52 @@ $(function () {
     });
 });
 
+
+//*******************Form de perfil***********************
+$("#perfil form .btn-aceptar").click(function(){
+    $(this).prop('disabled',true);
+    var form = $(this).closest( "form" );
+
+    $("#perfil div.error-msg").hide();
+    $("#perfil div.error-msg p").remove();
+    $('div.has-error p').remove();
+    $('div.has-error').removeClass('has-error');
+
+    $.get(form.attr('action') , form.serialize() )
+        .done(function( data ) {
+            if(data.success) {
+                if(typeof(data.url) != 'undefined'){
+                    window.location=data.url;
+                }else if(typeof(data.msg) != 'undefined'){
+                    var msg_modal = $('.modal .modal-dialog .modal-content');
+                    $('h3',msg_modal).append(data.msg);
+                    $('#modalSuccess .modal-dialog').append(msg_modal);
+                    $('#modalSuccess').modal('toggle');
+                }
+            } else {
+                //Manejo de errores en json
+                var errorsList = data.errors;
+                if(typeof(errorsList) != 'undefined'){
+                    for (i = 0; i < errorsList.length; i++) {
+                        var div = $('input[name="'+data.errors[i].field+'"]',form).closest('div');
+                        div.addClass('has-error');
+                        div.append($("<p>").text(data.errors[i].defaultMessage));
+                    }
+                }else{
+                    $("#perfil div.error-msg ul").append("<li>Error al guardar cambios del usuario</li>");
+                    $("#perfil div.error-msg").show();
+                }
+                $("#perfil form .btn-aceptar").prop('disabled',false);
+            }
+        })
+        .fail(function( data ) {
+            var result = $(data);
+
+        });
+});
+
+
+
 function isNumber(evt) {
     evt = (evt) ? evt : window.event;
     var charCode = (evt.which) ? evt.which : evt.keyCode;
