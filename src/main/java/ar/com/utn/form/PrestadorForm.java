@@ -1,9 +1,6 @@
 package ar.com.utn.form;
 
-import ar.com.utn.models.Provincia;
-import ar.com.utn.models.Telefono;
-import ar.com.utn.models.TipoDoc;
-import ar.com.utn.models.TipoTrabajo;
+import ar.com.utn.models.*;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
@@ -13,6 +10,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +19,6 @@ import java.util.List;
  */
 public class PrestadorForm {
 
-    private Long cuit;
     @NotBlank
     private String username;
     @NotBlank
@@ -47,6 +44,10 @@ public class PrestadorForm {
     private List<TipoTrabajo> tipos;
 
     private Boolean validar;
+
+    private Long cuit;
+    private Date nacimiento;
+    private Sexo sexo;
 
 
     public String getUsername() {
@@ -151,5 +152,21 @@ public class PrestadorForm {
 
     public void setTipos(List<TipoTrabajo> tipos) {
         this.tipos = tipos;
+    }
+
+    public Date getNacimiento() {
+        return nacimiento;
+    }
+
+    public void setNacimiento(Date nacimiento) {
+        this.nacimiento = nacimiento;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
     }
 }

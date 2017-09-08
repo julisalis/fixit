@@ -146,7 +146,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="nacimiento">Fecha Nacimiento</label>
                 <div class="col-md-6">
-                    <input type="date" th:field="*{nacimiento}" id="nacimiento" class="form-control input-md"/>
+                    <input type="text" th:field="*{nacimiento}" id="nacimiento" class="datepicker form-control input-md"/>
                 </div>
             </div>
 
@@ -196,6 +196,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
     $("#tipos").select2();
+    $('#nacimiento').datepicker({
+        dateFormat: "dd/mm/yy",
+        maxDate: '-18Y',
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel:true,
+    }).datepicker("setDate", firstAvailableDate());
+
+    function firstAvailableDate() {
+        var date = new Date();
+        return date;
+    }
 </script>
 
 </html>

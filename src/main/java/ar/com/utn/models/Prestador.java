@@ -1,8 +1,7 @@
 package ar.com.utn.models;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +14,11 @@ public class Prestador extends PersistentEntity {
     private List<TipoTrabajo> tipos;
 
     private Long cuit;
+    private Date nacimiento;
+    @Enumerated(EnumType.STRING)
+    private Sexo sexo;
+
+    @Column(columnDefinition="boolean default false", nullable = false)
     private boolean validado;
 
     @OneToMany(mappedBy = "prestador")
