@@ -2,6 +2,8 @@ package ar.com.utn.form;
 
 import ar.com.utn.models.Telefono;
 import ar.com.utn.models.TipoDoc;
+import ar.com.utn.models.Tomador;
+import ar.com.utn.models.Usuario;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -37,6 +39,23 @@ public class TomadorForm {
     private Long provincia;
     @NotNull
     private Long localidad;
+
+    public TomadorForm(Usuario user) {
+        this.nombre = user.getNombre();
+        this.apellido = user.getApellido();
+        this.documento = user.getDocumento();
+        this.email = user.getEmail();
+        this.tipoDoc = user.getTipoDoc();
+        if(user.getUbicacion()!=null && user.getUbicacion().getLocalidad()!=null && user.getUbicacion().getLocalidad()!=null){
+            this.provincia = user.getUbicacion().getProvincia().getId();
+            this.localidad = user.getUbicacion().getLocalidad().getId();
+        }
+        this.telefono = new TelefonoForm(user.getTelefono());
+        this.username = user.getUsername();
+    }
+
+    public TomadorForm() {
+    }
 
 
     public String getUsername() {

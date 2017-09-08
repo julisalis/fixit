@@ -1,5 +1,6 @@
 package ar.com.utn.form;
 
+import ar.com.utn.models.Telefono;
 import org.hibernate.validator.constraints.NotBlank;
 
 /**
@@ -22,6 +23,12 @@ public class TelefonoForm {
         this.codArea = codArea;
         this.codPais = codPais;
         this.telefono = telefono;
+    }
+
+    public TelefonoForm(Telefono telefono) {
+        this.codArea = telefono.getCodArea();
+        this.codPais = telefono.getCodPais();
+        this.telefono = telefono.getTelefono();
     }
 
     public String getCodArea() {

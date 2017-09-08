@@ -1,6 +1,6 @@
 package ar.com.utn.controllers;
 
-import ar.com.utn.form.PrestadorForm;
+import ar.com.utn.dto.TomadorDTO;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
@@ -10,13 +10,11 @@ import ar.com.utn.repositories.UsuarioRepository;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -66,9 +64,8 @@ public class UsuarioController {
 
     @GetMapping(value="/perfil")
     public String perfilUsuario(WebRequest request, Model model) {
-        model.addAttribute("usuario",currentSession.getUser());
+        model.addAttribute("tomadorForm",new TomadorForm(currentSession.getUser()));
         model.addAttribute("provincias", signupController.generarProvicias());
-        model.addAttribute("tomadorForm",new TomadorForm());
         model.addAttribute("telefono",new TelefonoForm());
         model.addAttribute("documentos", TipoDoc.values());
         return "perfil-usuario";
