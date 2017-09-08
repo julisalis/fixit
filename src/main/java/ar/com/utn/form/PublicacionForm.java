@@ -23,6 +23,7 @@ public class PublicacionForm {
     private String titulo;
     @NotBlank
     private String descripcion;
+    @NotNull
     private BigDecimal presupMax;
     @NotNull
     private List<TipoTrabajo> tiposTrabajo;
@@ -37,7 +38,7 @@ public class PublicacionForm {
     @NotNull
     private Urgencia urgencia;
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd-MM-yyyy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd/mm/yy")
     private LocalDateTime fecha;
 
     public PublicacionForm() {

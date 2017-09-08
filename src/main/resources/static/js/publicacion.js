@@ -35,13 +35,26 @@ $(function () {
         }
     });
 
+    if( $("#urgencia").val()=="FECHA"){
+        $("#fecha").attr("disabled",false);
+    }
 
     $('.datepicker').datepicker({
-        format: 'mm/dd/yyyy',
-        startDate: '-3d'
-    });
+        dateFormat: "dd/mm/yy",
+        maxDate: '+1Y',
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel:true,
+        minDate:firstAvailableDate(),
+        }).datepicker("setDate", firstAvailableDate());
+
 
 
 
 });
+
+function firstAvailableDate() {
+    var date = new Date();
+    return date;
+}
 

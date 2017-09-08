@@ -104,7 +104,7 @@
                             <div class="section category-items job-category-items  text-center">
                                 <div data-toggle="buttons" class="btn-group category-list" id="tiposTrabajo">
                                     <label class="category-item" th:each="item: ${tipos}">
-                                        <input hidden class="category-checkbox" type="checkbox" th:field="*{tiposTrabajo}" th:value="${item.id}" />
+                                        <input hidden class="category-checkbox" type="checkbox" th:field="*{tiposTrabajo}" th:value="${item.id}" data-validation="required"/>
                                         <div class="category-icon">
                                             <img th:src="'/images/'+${item.imagen}" alt="images" th:name="${item.slug}" class="img-selected image-radio img-responsive"/>
                                         </div>

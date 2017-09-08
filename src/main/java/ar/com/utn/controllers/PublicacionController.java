@@ -57,15 +57,19 @@ public class PublicacionController {
     public String newPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response) {
         try {
 
+            if(publicacionForm.getUrgencia().equals(Urgencia.FECHA) && publicacionForm.getFecha()==null){
+                result.rejectValue("Fecha","Fecha","es requerída");
+            }
+
             if(!result.hasErrors()){
                 publicacionService.createPublicacion(publicacionForm);
                 return "redirect:/publicacion/list";
             }else{
                 addModelAttributes(model,publicacionForm);
-                return "/publicacion/new";
+                return "publicacion-new-edit";
             }
         }catch (Exception e) {
-            return "redirect:/publicacion/list";
+            return "publicacion-new-edit";
         }
 
     }
