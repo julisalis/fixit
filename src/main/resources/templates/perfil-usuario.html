@@ -112,7 +112,7 @@
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="username">Nombre de Usuario*</label>
                         <div class="col-md-6">
-                            <input id="username" type="text" th:value="${username}" th:field="*{username}" class="form-control" required="required"/>
+                            <input id="username" type="text" th:value="${username}" th:field="*{username}" class="form-control" required="required" disabled/>
                         </div>
                     </div>
 
@@ -125,7 +125,7 @@
 
 
                     <!-- Button -->
-                    <div class="form-group submit">
+                    <div style="text-align: center;" class="form-group submit">
                         <label class="control-label" for="submit"></label>
                         <button class="submit button button-block btn btn-primary btn-aceptar" id="submit">Guardar cambios</button>
                     </div>
