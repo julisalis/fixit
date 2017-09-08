@@ -96,7 +96,7 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         Boolean valido = afipHandler.validar(prestadorForm.getCuit());*/
         Boolean valido = true;
 
-        Prestador prestador = prestadorRepository.save(new Prestador(prestadorForm.getCuit(),valido));
+        Prestador prestador = prestadorRepository.save(new Prestador(prestadorForm.getCuit(),valido,prestadorForm.getTipos()));
         Usuario usuario = new Usuario(prestadorForm.getUsername(),prestadorForm.getNombre(),prestadorForm.getApellido(),prestadorForm.getDocumento(),
                 prestadorForm.getTipoDoc(),encoder.encode(prestadorForm.getPassword()),telefono,ubicacion,prestadorForm.getEmail(),prestador);
         Usuario usuarioGenerado = usuarioRepository.save(usuario);

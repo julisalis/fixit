@@ -77,15 +77,15 @@
                     </div>
                     <!-- Prepended text-->
                     <div class="form-group">
-                        <label class="col-md-4 control-label" for="telefono">Celular*</label>
-                        <div class="col-md-3">
+                        <label class="col-md-4 col-xs-12 control-label" for="telefono">Celular*</label>
+                        <div class="col-md-2 col-xs-5">
                             <div class="input-group">
                                 <input type="hidden" th:field="*{telefono.codPais}" />
                                 <span class="input-group-addon" type="text" value="+54">+54</span>
                                 <input  placeholder="011" id="codArea" maxlength="4" th:value="${telefono.codArea}" th:field="*{telefono.codArea}" class="form-control" type="text" required="required" onkeypress="return isNumber(event)"/>
                             </div>
                         </div>
-                        <div class="col-md-3" style="padding-left: 0px;" >
+                        <div class="col-md-4 col-xs-7" style="padding-left: 0px;" >
                             <input placeholder="36329860" id="telefono" th:value="${telefono.telefono}" th:field="*{telefono.telefono}" maxlength="8" class="form-control" type="text" required="required" onkeypress="return isNumber(event)"/>
                         </div>
                     </div>

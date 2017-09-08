@@ -130,6 +130,13 @@
             </div>
 
             <div class="form-group">
+                <label class="col-md-4 control-label" for="validar">Validar con AFIP</label>
+                <div class="col-md-6">
+                    <input type="checkbox" id="validar" th:field="*{validar}" value="">
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-md-4 control-label" for="cuit">CUIT</label>
                 <div class="col-md-6">
                     <input type="text" th:field="*{cuit}" id="cuit" class="form-control input-md"/>
@@ -137,9 +144,18 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="validar">Validar con AFIP</label>
+                <label class="col-md-4 control-label" for="nacimiento">Fecha Nacimiento</label>
                 <div class="col-md-6">
-                    <input type="checkbox" id="validar" th:field="*{validar}" value="">
+                    <input type="date" th:field="*{nacimiento}" id="nacimiento" class="form-control input-md"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="sexo">Sexo</label>
+                <div class="col-md-6">
+                    <select required="required" th:field="*{sexo}" class="form-control" id="sexo">
+                        <option th:each="se : ${sexos}"  th:value="${se.value}" th:text="${se.label}"></option>
+                    </select>
                 </div>
             </div>
 
