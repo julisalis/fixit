@@ -486,11 +486,11 @@ background-color:#f7f7f7;
 }
 
 .container .section.category-items.job-category-items.text-center{
-    margin-top: 35px;
     padding: 50px 25px 35px;
     display: inline-block;
     background-color: #ffffff;
     width: 100%;
+    margin-bottom: 40px;
 }
 
 .container .section.category-items.job-category-items.text-center .category-list{
@@ -904,6 +904,7 @@ span {
 #section-Destacados .btn-secondary-alt{
     margin-bottom: 6%;
 }
+
 #publicacion{
     padding-top: 90px;
     background-color: rgba(211, 211, 211, 0.58);
@@ -1080,3 +1081,89 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.fixit-product-box p.installationType strong{
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    color: #333;
+    margin-top: 2%;
+}
+
+.fixit-product-box small {
+    color: #555;
+    display: block;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 1px;
+    line-height: 26px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 12px;
+}
+
+#section-Publicaciones-Categoria .btn-secondary-alt{
+    font-size: 14px;
+    margin-bottom: 5%;
+}
+
+.fixit-product-box {
+    margin-bottom: 10%;
+    padding: 0;
+    text-align: center;
+}
+
+#section-Publicaciones-Categoria {
+    padding-top: 30px;
+    background-color: rgba(211, 211, 211, 0.58);
+    padding-bottom: 50px;
+}
+
+#section-Publicaciones-Categoria .container {
+    background-color: white;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border-radius: 7px;
+    text-align: center;
+}
+
+#section-Publicaciones-Categoria .subtitulo-jobs {
+    font-size: 30px;
+    letter-spacing: 12px;
+    margin-top: 0px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+#section-Publicaciones-Categoria .img-responsive {
+    margin-bottom: 8%;
+}
+
+.jumbotron-categoria {
+    background-image: url("../images/mantenimiento.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0% 40%;
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 250px;
+    color: rgba(255,255,255,1);
+}
+
+.text-center .container .titulo-prin-static {
+    visibility: visible;
+    animation-delay: 0.1s;
+    animation-name: fadeInDown;
+    margin-top: 100px;
+    text-transform: uppercase;
+    font-size: 50px;
+    letter-spacing: 16px;
+    line-height: 60px;
+    text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
+}
+
+
+

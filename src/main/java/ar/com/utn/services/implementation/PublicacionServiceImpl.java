@@ -52,4 +52,9 @@ public class PublicacionServiceImpl implements PublicacionService {
 
 
     }
+
+    @Override
+    public Integer countPublicaciones(TipoTrabajo tipoTrabajo) {
+        return publicacionRepository.countByTiposTrabajo(tipoTrabajo);
+    }
 }

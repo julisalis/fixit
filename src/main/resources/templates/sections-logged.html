@@ -27,9 +27,9 @@
                     </h3>
                     <ul class="list-block">
                         <li class="list-block__item"  th:each="item: ${tipotrabajos}">
-                            <a class="category-a" th:href="'/publicaciones/'+${item.slug}">
+                            <a class="category-a" th:href="'/publicaciones/'+${item.TipoTrabajo.slug}">
                                 <div class="category-description">
-                                    <h2 th:text="${item.nombre}"/>
+                                    <h2 th:text="${item.TipoTrabajo.nombre}"/>
                                 </div>
                             </a>
                         </li>

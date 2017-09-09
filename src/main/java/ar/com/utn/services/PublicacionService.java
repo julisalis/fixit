@@ -12,4 +12,6 @@ public interface PublicacionService {
     List<TipoTrabajo> getTipostrabajos();
 
     void createPublicacion(PublicacionForm publicacionForm);
+
+    Integer countPublicaciones (TipoTrabajo tipoTrabajo);
 }

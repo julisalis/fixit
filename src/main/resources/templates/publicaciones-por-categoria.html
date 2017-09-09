@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+    <title>FixIT</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+</head>
+<body>
+<div th:fragment="sections-no-logged">
+    <!--/*/ <th:block th:include="fragments/header-static :: header"></th:block> /*/-->
+
+    <!-- Modal logIn-->
+    <!--/*/ <th:block th:include="modals/login :: login"></th:block> /*/-->
+
+    <!-- Foto inicial -->
+    <section id="section-foto">
+        <div class="jumbotron-categoria text-center">
+            <div class="container">
+                <h1 class="titulo-prin-static">Plomería</h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- Publicaciones por categoría -->
+    <section id="section-Publicaciones-Categoria">
+        <div class="container">
+                <h3 class="subtitulo-jobs">PUBLICACIONES</h3>
+                <div class="col-md-12 form-container">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper">
+                        <div class="fixit-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/inodoro.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Plomería">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Instalación de inodoro</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                </p>
+                                <!--Solo ve el "POSTULARME" en caso que sea el prestador-->
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated()">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper">
+                        <div class="fixit-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/inodoro.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Plomería">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Instalación de inodoro</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated()">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper">
+                        <div class="fixit-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/inodoro.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Plomería">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Instalación de inodoro</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated()">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper">
+                        <div class="fixit-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/inodoro.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Plomería">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Instalación de inodoro</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated()">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper">
+                        <div class="fixit-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/inodoro.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Plomería">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Instalación de inodoro</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated()">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper">
+                        <div class="fixit-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/inodoro.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Plomería">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Instalación de inodoro</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated()">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper">
+                        <div class="fixit-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/inodoro.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Plomería">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Instalación de inodoro</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated()">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper">
+                        <div class="fixit-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/inodoro.jpg" onerror="this.src='/images/not-found.png'" class="img-responsive" alt="Plomería">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong>Instalación de inodoro</strong>
+                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                </p>
+                                <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated()">
+                                    <span class="anim"></span>
+                                    Postularme
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</div>
+</body>
+</html>
