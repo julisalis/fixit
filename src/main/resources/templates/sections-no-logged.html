@@ -40,13 +40,13 @@
                 <h3 class="subtitulo-jobs">¿QUÉ ESTAS BUSCANDO?</h3>
                 <ul class="category-list" >
                     <li class="category-item" th:each="item: ${tipotrabajos}">
-                        <a th:href="'/publicaciones/'+${item.slug}">
+                        <a th:href="'/publicaciones/'+${item.tipoTrabajo.slug}">
                             <div class="category-icon">
-                                <img th:src="'images/'+${item.imagen}" th:name="${item.slug}" alt="images" class="img-responsive img-selected"/>
+                                <img th:src="'images/'+${item.tipoTrabajo.imagen}" th:name="${item.tipoTrabajo.slug}" alt="images" class="img-responsive img-selected"/>
                             </div>
-                            <span class="category-title" th:text="${item.nombre}">
+                            <span class="category-title" th:text="${item.tipoTrabajo.nombre}">
                                 </span>
-                            <span class="category-quantity">(1298)</span>
+                            <span class="category-quantity" th:text="'('+${item.cantidad}+')'"/>
                         </a>
                     </li><!-- category-item -->
                 </ul>
