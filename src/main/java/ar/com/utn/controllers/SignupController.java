@@ -1,13 +1,13 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.afip.AfipHandler;
+import ar.com.utn.afip.domain.Persona;
+import ar.com.utn.afip.enums.AfipWs;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
-import ar.com.utn.models.Prestador;
-import ar.com.utn.models.Telefono;
-import ar.com.utn.models.TipoDoc;
-import ar.com.utn.models.Usuario;
+import ar.com.utn.models.*;
 import ar.com.utn.services.PrestadorService;
 import ar.com.utn.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +48,7 @@ import java.util.stream.Collectors;
             model.addAttribute("telefono",new TelefonoForm());
             model.addAttribute("documentos", TipoDoc.values());
             model.addAttribute("tiposTrabajos", generarTiposTrabajos());
+            model.addAttribute("sexos", Sexo.values());
             return "signup-prestador";
         }
 
@@ -108,14 +109,33 @@ import java.util.stream.Collectors;
                 result.rejectValue("email","email.repeat","El email ingresado ya existe");
             }
 
+            if(prestadorForm.getValidar()) {
+                if(prestadorForm.getCuit()==null || prestadorForm.getNacimiento() == null || prestadorForm.getSexo() == null) {
+                    result.rejectValue("validar","validar.campos", "Todos los campos obligatorios");
+                }
+            }
+
             if (prestadorForm.getCuit()!=null && !cuitUnique){
                 result.rejectValue("cuit","cuit.repeat","El cuit ingresado ya existe");
             }
 
             if(!result.hasErrors()){
-                usuarioService.registrarPrestador(prestadorForm);
-                map.put("success", true);
-                map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
+                /*if(prestadorForm.getValidar()){
+                    AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l);
+                    Persona personaAfip = afip.getPersona(prestadorForm.getCuit());
+                    if(!validarPersonaConAfip(personaAfip,prestadorForm)) {
+                        map.put("success", false);
+                        map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados o deseleccione la validación.");
+                    }else{
+                        usuarioService.registrarPrestador(prestadorForm);
+                        map.put("success", true);
+                        map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
+                    }
+                }else{*/
+                    usuarioService.registrarPrestador(prestadorForm);
+                    map.put("success", true);
+                    map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
+                //}
             }else{
                 map.put("success", false);
                 map.put("errors", result.getAllErrors());
@@ -126,6 +146,24 @@ import java.util.stream.Collectors;
         }
 
         return map;
+    }
+
+    private boolean validarPersonaConAfip(Persona personaAfip, PrestadorForm pf) {
+        if(!personaAfip.getNombreCompleto().equalsIgnoreCase(pf.getApellido().trim() + " " +pf.getNombre().trim())) {
+            return false;
+        }
+
+        if(!personaAfip.getNacimiento().equals(pf.getNacimiento())) {
+            return false;
+        }
+
+        if(!pf.getSexo().equalsAfip(personaAfip.getSexo())) {
+            return false;
+        }
+
+        //TODO: Falta el tema de las actividades
+
+        return true;
     }
 
     private boolean validarTelefono(@Valid TelefonoForm telefono) {

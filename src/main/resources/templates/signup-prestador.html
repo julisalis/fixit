@@ -137,24 +137,24 @@
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="cuit">CUIT</label>
+                <label class="col-md-4 control-label" for="cuit">CUIT*</label>
                 <div class="col-md-6">
                     <input type="text" th:field="*{cuit}" id="cuit" class="form-control input-md"/>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="nacimiento">Fecha Nacimiento</label>
+                <label class="col-md-4 control-label" for="nacimiento">Fecha Nacimiento*</label>
                 <div class="col-md-6">
                     <input type="text" th:field="*{nacimiento}" id="nacimiento" class="datepicker form-control input-md"/>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-md-4 control-label" for="sexo">Sexo</label>
+                <label class="col-md-4 control-label" for="sexo">Sexo*</label>
                 <div class="col-md-6">
                     <select required="required" th:field="*{sexo}" class="form-control" id="sexo">
-                        <option th:each="se : ${sexos}"  th:value="${se.value}" th:text="${se.label}"></option>
+                        <option th:each="se : ${sexos}"  th:value="${se}" th:text="${se.texto}"></option>
                     </select>
                 </div>
             </div>
@@ -195,6 +195,10 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
+    $("#nacimiento").parent().parent().hide();
+    $("#cuit").parent().parent().hide();
+    $("#sexo").parent().parent().hide();
+
     $("#tipos").select2();
     $('#nacimiento').datepicker({
         dateFormat: "dd/mm/yy",
@@ -208,6 +212,20 @@
         var date = new Date();
         return date;
     }
+
+    $("#validar").val(!this.checked);
+
+    $("#validar").change(function(){
+       if(this.checked) {
+           $("#nacimiento").parent().parent().show();
+           $("#cuit").parent().parent().show();
+           $("#sexo").parent().parent().show();
+       }else{
+           $("#nacimiento").parent().parent().hide();
+           $("#cuit").parent().parent().hide();
+           $("#sexo").parent().parent().hide();
+       }
+    });
 </script>
 
 </html>

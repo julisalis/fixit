@@ -13,4 +13,17 @@ public enum Sexo {
     public String getName(){
         return name();
     }
+
+    public static Sexo afipValue(String afip) {
+        if(afip.equalsIgnoreCase("MASCULINO")) {
+            return MASCULINO;
+        }
+        if(afip.equalsIgnoreCase("FEMENINO")) {
+            return FEMENINO;
+        }
+        if(afip.equalsIgnoreCase("DESCONOCIDO")) {
+            return DESCONOCIDO;
+        }
+        return null;
+    }
 }

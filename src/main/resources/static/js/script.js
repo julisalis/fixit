@@ -36,7 +36,7 @@ $(function () {
                         $('#modalSuccess').modal('toggle');
                     }
                 } else {
-                    //Manejo de errores en json
+                    //Manejo de errores en json 
                     var errorsList = data.errors;
                     if(typeof(errorsList) != 'undefined'){
                         for (i = 0; i < errorsList.length; i++) {

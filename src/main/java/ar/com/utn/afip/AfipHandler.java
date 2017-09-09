@@ -92,10 +92,9 @@ public class AfipHandler {
             //PersonaServiceA10Impl ws = new PersonaServiceA10Impl();
             PersonaServiceA4_Service s = new PersonaServiceA4_Service();
             PersonaServiceA4 psa4 = s.getPersonaServiceA4Port();
-            //psa4.dummy();
-            //ws.dummy();
             personaReturn = psa4.getPersona(personaRequest.getToken(), personaRequest.getSign(), personaRequest.getCuitRepresentada(), personaRequest.getIdPersona());
             persona.buildPersonaFromAfip(personaReturn);
+            return persona;
 
         }catch(Exception e){
             e.printStackTrace();

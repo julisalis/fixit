@@ -4,14 +4,17 @@ import ar.com.utn.afip.enums.*;
 import sr.puc.server.ws.soap.a4.*;
 import sr.puc.server.ws.soap.a4.Actividad;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public class Persona {
     private String apellido;
     private String nombre;
     private Sexo sexo;
-    private LocalDate nacimiento;
+    private Date nacimiento;
     //private String actividadPrincipal;
     //private Long idActividadPrincipal;
     private List<Actividad> actividades;
@@ -30,18 +33,31 @@ public class Persona {
         sr.puc.server.ws.soap.a4.Persona p = new sr.puc.server.ws.soap.a4.Persona();
         p = pr.getPersona();
 
-        this.setNombre(p.getNombre());
-        this.setApellido(p.getApellido());
+        try {
+            this.setNombre(new String(p.getNombre().getBytes("ISO-8859-1"),"utf-8"));
+            this.setApellido(new String(p.getApellido().getBytes("ISO-8859-1"),"utf-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         //Sexo
+        this.setSexo(Sexo.afipValue(p.getSexo()));
         //Nacimiento
+        this.setNacimiento(toDate(p.getFechaNacimiento()));
         this.setIdPersona(p.getIdPersona());
         this.setTipoDocumento(TipoDocumento.getByCodigo(p.getTipoDocumento()));
         this.setNumeroDocumento(p.getNumeroDocumento());
-        this.setTipoPersona(TipoPersona.getByNombre(p.getTipoPersona()));
-        this.setTipoClave(TipoClave.valueOf(p.getTipoClave()));
-        this.setEstadoClave(EstadoClave.valueOf(p.getEstadoClave()));
+        //this.setTipoPersona(TipoPersona.getByNombre(p.getTipoPersona()));
+        //this.setTipoClave(TipoClave.valueOf(p.getTipoClave()));
+        //this.setEstadoClave(EstadoClave.valueOf(p.getEstadoClave()));
         //Actividades
         this.setDomicilio(p.getDomicilio());
+    }
+
+    private Date toDate(XMLGregorianCalendar calendar){
+        if(calendar == null) {
+            return null;
+        }
+        return calendar.toGregorianCalendar().getTime();
     }
 
     public String getApellido() {
@@ -124,11 +140,11 @@ public class Persona {
         this.sexo = sexo;
     }
 
-    public LocalDate getNacimiento() {
+    public Date getNacimiento() {
         return nacimiento;
     }
 
-    public void setNacimiento(LocalDate nacimiento) {
+    public void setNacimiento(Date nacimiento) {
         this.nacimiento = nacimiento;
     }
 
@@ -138,5 +154,13 @@ public class Persona {
 
     public void setActividades(List<Actividad> actividades) {
         this.actividades = actividades;
+    }
+
+    public String getNombreCompleto() {
+        if(getNombre() == null) {
+            return getApellido().trim().toUpperCase();
+        }
+
+        return getApellido().trim().toUpperCase() + " " + getNombre().trim().toUpperCase();
     }
 }
