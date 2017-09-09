@@ -57,4 +57,9 @@ public class PublicacionServiceImpl implements PublicacionService {
     public Integer countPublicaciones(TipoTrabajo tipoTrabajo) {
         return publicacionRepository.countByTiposTrabajo(tipoTrabajo);
     }
+
+    @Override
+    public List<Publicacion> findAll() {
+        return publicacionRepository.findAll();
+    }
 }

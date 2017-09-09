@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import sun.misc.Request;
 
@@ -39,20 +36,13 @@ public class IndexController {
         return tiposTrabajos.stream().map(t -> new TipoTrabajoDTO(t,publicacionService.countPublicaciones(t))).collect(Collectors.toList());
     }
 
-    @GetMapping(value="/publicaciones/plomeria")
-    public String listPublicaciones(WebRequest request, Model model) {
-       // model.addAttribute("publicaciones", );
+    @GetMapping(value="/publicaciones/{slug}")
+    public String listPublicaciones(@PathVariable("slug") String slug, WebRequest request, Model model) {
+       model.addAttribute("publicaciones", getPublicacionesPorCatregoria(publicacionService.findAll(), slug));
         return "publicaciones-por-categoria";
     }
 
-//    @GetMapping(value="/publicaciones/{slug}")
-//    public String listPublicaciones(@RequestParam String slug, WebRequest request, Model model) {
-//       model.addAttribute("publicaciones", );
-//        return "publicaciones-por-categoria";
-//    }
-
-//    public List<Publicacion> getPublicacionesPorCatregoria (List<Publicacion> publicaciones, slug) {
-//        return publicaciones.stream().filter(p -> p.getTiposTrabajo().f)
-//                .map(p -> ).collect(Collectors.toList());
-//    }
+    public List<Publicacion> getPublicacionesPorCatregoria (List<Publicacion> publicaciones, String slug) {
+        return publicaciones.stream().filter(p -> p.getTiposTrabajo().stream().anyMatch(t -> t.getSlug().equals(slug))).collect(Collectors.toList());
+    }
 }
