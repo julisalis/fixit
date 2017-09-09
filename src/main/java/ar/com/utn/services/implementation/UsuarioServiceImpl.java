@@ -146,8 +146,8 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+    public UserDetails loadUserByUsernameAndRoles(String username,List<Rol> roles) throws UsernameNotFoundException {
         Usuario usuario = findByUsername(username);
         if (usuario == null) {
             throw new UsernameNotFoundException(username);
@@ -155,7 +155,7 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         if(!usuario.isActivado()){
             throw new UserNotActiveException("El usuario se encuentra inactivo");
         }
-        return new UserDetailsImpl(usuario);
+        return new UserDetailsImpl(usuario,roles);
     }
 
 
@@ -186,15 +186,27 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         if(user != null){
             user.setActivado(true);
             user.setActivationToken(null);
-            logInUser(user.getUsername());
+            logInUser(user.getUsername(),user.getRoles());
             return;
         }
         throw new TokenNotFoundException("The token does not exists");
     }
 
-    private void logInUser(String username) {
-        UserDetails userDetails = loadUserByUsername(username);
+    private void logInUser(String username, List<Rol> roles) {
+        UserDetails userDetails = loadUserByUsernameAndRoles(username,roles);
         currentSession.logInUser(userDetails);
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Usuario usuario = findByUsername(username);
+        if (usuario == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        if(!usuario.isActivado()){
+            throw new UserNotActiveException("El usuario se encuentra inactivo");
+        }
+        return new UserDetailsImpl(usuario,usuario.getRoles());
     }
 }
 

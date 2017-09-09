@@ -46,8 +46,11 @@ public class Usuario extends PersistentEntity {
     @OneToOne
     private Prestador prestador;
 
+    @ElementCollection(targetClass=Rol.class)
     @Enumerated(EnumType.STRING)
-    private Rol rol = Rol.USER;
+    @CollectionTable(name="user_rol")
+    @Column(name="rol")
+    private List<Rol> roles;
 
     @Column(columnDefinition="boolean default false", nullable = false)
     private  boolean activado= false;
@@ -64,8 +67,8 @@ public class Usuario extends PersistentEntity {
 
     }
 
-    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Long cuit, Prestador prestador, Ubicacion ubicacion,String emails) {
-        super();
+
+    private void createUser(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion,String email) {
         this.username = username;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -73,40 +76,27 @@ public class Usuario extends PersistentEntity {
         this.tipoDoc = tipoDoc;
         this.password= password;
         this.telefono = telefono;
-        this.prestador = prestador;
         this.ubicacion=ubicacion;
         this.email = email;
-        //falta el rol
+    }
+
+
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Long cuit, Prestador prestador, Ubicacion ubicacion,String email) {
+        createUser(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
+        this.prestador = prestador;
+        this.roles.add(Rol.PRESTADOR);
     }
 
     public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion,String email,Tomador tomador) {
-        super();
-        this.username = username;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.documento = documento;
-        this.tipoDoc = tipoDoc;
-        this.password= password;
-        this.telefono = telefono;
+        createUser(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
         this.tomador = tomador;
-        this.ubicacion=ubicacion;
-        this.email = email;
-        //falta el rol
+        this.roles.add(Rol.TOMADOR);
     }
 
     public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion,String email,Prestador prestador) {
-        super();
-        this.username = username;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.documento = documento;
-        this.tipoDoc = tipoDoc;
-        this.password= password;
-        this.telefono = telefono;
+        createUser(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
         this.prestador = prestador;
-        this.ubicacion=ubicacion;
-        this.email = email;
-        //falta el rol
+        this.roles.add(Rol.PRESTADOR);
     }
 
     public String getUsername() {
@@ -187,12 +177,20 @@ public class Usuario extends PersistentEntity {
         this.ubicacion = ubicacion;
     }
 
-    public Rol getRol() {
-        return rol;
+    public Date getFechaCreacion() {
+        return fechaCreacion;
     }
 
-    public void setRol(Rol rol) {
-        this.rol = rol;
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public List<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
     }
 
     public String getActivationToken() {

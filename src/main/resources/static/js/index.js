@@ -11,5 +11,36 @@ $(function () {
         img.prop("src",'/images/'+name+".png");
     });
 
+    $(".modal-signin button.btn-login").click(function(){
+        var container = $(this).closest(".modal-signin");
+        //Escondo el error
+        $("div.error-msg",container).hide();
+        $("div.error-msg p",container).remove();
+        var form = $(this).closest( "form" );
+        $.post(form.attr('action') , form.serialize() )
+            .done(function( data ) {
+                if(data.success) {
+                    if(typeof(data.select_role) != 'undefined' && data.select_role==true ){
+                        //mostrar selector de role
+                    }else{
+                        if(typeof(data.url) != 'undefined'){
+                            window.location=data.url;
+                        }else{
+                            location.reload();
+                        }
+                    }
+
+                } else {
+                    //Muestro error
+                    $("div.error-msg",container).append("<p>"+$.i18n._('login-error')+"</p>");
+                    $("div.error-msg",container).show();
+                }
+            })
+            .fail(function( data ) {
+                var result = $(data);
+            });
+
+    });
+
 
 });

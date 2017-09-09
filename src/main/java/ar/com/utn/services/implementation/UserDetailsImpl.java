@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -16,15 +17,17 @@ import java.util.Set;
 public class UserDetailsImpl implements UserDetails {
 
     private Usuario usuario;
+    private List<Rol> roles;
 
-    public UserDetailsImpl(Usuario usuario) {
+    public UserDetailsImpl(Usuario usuario,List<Rol> rol) {
         this.usuario = usuario;
+        this.roles=rol;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
-        authorities.add( new SimpleGrantedAuthority(usuario.getRol().name()));
+        roles.forEach(rol -> authorities.add( new SimpleGrantedAuthority(rol.name())));
         return authorities;
     }
 
