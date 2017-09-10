@@ -46,7 +46,7 @@ public class Usuario extends PersistentEntity {
     @OneToOne
     private Prestador prestador;
 
-    @ElementCollection(targetClass=Rol.class)
+    @ElementCollection(targetClass=Rol.class,fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     @CollectionTable(name="user_rol")
     @Column(name="rol")
