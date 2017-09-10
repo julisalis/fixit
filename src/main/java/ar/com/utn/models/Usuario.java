@@ -81,18 +81,21 @@ public class Usuario extends PersistentEntity {
     public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Long cuit, Prestador prestador, Ubicacion ubicacion,String email) {
         this(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
         this.prestador = prestador;
+        this.roles = new ArrayList<>();
         this.roles.add(Rol.PRESTADOR);
     }
 
     public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion,String email,Tomador tomador) {
         this(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
         this.tomador = tomador;
+        this.roles = new ArrayList<>();
         this.roles.add(Rol.TOMADOR);
     }
 
     public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion,String email,Prestador prestador) {
         this(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
         this.prestador = prestador;
+        this.roles = new ArrayList<>();
         this.roles.add(Rol.PRESTADOR);
     }
 
