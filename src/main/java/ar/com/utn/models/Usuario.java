@@ -66,9 +66,7 @@ public class Usuario extends PersistentEntity {
     public Usuario(){
 
     }
-
-
-    private void createUser(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion,String email) {
+    public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion, String email) {
         this.username = username;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -80,21 +78,20 @@ public class Usuario extends PersistentEntity {
         this.email = email;
     }
 
-
     public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Long cuit, Prestador prestador, Ubicacion ubicacion,String email) {
-        createUser(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
+        this(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
         this.prestador = prestador;
         this.roles.add(Rol.PRESTADOR);
     }
 
     public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion,String email,Tomador tomador) {
-        createUser(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
+        this(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
         this.tomador = tomador;
         this.roles.add(Rol.TOMADOR);
     }
 
     public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Ubicacion ubicacion,String email,Prestador prestador) {
-        createUser(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
+        this(username,nombre,apellido,documento,tipoDoc,password,telefono,ubicacion,email);
         this.prestador = prestador;
         this.roles.add(Rol.PRESTADOR);
     }
