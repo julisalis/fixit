@@ -30,10 +30,10 @@
                 <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Profesionales" data-target="section-Profesionales">Profesionales</a></li>
                 <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Destacados" data-target="section-Destacados">Trabajos Destacados</a></li>
                 <!--Tomador AGREGAR HASROLE-->
-                <li sec:authorize="isAuthenticated()" access="hasRole('TOMADOR')"><a href="/publicacion/list">Publicaciones</a></li>
+                <li sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" ><a href="/publicacion/list">Publicaciones</a></li>
                 <!--Prestador AGREGAR HASROLE-->
-                <li sec:authorize="isAuthenticated()" access="hasRole('PRESTADOR')"><a href="#about">Postulaciones</a></li>
-                <li sec:authorize="isAuthenticated()" access="hasRole('PRESTADOR')"><a href="#contact">Trabajos</a></li>
+                <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="#about">Postulaciones</a></li>
+                <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="#contact">Trabajos</a></li>
             </ul>
 
             <div class="navbar-text navbar-right">
