@@ -147,18 +147,6 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
     }
 
 
-    public UserDetails loadUserByUsernameAndRoles(String username,List<Rol> roles) throws UsernameNotFoundException {
-        Usuario usuario = findByUsername(username);
-        if (usuario == null) {
-            throw new UsernameNotFoundException(username);
-        }
-        if(!usuario.isActivado()){
-            throw new UserNotActiveException("El usuario se encuentra inactivo");
-        }
-        return new UserDetailsImpl(usuario,roles);
-    }
-
-
     @Override
     public boolean usernameUnique(String username){
         Usuario user = usuarioRepository.findByUsernameIgnoreCase(username);
@@ -186,14 +174,14 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         if(user != null){
             user.setActivado(true);
             user.setActivationToken(null);
-            logInUser(user.getUsername(),user.getRoles());
+            logInUser(user.getUsername());
             return;
         }
         throw new TokenNotFoundException("The token does not exists");
     }
 
-    private void logInUser(String username, List<Rol> roles) {
-        UserDetails userDetails = loadUserByUsernameAndRoles(username,roles);
+    private void logInUser(String username) {
+        UserDetails userDetails = loadUserByUsername(username);
         currentSession.logInUser(userDetails);
     }
 
@@ -206,7 +194,7 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         if(!usuario.isActivado()){
             throw new UserNotActiveException("El usuario se encuentra inactivo");
         }
-        return new UserDetailsImpl(usuario,usuario.getRoles());
+        return new UserDetailsImpl(usuario);
     }
 }
 

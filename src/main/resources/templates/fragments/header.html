@@ -29,9 +29,7 @@
                 <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Clientes" data-target="section-Clientes">Clientes</a></li>
                 <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Profesionales" data-target="section-Profesionales">Profesionales</a></li>
                 <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Destacados" data-target="section-Destacados">Trabajos Destacados</a></li>
-                <!--Tomador AGREGAR HASROLE-->
                 <li sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" ><a href="/publicacion/list">Publicaciones</a></li>
-                <!--Prestador AGREGAR HASROLE-->
                 <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="#about">Postulaciones</a></li>
                 <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="#contact">Trabajos</a></li>
             </ul>
