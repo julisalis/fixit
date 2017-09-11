@@ -4,6 +4,11 @@ $(function () {
         $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
     });
 
+    var navMain = $(".navbar-collapse");
+    navMain.on("click", "a", null, function () {
+        navMain.collapse('hide');
+    });
+
     $("#localidad").load('/signup/ajax/localidad', $("#provincia").serialize());
     $('#provincia').on('change', function() {
         $("#localidad").load('/signup/ajax/localidad', $("#provincia").serialize());
