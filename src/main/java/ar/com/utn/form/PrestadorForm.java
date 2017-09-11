@@ -46,7 +46,9 @@ public class PrestadorForm {
     private Boolean validar;
 
     private Long cuit;
-    private Date nacimiento;
+    @Temporal(TemporalType.DATE)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd/mm/yy")
+    private LocalDate nacimiento;
     private Sexo sexo;
 
 
@@ -154,11 +156,11 @@ public class PrestadorForm {
         this.tipos = tipos;
     }
 
-    public Date getNacimiento() {
+    public LocalDate getNacimiento() {
         return nacimiento;
     }
 
-    public void setNacimiento(Date nacimiento) {
+    public void setNacimiento(LocalDate nacimiento) {
         this.nacimiento = nacimiento;
     }
 

@@ -14,7 +14,7 @@ public class Persona {
     private String apellido;
     private String nombre;
     private Sexo sexo;
-    private Date nacimiento;
+    private LocalDate nacimiento;
     //private String actividadPrincipal;
     //private Long idActividadPrincipal;
     private List<Actividad> actividades;
@@ -29,35 +29,34 @@ public class Persona {
     public Persona() {
     }
 
-    public void buildPersonaFromAfip(PersonaReturn pr) {
+    public static Persona buildPersonaFromAfip(PersonaReturn pr) {
         sr.puc.server.ws.soap.a4.Persona p = new sr.puc.server.ws.soap.a4.Persona();
         p = pr.getPersona();
 
-        try {
-            this.setNombre(new String(p.getNombre().getBytes("ISO-8859-1"),"utf-8"));
-            this.setApellido(new String(p.getApellido().getBytes("ISO-8859-1"),"utf-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        Persona persona = new Persona();
+        persona.setNombre(p.getNombre());
+        persona.setApellido(p.getApellido());
         //Sexo
-        this.setSexo(Sexo.afipValue(p.getSexo()));
+        persona.setSexo(Sexo.afipValue(p.getSexo()));
         //Nacimiento
-        this.setNacimiento(toDate(p.getFechaNacimiento()));
-        this.setIdPersona(p.getIdPersona());
-        this.setTipoDocumento(TipoDocumento.getByCodigo(p.getTipoDocumento()));
-        this.setNumeroDocumento(p.getNumeroDocumento());
+        persona.setNacimiento(toDate(p.getFechaNacimiento()));
+        persona.setIdPersona(p.getIdPersona());
+        persona.setTipoDocumento(TipoDocumento.getByCodigo(p.getTipoDocumento()));
+        persona.setNumeroDocumento(p.getNumeroDocumento());
         //this.setTipoPersona(TipoPersona.getByNombre(p.getTipoPersona()));
         //this.setTipoClave(TipoClave.valueOf(p.getTipoClave()));
         //this.setEstadoClave(EstadoClave.valueOf(p.getEstadoClave()));
         //Actividades
-        this.setDomicilio(p.getDomicilio());
+        persona.setDomicilio(p.getDomicilio());
+
+        return persona;
     }
 
-    private Date toDate(XMLGregorianCalendar calendar){
+    private static LocalDate toDate(XMLGregorianCalendar calendar){
         if(calendar == null) {
             return null;
         }
-        return calendar.toGregorianCalendar().getTime();
+        return calendar.toGregorianCalendar().toZonedDateTime().toLocalDate();
     }
 
     public String getApellido() {
@@ -140,11 +139,11 @@ public class Persona {
         this.sexo = sexo;
     }
 
-    public Date getNacimiento() {
+    public LocalDate getNacimiento() {
         return nacimiento;
     }
 
-    public void setNacimiento(Date nacimiento) {
+    public void setNacimiento(LocalDate nacimiento) {
         this.nacimiento = nacimiento;
     }
 
