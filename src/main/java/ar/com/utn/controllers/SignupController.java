@@ -17,6 +17,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import sr.puc.server.ws.soap.a4.Actividad;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -161,12 +162,24 @@ import java.util.stream.Collectors;
             return false;
         }
 
-        //TODO: Falta el tema de las actividades
+        /*if(!actividadValida(personaAfip.getActividades())) {
+            return false;
+        }*/
 
         return true;
     }
 
-    private boolean validarTelefono(@Valid TelefonoForm telefono) {
+    private boolean actividadValida(List<Actividad> actividades) {
+        Boolean valido = false;
+        for (Actividad a : actividades) {
+            if (prestadorService.getActividadesAfip().stream().anyMatch(af -> af.getDescripcion().trim().equalsIgnoreCase(a.getDescripcionActividad().trim()))) {
+                valido = true;
+            }
+        }
+        return valido;
+    }
+
+        private boolean validarTelefono(@Valid TelefonoForm telefono) {
         return true;
     }
 

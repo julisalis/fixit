@@ -46,9 +46,11 @@ public class PrestadorForm {
     private Boolean validar;
 
     private Long cuit;
+
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd/mm/yy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd/MM/yyyy")
     private LocalDate nacimiento;
+
     private Sexo sexo;
 
 
