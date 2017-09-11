@@ -9,11 +9,11 @@
     <section id="signin" class="modal-signin">
         <div class="container">
             <div class="col-lg-12">
-                <div th:if="${param.error}" class="error-msg alert alert-danger">
+                <div hidden class="error-msg alert alert-danger">
                     <p>Usuario o contraseña invalidos.</p>
                 </div>
                 <div th:if="${param.logout}" class="alert alert-success">
-                    <p >Has cerrado sesión.</p>
+                    <p>Has cerrado sesión.</p>
                 </div>
                 <form name="f" th:action="@{/login}" method="post" class="form-signin">
                     <input type="text" id="username" name="username" class="form-control" placeholder="Nombre de usuario" required="true" />
@@ -24,7 +24,7 @@
                         <!--<span class="span">Recuerdame</span>-->
                     <!--</div>-->
 
-                    <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+                    <button class="btn btn-lg btn-primary btn-block btn-login" type="submit">Ingresar</button>
                     <div class=" col-lg-12 link-login forgot-password">
                         <a href="#">¿Olvidó su contraseña?</a>
                     </div>
