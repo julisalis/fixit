@@ -86,15 +86,12 @@ public class AfipHandler {
         personaRequest.setCuitRepresentada(getTicketAcceso().getCuitRepresentada());
         personaRequest.setIdPersona(idPersona);
 
-        Persona persona = new Persona();
-
         try {
             //PersonaServiceA10Impl ws = new PersonaServiceA10Impl();
             PersonaServiceA4_Service s = new PersonaServiceA4_Service();
             PersonaServiceA4 psa4 = s.getPersonaServiceA4Port();
             personaReturn = psa4.getPersona(personaRequest.getToken(), personaRequest.getSign(), personaRequest.getCuitRepresentada(), personaRequest.getIdPersona());
-            persona.buildPersonaFromAfip(personaReturn);
-            return persona;
+            return Persona.buildPersonaFromAfip(personaReturn);
 
         }catch(Exception e){
             e.printStackTrace();
