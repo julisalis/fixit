@@ -1,7 +1,4 @@
 package ar.com.utn.models;
-
-import org.hibernate.type.CurrencyType;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -42,9 +39,9 @@ public class Publicacion extends PersistentEntity{
     private PublicacionMultimedia multimedia;
     @Enumerated
     private Urgencia urgencia;
-    @Column
+    @Column(columnDefinition = "DATETIME")
     private LocalDate fecha;
-    @Column(nullable = false)
+    @Column(columnDefinition = "DATETIME")
     private LocalDateTime fechaCreacion;
 
     public Publicacion() {

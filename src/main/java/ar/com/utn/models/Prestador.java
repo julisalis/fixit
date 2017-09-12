@@ -15,6 +15,7 @@ public class Prestador extends PersistentEntity {
     private List<TipoTrabajo> tipos;
 
     private Long cuit;
+    @Column(columnDefinition = "DATETIME")
     private LocalDate nacimiento;
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
