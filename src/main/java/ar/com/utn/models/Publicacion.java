@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Currency;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -39,20 +40,20 @@ public class Publicacion extends PersistentEntity{
     private PublicacionMultimedia multimedia;
     @Enumerated
     private Urgencia urgencia;
-    @Column(columnDefinition = "DATETIME")
-    private LocalDate fecha;
-    @Column(columnDefinition = "DATETIME")
-    private LocalDateTime fechaCreacion;
+
+    private Date fecha;
+
+    private Date fechaCreacion;
 
     public Publicacion() {
     }
 
     @PrePersist
     protected void onCreate() {
-        fechaCreacion = LocalDateTime.now();
+        this.fechaCreacion = new Date();
     }
 
-    public Publicacion(String currency,String titulo, String descripcion, BigDecimal presupMax, TipoTrabajo tipoTrabajo, Localidad localidad, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia,LocalDate fecha,Urgencia urgencia) {
+    public Publicacion(String currency,String titulo, String descripcion, BigDecimal presupMax, TipoTrabajo tipoTrabajo, Localidad localidad, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia,Date fecha,Urgencia urgencia) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.presupMax = presupMax;
@@ -162,11 +163,11 @@ public class Publicacion extends PersistentEntity{
         this.multimedia = multimedia;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 
@@ -178,11 +179,11 @@ public class Publicacion extends PersistentEntity{
         this.currency = currency;
     }
 
-    public LocalDateTime getFechaCreacion() {
+    public Date getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+    public void setFechaCreacion(Date fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 }

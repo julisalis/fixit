@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class PublicacionForm {
     private Urgencia urgencia;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="MM-dd-yyyy")
-    private LocalDate fecha;
+    private Date fecha;
 
     public PublicacionForm() {
     }
@@ -109,13 +110,13 @@ public class PublicacionForm {
         this.urgencia = urgencia;
     }
 
-    public LocalDate getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(LocalDate fecha) {
-        this.fecha = fecha;
-    }
+//    public LocalDate getFecha() {
+//        return fecha;
+//    }
+//
+//    public void setFecha(LocalDate fecha) {
+//        this.fecha = fecha;
+//    }
 
     public String getCurrencyCode() {
         return currencyCode;
@@ -123,5 +124,13 @@ public class PublicacionForm {
 
     public void setCurrencyCode(String currencyCode) {
         this.currencyCode = currencyCode;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }

@@ -5,6 +5,7 @@ import ar.com.utn.models.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Currency;
+import java.util.Date;
 
 /**
  * Created by iaruedel on 12/09/17.
@@ -19,7 +20,7 @@ public class PublicacionDTO {
     private Localidad localidad;
     private Provincia provincia;
     private String urgencia;
-    private LocalDate fecha;
+    private Date fecha;
 
     public PublicacionDTO(Publicacion publicacion) {
         this.titulo = publicacion.getTitulo();
@@ -100,11 +101,11 @@ public class PublicacionDTO {
         this.urgencia = urgencia;
     }
 
-    public LocalDate getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 }
