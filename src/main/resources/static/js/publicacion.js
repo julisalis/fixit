@@ -13,6 +13,7 @@ $(function () {
             img.prop("src",'/images/'+name+".png");
         }
         else{
+            $(".category-item").find(".category-checkbox").prop('checked',false);
             $(this).find(".category-checkbox").prop('checked',true);
             $(this).addClass("checked");
             var img = $(this).find(".img-selected");
@@ -40,16 +41,14 @@ $(function () {
     }
 
     $('.datepicker').datepicker({
-        dateFormat: "dd/mm/yy",
+        autoclose: true,
+        dateFormat: "mm-dd-yy",
         maxDate: '+1Y',
         changeMonth: true,
         changeYear: true,
         showButtonPanel:true,
         minDate:firstAvailableDate(),
-        }).datepicker("setDate", firstAvailableDate());
-
-
-
+        });
 
 });
 

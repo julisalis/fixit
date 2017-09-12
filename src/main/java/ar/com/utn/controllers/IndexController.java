@@ -43,6 +43,6 @@ public class IndexController {
     }
 
     public List<Publicacion> getPublicacionesPorCatregoria (List<Publicacion> publicaciones, String slug) {
-        return publicaciones.stream().filter(p -> p.getTiposTrabajo().stream().anyMatch(t -> t.getSlug().equals(slug))).collect(Collectors.toList());
+        return publicaciones.stream().filter(p -> p.getTipoTrabajo().getSlug().equals(slug)).collect(Collectors.toList());
     }
 }

@@ -75,6 +75,8 @@
                             <label for="fecha">Fecha</label>
                             <input type="text" th:field="*{fecha}"
                                    id="fecha" class="datepicker form-control input-md"
+                                   data-validation="date"
+                                   data-validation-format="mm-dd-yyyy"
                                    th:disabled="${fecha == null}"/>
                         </div>
 
@@ -100,11 +102,11 @@
                         </div>
 
                         <div class="form-group col-md-12">
-                            <label for="tiposTrabajo">Categorías</label>
+                            <label for="tipoTrabajo">Categorías</label>
                             <div class="section category-items job-category-items  text-center">
-                                <div data-toggle="buttons" class="btn-group category-list" id="tiposTrabajo">
+                                <div data-toggle="buttons" class="btn-group category-list" id="tipoTrabajo">
                                     <label class="category-item" th:each="item: ${tipos}">
-                                        <input hidden class="category-checkbox" type="checkbox" th:field="*{tiposTrabajo}" th:value="${item.id}" data-validation="required"/>
+                                        <input hidden class="category-checkbox" type="radio" th:field="*{tipoTrabajo}" th:value="${item.id}" data-validation="required"/>
                                         <div class="category-icon">
                                             <img th:src="'/images/'+${item.imagen}" alt="images" th:name="${item.slug}" class="img-selected image-radio img-responsive"/>
                                         </div>

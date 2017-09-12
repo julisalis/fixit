@@ -19,6 +19,7 @@ import java.util.List;
  * Created by iaruedel on 16/08/17.
  */
 public class PublicacionForm {
+
     @NotBlank
     private String titulo;
     @NotBlank
@@ -26,7 +27,7 @@ public class PublicacionForm {
     @NotNull
     private BigDecimal presupMax;
     @NotNull
-    private List<TipoTrabajo> tiposTrabajo;
+    private TipoTrabajo tipoTrabajo;
     @NotNull
     private String currencyCode;
     @NotNull
@@ -38,8 +39,9 @@ public class PublicacionForm {
     @NotNull
     private Urgencia urgencia;
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd/mm/yy")
-    private LocalDateTime fecha;
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="MM-dd-yyyy")
+    @NotNull
+    private LocalDate fecha;
 
     public PublicacionForm() {
     }
@@ -92,12 +94,12 @@ public class PublicacionForm {
         this.localidad = localidad;
     }
 
-    public List<TipoTrabajo> getTiposTrabajo() {
-        return tiposTrabajo;
+    public TipoTrabajo getTipoTrabajo() {
+        return tipoTrabajo;
     }
 
-    public void setTiposTrabajo(List<TipoTrabajo> tiposTrabajo) {
-        this.tiposTrabajo = tiposTrabajo;
+    public void setTipoTrabajo(TipoTrabajo tipoTrabajo) {
+        this.tipoTrabajo = tipoTrabajo;
     }
 
     public Urgencia getUrgencia() {
@@ -108,11 +110,11 @@ public class PublicacionForm {
         this.urgencia = urgencia;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

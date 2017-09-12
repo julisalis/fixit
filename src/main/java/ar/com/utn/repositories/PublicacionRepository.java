@@ -10,6 +10,6 @@ import java.util.List;
  * Created by julis on 15/7/2017.
  */
 public interface PublicacionRepository extends CrudRepository<Publicacion, Long> {
-    Integer countByTiposTrabajo(TipoTrabajo tipoTrabajo);
+    Integer countByTipoTrabajo(TipoTrabajo tipoTrabajo);
     List<Publicacion> findAll();
 }

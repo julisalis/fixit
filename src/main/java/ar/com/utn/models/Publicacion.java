@@ -4,6 +4,7 @@ import org.hibernate.type.CurrencyType;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.List;
@@ -20,11 +21,9 @@ public class Publicacion extends PersistentEntity{
     private String descripcion;
     private BigDecimal presupMax;
     private Currency currency;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "experiencia_tipotrabajo",
-            joinColumns = {@JoinColumn(name = "publicacion_fk", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "tipoTrabajo_fk", nullable = false, updatable = false) })
-    private List<TipoTrabajo> tiposTrabajo;
+    @ManyToOne
+    @JoinColumn(name="tipotrabajo_fk",nullable = false)
+    private TipoTrabajo tipoTrabajo;
     @ManyToOne
     @JoinColumn(name="ubicacion_fk",nullable = false)
     private Ubicacion ubicacion;
@@ -43,7 +42,7 @@ public class Publicacion extends PersistentEntity{
     private PublicacionMultimedia multimedia;
     @Enumerated
     private Urgencia urgencia;
-    private LocalDateTime fecha;
+    private LocalDate fecha;
     private LocalDateTime fechaCreacion;
 
     public Publicacion() {
@@ -54,11 +53,11 @@ public class Publicacion extends PersistentEntity{
         fechaCreacion = LocalDateTime.now();
     }
 
-    public Publicacion(String titulo, String descripcion, BigDecimal presupMax, List<TipoTrabajo> tipoTrabajo, Ubicacion ubicacion, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia,LocalDateTime fecha,Urgencia urgencia) {
+    public Publicacion(String titulo, String descripcion, BigDecimal presupMax, TipoTrabajo tipoTrabajo, Ubicacion ubicacion, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia,LocalDate fecha,Urgencia urgencia) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.presupMax = presupMax;
-        this.tiposTrabajo = tipoTrabajo;
+        this.tipoTrabajo = tipoTrabajo;
         this.ubicacion = ubicacion;
         this.tiempoPublicacion = tiempoPublicacion;
         this.tomador = tomador;
@@ -99,12 +98,12 @@ public class Publicacion extends PersistentEntity{
         this.postulaciones = postulaciones;
     }
 
-    public List<TipoTrabajo> getTiposTrabajo() {
-        return tiposTrabajo;
+    public TipoTrabajo getTipoTrabajo() {
+        return tipoTrabajo;
     }
 
-    public void setTiposTrabajo(List<TipoTrabajo>  tipoTrabajo) {
-        this.tiposTrabajo = tipoTrabajo;
+    public void setTipoTrabajo(TipoTrabajo tipoTrabajo) {
+        this.tipoTrabajo = tipoTrabajo;
     }
 
     public List<Mensaje> getMensajes() {
@@ -163,11 +162,11 @@ public class Publicacion extends PersistentEntity{
         this.multimedia = multimedia;
     }
 
-    public LocalDateTime getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDateTime fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 

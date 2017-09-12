@@ -45,7 +45,7 @@ public class PublicacionServiceImpl implements PublicacionService {
         if(userlogged!=null) {
             Tomador tomador = userlogged.getTomador();
             Publicacion publicacion = new Publicacion(publicacionForm.getTitulo(),publicacionForm.getDescripcion(),publicacionForm.getPresupMax(),
-                    publicacionForm.getTiposTrabajo(),ubicacion,publicacionForm.getTiempoPublicacion(),
+                    publicacionForm.getTipoTrabajo(),ubicacion,publicacionForm.getTiempoPublicacion(),
                     tomador,null,publicacionForm.getFecha(),publicacionForm.getUrgencia());
             publicacionRepository.save(publicacion);
         }
@@ -55,7 +55,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 
     @Override
     public Integer countPublicaciones(TipoTrabajo tipoTrabajo) {
-        return publicacionRepository.countByTiposTrabajo(tipoTrabajo);
+        return publicacionRepository.countByTipoTrabajo(tipoTrabajo);
     }
 
     @Override
