@@ -14,27 +14,14 @@ import javax.persistence.Table;
 @Table (name="ubicacion")
 public class Ubicacion extends PersistentEntity{
     @ManyToOne
-    @JoinColumn(name="id_provincia",nullable = false)
-    private Provincia provincia;
-
-    @ManyToOne
     @JoinColumn(name="id_localidad",nullable = false)
     private Localidad localidad;
 
     public Ubicacion() {
     }
 
-    public Ubicacion(Provincia provincia, Localidad localidad){
-        this.provincia = provincia;
+    public Ubicacion(Localidad localidad){
         this.localidad = localidad;
-    }
-
-    public Provincia getProvincia() {
-        return provincia;
-    }
-
-    public void setProvincia(Provincia provincia) {
-        this.provincia = provincia;
     }
 
     public Localidad getLocalidad() {

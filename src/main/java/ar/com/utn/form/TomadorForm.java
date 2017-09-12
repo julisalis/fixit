@@ -46,8 +46,8 @@ public class TomadorForm {
         this.documento = user.getDocumento();
         this.email = user.getEmail();
         this.tipoDoc = user.getTipoDoc();
-        if(user.getUbicacion()!=null && user.getUbicacion().getLocalidad()!=null && user.getUbicacion().getLocalidad()!=null){
-            this.provincia = user.getUbicacion().getProvincia().getId();
+        if(user.getUbicacion()!=null && user.getUbicacion().getLocalidad()!=null && user.getUbicacion().getLocalidad().getProvincia()!=null){
+            this.provincia = user.getUbicacion().getLocalidad().getProvincia().getId();
             this.localidad = user.getUbicacion().getLocalidad().getId();
         }
         this.telefono = new TelefonoForm(user.getTelefono());

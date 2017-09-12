@@ -84,9 +84,8 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
     @Override
     @Transactional
     public Usuario registrarPrestador(PrestadorForm prestadorForm) {
-        Provincia provincia=provinciaRepository.findOne(prestadorForm.getProvincia());
         Localidad localidad=localidadRepository.findOne(prestadorForm.getLocalidad());
-        Ubicacion ubicacion=new Ubicacion(provincia,localidad);
+        Ubicacion ubicacion=new Ubicacion(localidad);
         ubicacionRepository.save(ubicacion);
         Telefono telefono= new Telefono(prestadorForm.getTelefono().getCodPais(),prestadorForm.getTelefono().getCodArea(),prestadorForm.getTelefono().getTelefono());
         telefonoRepository.save(telefono);
@@ -114,10 +113,8 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
     @Override
     @Transactional
     public Usuario registrarTomador(TomadorForm tomadorForm) {
-
-        Provincia provincia=provinciaRepository.findOne(tomadorForm.getProvincia());
         Localidad localidad=localidadRepository.findOne(tomadorForm.getLocalidad());
-        Ubicacion ubicacion=new Ubicacion(provincia,localidad);
+        Ubicacion ubicacion=new Ubicacion(localidad);
         ubicacionRepository.save(ubicacion);
         Telefono telefono= new Telefono(tomadorForm.getTelefono().getCodPais(),tomadorForm.getTelefono().getCodArea(),tomadorForm.getTelefono().getTelefono());
         telefonoRepository.save(telefono);

@@ -40,7 +40,6 @@ public class PublicacionForm {
     private Urgencia urgencia;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="MM-dd-yyyy")
-    @NotNull
     private LocalDate fecha;
 
     public PublicacionForm() {

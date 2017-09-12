@@ -25,8 +25,8 @@ public class Publicacion extends PersistentEntity{
     @JoinColumn(name="tipotrabajo_fk",nullable = false)
     private TipoTrabajo tipoTrabajo;
     @ManyToOne
-    @JoinColumn(name="ubicacion_fk",nullable = false)
-    private Ubicacion ubicacion;
+    @JoinColumn(name="localidad_fk",nullable = false)
+    private Localidad localidad;
     @Enumerated
     private TipoPublicacion tipoPublicacion = TipoPublicacion.REGULAR;
     @Enumerated
@@ -53,12 +53,12 @@ public class Publicacion extends PersistentEntity{
         fechaCreacion = LocalDateTime.now();
     }
 
-    public Publicacion(String titulo, String descripcion, BigDecimal presupMax, TipoTrabajo tipoTrabajo, Ubicacion ubicacion, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia,LocalDate fecha,Urgencia urgencia) {
+    public Publicacion(String titulo, String descripcion, BigDecimal presupMax, TipoTrabajo tipoTrabajo, Localidad localidad, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia,LocalDate fecha,Urgencia urgencia) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.presupMax = presupMax;
         this.tipoTrabajo = tipoTrabajo;
-        this.ubicacion = ubicacion;
+        this.localidad = localidad;
         this.tiempoPublicacion = tiempoPublicacion;
         this.tomador = tomador;
         this.multimedia = multimedia;
@@ -130,12 +130,12 @@ public class Publicacion extends PersistentEntity{
         this.tipoPublicacion = tipoPublicacion;
     }
 
-    public Ubicacion getUbicacion() {
-        return ubicacion;
+    public Localidad getLocalidad() {
+        return localidad;
     }
 
-    public void setUbicacion(Ubicacion ubicacion) {
-        this.ubicacion = ubicacion;
+    public void setLocalidad(Localidad localidad) {
+        this.localidad = localidad;
     }
 
     public TiempoPublicacion getTiempoPublicacion() {

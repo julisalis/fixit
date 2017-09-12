@@ -1,9 +1,6 @@
 package ar.com.utn.models;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by iaruedel on 05/08/17.
@@ -11,7 +8,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="localidad")
 public class Localidad extends PersistentEntity{
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="id_provincia",nullable=false)
     private Provincia provincia;
     private String nombre;
@@ -24,12 +21,12 @@ public class Localidad extends PersistentEntity{
         this.nombre = nombre;
     }
 
-    public Provincia getIdProvincia() {
+    public Provincia getProvincia() {
         return provincia;
     }
 
-    public void setIdProvincia(Provincia idProvincia) {
-        this.provincia = idProvincia;
+    public void setProvincia(Provincia provincia) {
+        this.provincia = provincia;
     }
 
     public String getNombre() {
