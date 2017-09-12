@@ -37,13 +37,11 @@ public class PublicacionServiceImpl implements PublicacionService {
         Usuario userlogged = currentSession.getUser();
         if(userlogged!=null) {
             Tomador tomador = userlogged.getTomador();
-            Publicacion publicacion = new Publicacion(publicacionForm.getTitulo(),publicacionForm.getDescripcion(),publicacionForm.getPresupMax(),
+            Publicacion publicacion = new Publicacion(publicacionForm.getCurrencyCode(),publicacionForm.getTitulo(),publicacionForm.getDescripcion(),publicacionForm.getPresupMax(),
                     publicacionForm.getTipoTrabajo(),localidad,publicacionForm.getTiempoPublicacion(),
                     tomador,null,publicacionForm.getFecha(),publicacionForm.getUrgencia());
             publicacionRepository.save(publicacion);
         }
-
-
     }
 
     @Override

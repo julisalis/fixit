@@ -5,23 +5,20 @@ $(function () {
     });
 
     $(".category-item").click(function(){
-        if($(this).hasClass("checked")){
-            $(this).find(".category-checkbox").prop('checked',false);
-            $(this).removeClass("checked");
-            var img = $(this).find(".img-selected");
-            var name = img.attr("name");
-            img.prop("src",'/images/'+name+".png");
-        }
-        else{
-            $(".category-item").find(".category-checkbox").prop('checked',false);
+
+            $(".category-item").each(function () {
+                $(this).find(".category-checkbox").prop('checked',false);
+                $(this).removeClass("checked");
+                var img = $(this).find(".img-selected");
+                var name = img.attr("name");
+                img.prop("src",'/images/'+name+".png");
+            });
+
             $(this).find(".category-checkbox").prop('checked',true);
             $(this).addClass("checked");
             var img = $(this).find(".img-selected");
             var name = img.attr("name");
             img.prop("src",'/images/'+name+"-selected.png");
-        }
-
-
     });
 
     $('.category-item').hover(function(){
