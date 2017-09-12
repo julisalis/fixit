@@ -1,5 +1,6 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.dto.TipoTrabajoDTO;
 import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.TipoTrabajo;
@@ -42,7 +43,7 @@ public class IndexController {
         return "publicaciones-por-categoria";
     }
 
-    public List<Publicacion> getPublicacionesPorCatregoria (List<Publicacion> publicaciones, String slug) {
-        return publicaciones.stream().filter(p -> p.getTipoTrabajo().getSlug().equals(slug)).collect(Collectors.toList());
+    public List<PublicacionDTO> getPublicacionesPorCatregoria (List<Publicacion> publicaciones, String slug) {
+        return publicaciones.stream().filter(p -> p.getTipoTrabajo().getSlug().equals(slug)).map(publicacion -> new PublicacionDTO(publicacion)).collect(Collectors.toList());
     }
 }

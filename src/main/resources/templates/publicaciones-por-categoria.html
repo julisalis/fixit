@@ -35,10 +35,10 @@
                             </a>
                             <div>
                                 <p class="installationType">
-                                    <strong th:text="${publicacion.nombre}"></strong>
-                                    <small class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
-                                    <small class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
-                                    <small class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                    <strong th:text="${publicacion.titulo}"></strong>
+                                    <small th:text="${publicacion.localidad?.nombre}+' ,'+${publicacion.provincia?.nombre}" class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small th:text="'Hasta '+${publicacion.presupMax}+' '+${publicacion.currency}" class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small th:text="${publicacion.urgencia}" class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
                                 </p>
                                 <!--Solo ve el "POSTULARME" en caso que sea el prestador-->
                                 <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated()">
