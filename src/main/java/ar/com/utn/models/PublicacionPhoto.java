@@ -16,16 +16,59 @@ public class PublicacionPhoto extends PersistentEntity {
     @Column(name = "order_view")
     private Integer orderInView;
     @Column(name = "is_deleted")
-    private Boolean deleted = false;
-    @Column(nullable = false)
-    private LocalDateTime creation;
+    private boolean deleted = false;
     @Column(name="file_name",nullable = false)
     private String fileName;
     @Column(name="content_type",nullable = false)
     private String contentType;
+    private boolean cover;
 
-    @PrePersist
-    protected void onCreate() {
-        this.creation = LocalDateTime.now();
+    public Publicacion getPublicacion() {
+        return publicacion;
+    }
+
+    public void setPublicacion(Publicacion publicacion) {
+        this.publicacion = publicacion;
+    }
+
+    public Integer getOrderInView() {
+        return orderInView;
+    }
+
+    public void setOrderInView(Integer orderInView) {
+        this.orderInView = orderInView;
+    }
+
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public boolean isCover() {
+        return cover;
+    }
+
+    public void setCover(boolean cover) {
+        this.cover = cover;
     }
 }

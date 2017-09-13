@@ -21,7 +21,19 @@ public class PublicacionMultimedia {
     protected PublicacionMultimedia() {
     }
 
-    public PublicacionMultimedia(String folder) {
+    public List<PublicacionPhoto> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<PublicacionPhoto> photos) {
+        this.photos = photos;
+    }
+
+    public String getFolder() {
+        return folder;
+    }
+
+    public void setFolder(String folder) {
         this.folder = folder;
     }
 }

@@ -1188,5 +1188,61 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
 }
 
+#publicacion  form .photo-section .btn {
+
+    width: 250px;
+}
+
+.photo-section #add-photo-link {
+    position: relative;
+    background:  rgba(2,58,143,1);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 3px;
+    border: 1px solid #cccccc;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    cursor: pointer;
+    margin: 0 auto;
+    width: 200px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.photo-section #add-photo-link:hover{
+    background: rgb(148, 169, 177);
+}
+.photo-section #add-photo-link input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    height: 100%;
+}
+
+
+.photo-section #add-photo-link span{
+    font-size: 16px;
+    font-weight: bold !important;
+}
+
+.photo-section #preview_images .view {
+    position: relative;
+    display: inline-block;
+}
+
+.photo-section #preview_images .view .buttons {
+    padding-top: 7px;
+    padding-right: 7px;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    font-size: 40px;
+}
+
+.photo-section #preview_images .view a.remove {
+    color: red;
+}
 
 

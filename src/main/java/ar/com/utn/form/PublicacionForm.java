@@ -1,9 +1,6 @@
 package ar.com.utn.form;
 
-import ar.com.utn.models.Publicacion;
-import ar.com.utn.models.TiempoPublicacion;
-import ar.com.utn.models.TipoTrabajo;
-import ar.com.utn.models.Urgencia;
+import ar.com.utn.models.*;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,8 +11,10 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by iaruedel on 16/08/17.
@@ -40,6 +39,8 @@ public class PublicacionForm {
     private TiempoPublicacion tiempoPublicacion;
     @NotNull
     private Urgencia urgencia;
+    @NotNull
+    private List<PublicacionFotoForm> publicacionFotoForms = new ArrayList<>();
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="MM-dd-yyyy")
     private LocalDate fecha;
@@ -47,7 +48,7 @@ public class PublicacionForm {
     public PublicacionForm() {
     }
 
-    public PublicacionForm(Publicacion publicacion) {
+    public PublicacionForm(Publicacion publicacion,List<PublicacionFotoForm> publicacionFotoForms) {
         this.titulo = publicacion.getTitulo();
         this.descripcion = publicacion.getDescripcion();
         this.presupMax = publicacion.getPresupMax();
@@ -57,7 +58,10 @@ public class PublicacionForm {
         this.provincia = publicacion.getLocalidad().getProvincia().getId();
         this.urgencia = publicacion.getUrgencia();
         this.fecha = publicacion.getFecha();
+        this.publicacionFotoForms = publicacionFotoForms;
     }
+
+
 
     public TiempoPublicacion getTiempoPublicacion() {
         return tiempoPublicacion;
@@ -145,5 +149,13 @@ public class PublicacionForm {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public List<PublicacionFotoForm> getPublicacionFotoForms() {
+        return publicacionFotoForms;
+    }
+
+    public void setPublicacionFotoForms(List<PublicacionFotoForm> publicacionFotoForms) {
+        this.publicacionFotoForms = publicacionFotoForms;
     }
 }

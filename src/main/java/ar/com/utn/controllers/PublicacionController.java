@@ -1,10 +1,7 @@
 package ar.com.utn.controllers;
 
 import ar.com.utn.dto.PublicacionDTO;
-import ar.com.utn.form.CurrencyCode;
-import ar.com.utn.form.PrestadorForm;
-import ar.com.utn.form.PublicacionForm;
-import ar.com.utn.form.SelectorForm;
+import ar.com.utn.form.*;
 import ar.com.utn.models.*;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
@@ -26,6 +23,7 @@ import java.beans.PropertyEditorSupport;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -62,10 +60,20 @@ public class PublicacionController {
 
     @GetMapping(value="/edit/{publicacionId}")
     public String editPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
-        addModelAttributes(model,new PublicacionForm(publicacionService.findById(publicacionId)));
+        Publicacion publicacion = publicacionService.findById(publicacionId);
+        addModelAttributes(model,new PublicacionForm(publicacion, buildFotoForms(publicacion.getMultimedia())));
         return "publicacion-new-edit";
     }
 
+    private List<PublicacionFotoForm> buildFotoForms(PublicacionMultimedia multimedia) {
+        if (multimedia!=null && multimedia.getPhotos()!=null){
+            return multimedia.getPhotos()
+                    .stream()
+                    .map(publicacionPhoto ->
+                            new PublicacionFotoForm(publicacionPhoto, multimedia.getFolder())).collect(Collectors.toList());
+        }
+        else return new ArrayList<>();
+    }
     @PostMapping(path="/new")
     public String newPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response) {
         try {

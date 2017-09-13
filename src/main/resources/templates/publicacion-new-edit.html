@@ -10,7 +10,6 @@
 <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
 <div id="publicacion">
-
         <div class="container">
 
             <h2>Nueva Publicación</h2>
@@ -115,12 +114,45 @@
                             </div>
                         </div>
 
+                        <div class="form-group col-lg-12 photo-section">
+                            <a href="#" id="add-photo-link" class="btn"> <span>+ Agregar Foto</span>
+                                <input type="file" id="upload" value="Choose a file" accept="image/*">
+                            </a>
+
+                            <div id="preview_images" class="row">
+
+                                <div class="col-md-3 view" th:each="foto: ${publicacionFotoForms}">
+                                    <a href="#" class=" thumbnail">
+                                        <img src=""/>
+                                    </a>
+
+                                    <div class="buttons">
+                                        <a id="${grupo.identifier}" href="#delete" class="remove">
+                                            <i class="glyphicon glyphicon-remove-circle"></i>
+                                        </a>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div id="image_template" style="display: none">
+                                <div class="image_thumbnail col-md-3 view">
+                                    <a href="#" class="thumbnail"> <img src="" data-cover="" /></a>
+                                    <div class="buttons">
+                                        <a href="#delete" class="remove"> <i class="glyphicon glyphicon-remove-circle"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Button -->
                         <div class="form-group col-md-12 btn-publicacion">
                             <button type="submit" class="submit button button-block btn btn-primary btn-aceptar" id="submit">Publicar Trabajo</button>
                         </div>
 
                     </fieldset>
+
+
                 </form>
 
             </div>
