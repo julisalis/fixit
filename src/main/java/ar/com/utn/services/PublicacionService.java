@@ -19,4 +19,6 @@ public interface PublicacionService {
     List<Publicacion> findAll();
 
     Publicacion findById(Long publicacionId);
+
+    TipoTrabajo findTipoTrabajoBySlug(String slug);
 }

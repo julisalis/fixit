@@ -39,7 +39,8 @@ public class IndexController {
 
     @GetMapping(value="/publicaciones/{slug}")
     public String listPublicaciones(@PathVariable("slug") String slug, WebRequest request, Model model) {
-       model.addAttribute("publicaciones", getPublicacionesPorCatregoria(publicacionService.findAll(), slug));
+        model.addAttribute("nombre_categoria",publicacionService.findTipoTrabajoBySlug(slug).getNombre());
+        model.addAttribute("publicaciones", getPublicacionesPorCatregoria(publicacionService.findAll(), slug));
         return "publicaciones-por-categoria";
     }
 

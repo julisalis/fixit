@@ -13,4 +13,5 @@ import java.util.List;
 @Repository
 public interface TipoTrabajoRepository extends CrudRepository<TipoTrabajo,Long> {
     List<TipoTrabajo> findAll();
+    TipoTrabajo findBySlug(String slug);
 }

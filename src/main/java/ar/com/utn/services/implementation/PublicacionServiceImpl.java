@@ -58,4 +58,9 @@ public class PublicacionServiceImpl implements PublicacionService {
     public Publicacion findById(Long publicacionId) {
         return publicacionRepository.findOne(publicacionId);
     }
+
+    @Override
+    public TipoTrabajo findTipoTrabajoBySlug(String slug) {
+        return tipoTrabajoRepository.findBySlug(slug);
+    }
 }
