@@ -1,5 +1,6 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.form.CurrencyCode;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.PublicacionForm;
@@ -47,7 +48,9 @@ public class PublicacionController {
     public String listPublicaciones(WebRequest request, Model model) {
         //todo add en security permisos solo para el tomaddor
         Usuario user = currentSession.getUser();
-        model.addAttribute("publicaciones",user.getTomador().getPublicaciones());
+        model.addAttribute("publicaciones",
+                user.getTomador().getPublicaciones()
+                        .stream().map(publicacion -> new PublicacionDTO(publicacion)).collect(Collectors.toList()));
         return "publicacion-list";
     }
 

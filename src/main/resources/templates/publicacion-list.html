@@ -8,18 +8,31 @@
 </head>
 <body class="white-body">
 <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
-
-<div id="publicacion">
-
-    <div class="container">
-            <h2>Mis Publicaciones</h2>
-        <div class="col-md-12 form-container">
-            <!--<div class="">-->
-                <!--<a href="/publicacion/new" class="button btn btn-primary">Nueva Publicación</a>-->
-            <!--</div>-->
+<section id="section-publicaciones" class="public-list">
+        <div class="container">
+            <div class="col-md-12 form-container">
+                <h3 class="subtitulo-jobs">Mis Publicaciones</h3>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper" th:each="publicacion : ${publicaciones}">
+                        <div class="fixit-product-box  shadow-box">
+                            <a href="#" class="shadow-box-link">
+                                <img src="/images/publicaciones/not-found.png" onerror="this.src='/images/publicaciones/not-found.png'" class="img-responsive" alt="Plomería">
+                            </a>
+                            <div>
+                                <p class="installationType">
+                                    <strong th:text="${publicacion.titulo}"></strong>
+                                    <small th:text="${publicacion.localidad?.nombre}+' ,'+${publicacion.provincia?.nombre}" class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
+                                    <small th:text="'Hasta '+${publicacion.presupMax}+' '+${publicacion.currency}" class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
+                                    <small th:text="${publicacion.urgencia}" class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div >
+                </div>
+            </div>
         </div>
-    </div>
-</div>
+</section>
+
 
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
