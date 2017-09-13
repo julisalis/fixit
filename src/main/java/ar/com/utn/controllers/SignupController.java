@@ -22,6 +22,7 @@ import sr.puc.server.ws.soap.a4.Actividad;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.text.Normalizer;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -121,7 +122,7 @@ import java.util.stream.Collectors;
             }
 
             if(!result.hasErrors()){
-                /*if(prestadorForm.getValidar()){
+                if(prestadorForm.getValidar()){
                     AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l);
                     Persona personaAfip = afip.getPersona(prestadorForm.getCuit());
                     if(!validarPersonaConAfip(personaAfip,prestadorForm)) {
@@ -132,11 +133,11 @@ import java.util.stream.Collectors;
                         map.put("success", true);
                         map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
                     }
-                }else{*/
+                }else{
                     usuarioService.registrarPrestador(prestadorForm);
                     map.put("success", true);
                     map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
-                //}
+                }
             }else{
                 map.put("success", false);
                 map.put("errors", result.getAllErrors());
@@ -150,7 +151,7 @@ import java.util.stream.Collectors;
     }
 
     private boolean validarPersonaConAfip(Persona personaAfip, PrestadorForm pf) {
-        if(!personaAfip.getNombreCompleto().equalsIgnoreCase(pf.getApellido().trim() + " " +pf.getNombre().trim())) {
+        if(!normalizarTexto(personaAfip.getNombreCompleto()).equalsIgnoreCase(normalizarTexto(pf.getApellido().trim() + " " +pf.getNombre().trim()))) {
             return false;
         }
 
@@ -167,6 +168,13 @@ import java.util.stream.Collectors;
         }*/
 
         return true;
+    }
+
+    private String normalizarTexto(String s) {
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[^\\p{ASCII}]", "");
+        s = s.replaceAll("[^-a-zA-Z0-9]", "");
+        return s;
     }
 
     private boolean actividadValida(List<Actividad> actividades) {

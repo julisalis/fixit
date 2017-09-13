@@ -50,8 +50,19 @@ $(function () {
                             div.append($("<p>").text(data.errors[i].defaultMessage));
                         }
                     }else{
-                        $("#signup div.error-msg ul").append("<li>Error en registro de usuario</li>");
-                        $("#signup div.error-msg").show();
+                        /*$("#signup div.error-msg ul").html("<li>Error en registro de usuario</li>");
+                        $("#signup div.error-msg").show();*/
+                        BootstrapDialog.show({
+                            title: 'Error',
+                            message: data.msg,
+                            type: BootstrapDialog.TYPE_DANGER,
+                            buttons: [{
+                                label: 'Cerrar',
+                                action: function(dialogItself){
+                                    dialogItself.close();
+                                }
+                            }]
+                        });
                     }
                     $("#signup form .btn-aceptar").prop('disabled',false);
                 }
