@@ -536,7 +536,7 @@ background-color:#f7f7f7;
 .category-title {
     display: block;
     font-size: 13px;
-    color: #505050;
+    color: slategrey;
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1061,6 +1061,7 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
 #publicacion .form-horizontal .form-group {
     margin-right: 0px;
     margin-left: 0px;
+    text-align: center;
 }
 
 
@@ -1080,6 +1081,13 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+#publicacion .container .form-signin .btn-primary, .btn-primary {
+    background-color: transparent;
+    border-color: #3ac58f;
+    color: #3ac58f;
+    font-size: 20px;
 }
 
 .fixit-product-box p.installationType strong{

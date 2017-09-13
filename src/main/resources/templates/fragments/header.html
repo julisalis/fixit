@@ -29,9 +29,10 @@
                 <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Clientes" data-target="section-Clientes">Clientes</a></li>
                 <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Profesionales" data-target="section-Profesionales">Profesionales</a></li>
                 <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Destacados" data-target="section-Destacados">Trabajos Destacados</a></li>
-                <li sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" ><a href="/publicacion/list">Publicaciones</a></li>
-                <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="#about">Postulaciones</a></li>
-                <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="#contact">Trabajos</a></li>
+                <li sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" > <a href="/publicacion/new">Nueva Publicación</a></li>
+                <li sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" ><a href="/publicacion/list">Mis Publicaciones</a></li>
+                <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="#about">Mis Postulaciones</a></li>
+                <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="#contact">Trabajos Realizados</a></li>
             </ul>
 
             <div class="navbar-text navbar-right">
