@@ -1,5 +1,6 @@
 package ar.com.utn.form;
 
+import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.TiempoPublicacion;
 import ar.com.utn.models.TipoTrabajo;
 import ar.com.utn.models.Urgencia;
@@ -41,9 +42,21 @@ public class PublicacionForm {
     private Urgencia urgencia;
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="MM-dd-yyyy")
-    private Date fecha;
+    private LocalDate fecha;
 
     public PublicacionForm() {
+    }
+
+    public PublicacionForm(Publicacion publicacion) {
+        this.titulo = publicacion.getTitulo();
+        this.descripcion = publicacion.getDescripcion();
+        this.presupMax = publicacion.getPresupMax();
+        this.currencyCode = publicacion.getCurrency().getCurrencyCode();
+        this.tipoTrabajo = publicacion.getTipoTrabajo();
+        this.localidad = publicacion.getLocalidad().getId();
+        this.provincia = publicacion.getLocalidad().getProvincia().getId();
+        this.urgencia = publicacion.getUrgencia();
+        this.fecha = publicacion.getFecha();
     }
 
     public TiempoPublicacion getTiempoPublicacion() {
@@ -126,11 +139,11 @@ public class PublicacionForm {
         this.currencyCode = currencyCode;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 }

@@ -20,7 +20,7 @@ public class PublicacionDTO {
     private Localidad localidad;
     private Provincia provincia;
     private String urgencia;
-    private Date fecha;
+    private LocalDate fecha;
 
     public PublicacionDTO(Publicacion publicacion) {
         this.titulo = publicacion.getTitulo();
@@ -101,11 +101,11 @@ public class PublicacionDTO {
         this.urgencia = urgencia;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 }

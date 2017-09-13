@@ -17,4 +17,6 @@ public interface PublicacionService {
     Integer countPublicaciones (TipoTrabajo tipoTrabajo);
 
     List<Publicacion> findAll();
+
+    Publicacion findById(Long publicacionId);
 }

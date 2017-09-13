@@ -1,6 +1,8 @@
 package ar.com.utn.models;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 
@@ -23,7 +25,7 @@ public class Usuario extends PersistentEntity {
     private String nombre;
     private String apellido;
 
-    private Date fechaCreacion;
+    private LocalDateTime fechaCreacion;
 
     @Enumerated (EnumType.STRING)
     private TipoDoc tipoDoc;
@@ -60,7 +62,7 @@ public class Usuario extends PersistentEntity {
 
     @PrePersist
 	protected void onCreate() {
-        this.fechaCreacion = new Date();
+        this.fechaCreacion = LocalDateTime.now();
     }
     
     public Usuario(){
@@ -177,11 +179,11 @@ public class Usuario extends PersistentEntity {
         this.ubicacion = ubicacion;
     }
 
-    public Date getFechaCreacion() {
+    public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 

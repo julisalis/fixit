@@ -9,6 +9,7 @@ import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Required;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -53,6 +54,12 @@ public class PublicacionController {
     @GetMapping(value="/new")
     public String newPublicacion(WebRequest request, Model model) {
         addModelAttributes(model,new PublicacionForm());
+        return "publicacion-new-edit";
+    }
+
+    @GetMapping(value="/edit/{publicacionId}")
+    public String editPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
+        addModelAttributes(model,new PublicacionForm(publicacionService.findById(publicacionId)));
         return "publicacion-new-edit";
     }
 

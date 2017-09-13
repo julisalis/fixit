@@ -53,4 +53,9 @@ public class PublicacionServiceImpl implements PublicacionService {
     public List<Publicacion> findAll() {
         return publicacionRepository.findAll();
     }
+
+    @Override
+    public Publicacion findById(Long publicacionId) {
+        return publicacionRepository.findOne(publicacionId);
+    }
 }

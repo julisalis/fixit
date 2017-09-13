@@ -40,20 +40,18 @@ public class Publicacion extends PersistentEntity{
     private PublicacionMultimedia multimedia;
     @Enumerated
     private Urgencia urgencia;
-
-    private Date fecha;
-
-    private Date fechaCreacion;
+    private LocalDate fecha;
+    private LocalDateTime fechaCreacion;
 
     public Publicacion() {
     }
 
     @PrePersist
     protected void onCreate() {
-        this.fechaCreacion = new Date();
+        this.fechaCreacion = LocalDateTime.now();
     }
 
-    public Publicacion(String currency,String titulo, String descripcion, BigDecimal presupMax, TipoTrabajo tipoTrabajo, Localidad localidad, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia,Date fecha,Urgencia urgencia) {
+    public Publicacion(String currency,String titulo, String descripcion, BigDecimal presupMax, TipoTrabajo tipoTrabajo, Localidad localidad, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia,LocalDate fecha,Urgencia urgencia) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.presupMax = presupMax;
@@ -163,11 +161,11 @@ public class Publicacion extends PersistentEntity{
         this.multimedia = multimedia;
     }
 
-    public Date getFecha() {
+    public LocalDate getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
     }
 
@@ -179,11 +177,11 @@ public class Publicacion extends PersistentEntity{
         this.currency = currency;
     }
 
-    public Date getFechaCreacion() {
+    public LocalDateTime getFechaCreacion() {
         return fechaCreacion;
     }
 
-    public void setFechaCreacion(Date fechaCreacion) {
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
     }
 }
