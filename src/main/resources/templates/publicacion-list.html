@@ -21,9 +21,13 @@
                             <div>
                                 <p class="installationType">
                                     <strong th:text="${publicacion.titulo}"></strong>
-                                    <small th:text="${publicacion.localidad?.nombre}+' ,'+${publicacion.provincia?.nombre}" class="btn-price-AR"><i class="fa fa-map-marker" aria-hidden="true"></i> Caballito, Capital Federal</small>
-                                    <small th:text="'Hasta '+${publicacion.presupMax}+' '+${publicacion.currency}" class="btn-price-AR"><i class="fa fa-credit-card" aria-hidden="true"></i> Hasta $1.199,00</small>
-                                    <small th:text="${publicacion.urgencia}" class="btn-price-AR"><i class="fa fa-calendar" aria-hidden="true"></i> Urgente</small>
+                                <div class="icons-publicacion"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+                                <small th:text="${publicacion.localidad?.nombre}+' ,'+${publicacion.provincia?.nombre}" class="btn-price-AR"></small> <br>
+                                <div class="icons-publicacion"> <i class="fa fa-credit-card" aria-hidden="true"></i></div>
+                                <small th:text="'Hasta '+${publicacion.presupMax}+' '+${publicacion.currency}" class="btn-price-AR"></small> <br>
+                                <div class="icons-publicacion"> <i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                <small th:text="${publicacion.urgencia}" class="btn-price-AR"></small>
+                                <small th:text="${publicacion.fecha}" class="btn-price-AR"></small>
                                 </p>
                             </div>
                         </div>
