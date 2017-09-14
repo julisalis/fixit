@@ -47,10 +47,13 @@ public class Persona {
         //this.setTipoClave(TipoClave.valueOf(p.getTipoClave()));
         //this.setEstadoClave(EstadoClave.valueOf(p.getEstadoClave()));
         //Actividades
+        persona.setActividades(p.getActividad());
         persona.setDomicilio(p.getDomicilio());
 
         return persona;
     }
+
+
 
     private static LocalDate toDate(XMLGregorianCalendar calendar){
         if(calendar == null) {

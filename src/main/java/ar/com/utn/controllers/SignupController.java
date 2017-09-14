@@ -127,11 +127,22 @@ import java.util.stream.Collectors;
                     Persona personaAfip = afip.getPersona(prestadorForm.getCuit());
                     if(!validarPersonaConAfip(personaAfip,prestadorForm)) {
                         map.put("success", false);
-                        map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados o deseleccione la validación.");
+                        String actividades = !personaAfip.getActividades().isEmpty()?personaAfip.getActividades().get(0).getDescripcionActividad():"Ninguna";
+                        map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados o deseleccione la validación.\n" +
+                                "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
+                                "Cuit: "+personaAfip.getIdPersona().toString()+"\n"+
+                                "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
+                                "Sexo: "+personaAfip.getSexo().getName()+"\n" +
+                                "Actividad Principal: "+actividades+"\n"+
+                                "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
                     }else{
                         usuarioService.registrarPrestador(prestadorForm);
                         map.put("success", true);
-                        map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
+                        map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.\n" +
+                                "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
+                                "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
+                                "Sexo: "+personaAfip.getSexo().getName()+"\n" +
+                                "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
                     }
                 }else{
                     usuarioService.registrarPrestador(prestadorForm);
@@ -145,6 +156,7 @@ import java.util.stream.Collectors;
         }catch (Exception e) {
             map.put("success", false);
             map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
+            e.printStackTrace();
         }
 
         return map;
