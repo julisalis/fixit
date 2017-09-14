@@ -23,14 +23,32 @@ public class AfipHandler {
         afip.getPersona(20389962237L);
     }*/
 
+    private static final int TTL = 5;
     public TicketAcceso getTicketAcceso() {
+        int time = 1;
+        while(time <= TTL){
+            try{
+                if (this.ta == null){
+                    TicketAcceso taNuevo = this.autenticar();
+                    taNuevo.setCuitRepresentada(cuit);
+                    this.setTicketAcceso(taNuevo);
+                }
+                return ta;
+            }catch (Exception e){
+                time++;
+            }
+        }
+        throw new RuntimeException("Problemas en la conexión con AFIP");
+    }
+
+    /*public TicketAcceso getTicketAcceso() {
         if (this.ta == null){
             TicketAcceso taNuevo = this.autenticar();
             taNuevo.setCuitRepresentada(cuit);
             this.setTicketAcceso(taNuevo);
         }
         return ta;
-    }
+    }*/
 
     public void setTicketAcceso(TicketAcceso at) {
         this.ta = at;
