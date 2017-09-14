@@ -2399,7 +2399,7 @@ INSERT INTO actividadafip(codigo,descripcion) VALUES (452100,'Construcción, ref
 INSERT INTO actividadafip(codigo,descripcion) VALUES (452400,'Construcción, reforma y reparación de redes(Incluye  la construcción, reforma y reparación de redes de electricidad, de gas, de agua, de telecomunicaciones, etc.)');
 INSERT INTO actividadafip(codigo,descripcion) VALUES (453190,'Ejecución y mantenimiento de instalaciones eléctricas y electrónicas n.c.p.(Incluye la instalación de antenas, pararrayos, sistemas de alarmas contra incendios y robos, sistemas de telecomunicación, etc.)');
 INSERT INTO actividadafip(codigo,descripcion) VALUES (454100,'Instalaciones de carpintería, herrería de obra y artística(Incluye instalación de puertas y ventanas, carpintería metálica y no metálica, etc.)');
-INSERT INTO actividadafip(codigo,descripcion) VALUES (453300,'Instalaciones de gas, agua, sanitarios y de climatización, con sus artefactos conexos(Incluye la instalación de compactadores, calderas, sistemas de calefacción central, etc.)');
+INSERT INTO actividadafip(codigo,descripcion) VALUES (453300,'Instalaciones de gas, agua, sanitarios y de climatización, con sus artefactos conexos');
 INSERT INTO actividadafip(codigo,descripcion) VALUES (725000,'Mantenimiento y reparación de maquinaria de oficina, contabilidad e informática');
 INSERT INTO actividadafip(codigo,descripcion) VALUES (454400,'Pintura y trabajos de decoración');
 INSERT INTO actividadafip(codigo,descripcion) VALUES (526909,'Reparación de  artículos  n.c.p.');

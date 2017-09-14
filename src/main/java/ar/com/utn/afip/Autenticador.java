@@ -9,6 +9,8 @@ import org.apache.axis.client.Call;
 import org.apache.axis.client.Service;
 import org.apache.axis.encoding.Base64;
 import org.apache.axis.encoding.XMLType;
+import org.apache.commons.net.ntp.NTPUDPClient;
+import org.apache.commons.net.ntp.TimeInfo;
 import org.bouncycastle.cms.CMSProcessable;
 import org.bouncycastle.cms.CMSProcessableByteArray;
 import org.bouncycastle.cms.CMSSignedData;
@@ -19,19 +21,21 @@ import org.dom4j.io.SAXReader;
 
 import javax.xml.rpc.ParameterMode;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.Security;
 import java.security.cert.CertStore;
 import java.security.cert.CollectionCertStoreParameters;
 import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created by jsalischiker on 16/06/17.
@@ -115,15 +119,33 @@ public class Autenticador {
 
         String LoginTicketRequest_xml;
 
-        Date GenTime = new Date();
+        //Date GenTime = new Date();
+        String TIME_SERVER = "time.afip.gov.ar";
+        NTPUDPClient timeClient = new NTPUDPClient();
+        InetAddress inetAddress = null;
+        TimeInfo timeInfo = null;
+        try {
+            inetAddress = InetAddress.getByName(TIME_SERVER);
+            timeInfo = timeClient.getTime(inetAddress);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        long returnTime = timeInfo.getMessage().getTransmitTimeStamp().getTime();
+        Date GenTime = new Date(returnTime);
         GregorianCalendar gentime = new GregorianCalendar();
+        //gentime.setTimeZone(TimeZone.getTimeZone("America/Buenos_Aires"));
         GregorianCalendar exptime = new GregorianCalendar();
+        //exptime.setTimeZone(TimeZone.getTimeZone("America/Buenos_Aires"));
         String UniqueId = new Long(GenTime.getTime() / 1000).toString();
 
+        //gentime.setTimeInMillis(GenTime.getTime());
+        gentime.setTime(new Date(GenTime.getTime()));
         exptime.setTime(new Date(GenTime.getTime()+TicketTime));
 
         XMLGregorianCalendarImpl XMLGenTime = new XMLGregorianCalendarImpl(gentime);
+        //XMLGenTime.setTimezone(-3);
         XMLGregorianCalendarImpl XMLExpTime = new XMLGregorianCalendarImpl(exptime);
+        //XMLExpTime.setTimezone(-3);
 
         LoginTicketRequest_xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>"
                 +"<loginTicketRequest version=\"1.0\">"
@@ -166,8 +188,10 @@ public class Autenticador {
 
 
         } catch (AxisFault af) {
+            af.printStackTrace();
             throw new AfipWsaaException(af.getFaultCode().getLocalPart(), af.getFaultReason());
         } catch (Exception e) {
+            e.printStackTrace();
             throw new AfipWsaaException("unknown.error",e.getMessage());
         }
         return new LoginTicketResponse(loginTicketResponse);

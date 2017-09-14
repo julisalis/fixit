@@ -125,9 +125,9 @@ import java.util.stream.Collectors;
                 if(prestadorForm.getValidar()){
                     AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l);
                     Persona personaAfip = afip.getPersona(prestadorForm.getCuit());
+                    String actividades = !personaAfip.getActividades().isEmpty()?personaAfip.getActividades().get(0).getDescripcionActividad():"Ninguna";
                     if(!validarPersonaConAfip(personaAfip,prestadorForm)) {
                         map.put("success", false);
-                        String actividades = !personaAfip.getActividades().isEmpty()?personaAfip.getActividades().get(0).getDescripcionActividad():"Ninguna";
                         map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados o deseleccione la validación.\n" +
                                 "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
                                 "Cuit: "+personaAfip.getIdPersona().toString()+"\n"+
@@ -142,6 +142,7 @@ import java.util.stream.Collectors;
                                 "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
                                 "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
                                 "Sexo: "+personaAfip.getSexo().getName()+"\n" +
+                                "Actividad Principal: "+actividades+"\n"+
                                 "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
                     }
                 }else{
