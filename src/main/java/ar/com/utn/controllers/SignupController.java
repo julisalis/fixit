@@ -175,9 +175,9 @@ import java.util.stream.Collectors;
             return false;
         }
 
-        /*if(!actividadValida(personaAfip.getActividades())) {
+        if(!actividadValida(personaAfip.getActividades())) {
             return false;
-        }*/
+        }
 
         return true;
     }
@@ -186,6 +186,7 @@ import java.util.stream.Collectors;
         s = Normalizer.normalize(s, Normalizer.Form.NFD);
         s = s.replaceAll("[^\\p{ASCII}]", "");
         s = s.replaceAll("[^-a-zA-Z0-9]", "");
+        s = s.replaceAll("[AEIOUaeiou]", "");
         return s;
     }
 
