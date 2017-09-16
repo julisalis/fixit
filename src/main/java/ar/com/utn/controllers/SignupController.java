@@ -123,7 +123,7 @@ import java.util.stream.Collectors;
 
             if(!result.hasErrors()){
                 if(prestadorForm.getValidar()){
-                    AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l);
+                    AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l, prestadorService);
                     Persona personaAfip = afip.getPersona(prestadorForm.getCuit());
                     String actividades = !personaAfip.getActividades().isEmpty()?personaAfip.getActividades().get(0).getDescripcionActividad():"Ninguna";
                     if(!validarPersonaConAfip(personaAfip,prestadorForm)) {

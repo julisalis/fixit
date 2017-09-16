@@ -2,11 +2,15 @@ package ar.com.utn.afip;
 
 import ar.com.utn.afip.domain.Persona;
 import ar.com.utn.afip.enums.AfipWs;
+import ar.com.utn.services.PrestadorService;
+import sr.puc.server.ws.soap.a4.GetPersona;
+import sr.puc.server.ws.soap.a4.PersonaReturn;
+import sr.puc.server.ws.soap.a4.PersonaServiceA4;
+import sr.puc.server.ws.soap.a4.PersonaServiceA4_Service;
 
 import java.io.FileInputStream;
+import java.time.LocalDateTime;
 import java.util.Properties;
-
-import sr.puc.server.ws.soap.a4.*;
 
 /**
  * Created by jsalischiker on 16/06/17.
@@ -17,6 +21,7 @@ public class AfipHandler {
     private TicketAcceso ta = null;
     private AfipWs service;
     private Long cuit;
+    private PrestadorService prestadorService;
 
     /*public static void main(String[] args){
         AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237L);
@@ -47,6 +52,14 @@ public class AfipHandler {
             TicketAcceso taNuevo = this.autenticar();
             taNuevo.setCuitRepresentada(cuit);
             this.setTicketAcceso(taNuevo);
+            prestadorService.saveTicketAcceso(taNuevo);
+        }else{
+            if(!this.ta.getVencimiento().isAfter(LocalDateTime.now())) {
+                TicketAcceso taNuevo = this.autenticar();
+                taNuevo.setCuitRepresentada(cuit);
+                this.setTicketAcceso(taNuevo);
+                prestadorService.saveTicketAcceso(taNuevo);
+            }
         }
         return ta;
     }
@@ -55,10 +68,17 @@ public class AfipHandler {
         this.ta = at;
     }
 
-    public AfipHandler(AfipWs service, Long cuitRepresentada) {
+    public AfipHandler(AfipWs service, Long cuitRepresentada, PrestadorService prestadorService) {
         this.autenticador = new Autenticador();
         this.service = service;
         this.cuit = cuitRepresentada;
+        this.prestadorService = prestadorService;
+        TicketAcceso taOld = prestadorService.getLastTicketAcceso();
+        if(taOld!=null){
+            if(taOld.getVencimiento().isAfter(LocalDateTime.now())) {
+                this.ta = taOld;
+            }
+        }
     }
 
     private TicketAcceso autenticar(){

@@ -34,6 +34,7 @@ import java.security.cert.CollectionCertStoreParameters;
 import java.security.cert.X509Certificate;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -205,8 +206,10 @@ public class Autenticador {
 
             String token = tokenDoc.valueOf("/loginTicketResponse/credentials/token");
             String sign = tokenDoc.valueOf("/loginTicketResponse/credentials/sign");
+            String exp = tokenDoc.valueOf("/loginTicketResponse/header/expirationTime");
+            LocalDateTime expDate = LocalDateTime.parse(exp, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
 
-            return new TicketAcceso(token, sign);
+            return new TicketAcceso(token, sign, expDate);
         } catch (Exception e) {
             throw new AfipWsaaException("obtain.token.sign",e.getMessage());
         }
