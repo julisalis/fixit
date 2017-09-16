@@ -44,6 +44,11 @@ public class IndexController {
         return "publicaciones-por-categoria";
     }
 
+    @GetMapping(value = "/publicaciones")
+    public String listPublicacionesSearch(@RequestParam(value="search") String search) {
+        return "index";
+    }
+
     public List<PublicacionDTO> getPublicacionesPorCatregoria (List<Publicacion> publicaciones, String slug) {
         return publicaciones.stream().filter(p -> p.getTipoTrabajo().getSlug().equals(slug)).map(publicacion -> new PublicacionDTO(publicacion)).collect(Collectors.toList());
     }
