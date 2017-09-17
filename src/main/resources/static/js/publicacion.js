@@ -30,6 +30,8 @@ $(function () {
     $("#urgencia").change(function () {
         if($(this).val()=="FECHA"){
             $("#fecha").attr("disabled",false);
+        } else {
+            $("#fecha").attr("disabled",true);
         }
     });
 

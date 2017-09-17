@@ -1188,5 +1188,9 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
 }
 
+.telefono .input-group.has-error p {
+    display: none;
+}
+
 
 
