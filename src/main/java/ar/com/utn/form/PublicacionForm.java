@@ -39,13 +39,14 @@ public class PublicacionForm {
     private TiempoPublicacion tiempoPublicacion;
     @NotNull
     private Urgencia urgencia;
-    @NotNull
+    private PublicacionFotoForm primaryImage;
     private List<PublicacionFotoForm> publicacionFotoForms = new ArrayList<>();
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="MM-dd-yyyy")
     private LocalDate fecha;
 
     public PublicacionForm() {
+        this.publicacionFotoForms = new ArrayList<>();
     }
 
     public PublicacionForm(Publicacion publicacion,List<PublicacionFotoForm> publicacionFotoForms) {
@@ -157,5 +158,13 @@ public class PublicacionForm {
 
     public void setPublicacionFotoForms(List<PublicacionFotoForm> publicacionFotoForms) {
         this.publicacionFotoForms = publicacionFotoForms;
+    }
+
+    public PublicacionFotoForm getPrimaryImage() {
+        return primaryImage;
+    }
+
+    public void setPrimaryImage(PublicacionFotoForm primaryImage) {
+        this.primaryImage = primaryImage;
     }
 }

@@ -1,7 +1,17 @@
+// variables that the file uploader references
+var fileInput;
+var imagesToDelete = new Array();
+var primaryImage = null;
+var maxFiles = 5 - $("#imageSize").val();
+var minFiles = $("#imageSize").val()>0 ? 0 : 1;
+
 $(function () {
     $.validate({
         lang : 'es',
-        decimalSeparator : ',',
+        onSuccess : function($form) {
+            debugger;
+            uploadFiles();
+        }
     });
 
     $(".category-item").click(function(){
@@ -46,65 +56,66 @@ $(function () {
         showButtonPanel:true,
         minDate:firstAvailableDate(),
         });
+    initializeImages();
+    initializeFileInput();
 
-    $("a#add-photo-link input").on('change', function () {
-        if($('.image_thumbnail').length <= 8){
-            readFile(this);
-        }else {
-            //show error
-            $("a#add-photo-link input").prepend('<input class="error"> Ha alcanzado el límite de fotos </input>')
-        }
-
-
-    });
-
-    $("#preview_images .image_thumbnail.view").hover(function () {
-        $(this).find($("buttons")).show();
-    }, function () {
-        $(this).find($("buttons")).hide();
-    });
 });
 
-var count=-1;
+
 function firstAvailableDate() {
     var date = new Date();
     return date;
 }
 
-function readFile(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-        reader.onload = function (e) {
-            $(".photo-section  #preview_images").show();
-            count=count+1;
-            var img_div = $('#image_template .image_thumbnail').clone();
-            var images_container = $("#preview_images");
-            images_container.show();
-            images_container.append(img_div);
-            var img = $("img", img_div).attr('src', e.target.result);
-            var input = $('<input class="added_'+count+'" type="hidden">').attr('value', e.target.result).attr("name", "files["+count+"]");
-            img_div.append(input);
-
+function initializeFileInput(){
+    fileInput = $("#input-images");
+    fileInput.fileinput({
+        language: "es",
+        uploadUrl: "publicacion/uploadImage", // server upload action
+        uploadAsync: false,
+        showUpload: false,
+        showRemove: false,
+        maxFileCount: maxFiles,
+        minFileCount: minFiles,
+        maxFileSize: 1000,
+        validateInitialCount: true,
+        overwriteInitial: false,
+        allowedFileExtensions: ["jpg", "png","jpeg"],
+        minImageWidth: 100,
+        minImageHeight: 140,
+        uploadExtraData: function() {
+            return {
+                publicicacionId: $("#publicicacionId").val()
+            };
         }
-        reader.readAsDataURL(input.files[0]);
+    });
 
-    } else {
-        alert("Sorry - you're browser doesn't support the FileReader API");
-    }
+}
+function initializeImages(){
+    $(".card-image-container").on("click",".btn-profile",function(){
+        $(".card-image-container").find(".card-image.primary").removeClass("primary");
+        $(this).closest(".card-image").addClass("primary");
+        primaryImage = $(this).data("publicacion-image-id");
+    })
+
+    $(".card-image-container").on("click",".btn-trash",function(){
+        imagesToDelete.push($(this).data("publicacion-image-id"));
+        $(this).closest(".card-image").fadeOut();
+        maxFiles = maxFiles + 1;
+        if(maxFiles > 0){
+            $("#file-input-container").show();
+        }
+        updateMaxQuantityFile(maxFiles)
+    })
 }
 
-//Eliminado de foto
-$('a.remove').click(function(e) {
-    removeImage($(this),e);
-});
-
-function removeImage(current, event){
-    event.preventDefault();
-    var input = $('<input type="hidden">').attr('value', current.data('id-image')).attr("name", "removed");
-    current.closest('form').append(input);
-    current.closest('.view').hide();
+function updateMaxQuantityFile(maxQuantity){
+    fileInput.fileinput('refresh', {maxFileCount:maxQuantity})
 }
 
+function uploadFiles(){
+    fileInput.fileinput("upload");
+}
 
 
 

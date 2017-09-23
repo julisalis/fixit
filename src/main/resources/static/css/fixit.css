@@ -1213,6 +1213,11 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     border-width: 3px;
     padding: 3px;
 }
+#publicacion  form #file-input-container .btn.btn-primary.btn-file{
+    height: 34px;
+    font-size: 15px;
+}
+
 
 
 .photo-section #add-photo-link {

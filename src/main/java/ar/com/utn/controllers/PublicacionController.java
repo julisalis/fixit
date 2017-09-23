@@ -7,14 +7,16 @@ import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,14 +56,14 @@ public class PublicacionController {
 
     @GetMapping(value="/new")
     public String newPublicacion(WebRequest request, Model model) {
-        addModelAttributes(model,new PublicacionForm());
+        addModelAttributes(model,new PublicacionForm(),"new");
         return "publicacion-new-edit";
     }
 
     @GetMapping(value="/edit/{publicacionId}")
     public String editPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
         Publicacion publicacion = publicacionService.findById(publicacionId);
-        addModelAttributes(model,new PublicacionForm(publicacion, buildFotoForms(publicacion.getMultimedia())));
+        addModelAttributes(model,new PublicacionForm(publicacion, buildFotoForms(publicacion.getMultimedia())),"edit");
         return "publicacion-new-edit";
     }
 
@@ -86,11 +88,11 @@ public class PublicacionController {
                 publicacionService.createPublicacion(publicacionForm);
                 return "redirect:/publicacion/list";
             }else{
-                addModelAttributes(model,publicacionForm);
+                addModelAttributes(model,publicacionForm,"new");
                 return "publicacion-new-edit";
             }
         }catch (Exception e) {
-            addModelAttributes(model,publicacionForm);
+            addModelAttributes(model,publicacionForm,"new");
             return "publicacion-new-edit";
         }
 
@@ -100,14 +102,33 @@ public class PublicacionController {
     }
 
 
-    public void addModelAttributes(Model model, PublicacionForm form){
+    public void addModelAttributes(Model model, PublicacionForm form, String formAction){
         model.addAttribute("provincias",generarProvicias());
         model.addAttribute("publicacion",form);
         model.addAttribute("tipos", publicacionService.getTipostrabajos());
         model.addAttribute("tiempos", TiempoPublicacion.values());
         model.addAttribute("urgencias", Urgencia.values());
         model.addAttribute("currencies", CurrencyCode.values());
-        model.addAttribute("form_action","new");
+        model.addAttribute("form_action",formAction);
     }
+
+    @SuppressWarnings("rawtypes")
+    @RequestMapping(value="/uploadImage",method=RequestMethod.POST)
+    public ResponseEntity uploadImage(MultipartHttpServletRequest request, @RequestParam long publicacionId){
+        try{
+            MultiValueMap<String, MultipartFile> inputFiles = request.getMultiFileMap();
+            List<MultipartFile> mpfs = inputFiles.get("inputFiles");
+            if(mpfs != null){
+                for(MultipartFile file : mpfs){
+                    publicacionService.saveImage(file, publicacionId);
+                }
+            }
+            return ResponseEntity.status(HttpStatus.OK).body("{}");
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{error:"+e.getMessage()+"}");
+        }
+
+    }
+
 }
 

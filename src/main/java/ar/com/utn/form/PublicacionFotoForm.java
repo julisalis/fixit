@@ -13,18 +13,26 @@ import java.util.List;
 public class PublicacionFotoForm {
 
     private boolean deleted;
-    private boolean cover;
     private String folder;
     private String name;
+    private long id;
 
     public PublicacionFotoForm() {
     }
 
     public PublicacionFotoForm(PublicacionPhoto publicacionPhoto, String folder) {
-        this.cover= publicacionPhoto.isCover();
         this.deleted = publicacionPhoto.isDeleted();
         this.folder = folder;
         this.name = publicacionPhoto.getFileName();
+        this.id = publicacionPhoto.getId();
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public boolean isDeleted() {
@@ -33,14 +41,6 @@ public class PublicacionFotoForm {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
-    }
-
-    public boolean isCover() {
-        return cover;
-    }
-
-    public void setCover(boolean cover) {
-        this.cover = cover;
     }
 
     public String getFolder() {

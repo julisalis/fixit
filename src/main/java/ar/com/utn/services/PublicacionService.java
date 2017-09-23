@@ -3,6 +3,7 @@ package ar.com.utn.services;
 import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.TipoTrabajo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -21,4 +22,6 @@ public interface PublicacionService {
     Publicacion findById(Long publicacionId);
 
     TipoTrabajo findTipoTrabajoBySlug(String slug);
+
+    void saveImage(MultipartFile file, long publicacionId);
 }

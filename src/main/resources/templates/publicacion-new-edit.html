@@ -5,6 +5,10 @@
     <title>FixIT</title>
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
     <script type="text/javascript" th:src="@{/js/publicacion.js}"></script>
+
+    <link th:href="@{/bootstrap-fileinput/css/fileinput.min.css}" media="all" rel="stylesheet" type="text/css" />
+    <script th:src="@{/bootstrap-fileinput/js/fileinput.min.js}"></script>
+    <script th:src="@{/bootstrap-fileinput/js/fileinput_locale_es.js}"></script>
 </head>
 <body class="white-body">
 <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
@@ -60,8 +64,6 @@
                             </select>
                         </div>
 
-
-
                         <div class="form-group col-md-6">
                             <label for="urgencia">¿Cuándo querés hacer el trabajo?</label>
                             <select  th:field="*{urgencia}" id="urgencia" class="form-control">
@@ -114,35 +116,37 @@
                             </div>
                         </div>
 
-                        <div class="form-group col-md-12 photo-section">
-                            <a href="#" id="add-photo-link" class="btn"> <span>+ Agregar Foto</span>
-                                <input type="file" id="upload" value="Choose a file" accept="image/*">
-                            </a>
+                        <div class="col-md-12 card-image-container" th:if="${publicacionFotoForms!= null && publicacionFotoForms.size() } ">
 
-                            <div id="preview_images" class="row">
-
-                                <div class="col-md-3 view" th:each="foto: ${publicacionFotoForms}">
-                                    <a href="#" class=" thumbnail">
-                                        <img src=""/>
-                                    </a>
-
-                                    <div class="buttons">
-                                        <a th:id="${foto.identifier}" href="#delete" class="remove">
-                                            <i class="glyphicon glyphicon-remove-circle"></i>
-                                        </a>
-                                    </div>
+                            <div class="col-md-3 card-image primary" th:if="${primaryImage} !=null">
+                                <div class="col-md-12">
+                                    <img th:src="${primaryImage.folder}+${primaryImage.name}" class="img-responsive margin-standard">
                                 </div>
-
-                            </div>
-
-                            <div id="image_template" style="display: none">
-                                <div class="image_thumbnail col-md-3 view">
-                                    <a href="#" class="thumbnail"> <img src="" data-cover="" /></a>
-                                    <div class="buttons">
-                                        <a href="#delete" class="remove"> <i class="glyphicon glyphicon-remove-circle"></i></a>
-                                    </div>
+                                <div class="col-md-12 panel text-center">
+                                    <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${primaryImage.id}">
+                                        <i class="fa fa-star-o"></i></button>
+                                    <button type="button" class="btn btn-trash btn-fab btn-raised" th:attr="data-publicicacion-image-id=${primaryImage.id}">
+                                        <i class="material-icons">delete</i></button>
                                 </div>
                             </div>
+
+                            <div class="col-md-3 card-image" th:each="foto : ${publicacionFotoForms}">
+                                <div class="col-md-12">
+                                    <img th:src="${foto.folder}+${foto.name}" class="img-responsive margin-standard">
+                                </div>
+                                <div class="col-md-12 panel text-center">
+                                    <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${foto.id}">
+                                        <i class="fa fa-star-o"></i></button>
+                                    <button type="button" class="btn btn-trash btn-fab btn-raised" th:attr="data-publicicacion-image-id=${foto.id}">
+                                        <i class="material-icons">delete</i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="imageSize" th:value="${publicacionFotoForms!= null && publicacionFotoForms.size()}">
+                        <div class="form-group col-md-12" id="file-input-container">
+                            <label class="control-label" for="input-images">Imágenes</label>
+                            <input id="input-images" type="file" name="inputFiles" multiple class="file-loading">
                         </div>
 
                         <!-- Button -->
@@ -151,7 +155,6 @@
                         </div>
 
                     </fieldset>
-
 
                 </form>
 
