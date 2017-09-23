@@ -49,6 +49,22 @@ $(function () {
         minDate:firstAvailableDate(),
         });
 
+    $("#modal-publicacion").on("click",  function () {
+        var publicacionId = $(this).data('id');
+
+        $.get('/publicacion/detalle', {publicacionId: publicacionId} )
+            .done(function( data ) {
+                if (typeof(data.publicacion) != 'undefined'){
+                    $('#publicacion').modal('toggle');
+                    $("#publicacion .modal-title").text( data.publicacion.titulo);
+                }
+
+
+            }).fail(function () {
+                return false;
+            });
+    });
+
 });
 
 function firstAvailableDate() {

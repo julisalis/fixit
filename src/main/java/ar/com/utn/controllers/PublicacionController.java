@@ -27,7 +27,9 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -65,6 +67,14 @@ public class PublicacionController {
     public String editPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
         addModelAttributes(model,new PublicacionForm(publicacionService.findById(publicacionId)));
         return "publicacion-new-edit";
+    }
+
+    @RequestMapping(path="/detalle")
+    public  @ResponseBody Map<String,Object> detallePublicacion(Long publicacionId, WebRequest request, Model model) {
+        HashMap<String,Object> map = new HashMap<>();
+        Publicacion mipublicacion = publicacionService.findById(publicacionId);
+        map.put("publicacion",new PublicacionDTO(mipublicacion));
+        return map;
     }
 
     @PostMapping(path="/new")

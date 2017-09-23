@@ -28,7 +28,7 @@ public class PublicacionForm {
     private String descripcion;
     @NotNull
     private BigDecimal presupMax;
-    @NotNull
+    @NotNull(message = "Debe seleccionar una categoría de trabajo para la publicación")
     private TipoTrabajo tipoTrabajo;
     @NotNull
     private String currencyCode;
