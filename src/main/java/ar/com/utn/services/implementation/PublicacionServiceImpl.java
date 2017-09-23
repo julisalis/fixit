@@ -46,7 +46,7 @@ public class PublicacionServiceImpl implements PublicacionService {
 
     @Override
     public Integer countPublicaciones(TipoTrabajo tipoTrabajo) {
-        return publicacionRepository.countByTipoTrabajo(tipoTrabajo);
+        return publicacionRepository.countByTipoTrabajoAndEstadoPublicacionEquals(tipoTrabajo, EstadoPublicacion.NUEVA);
     }
 
     @Override
@@ -62,5 +62,10 @@ public class PublicacionServiceImpl implements PublicacionService {
     @Override
     public TipoTrabajo findTipoTrabajoBySlug(String slug) {
         return tipoTrabajoRepository.findBySlug(slug);
+    }
+
+    @Override
+    public List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion) {
+        return publicacionRepository.findAllByEstadoPublicacionEquals(estadoPublicacion);
     }
 }

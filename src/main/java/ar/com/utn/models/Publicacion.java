@@ -26,6 +26,8 @@ public class Publicacion extends PersistentEntity{
     @JoinColumn(name="localidad_fk",nullable = false)
     private Localidad localidad;
     @Enumerated
+    private EstadoPublicacion estadoPublicacion = EstadoPublicacion.NUEVA;
+    @Enumerated
     private TipoPublicacion tipoPublicacion = TipoPublicacion.REGULAR;
     @Enumerated
     private TiempoPublicacion tiempoPublicacion;
@@ -183,5 +185,13 @@ public class Publicacion extends PersistentEntity{
 
     public void setFechaCreacion(LocalDateTime fechaCreacion) {
         this.fechaCreacion = fechaCreacion;
+    }
+
+    public EstadoPublicacion getEstadoPublicacion() {
+        return estadoPublicacion;
+    }
+
+    public void setEstadoPublicacion(EstadoPublicacion estadoPublicacion) {
+        this.estadoPublicacion = estadoPublicacion;
     }
 }

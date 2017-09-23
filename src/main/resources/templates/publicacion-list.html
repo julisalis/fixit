@@ -18,15 +18,15 @@
                     <h4>Estado Publicaciones</h4>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
-                        <li role="presentation" class=""><a href="#hot-jobs" data-toggle="tab" aria-expanded="false">Nuevas</a></li>
-                        <li role="presentation" class=""><a href="#recent-jobs" data-toggle="tab" aria-expanded="false">Contratadas</a></li>
-                        <li role="presentation" class="active"><a href="#popular-jobs" data-toggle="tab" aria-expanded="true">Finalizadas</a></li>
+                        <li role="presentation" class="active"><a href="#nuevas" data-toggle="tab" aria-expanded="true">Nuevas</a></li>
+                        <li role="presentation" class=""><a href="#contratadas" data-toggle="tab" aria-expanded="false">Contratadas</a></li>
+                        <li role="presentation" class=""><a href="#finalizadas" data-toggle="tab" aria-expanded="false">Finalizadas</a></li>
                     </ul>
                 </div>
 
                 <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane fade" id="hot-jobs">
-                        <div class="job-ad-item" th:each="publicacion : ${publicaciones}">
+                    <div role="tabpanel" class="tab-pane fade active in" id="nuevas">
+                        <div class="job-ad-item" th:each="nueva : ${publicacionesNuevas}">
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
@@ -36,15 +36,15 @@
 
                                 <div class="ad-info fixit-job-box col-md-7">
                                     <p class="installationType">
-                                    <span><strong th:text="${publicacion.titulo}"></strong></span>
+                                    <span><strong th:text="${nueva.titulo}"></strong></span>
                                     </p>
-                                    <span th:text="${publicacion.descripcion}"></span>
+                                    <span th:text="${nueva.descripcion}"></span>
                                     <div class="ad-meta">
                                         <ul>
-                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${publicacion.localidad?.nombre}+', '+${publicacion.provincia?.nombre}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${publicacion.presupMax}+' '+${publicacion.currency}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${publicacion.urgencia}" class="btn-price-AR"></small>
-                                                <small th:text="${publicacion.fecha}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${nueva.localidad?.nombre}+', '+${nueva.provincia?.nombre}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${nueva.presupMax}+' '+${nueva.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${nueva.urgencia}" class="btn-price-AR"></small>
+                                                <small th:text="${nueva.fecha}" class="btn-price-AR"></small></li>
                                         </ul>
                                     </div><!-- ad-meta -->
                                 </div><!-- ad-info -->
@@ -58,18 +58,70 @@
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->
-
                     </div><!-- tab-pane -->
 
-                    <div role="tabpanel" class="tab-pane fade" id="recent-jobs">
+                    <div role="tabpanel" class="tab-pane fade" id="contratadas">
+                        <div class="job-ad-item" th:each="contratada : ${publicacionesContratadas}">
+                            <div class="item-info">
+                                <div class="item-image-box col-md-2">
+                                    <div class="item-image">
+                                        <a href="job-details.html"><img src="/images/publicaciones/not-found.png" alt="Image" class="img-responsive"></a>
+                                    </div><!-- item-image -->
+                                </div>
 
+                                <div class="ad-info fixit-job-box col-md-7">
+                                    <p class="installationType">
+                                        <span><strong th:text="${contratada.titulo}"></strong></span>
+                                    </p>
+                                    <span th:text="${contratada.descripcion}"></span>
+                                    <div class="ad-meta">
+                                        <ul>
+                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${contratada.localidad?.nombre}+', '+${contratada.provincia?.nombre}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${contratada.presupMax}+' '+${contratada.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${contratada.urgencia}" class="btn-price-AR"></small>
+                                                <small th:text="${contratada.fecha}" class="btn-price-AR"></small></li>
+                                        </ul>
+                                    </div><!-- ad-meta -->
+                                </div><!-- ad-info -->
 
+                                <div class="button col-md-3">
+                                    <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                </div>
+                            </div><!-- item-info -->
+                        </div><!-- ad-item -->
                     </div><!-- tab-pane -->
 
-                    <div role="tabpanel" class="tab-pane fade active in" id="popular-jobs">
+                    <div role="tabpanel" class="tab-pane fade" id="finalizadas">
+                        <div class="job-ad-item" th:each="finalizada : ${publicacionesFinalizadas}">
+                            <div class="item-info">
+                                <div class="item-image-box col-md-2">
+                                    <div class="item-image">
+                                        <a href="job-details.html"><img src="/images/publicaciones/not-found.png" alt="Image" class="img-responsive"></a>
+                                    </div><!-- item-image -->
+                                </div>
 
+                                <div class="ad-info fixit-job-box col-md-7">
+                                    <p class="installationType">
+                                        <span><strong th:text="${finalizada.titulo}"></strong></span>
+                                    </p>
+                                    <span th:text="${finalizada.descripcion}"></span>
+                                    <div class="ad-meta">
+                                        <ul>
+                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${finalizada.localidad?.nombre}+', '+${finalizada.provincia?.nombre}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${finalizada.presupMax}+' '+${finalizada.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${finalizada.urgencia}" class="btn-price-AR"></small>
+                                                <small th:text="${finalizada.fecha}" class="btn-price-AR"></small></li>
+                                        </ul>
+                                    </div><!-- ad-meta -->
+                                </div><!-- ad-info -->
 
+                                <div class="button col-md-3">
+                                    <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                </div>
+                            </div><!-- item-info -->
+                        </div><!-- ad-item -->
                     </div><!-- tab-pane -->
+
                 </div><!-- tab-content -->
             </div>
         </div>

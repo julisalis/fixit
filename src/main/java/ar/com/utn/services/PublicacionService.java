@@ -1,6 +1,7 @@
 package ar.com.utn.services;
 
 import ar.com.utn.form.PublicacionForm;
+import ar.com.utn.models.EstadoPublicacion;
 import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.TipoTrabajo;
 
@@ -21,4 +22,6 @@ public interface PublicacionService {
     Publicacion findById(Long publicacionId);
 
     TipoTrabajo findTipoTrabajoBySlug(String slug);
+
+    List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion);
 }

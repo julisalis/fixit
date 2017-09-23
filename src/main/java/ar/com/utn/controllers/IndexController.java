@@ -2,9 +2,7 @@ package ar.com.utn.controllers;
 
 import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.dto.TipoTrabajoDTO;
-import ar.com.utn.models.Publicacion;
-import ar.com.utn.models.TipoTrabajo;
-import ar.com.utn.models.Usuario;
+import ar.com.utn.models.*;
 import ar.com.utn.services.PublicacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -40,7 +38,7 @@ public class IndexController {
     @GetMapping(value="/publicaciones/{slug}")
     public String listPublicaciones(@PathVariable("slug") String slug, WebRequest request, Model model) {
         model.addAttribute("nombre_categoria",publicacionService.findTipoTrabajoBySlug(slug).getNombre());
-        model.addAttribute("publicaciones", getPublicacionesPorCatregoria(publicacionService.findAll(), slug));
+        model.addAttribute("publicaciones", getPublicacionesPorCatregoria(publicacionService.findAllByEstadoPublicacionEquals(EstadoPublicacion.NUEVA), slug));
         return "publicaciones-por-categoria";
     }
 

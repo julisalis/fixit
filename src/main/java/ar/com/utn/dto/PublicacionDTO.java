@@ -21,6 +21,7 @@ public class PublicacionDTO {
     private Provincia provincia;
     private String urgencia;
     private LocalDate fecha;
+    private EstadoPublicacion estado;
 
     public PublicacionDTO(Publicacion publicacion) {
         this.titulo = publicacion.getTitulo();
@@ -32,6 +33,7 @@ public class PublicacionDTO {
         this.provincia = publicacion.getLocalidad().getProvincia();
         this.urgencia = publicacion.getUrgencia().name();
         this.fecha = publicacion.getFecha();
+        this.estado = publicacion.getEstadoPublicacion();
     }
 
     public PublicacionDTO() {
@@ -107,5 +109,13 @@ public class PublicacionDTO {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public EstadoPublicacion getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPublicacion estado) {
+        this.estado = estado;
     }
 }

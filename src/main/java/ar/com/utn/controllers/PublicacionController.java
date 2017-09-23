@@ -48,9 +48,10 @@ public class PublicacionController {
     public String listPublicaciones(WebRequest request, Model model) {
         //todo add en security permisos solo para el tomaddor
         Usuario user = currentSession.getUser();
-        model.addAttribute("publicaciones",
-                user.getTomador().getPublicaciones()
-                        .stream().map(publicacion -> new PublicacionDTO(publicacion)).collect(Collectors.toList()));
+        List<PublicacionDTO> misPublicaciones = user.getTomador().getPublicaciones().stream().map(publicacion -> new PublicacionDTO(publicacion)).collect(Collectors.toList());
+        model.addAttribute("publicacionesNuevas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.NUEVA)).collect(Collectors.toList()));
+        model.addAttribute("publicacioneContratadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.CONTRATADA)).collect(Collectors.toList()));
+        model.addAttribute("publicacionesFinalizadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.FINALIZADA)).collect(Collectors.toList()));
         return "publicacion-list";
     }
 
