@@ -37,7 +37,7 @@
                         <div class="fixit-product-box  shadow-box">
                                 <img th:src="@{/images/}+${publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                 <span th:text="${publicacion.tipoTrabajo.nombre}">asdasd</span>
-                                <a type="button" id="modal-publicacion" class="shadow-box-link"  data-id="" th:attr="data-id=${publicacion.id}" data-target="#publicacion">
+                                <a type="button" class="shadow-box-link modal-publicacion"  data-id="" th:attr="data-id=${publicacion.id}" data-target="#publicacion">
                                     <img src="/images/publicaciones/not-found.png" onerror="this.src='/images/publicaciones/not-found.png'" class="img-responsive" alt="Plomería">
                                 </a>
                             <div>
