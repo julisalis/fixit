@@ -5,19 +5,21 @@
     <title>FixIT</title>
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
     <script type="text/javascript" th:src="@{/js/publicacion.js}"></script>
+
+    <link th:href="@{/bootstrap-fileinput/css/fileinput.min.css}" media="all" rel="stylesheet" type="text/css" />
+    <script th:src="@{/bootstrap-fileinput/js/fileinput.min.js}"></script>
+    <script th:src="@{/bootstrap-fileinput/js/fileinput_locale_es.js}"></script>
 </head>
 <body class="white-body">
 <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
 <div id="publicacion">
-
         <div class="container">
-
-            <h2>Nueva Publicación</h2>
-
             <div class="col-md-12 form-container">
 
-                <form th:action="@{/publicacion/}+${form_action}" th:object="${publicacion}" method="post" role="form" class="form-horizontal col-xs-12 col-md-10 col-md-offset-1">
+                <h2>Publicación</h2>
+
+                <form id="publicacion-form" th:action="@{/publicacion/}+${form_action}+'-ajax'" th:object="${publicacion}" method="post" role="form" class="form-horizontal col-xs-12 col-md-10 col-md-offset-1">
 
                     <div th:if="${#fields.hasErrors()}" class="alert alert-danger error-msg" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -31,6 +33,8 @@
                     </div>
 
                     <fieldset>
+                        <input type="hidden" id="publicacionId" th:field="*{id}">
+
                         <div class="form-group col-md-12">
                             <label for="titulo">Título</label>
                             <input type="text" th:field="*{titulo}"
@@ -60,8 +64,6 @@
                                 <option th:fragment="localidad-fragment" th:each="loca : ${localidades}"  th:value="${loca.value}" th:text="${loca.label}"></option>
                             </select>
                         </div>
-
-
 
                         <div class="form-group col-md-6">
                             <label for="urgencia">¿Cuándo querés hacer el trabajo?</label>
@@ -101,18 +103,43 @@
                         </div>
 
                         <div class="form-group col-md-12">
-                            <label for="tipoTrabajo">Categorías</label>
-                            <div class="section category-items job-category-items  text-center">
-                                <div data-toggle="buttons" class="btn-group category-list" id="tipoTrabajo">
-                                    <label class="category-item" th:each="item: ${tipos}">
-                                        <input hidden class="category-checkbox" type="radio" th:field="*{tipoTrabajo}" th:value="${item.id}" data-validation="required"/>
-                                        <div class="category-icon">
-                                            <img th:src="'/images/'+${item.imagen}" alt="images" th:name="${item.slug}" class="img-selected image-radio img-responsive"/>
-                                        </div>
-                                        <span class="category-title" th:text="${item.nombre}"></span>
-                                    </label>
+                            <label for="tipoTrabajo">Categoría</label>
+                            <select  th:field="*{tipoTrabajo}" id="tipoTrabajo" class="form-control">
+                                <option th:each="item: ${tipos}" th:value="${item.id}" th:text="${item.nombre}"/>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 card-image-container" th:if="${publicacionFotoForms!= null && publicacionFotoForms.size() } ">
+
+                            <div class="col-md-3 card-image primary" th:if="${primaryImage} !=null">
+                                <div class="col-md-12">
+                                    <img th:src="${primaryImage.folder}+${primaryImage.name}" class="img-responsive margin-standard">
+                                </div>
+                                <div class="col-md-12 panel text-center">
+                                    <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${primaryImage.id}">
+                                        <i class="fa fa-star-o"></i></button>
+                                    <button type="button" class="btn btn-trash btn-fab btn-raised" th:attr="data-publicicacion-image-id=${primaryImage.id}">
+                                        <i class="material-icons">delete</i></button>
                                 </div>
                             </div>
+
+                            <div class="col-md-3 card-image" th:each="foto : ${publicacionFotoForms}">
+                                <div class="col-md-12">
+                                    <img th:src="${foto.folder}+${foto.name}" class="img-responsive margin-standard">
+                                </div>
+                                <div class="col-md-12 panel text-center">
+                                    <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${foto.id}">
+                                        <i class="fa fa-star-o"></i></button>
+                                    <button type="button" class="btn btn-trash btn-fab btn-raised" th:attr="data-publicicacion-image-id=${foto.id}">
+                                        <i class="material-icons">delete</i></button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="imageSize" th:value="${publicacionFotoForms!= null && publicacionFotoForms.size()}">
+                        <div class="form-group col-md-12" id="file-input-container">
+                            <label class="control-label" for="input-images">Imágenes</label>
+                            <input id="input-images" type="file" name="inputFiles" multiple class="file-loading">
                         </div>
 
                         <!-- Button -->
@@ -121,6 +148,7 @@
                         </div>
 
                     </fieldset>
+
                 </form>
 
             </div>

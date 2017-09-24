@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class PublicacionMultimedia {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "publicacion")
-    private List<PublicacionPhoto> photos = new ArrayList<PublicacionPhoto>();
+    private List<PublicacionPhoto> photos = new ArrayList<>();
 
     @Column(name = "multimedia_folder", unique = true)
     private String folder;
@@ -24,4 +24,21 @@ public class PublicacionMultimedia {
     public PublicacionMultimedia(String folder) {
         this.folder = folder;
     }
+
+    public List<PublicacionPhoto> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<PublicacionPhoto> photos) {
+        this.photos = photos;
+    }
+
+    public String getFolder() {
+        return folder;
+    }
+
+    public void setFolder(String folder) {
+        this.folder = folder;
+    }
+
 }

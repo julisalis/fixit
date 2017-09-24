@@ -920,7 +920,7 @@ span {
 }
 #publicacion .container .form-container{
     background-color: white;
-    padding-top: 50px;
+    padding-top: 20px;
     padding-bottom: 50px;
     border-radius: 7px;
 }
@@ -1214,6 +1214,91 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     text-shadow: 2px 4px 3px rgba(0,0,0,0.3);
 }
 
+#publicacion  form .photo-section .btn {
+    margin-bottom: 30px;
+    width: 250px;
+}
+
+#publicacion  form .photo-section .thumbnail>img {
+    height: 150px;
+}
+
+#publicacion  form .photo-section  #preview_images {
+    padding: 20px 10px 10px 20px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-left: 0;
+    margin-right: 0;
+    display: none;
+
+}
+
+#publicacion  form .photo-section  #preview_images .image_thumbnail.view .thumbnail{
+    border-color: rgba(0, 230, 141, 0.48);
+    border-width: 3px;
+    padding: 3px;
+}
+#publicacion  form #file-input-container .btn.btn-primary.btn-file{
+    height: 34px;
+    font-size: 15px;
+}
+
+
+
+.photo-section #add-photo-link {
+    position: relative;
+    background: rgb(87, 90, 90);
+    color: white;
+    padding: 10px 15px;
+    border-radius: 3px;
+    border: 1px solid #cccccc;
+    font-size: 16px;
+    font-weight: bold;
+    display: block;
+    cursor: pointer;
+    margin: 0 auto;
+    width: 200px;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+.photo-section #add-photo-link:hover{
+    background: rgba(211, 211, 211, 0.58);
+}
+.photo-section #add-photo-link input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    height: 100%;
+}
+
+
+.photo-section #add-photo-link span{
+    font-size: 16px;
+    font-weight: bold !important;
+}
+
+.photo-section #preview_images .view {
+    position: relative;
+    display: inline-block;
+}
+
+.photo-section #preview_images .view .buttons {
+    padding-top: 7px;
+    padding-right: 7px;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    font-size: 40px;
+    display: none;
+}
+
+.photo-section #preview_images .view a.remove {
+    color: red;
+}
+
 .telefono .input-group.has-error p {
     display: none;
 }
@@ -1488,5 +1573,9 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
 
 .navbar-brand>span:hover{
     color: white;
+}
+
+#publicacion .container{
+    padding-top: 120px;
 }
 

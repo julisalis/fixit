@@ -4,7 +4,9 @@ import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.models.EstadoPublicacion;
 import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.TipoTrabajo;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -13,7 +15,7 @@ import java.util.List;
 public interface PublicacionService {
     List<TipoTrabajo> getTipostrabajos();
 
-    void createPublicacion(PublicacionForm publicacionForm);
+    Publicacion createPublicacion(PublicacionForm publicacionForm);
 
     Integer countPublicaciones (TipoTrabajo tipoTrabajo);
 
@@ -22,6 +24,8 @@ public interface PublicacionService {
     Publicacion findById(Long publicacionId);
 
     TipoTrabajo findTipoTrabajoBySlug(String slug);
+
+    void saveImage(MultipartFile file, long publicacionId) throws IOException;
 
     List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion);
 }

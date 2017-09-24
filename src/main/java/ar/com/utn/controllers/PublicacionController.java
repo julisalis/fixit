@@ -1,33 +1,25 @@
 package ar.com.utn.controllers;
 
 import ar.com.utn.dto.PublicacionDTO;
-import ar.com.utn.form.CurrencyCode;
-import ar.com.utn.form.PrestadorForm;
-import ar.com.utn.form.PublicacionForm;
-import ar.com.utn.form.SelectorForm;
+import ar.com.utn.form.*;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.implementation.PublicacionSearch;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.validation.Valid;
-import java.beans.PropertyEditorSupport;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.EnumSet;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,14 +55,26 @@ public class PublicacionController {
 
     @GetMapping(value="/new")
     public String newPublicacion(WebRequest request, Model model) {
-        addModelAttributes(model,new PublicacionForm());
+        addModelAttributes(model,new PublicacionForm(),"new");
         return "publicacion-new-edit";
     }
 
     @GetMapping(value="/edit/{publicacionId}")
     public String editPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
-        addModelAttributes(model,new PublicacionForm(publicacionService.findById(publicacionId)));
+        Publicacion publicacion = publicacionService.findById(publicacionId);
+        addModelAttributes(model,new PublicacionForm(publicacion, buildFotoForms(publicacion.getMultimedia())),"edit");
         return "publicacion-new-edit";
+    }
+
+
+    private List<PublicacionFotoForm> buildFotoForms(PublicacionMultimedia multimedia) {
+        if (multimedia!=null && multimedia.getPhotos()!=null){
+            return multimedia.getPhotos()
+                    .stream()
+                    .map(publicacionPhoto ->
+                            new PublicacionFotoForm(publicacionPhoto, multimedia.getFolder())).collect(Collectors.toList());
+        }
+        else return new ArrayList<>();
     }
 
     @RequestMapping(path="/detalle")
@@ -81,40 +85,62 @@ public class PublicacionController {
         return map;
     }
 
-    @PostMapping(path="/new")
-    public String newPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response) {
+
+    @RequestMapping(path="/new-ajax")
+    public @ResponseBody Map<String,Object> newPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm, BindingResult result, Model model) {
+        HashMap<String,Object> map = new HashMap<>();
         try {
 
             if(publicacionForm.getUrgencia().equals(Urgencia.FECHA) && publicacionForm.getFecha()==null){
                 result.rejectValue("Fecha","Fecha","es requerída");
             }
-
             if(!result.hasErrors()){
-                publicacionService.createPublicacion(publicacionForm);
-                return "redirect:/publicacion/list";
+                Publicacion publicacion = publicacionService.createPublicacion(publicacionForm);
+                map.put("success", true);
+                map.put("publicacion", new PublicacionForm(publicacion,null));
+                map.put("msg","La publicación ha sido creada con éxito!");
             }else{
-                addModelAttributes(model,publicacionForm);
-                return "publicacion-new-edit";
+                map.put("success", false);
+                map.put("errors", result.getAllErrors());
             }
         }catch (Exception e) {
-            addModelAttributes(model,publicacionForm);
-            return "publicacion-new-edit";
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
         }
-
+        return map;
     }
     private List<SelectorForm> generarProvicias() {
         return usuarioService.getProvincias().stream().map(provincia -> new SelectorForm(provincia.getId(),provincia.getNombre())).collect(Collectors.toList());
     }
 
 
-    public void addModelAttributes(Model model, PublicacionForm form){
+    public void addModelAttributes(Model model, PublicacionForm form, String formAction){
         model.addAttribute("provincias",generarProvicias());
         model.addAttribute("publicacion",form);
         model.addAttribute("tipos", publicacionService.getTipostrabajos());
         model.addAttribute("tiempos", TiempoPublicacion.values());
         model.addAttribute("urgencias", Urgencia.values());
         model.addAttribute("currencies", CurrencyCode.values());
-        model.addAttribute("form_action","new");
+        model.addAttribute("form_action",formAction);
     }
+
+    @SuppressWarnings("rawtypes")
+    @RequestMapping(value="/uploadImage",method = RequestMethod.POST)
+    public ResponseEntity uploadImage(MultipartHttpServletRequest request, @RequestParam long publicacionId){
+        try{
+            MultiValueMap<String, MultipartFile> inputFiles = request.getMultiFileMap();
+            List<MultipartFile> mpfs = inputFiles.get("inputFiles");
+            if(mpfs != null){
+                for(MultipartFile file : mpfs){
+                    publicacionService.saveImage(file, publicacionId);
+                }
+            }
+            return ResponseEntity.status(HttpStatus.OK).body("{}");
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{error:"+e.getMessage()+"}");
+        }
+
+    }
+
 }
 
