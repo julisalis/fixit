@@ -74,19 +74,17 @@ function saveFunction() {
     $.get(form.attr('action'), form.serialize())
         .done(function (data) {
             if(data.success) {
-                debugger;
                 if (data.publicacion.id != null && typeof(data.publicacion.id) != 'undefined') {
                     $("#publicacionId").val(data.publicacion.id)
                     uploadFiles();
-                    //mostrar modal de success y redireccionar a list
                 } else {
-                    //Muestro error
+                    errorMessage();
                 }
             }else {
-                //Muestro error
+                errorMessage();
             }
         }).fail(function () {
-        debugger;
+        errorMessage();
     });
 }
 
@@ -118,6 +116,10 @@ function initializeFileInput(){
         }
     });
 
+    fileInput.on('filebatchuploadsuccess', function(event, data, previewId, index) {
+        successMessage();
+    });
+
 }
 function initializeImages(){
     $(".card-image-container").on("click",".btn-profile",function(){
@@ -144,5 +146,35 @@ function updateMaxQuantityFile(maxQuantity){
 function uploadFiles(){
     fileInput.fileinput("upload");
 }
+
+function successMessage(){
+    swal({
+            title: "Guardado",
+            text: "La publicación se ha guardado",
+            type: "success",
+            closeOnConfirm: true,
+            showLoaderOnConfirm: false
+        },
+        function(){
+            //redirect load product
+            listPublicaciones();
+        });
+}
+
+function listPublicaciones(){
+    window.location.href = "/publicacion/list";
+    location.reload();
+}
+
+function errorMessage(){
+    swal({
+        title: "Error",
+        text: "La publicación no se ha podido guardar",
+        type: "error",
+        closeOnConfirm: true,
+        showLoaderOnConfirm: false
+    });
+}
+
 
 
