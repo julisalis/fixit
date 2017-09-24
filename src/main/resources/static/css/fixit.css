@@ -485,6 +485,14 @@ background-color:#f7f7f7;
     margin-bottom: 30px;
 }
 
+.subtitulo-search{
+    font-size: 16px;
+    letter-spacing: 6px;
+    margin-top: -10px;
+    margin-bottom: 30px;
+    color: #aaa;
+}
+
 .container .section.category-items.job-category-items.text-center{
     padding: 50px 25px 35px;
     display: inline-block;
@@ -1119,6 +1127,24 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
 
 .fixit-product-box .icons-publicacion {
     display: inline;
+}
+
+.fixit-product-box .icon-tipotrabajo {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    width: 15%;
+    height: auto;
+    display: inline;
+    margin-right:5px;
+}
+
+.fixit-product-box>span{
+    font-size: 10px;
+    letter-spacing: 2px;
+    margin-top: 0px;
+    text-transform: uppercase;
+    color: #9c9c9c;
 }
 
 #section-publicaciones .btn-secondary-alt{
