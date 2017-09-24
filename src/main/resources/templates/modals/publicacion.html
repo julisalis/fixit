@@ -13,13 +13,92 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title"></h4>
+                    <h4 class="modal-title publicaciones"></h4>
                 </div>
                 <div class="modal-body">
+                    <!-- Carrousel de imagenes -->
+                    <section id="section-Clientes">
+                            <div class="section category-items job-category-items text-center imagenes-publicacion">
+                                <div class="row">
+                                    <div id="ifix-carousel-howitworks" class="carousel slide publicaciones" data-ride="carousel">
+                                        <ol class="carousel-indicators">
+                                            <li data-target="#ifix-carousel-howitworks" data-slide-to="0" class="active"></li>
+                                            <li data-target="#ifix-carousel-howitworks" data-slide-to="1"></li>
+                                            <li data-target="#ifix-carousel-howitworks" data-slide-to="2"></li>
+                                        </ol>
+                                        <div class="carousel-inner" role="listbox">
+                                            <div class="item active">
+                                                <div class="row">
+                                                        <div class="ifix-publicacion-image">
+                                                            <img src="/images/laptop1.png" class="img-responsive" alt="como funciona">
+                                                        </div>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="row">
+                                                    <div class="ifix-publicacion-image">
+                                                            <img src="/images/laptop2.png" class="img-responsive" alt="como funciona">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="item">
+                                                <div class="row">
+                                                    <div class="ifix-publicacion-image">
+                                                        <img src="/images/laptop3.png" class="img-responsive" alt="como funciona">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="ifix-carousel-controls">
+                                            <a class="left carousel-control" href="#ifix-carousel-howitworks" role="button" data-slide="prev">
+                                                <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+                                            </a>
+                                            <a class="right carousel-control" href="#ifix-carousel-howitworks" role="button" data-slide="next">
+                                                <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
 
+                    <!-- Datos Publicacion -->
+                    <section id="datos-publicacion">
+                        <div class="pregunta">
+                            <div class="icons-publicacion-detalle"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
+                                <h4 class="preguntas-publicacion">Qué hay que hacer?</h4>
+                        </div>
+                        <h3 class="modal-descripcion publicaciones"></h3>
+                        <div class="pregunta">
+                            <div class="icons-publicacion-detalle"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+                            <h4 class="preguntas-publicacion">Dónde?</h4>
+                        </div>
+                        <h3 class="modal-ubicacion publicaciones"></h3>
+                        <div class="pregunta">
+                            <div class="icons-publicacion-detalle"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
+                            <h4 class="preguntas-publicacion">Cuánto quiero gastar?</h4>
+                        </div>
+                        <h3 class="modal-precio publicaciones"></h3>
+                        <div class="pregunta">
+                            <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                            <h4 class="preguntas-publicacion">Cuándo lo necesito?</h4>
+                        </div>
+                        <h3 class="modal-urgencia modal-fecha publicaciones"></h3>
+                    </section>
+
+                    <!-- Boton -->
+                    <section id="boton-postularme">
+                        <div class="btn-postulacion">
+                            <!--Solo ve el "POSTULARME" en caso que sea el prestador-->
+                            <a href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') ">
+                                <span class="anim"></span>
+                                Postularme
+                            </a>
+                        </div>
+                    </section>
 
                 </div>
-            </div>
 
         </div>
     </div>
