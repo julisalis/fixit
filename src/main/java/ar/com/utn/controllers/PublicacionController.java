@@ -3,6 +3,7 @@ package ar.com.utn.controllers;
 import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.form.*;
 import ar.com.utn.models.*;
+import ar.com.utn.repositories.implementation.PublicacionSearch;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
@@ -37,6 +38,9 @@ public class PublicacionController {
     private CurrentSession currentSession;
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private PublicacionSearch publicacionSearch;
 
     @GetMapping(value="/list")
     public String listPublicaciones(WebRequest request, Model model) {
