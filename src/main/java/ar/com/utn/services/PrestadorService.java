@@ -1,5 +1,6 @@
 package ar.com.utn.services;
 
+import ar.com.utn.afip.TicketAcceso;
 import ar.com.utn.models.ActividadAfip;
 import ar.com.utn.models.TipoTrabajo;
 
@@ -12,4 +13,8 @@ public interface PrestadorService {
     List<TipoTrabajo> getTiposTrabajos();
 
     List<ActividadAfip> getActividadesAfip();
+
+    TicketAcceso getLastTicketAcceso();
+
+    void saveTicketAcceso(TicketAcceso ta);
 }

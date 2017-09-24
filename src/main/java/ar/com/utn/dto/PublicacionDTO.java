@@ -12,6 +12,7 @@ import java.util.Date;
  */
 public class PublicacionDTO {
 
+    private Long id;
     private String titulo;
     private String descripcion;
     private BigDecimal presupMax;
@@ -21,8 +22,10 @@ public class PublicacionDTO {
     private Provincia provincia;
     private String urgencia;
     private LocalDate fecha;
+    private EstadoPublicacion estado;
 
     public PublicacionDTO(Publicacion publicacion) {
+        this.id = publicacion.getId();
         this.titulo = publicacion.getTitulo();
         this.descripcion = publicacion.getDescripcion();
         this.presupMax = publicacion.getPresupMax();
@@ -32,9 +35,18 @@ public class PublicacionDTO {
         this.provincia = publicacion.getLocalidad().getProvincia();
         this.urgencia = publicacion.getUrgencia().name();
         this.fecha = publicacion.getFecha();
+        this.estado = publicacion.getEstadoPublicacion();
     }
 
     public PublicacionDTO() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitulo() {
@@ -107,5 +119,13 @@ public class PublicacionDTO {
 
     public void setFecha(LocalDate fecha) {
         this.fecha = fecha;
+    }
+
+    public EstadoPublicacion getEstado() {
+        return estado;
+    }
+
+    public void setEstado(EstadoPublicacion estado) {
+        this.estado = estado;
     }
 }

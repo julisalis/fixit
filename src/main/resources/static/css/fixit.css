@@ -1273,4 +1273,202 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     color: red;
 }
 
+.telefono .input-group.has-error p {
+    display: none;
+}
+
+.latest-jobs-ads {
+    margin-bottom: 15px;
+    background-color: #fff;
+    padding: 15px 30px;
+}
+.latest-jobs-ads .section-title {
+    padding-bottom: 0;
+}
+.page .section-title {
+    border-bottom: 1px solid #f2f2f2;
+    padding-bottom: 5px;
+    overflow: hidden;
+}
+.tab-manu {
+    overflow: hidden;
+    border-bottom: 1px solid #f2f2f2;
+}
+.tab-manu h4 {
+    float: left;
+    margin-bottom: 14px;
+}
+.section-title h4 {
+    color: #000;
+    font-weight: 500;
+}
+.tab-manu .nav-tabs {
+    float: right;
+    border: none;
+    border: 1px solid transparent;
+}
+.latest-jobs-ads .nav-tabs>li>a {
+    margin-right: 0;
+}
+.tab-manu .nav-tabs li a {
+    padding: 12px 15px;
+    border-bottom: 0;
+    text-transform: capitalize;
+    color: #9c9c9c;
+    margin-left: 2px;
+}
+.tab-manu .nav-tabs li a:hover, .tab-manu .nav-tabs li a:focus, .tab-manu .nav-tabs li.active a {
+    border: 1px solid #f2f2f2;
+    background-color: #fcfcfc;
+    border-bottom: #f2f2f2;
+    border-radius: 0;
+    color: #3ac58f;
+}
+.nav-tabs>li {
+    float: left;
+    margin-bottom: -1px;
+}
+.nav>li {
+    position: relative;
+    display: block;
+}
+.job-ad-item {
+    padding: 15px;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #f3f3f3;
+    margin: 18px 0;
+    border-radius: 2px;
+}
+.job-ad-item .item-info {
+    min-height: 0;
+    overflow: hidden;
+}
+.item-image-box, .item-info {
+    padding: 0;
+    margin: 0;
+}
+.item-image-box.col-md-2 {
+    width: 10%;
+}
+.job-ad-item .item-image-box, .job-ad-item .ad-info {
+    float: left;
+}
+.item-image-box {
+    overflow: hidden;
+}
+.item-image-box, .item-info {
+    padding: 0;
+    margin: 0;
+}
+.job-ad-item .item-image {
+    width: 95px;
+    height: 85px;
+    border: 1px solid #f3f3f3;
+    overflow: hidden;
+}
+.item-image {
+    position: relative;
+}
+.job-ad-item img {
+    width: inherit;
+}
+.job-ad-item .ad-info {
+    padding: 5px 25px;
+    text-align: left;
+}
+.job-ad-item .item-image-box, .job-ad-item .ad-info {
+    float: left;
+}
+.job-ad-item .ad-info span {
+    color: #000;
+    font-size: 20px;
+    display: block;
+    margin-bottom: 10px;
+}
+.job-ad-item .ad-info span {
+    color: #000;
+    font-size: 14px;
+    line-height: 17px;
+}
+.job-ad-item .ad-info a.title {
+    font-weight: 300;
+    color: #000;
+    font-weight: 500;
+}
+.job-ad-item .ad-info span a {
+    color: #000;
+    font-size: 20px;
+    font-weight: 300;
+}
+.job-ad-item .ad-meta {
+    position: inherit;
+    background-color: transparent;
+    border-top: none;
+    padding-left: 0;
+    min-height: inherit;
+    display: inline;
+}
+.job-ad-item .ad-meta li:first-child {
+    margin-left: 0;
+}
+.job-ad-item .ad-meta a, .job-ad-item .ad-meta li {
+    font-size: 14px;
+    color: #a0a0a0;
+    display: block;
+}
+.job-ad-item .ad-meta li {
+    float: left;
+    margin-left: 20px;
+}
+.job-ad-item .ad-meta a, .job-ad-item .ad-meta li {
+    font-size: 14px;
+    color: #a0a0a0;
+}
+.job-ad-item .ad-meta i, .job-ad-item .ad-meta a i {
+    font-size: 20px;
+    margin-right: 10px;
+}
+.ad-meta ul{
+    padding-left: 0px;
+}
+.ad-meta a i {
+    text-align: right;
+}
+.job-ad-item .button {
+    float: right;
+}
+.job-ad-item .btn.btn-primary {
+    padding: 5px 30px 6px;
+    margin-top: 25px;
+    font-size: 14px;
+    margin-right: 25px;
+    margin-bottom: 5%;
+}
+
+.fixit-job-box {
+    padding: 0;
+    text-align: center;
+}
+
+.fixit-job-box p.installationType strong {
+     text-transform: uppercase;
+     font-size: 20px;
+     font-weight: 400;
+     letter-spacing: 3px;
+     color: #333;
+     margin-top: 2%;
+ }
+
+.tam-boton-100{
+    width: 100%
+}
+
+.button.col-md-3 i{
+     margin-left: 5%;
+ }
+.edit-delete a:hover{
+    color: #23527c;
+    text-decoration: none;
+}
 

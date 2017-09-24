@@ -27,7 +27,9 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -48,9 +50,10 @@ public class PublicacionController {
     public String listPublicaciones(WebRequest request, Model model) {
         //todo add en security permisos solo para el tomaddor
         Usuario user = currentSession.getUser();
-        model.addAttribute("publicaciones",
-                user.getTomador().getPublicaciones()
-                        .stream().map(publicacion -> new PublicacionDTO(publicacion)).collect(Collectors.toList()));
+        List<PublicacionDTO> misPublicaciones = user.getTomador().getPublicaciones().stream().map(publicacion -> new PublicacionDTO(publicacion)).collect(Collectors.toList());
+        model.addAttribute("publicacionesNuevas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.NUEVA)).collect(Collectors.toList()));
+        model.addAttribute("publicacioneContratadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.CONTRATADA)).collect(Collectors.toList()));
+        model.addAttribute("publicacionesFinalizadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.FINALIZADA)).collect(Collectors.toList()));
         return "publicacion-list";
     }
 
@@ -67,6 +70,7 @@ public class PublicacionController {
         return "publicacion-new-edit";
     }
 
+
     private List<PublicacionFotoForm> buildFotoForms(PublicacionMultimedia multimedia) {
         if (multimedia!=null && multimedia.getPhotos()!=null){
             return multimedia.getPhotos()
@@ -76,6 +80,16 @@ public class PublicacionController {
         }
         else return new ArrayList<>();
     }
+
+    @RequestMapping(path="/detalle")
+    public  @ResponseBody Map<String,Object> detallePublicacion(Long publicacionId, WebRequest request, Model model) {
+        HashMap<String,Object> map = new HashMap<>();
+        Publicacion mipublicacion = publicacionService.findById(publicacionId);
+        map.put("publicacion",new PublicacionDTO(mipublicacion));
+        return map;
+    }
+
+
     @PostMapping(path="/new")
     public String newPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response) {
         try {

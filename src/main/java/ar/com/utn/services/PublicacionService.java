@@ -1,6 +1,7 @@
 package ar.com.utn.services;
 
 import ar.com.utn.form.PublicacionForm;
+import ar.com.utn.models.EstadoPublicacion;
 import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.TipoTrabajo;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,4 +25,6 @@ public interface PublicacionService {
     TipoTrabajo findTipoTrabajoBySlug(String slug);
 
     void saveImage(MultipartFile file, long publicacionId);
+
+    List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion);
 }
