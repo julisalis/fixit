@@ -47,9 +47,10 @@ public class PublicacionServiceImpl implements PublicacionService {
         Publicacion publicacion = new Publicacion(publicacionForm.getCurrencyCode(),publicacionForm.getTitulo(),publicacionForm.getDescripcion(),publicacionForm.getPresupMax(),
                 publicacionForm.getTipoTrabajo(),localidad,publicacionForm.getTiempoPublicacion(),
                 tomador,null,publicacionForm.getFecha(),publicacionForm.getUrgencia());
-        publicacion.setMultimedia(new PublicacionMultimedia("/"+userlogged+"/"+publicacion.getId()));
+        publicacionRepository.save(publicacion);
+        publicacion.setMultimedia(new PublicacionMultimedia("/"+userlogged.getUsername()+"/"+publicacion.getId()+"/"));
 
-        return publicacionRepository.save(publicacion);
+        return publicacion;
     }
 
     @Override

@@ -75,7 +75,9 @@ function saveFunction() {
         .done(function (data) {
             if(data.success) {
                 if (data.publicacion.id != null && typeof(data.publicacion.id) != 'undefined') {
-                    $("#publicacionId").val(data.publicacion.id)
+                    $("#publicacionId").val(data.publicacion.id);
+                    fileInput.fileinput('refresh', {uploadExtraData:{publicacionId:data.publicacion.id},
+                        uploadUrl:"/publicacion/uploadImage"});
                     uploadFiles();
                 } else {
                     errorMessage();
@@ -140,7 +142,7 @@ function initializeImages(){
 }
 
 function updateMaxQuantityFile(maxQuantity){
-    fileInput.fileinput('refresh', {maxFileCount:maxQuantity})
+    fileInput.fileinput('refresh', {maxFileCount:maxQuantity});
 }
 
 function uploadFiles(){
