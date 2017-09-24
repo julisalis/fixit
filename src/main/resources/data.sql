@@ -335,7 +335,6 @@ INSERT INTO localidad (id_provincia, nombre) VALUES ( 4, 'Antofagasta');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 4, 'Belén');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 4, 'Capayán');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 4, 'Capital');
-INSERT INTO localidad (id_provincia, nombre) VALUES ( 4, '4');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 4, 'Corral Quemado');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 4, 'El Alto');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 4, 'El Rodeo');
@@ -663,7 +662,6 @@ INSERT INTO localidad (id_provincia, nombre) VALUES ( 7, 'La Higuera');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 7, 'La Laguna');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 7, 'La Paisanita');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 7, 'La Palestina');
-INSERT INTO localidad (id_provincia, nombre) VALUES ( 7, '12');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 7, 'La Paquita');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 7, 'La Para');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 7, 'La Paz');
@@ -1076,7 +1074,6 @@ INSERT INTO localidad (id_provincia, nombre) VALUES ( 9, 'El Quebracho');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 9, 'El Redomón');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 9, 'El Solar');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 9, 'Enrique Carbo');
-INSERT INTO localidad (id_provincia, nombre) VALUES ( 9, '9');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 9, 'Espinillo N.');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 9, 'Estación Campos');
 INSERT INTO localidad (id_provincia, nombre) VALUES ( 9, 'Estación Escriña');
@@ -1376,7 +1373,6 @@ INSERT INTO localidad (id_provincia, nombre) VALUES( 12, 'Jacinto Arauz');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 12, 'La Adela');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 12, 'La Humada');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 12, 'La Maruja');
-INSERT INTO localidad (id_provincia, nombre) VALUES( 12, '12');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 12, 'La Reforma');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 12, 'Limay Mahuida');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 12, 'Lonquimay');
@@ -1566,7 +1562,6 @@ INSERT INTO localidad (id_provincia, nombre) VALUES( 16, 'Los Catutos');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 16, 'Los Chihuidos');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 16, 'Los Miches');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 16, 'Manzano Amargo');
-INSERT INTO localidad (id_provincia, nombre) VALUES( 16, '16');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 16, 'Octavio Pico');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 16, 'Paso Aguerre');
 INSERT INTO localidad (id_provincia, nombre) VALUES( 16, 'Picún Leufú');
@@ -2418,3 +2413,12 @@ INSERT INTO actividadafip(codigo,descripcion) VALUES (500143,'COLOC PULIDO DE PI
 INSERT INTO actividadafip(codigo,descripcion) VALUES (725000,'MANTENIMIENTO Y REPARACION DE MAQUINARIA DE OFICINA,CONTABILIDAD E INFORMATICA');
 INSERT INTO actividadafip(codigo,descripcion) VALUES (951218,'REPAR ARTIC ELECTR DE U/DOMEST');
 INSERT INTO actividadafip(codigo,descripcion) VALUES (952100,'REPARACIÓN DE ARTÍCULOS ELÉCTRICOS Y ELECTRÓNICOS DE USO DOMÉSTICO');
+
+
+-- Usuario admin de prueba
+INSERT INTO telefono(cod_area, cod_pais, telefono) VALUES(11,54,123456789);
+INSERT INTO tomador() VALUES();
+INSERT INTO ubicacion(id_localidad) VALUES(38);
+INSERT INTO user_rol (usuario_id, rol) VALUES(1, 'TOMADOR');
+INSERT INTO usuarios(activado, apellido, documento, email, fecha_creacion, nombre, password, tipo_doc, username, id_telefono, tomador_id, id_ubicacion)
+VALUES(1,'admin', '38457302',  'melaniejarabroviski@hotmail.com', '2017-09-24', 'admin', '$2a$10$iJWyKdOPydsJsEjKm0UFc.QmgAbSFjwHSsEighFW3oyOj21ofLBH2', 'DNI', 'admin', 1, 1, 1);
