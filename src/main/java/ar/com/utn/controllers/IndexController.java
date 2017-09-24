@@ -46,16 +46,18 @@ public class IndexController {
         return "publicaciones-por-categoria";
     }
 
-    @GetMapping(value = "/publicaciones")
-    public String listPublicacionesSearch(@RequestParam(value="search") String search) {
+    @GetMapping(value = "/publicaciones/search")
+    public String listPublicacionesSearch(@RequestParam(value="searchTerm") String searchTerm, Model model) {
         List searchResults = null;
         try {
-            searchResults = publicacionSearch.search(search);
+            searchResults = publicacionSearch.search(searchTerm);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return "index";
+        model.addAttribute("publicaciones", searchResults);
+        model.addAttribute("searchTerm",searchTerm);
+        return "publicaciones-busqueda";
     }
 
     public List<PublicacionDTO> getPublicacionesPorCatregoria (List<Publicacion> publicaciones, String slug) {

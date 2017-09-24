@@ -18,7 +18,7 @@
     <section id="section-foto">
         <div class="jumbotron-categoria text-center">
             <div class="container">
-                <h1 class="titulo-prin-static" th:text="${nombre_categoria}">Categoría</h1>
+                <h1 class="titulo-prin-static">Busqueda</h1>
             </div>
         </div>
     </section>
@@ -27,13 +27,16 @@
     <section id="section-publicaciones">
         <div class="container">
                 <h3 class="subtitulo-jobs">PUBLICACIONES</h3>
+                <h5 class="subtitulo-search" th:text="'Resultados de busqueda para: '+${searchTerm}">Resultados de busqueda</h5>
                 <div class="col-md-12 form-container">
-                <div class="row">
                     <div th:if="${#lists.isEmpty(publicaciones)}">
-                        <h4>No hay publicaciones</h4>
+                        <h3>No hay publicaciones</h3>
                     </div>
+                <div class="row">
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper" th:each="publicacion : ${publicaciones}">
                         <div class="fixit-product-box  shadow-box">
+                                <img th:src="@{/images/}+${publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
+                                <span th:text="${publicacion.tipoTrabajo.nombre}">asdasd</span>
                                 <a type="button" id="modal-publicacion" class="shadow-box-link"  data-id="" th:attr="data-id=${publicacion.id}" data-target="#publicacion">
                                     <img src="/images/publicaciones/not-found.png" onerror="this.src='/images/publicaciones/not-found.png'" class="img-responsive" alt="Plomería">
                                 </a>
@@ -41,7 +44,7 @@
                                 <p class="installationType">
                                     <strong th:text="${publicacion.titulo}"></strong>
                                     <div class="icons-publicacion"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
-                                    <small th:text="${publicacion.localidad?.nombre}+' ,'+${publicacion.provincia?.nombre}" class="btn-price-AR"></small> <br>
+                                    <small th:text="${publicacion.localidad?.nombre}+' ,'+${publicacion.localidad?.provincia?.nombre}" class="btn-price-AR"></small> <br>
                                     <div class="icons-publicacion"> <i class="fa fa-credit-card" aria-hidden="true"></i></div>
                                     <small th:text="'Hasta '+${publicacion.presupMax}+' '+${publicacion.currency}" class="btn-price-AR"></small> <br>
                                     <div class="icons-publicacion"> <i class="fa fa-calendar" aria-hidden="true"></i></div>
