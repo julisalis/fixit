@@ -45,29 +45,6 @@ $(function () {
     initializeImages();
     initializeFileInput();
 
-    $(".modal-publicacion").on("click",  function () {
-        var publicacionId = $(this).data('id');
-
-        $.get('/publicacion/detalle', {publicacionId: publicacionId} )
-            .done(function( data ) {
-                if (typeof(data.publicacion) != 'undefined'){
-                    $('#publicacion').modal('toggle');
-                    $("#publicacion .modal-title").text( data.publicacion.titulo);
-                    $("#publicacion .modal-descripcion").text( data.publicacion.descripcion);
-                    $("#publicacion .modal-ubicacion").text( data.publicacion.localidad.nombre+', '+data.publicacion.provincia.nombre);
-                    $("#publicacion .modal-precio").text('Hasta '+ data.publicacion.presupMax+' '+data.publicacion.currency);
-                    $("#publicacion .modal-urgencia").text( data.publicacion.urgencia);
-                    $("#publicacion .modal-fecha").text(data.publicacion.fecha.dayOfMonth+'/'+data.publicacion.fecha.monthValue+'/'+data.publicacion.fecha.year);
-                }
-
-
-            }).fail(function () {
-                return false;
-            });
-    });
-    // $("#submit").on("click",  function () {
-    //
-    // });
 });
 function saveFunction() {
     var form = $("#publicacion-form");
