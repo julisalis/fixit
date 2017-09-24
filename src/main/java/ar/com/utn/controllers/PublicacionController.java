@@ -17,16 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.beans.PropertyEditorSupport;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,26 +82,28 @@ public class PublicacionController {
     }
 
 
-    @PostMapping(path="/new")
-    public String newPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(path="/new-ajax")
+    public @ResponseBody Map<String,Object> newPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm, BindingResult result, Model model) {
+        HashMap<String,Object> map = new HashMap<>();
         try {
 
             if(publicacionForm.getUrgencia().equals(Urgencia.FECHA) && publicacionForm.getFecha()==null){
                 result.rejectValue("Fecha","Fecha","es requerída");
             }
-
             if(!result.hasErrors()){
-                publicacionService.createPublicacion(publicacionForm);
-                return "redirect:/publicacion/list";
+                Publicacion publicacion = publicacionService.createPublicacion(publicacionForm);
+                map.put("success", true);
+                map.put("publicacion", new PublicacionForm(publicacion,null));
+                map.put("msg","La publicación ha sido creada con éxito!");
             }else{
-                addModelAttributes(model,publicacionForm,"new");
-                return "publicacion-new-edit";
+                map.put("success", false);
+                map.put("errors", result.getAllErrors());
             }
         }catch (Exception e) {
-            addModelAttributes(model,publicacionForm,"new");
-            return "publicacion-new-edit";
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
         }
-
+        return map;
     }
     private List<SelectorForm> generarProvicias() {
         return usuarioService.getProvincias().stream().map(provincia -> new SelectorForm(provincia.getId(),provincia.getNombre())).collect(Collectors.toList());
@@ -127,7 +121,7 @@ public class PublicacionController {
     }
 
     @SuppressWarnings("rawtypes")
-    @RequestMapping(value="/uploadImage",method=RequestMethod.POST)
+    @RequestMapping(value="/uploadImage",method = RequestMethod.POST)
     public ResponseEntity uploadImage(MultipartHttpServletRequest request, @RequestParam long publicacionId){
         try{
             MultiValueMap<String, MultipartFile> inputFiles = request.getMultiFileMap();

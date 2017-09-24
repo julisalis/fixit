@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
  * Created by iaruedel on 16/08/17.
  */
 public class PublicacionForm {
-
+    private Long id;
     @NotBlank
     private String titulo;
     @NotBlank
@@ -60,6 +60,7 @@ public class PublicacionForm {
         this.urgencia = publicacion.getUrgencia();
         this.fecha = publicacion.getFecha();
         this.publicacionFotoForms = publicacionFotoForms;
+        this.id = publicacion.getId();
     }
 
 
@@ -166,5 +167,13 @@ public class PublicacionForm {
 
     public void setPrimaryImage(PublicacionFotoForm primaryImage) {
         this.primaryImage = primaryImage;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

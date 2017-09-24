@@ -8,34 +8,17 @@ var minFiles = $("#imageSize").val()>0 ? 0 : 1;
 $(function () {
     $.validate({
         lang : 'es',
+        decimalSeparator: ',',
         onSuccess : function($form) {
-            debugger;
-            uploadFiles();
+            saveFunction();
+                //uploadFiles();
+            return false; // Will stop the submission of the form
         }
     });
 
-    $(".category-item").click(function(){
-
-            $(".category-item").each(function () {
-                $(this).find(".category-checkbox").prop('checked',false);
-                $(this).removeClass("checked");
-                var img = $(this).find(".img-selected");
-                var name = img.attr("name");
-                img.prop("src",'/images/'+name+".png");
-            });
-
-            $(this).find(".category-checkbox").prop('checked',true);
-            $(this).addClass("checked");
-            var img = $(this).find(".img-selected");
-            var name = img.attr("name");
-            img.prop("src",'/images/'+name+"-selected.png");
-    });
-
-    $('.category-item').hover(function(){
-        $(this).addClass("hover");
-    }, function () {
-        $(this).removeClass("hover");
-    });
+    if(maxFiles == 0){
+        $("#file-input-container").hide();
+    }
 
     $("#urgencia").change(function () {
         if($(this).val()=="FECHA"){
@@ -58,6 +41,7 @@ $(function () {
         showButtonPanel:true,
         minDate:firstAvailableDate(),
         });
+
     initializeImages();
     initializeFileInput();
 
@@ -76,9 +60,30 @@ $(function () {
                 return false;
             });
     });
-
+    // $("#submit").on("click",  function () {
+    //
+    // });
 });
-
+function saveFunction() {
+    var form = $("#publicacion-form");
+    $.get(form.attr('action'), form.serialize())
+        .done(function (data) {
+            if(data.success) {
+                debugger;
+                if (data.publicacion.id != null && typeof(data.publicacion.id) != 'undefined') {
+                    $("#publicacionId").val(data.publicacion.id)
+                    uploadFiles();
+                    //mostrar modal de success y redireccionar a list
+                } else {
+                    //Muestro error
+                }
+            }else {
+                //Muestro error
+            }
+        }).fail(function () {
+        debugger;
+    });
+}
 
 function firstAvailableDate() {
     var date = new Date();
@@ -89,7 +94,7 @@ function initializeFileInput(){
     fileInput = $("#input-images");
     fileInput.fileinput({
         language: "es",
-        uploadUrl: "publicacion/uploadImage", // server upload action
+        uploadUrl: "/publicacion/uploadImage", // server upload action
         uploadAsync: false,
         showUpload: false,
         showRemove: false,
@@ -103,7 +108,7 @@ function initializeFileInput(){
         minImageHeight: 140,
         uploadExtraData: function() {
             return {
-                publicicacionId: $("#publicicacionId").val()
+                publicacionId: $("#publicacionId").val()
             };
         }
     });
@@ -134,9 +139,5 @@ function updateMaxQuantityFile(maxQuantity){
 function uploadFiles(){
     fileInput.fileinput("upload");
 }
-
-
-
-
 
 

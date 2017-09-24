@@ -1,6 +1,7 @@
 package ar.com.utn.models;
 
 import javax.persistence.*;
+import java.io.File;
 import java.time.LocalDateTime;
 
 /**
@@ -15,17 +16,14 @@ public class PublicacionPhoto extends PersistentEntity {
     private Publicacion publicacion;
     @Column(name = "is_deleted")
     private boolean deleted = false;
-    @Column(name="file_name",nullable = false)
-    private String fileName;
     @Column(name="extension",nullable = false)
     private String extension;
     private LocalDateTime uploadedDate;
     private boolean cover;
 
-    public PublicacionPhoto(Publicacion publicacion,boolean deleted, String fileName, String extension,boolean cover) {
+    public PublicacionPhoto(Publicacion publicacion,boolean deleted, String extension,boolean cover) {
         this.publicacion = publicacion;
         this.deleted = deleted;
-        this.fileName = fileName;
         this.extension = extension;
         this.uploadedDate = LocalDateTime.now();
         this.cover = cover;
@@ -47,12 +45,8 @@ public class PublicacionPhoto extends PersistentEntity {
         this.deleted = deleted;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
+    public String getName(){
+        return getId().toString()+"."+getExtension();
     }
 
     public String getExtension() {
@@ -77,5 +71,17 @@ public class PublicacionPhoto extends PersistentEntity {
 
     public void setCover(boolean cover) {
         this.cover = cover;
+    }
+
+    public File getDirectory(String imageRoot, String folder) {
+        return new File(buildDirectory(imageRoot,folder));
+    }
+    private String buildDirectory(String imageRoot,String folder){
+        return imageRoot+"/"+folder;
+    }
+
+    public File getFile(String imageRoot,String folder){
+        File destination = new File(buildDirectory(imageRoot,folder), getName());
+        return destination;
     }
 }

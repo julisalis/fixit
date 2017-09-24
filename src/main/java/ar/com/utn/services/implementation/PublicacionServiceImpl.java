@@ -4,6 +4,7 @@ import ar.com.utn.exception.PublicacionException;
 import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.*;
+import ar.com.utn.services.MultimediaService;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class PublicacionServiceImpl implements PublicacionService {
     private PublicacionRepository publicacionRepository;
     @Autowired
     private PublicacionPhotoRepository publicacionPhotoRepository;
+    @Autowired
+    private MultimediaService multimediaService;
 
     @Override
     public List<TipoTrabajo> getTipostrabajos() {
@@ -37,16 +40,16 @@ public class PublicacionServiceImpl implements PublicacionService {
 
     @Override
     @Transactional
-    public void createPublicacion(PublicacionForm publicacionForm) {
+    public Publicacion createPublicacion(PublicacionForm publicacionForm) {
         Localidad localidad=localidadRepository.findOne(publicacionForm.getLocalidad());
         Usuario userlogged = currentSession.getUser();
-        if(userlogged!=null) {
-            Tomador tomador = userlogged.getTomador();
-            Publicacion publicacion = new Publicacion(publicacionForm.getCurrencyCode(),publicacionForm.getTitulo(),publicacionForm.getDescripcion(),publicacionForm.getPresupMax(),
-                    publicacionForm.getTipoTrabajo(),localidad,publicacionForm.getTiempoPublicacion(),
-                    tomador,null,publicacionForm.getFecha(),publicacionForm.getUrgencia());
-            publicacionRepository.save(publicacion);
-        }
+        Tomador tomador = userlogged.getTomador();
+        Publicacion publicacion = new Publicacion(publicacionForm.getCurrencyCode(),publicacionForm.getTitulo(),publicacionForm.getDescripcion(),publicacionForm.getPresupMax(),
+                publicacionForm.getTipoTrabajo(),localidad,publicacionForm.getTiempoPublicacion(),
+                tomador,null,publicacionForm.getFecha(),publicacionForm.getUrgencia());
+        publicacion.setMultimedia(new PublicacionMultimedia("/"+userlogged+"/"+publicacion.getId()));
+
+        return publicacionRepository.save(publicacion);
     }
 
     @Override
@@ -71,17 +74,21 @@ public class PublicacionServiceImpl implements PublicacionService {
 
     @Override
     @Transactional(rollbackOn={Exception.class})
-    public void saveImage(MultipartFile file,long publicacionId) throws PublicacionException, IllegalStateException{
+    public void saveImage(MultipartFile file,long publicacionId) throws PublicacionException, IllegalStateException, IOException {
         Publicacion publicacion = publicacionRepository.findOne(publicacionId);
+        PublicacionPhoto publicacionPhoto;
         if(publicacion.getMultimedia().getPhotos().size() > 4){
             throw new PublicacionException("El producto ha alcanzado el limite de imagenes");
         }
         String extension = file.getContentType().split("/")[1];
-        if(publicacion.getMultimedia().getPhotos().stream().anyMatch(publicacionPhoto -> publicacionPhoto.isCover())){
-           publicacionPhotoRepository.save(new PublicacionPhoto(publicacion,false,"hola",extension,true));
+        if(publicacion.getMultimedia().getPhotos().stream().anyMatch(foto -> foto.isCover())){
+           publicacionPhoto = publicacionPhotoRepository.save(new PublicacionPhoto(publicacion,false,extension,true));
         }else{
-            publicacionPhotoRepository.save(new PublicacionPhoto(publicacion,false,"hola",extension,false));
+            publicacionPhoto =publicacionPhotoRepository.save(new PublicacionPhoto(publicacion,false,extension,false));
+
         }
+        publicacion.getMultimedia().getPhotos().add(publicacionPhoto);
+        multimediaService.saveEcommerceImage(publicacionPhoto, file, publicacion.getMultimedia());
     }
 
     public List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion) {

@@ -23,7 +23,7 @@ public class PublicacionFotoForm {
     public PublicacionFotoForm(PublicacionPhoto publicacionPhoto, String folder) {
         this.deleted = publicacionPhoto.isDeleted();
         this.folder = folder;
-        this.name = publicacionPhoto.getFileName();
+        this.name = publicacionPhoto.getName();
         this.id = publicacionPhoto.getId();
     }
 
