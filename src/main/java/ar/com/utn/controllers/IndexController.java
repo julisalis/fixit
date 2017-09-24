@@ -3,6 +3,7 @@ package ar.com.utn.controllers;
 import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.dto.TipoTrabajoDTO;
 import ar.com.utn.models.*;
+import ar.com.utn.repositories.implementation.PublicacionSearch;
 import ar.com.utn.services.PublicacionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -25,6 +26,9 @@ public class IndexController {
     @Autowired
     private PublicacionService publicacionService;
 
+    @Autowired
+    private PublicacionSearch publicacionSearch;
+
     @RequestMapping("/")
     String index(Model model) {
         model.addAttribute("tipotrabajos", getTiposTrabajos(publicacionService.getTipostrabajos()));
@@ -44,6 +48,13 @@ public class IndexController {
 
     @GetMapping(value = "/publicaciones")
     public String listPublicacionesSearch(@RequestParam(value="search") String search) {
+        List searchResults = null;
+        try {
+            searchResults = publicacionSearch.search(search);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
         return "index";
     }
 

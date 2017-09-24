@@ -1,4 +1,7 @@
 package ar.com.utn.models;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,10 +16,14 @@ import java.util.Set;
  */
 @Entity
 @Table(name="publicacion")
+@Indexed
 public class Publicacion extends PersistentEntity{
 
+    @Field
     private String titulo;
+    @Field
     private String descripcion;
+
     private BigDecimal presupMax;
     private Currency currency;
     @ManyToOne

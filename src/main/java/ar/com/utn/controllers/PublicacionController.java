@@ -6,6 +6,7 @@ import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.models.*;
+import ar.com.utn.repositories.implementation.PublicacionSearch;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
@@ -45,6 +46,9 @@ public class PublicacionController {
     private CurrentSession currentSession;
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private PublicacionSearch publicacionSearch;
 
     @GetMapping(value="/list")
     public String listPublicaciones(WebRequest request, Model model) {
