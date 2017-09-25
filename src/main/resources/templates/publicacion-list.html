@@ -26,6 +26,9 @@
 
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade active in" id="nuevas">
+                        <div th:if="${#lists.isEmpty(publicacionesNuevas)}">
+                            <h3>No hay publicaciones nuevas</h3>
+                        </div>
                         <div class="job-ad-item" th:each="nueva : ${publicacionesNuevas}">
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
@@ -61,6 +64,9 @@
                     </div><!-- tab-pane -->
 
                     <div role="tabpanel" class="tab-pane fade" id="contratadas">
+                        <div th:if="${#lists.isEmpty(publicacionesContratadas)}">
+                            <h3>No hay publicaciones contratadas</h3>
+                        </div>
                         <div class="job-ad-item" th:each="contratada : ${publicacionesContratadas}">
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
@@ -92,6 +98,9 @@
                     </div><!-- tab-pane -->
 
                     <div role="tabpanel" class="tab-pane fade" id="finalizadas">
+                        <div th:if="${#lists.isEmpty(publicacionesFinalizadas)}">
+                            <h3>No hay publicaciones finalizadas</h3>
+                        </div>
                         <div class="job-ad-item" th:each="finalizada : ${publicacionesFinalizadas}">
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
