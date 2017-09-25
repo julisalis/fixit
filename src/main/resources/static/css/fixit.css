@@ -439,7 +439,14 @@ div.signup, #signin .container{
 }
 
 .body-background{
-background-color:#f7f7f7;
+    background-image: url("../images/plumber-blur.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    min-height: 785px;
+    position: relative;
+    width: 100%;
+    height: 100%;
 }
 #signup .login{
     text-align: center;
