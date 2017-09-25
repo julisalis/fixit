@@ -8,12 +8,7 @@ var minFiles = $("#imageSize").val()>0 ? 0 : 1;
 $(function () {
     $.validate({
         lang : 'es',
-        decimalSeparator: ',',
-        onSuccess : function($form) {
-            saveFunction();
-                //uploadFiles();
-            return false; // Will stop the submission of the form
-        }
+        decimalSeparator: ','
     });
 
     if(maxFiles == 0){
@@ -45,27 +40,35 @@ $(function () {
     initializeImages();
     initializeFileInput();
 
-});
-function saveFunction() {
-    var form = $("#publicacion-form");
-    $.get(form.attr('action'), form.serialize())
-        .done(function (data) {
-            if(data.success) {
+
+    $("form").submit(function() {
+        return false;
+    });
+
+    $("#submit-p").click(function() {
+        var form = $(this).closest("form");
+        $.ajax({
+            url: form.attr('action'),
+            data: form.serialize(),
+            method: "POST",
+            success: function( data, textStatus, jqXHR) {
                 if (data.publicacion.id != null && typeof(data.publicacion.id) != 'undefined') {
                     $("#publicacionId").val(data.publicacion.id);
-                    fileInput.fileinput('refresh', {uploadExtraData:{publicacionId:data.publicacion.id},
-                        uploadUrl:"/publicacion/uploadImage"});
                     uploadFiles();
                 } else {
                     errorMessage();
                 }
-            }else {
+            },
+            error: function ( jqXHR, textStatus, errorThrown){
                 errorMessage();
             }
-        }).fail(function () {
-        errorMessage();
+        });
+        return false;
     });
-}
+
+
+
+});
 
 function firstAvailableDate() {
     var date = new Date();
@@ -97,6 +100,9 @@ function initializeFileInput(){
 
     fileInput.on('filebatchuploadsuccess', function(event, data, previewId, index) {
         successMessage();
+    });
+    fileInput.on('filebatchuploaderror', function(event, data, previewId, index) {
+        errorMessage();
     });
 
 }
@@ -135,7 +141,6 @@ function successMessage(){
             showLoaderOnConfirm: false
         },
         function(){
-            //redirect load product
             listPublicaciones();
         });
 }

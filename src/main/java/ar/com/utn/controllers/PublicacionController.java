@@ -86,7 +86,7 @@ public class PublicacionController {
     }
 
 
-    @RequestMapping(path="/new-ajax")
+    @PostMapping(path="/new")
     public @ResponseBody Map<String,Object> newPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm, BindingResult result, Model model) {
         HashMap<String,Object> map = new HashMap<>();
         try {

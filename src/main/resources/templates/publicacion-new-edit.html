@@ -4,11 +4,12 @@
 <head lang="en">
     <title>FixIT</title>
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <link rel="stylesheet" type="text/css"  th:href="@{/bootstrap-fileinput/css/fileinput.min.css}" media="all"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-sweetalert/sweetalert.css}"/>
+    <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/fileinput.min.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/locales/es.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-sweetalert/sweetalert.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/publicacion.js}"></script>
-
-    <link th:href="@{/bootstrap-fileinput/css/fileinput.min.css}" media="all" rel="stylesheet" type="text/css" />
-    <script th:src="@{/bootstrap-fileinput/js/fileinput.min.js}"></script>
-    <script th:src="@{/bootstrap-fileinput/js/locales/es.js}"></script>
 </head>
 <body class="white-body">
 <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
@@ -19,7 +20,7 @@
 
                 <h2>Publicación</h2>
 
-                <form id="publicacion-form" th:action="@{/publicacion/}+${form_action}+'-ajax'" th:object="${publicacion}" method="post" role="form" class="form-horizontal col-xs-12 col-md-10 col-md-offset-1">
+                <form id="publicacion-form" th:action="@{/publicacion/}+${form_action}" th:object="${publicacion}" method="post" role="form" class="form-horizontal col-xs-12 col-md-10 col-md-offset-1">
 
                     <div th:if="${#fields.hasErrors()}" class="alert alert-danger error-msg" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -144,7 +145,7 @@
 
                         <!-- Button -->
                         <div class="form-group col-md-12 btn-publicacion">
-                            <button type="submit" class="submit button button-block btn btn-primary btn-aceptar" id="submit">Publicar Trabajo</button>
+                            <button class="submit button button-block btn btn-primary btn-aceptar" id="submit-p">Publicar Trabajo</button>
                         </div>
 
                     </fieldset>
