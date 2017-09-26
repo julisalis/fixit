@@ -1,11 +1,13 @@
 package ar.com.utn.controllers;
 
 import ar.com.utn.dto.TomadorDTO;
+import ar.com.utn.form.PerfilForm;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.TipoDoc;
 import ar.com.utn.models.Usuario;
+import ar.com.utn.repositories.TipoTrabajoRepository;
 import ar.com.utn.repositories.UsuarioRepository;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
@@ -33,6 +35,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private TipoTrabajoRepository tipoTrabajoRepository;
 
     @Autowired
     private UsuarioService usuarioService;
@@ -64,17 +69,20 @@ public class UsuarioController {
 
     @GetMapping(value="/perfil")
     public String perfilUsuario(WebRequest request, Model model) {
-        model.addAttribute("tomadorForm",new TomadorForm(currentSession.getUser()));
+        //model.addAttribute("tomadorForm",new TomadorForm(currentSession.getUser()));
+        //model.addAttribute("perfilForm",new PerfilForm(currentSession.getUser()));
+        model.addAttribute("user",currentSession.getUser());
         model.addAttribute("provincias", signupController.generarProvicias());
-        model.addAttribute("telefono",new TelefonoForm());
+        //model.addAttribute("telefono",new TelefonoForm());
         model.addAttribute("documentos", TipoDoc.values());
+        model.addAttribute("tiposTrabajo",tipoTrabajoRepository.findAll());
         return "perfil-usuario";
-
     }
 
     @RequestMapping("/ajax/localidad")
     public String ajaxBrands(@RequestParam("provincia") String provinceId, Model model) {
         List<SelectorForm> models = usuarioService.findAllLocalidadByProvince(Long.parseLong(provinceId));
+        model.addAttribute("user",currentSession.getUser());
         model.addAttribute("localidades", models);
         return "perfil-usuario :: localidad-fragment ";
     }
