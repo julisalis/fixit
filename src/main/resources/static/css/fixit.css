@@ -442,7 +442,6 @@ div.signup, #signin .container{
     background-image: url("../images/plumber-blur.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    overflow: hidden;
     min-height: 785px;
     position: relative;
     width: 100%;
