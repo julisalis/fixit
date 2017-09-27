@@ -6,11 +6,18 @@ var maxFiles = 5 - $("#imageSize").val();
 var minFiles = $("#imageSize").val()>0 ? 0 : 1;
 
 $(function () {
+
     $.validate({
         lang : 'es',
-        decimalSeparator: ','
+        decimalSeparator: ',',
+        onSuccess : function($form) {
+            saveFunction($form);
+            return false; // Will stop the submission of the form
+        }
     });
 
+    initializeImages();
+    initializeFileInput();
     if(maxFiles == 0){
         $("#file-input-container").hide();
     }
@@ -22,11 +29,9 @@ $(function () {
             $("#fecha").attr("disabled",true);
         }
     });
-
     if( $("#urgencia").val()=="FECHA"){
         $("#fecha").attr("disabled",false);
     }
-
     $('.datepicker').datepicker({
         autoclose: true,
         dateFormat: "mm-dd-yy",
@@ -37,38 +42,27 @@ $(function () {
         minDate:firstAvailableDate(),
         });
     
-    initializeImages();
-    initializeFileInput();
-
-
-    $("form").submit(function() {
-        return false;
-    });
-
-    $("#submit-p").click(function() {
-        var form = $(this).closest("form");
-        $.ajax({
-            url: form.attr('action'),
-            data: form.serialize(),
-            method: "POST",
-            success: function( data, textStatus, jqXHR) {
-                if (data.publicacion.id != null && typeof(data.publicacion.id) != 'undefined') {
-                    $("#publicacionId").val(data.publicacion.id);
-                    uploadFiles();
-                } else {
-                    errorMessage();
-                }
-            },
-            error: function ( jqXHR, textStatus, errorThrown){
-                errorMessage();
-            }
-        });
-        return false;
-    });
-
-
 
 });
+
+function saveFunction(form){
+    $.ajax({
+        url: form.attr('action'),
+        data: form.serialize(),
+        method: "POST",
+        success: function( data, textStatus, jqXHR) {
+            if (data.publicacion.id != null && typeof(data.publicacion.id) != 'undefined') {
+                $("#publicacionId").val(data.publicacion.id);
+                uploadFiles();
+            } else {
+                errorMessage();
+            }
+        },
+        error: function ( jqXHR, textStatus, errorThrown){
+            errorMessage();
+        }
+    });
+}
 
 function firstAvailableDate() {
     var date = new Date();
@@ -79,7 +73,7 @@ function initializeFileInput(){
     fileInput = $("#input-images");
     fileInput.fileinput({
         language: "es",
-        uploadUrl: "/publicacion/uploadImage", // server upload action
+        uploadUrl: "/publicacion/uploadMultipleFile", // server upload action
         uploadAsync: false,
         showUpload: false,
         showRemove: false,
@@ -88,6 +82,7 @@ function initializeFileInput(){
         maxFileSize: 1000,
         validateInitialCount: true,
         overwriteInitial: false,
+        showClose :false,
         allowedFileExtensions: ["jpg", "png","jpeg"],
         minImageWidth: 100,
         minImageHeight: 140,

@@ -19,6 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -140,6 +141,22 @@ public class PublicacionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{error:"+e.getMessage()+"}");
         }
 
+    }
+
+    @RequestMapping(value = "/uploadMultipleFile", method = RequestMethod.POST, produces = "application/json;charset=utf8")
+    @ResponseBody
+    public ResponseEntity uploadMultipleFileHandler(@RequestParam("inputFiles") MultipartFile[] files,@RequestParam("publicacionId")  long publicacionId ) throws IOException {
+
+        try{
+            for (int i = 0; i < files.length; i++) {
+                MultipartFile file = files[i];
+                publicacionService.saveImage(file, publicacionId);
+            }
+
+            return ResponseEntity.status(HttpStatus.OK).body("{}");
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{error:"+e.getMessage()+"}");
+        }
     }
 
 }
