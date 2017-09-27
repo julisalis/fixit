@@ -13,7 +13,7 @@
 
     <div class="container">
         <h2>Mi Perfil</h2>
-        <div class="col-md-12 form-container" id="perfil">
+        <div class="col-md-12 form-container form-horizontal" id="perfil">
 
                 <!--<div th:if="${#fields.hasErrors()}" class="alert alert-danger error-msg" role="alert">
                     <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -34,6 +34,8 @@
                 </div>-->
 
                 <fieldset>
+
+                    <input type="hidden" th:value="${user.id}" id="id" class="form-control input-md"/>
                     <!-- Text input-->
                     <div class="form-group">
                         <label class="col-md-4 control-label" for="nombre">Nombre*</label>
@@ -135,8 +137,7 @@
 
 
                     <!-- Button -->
-                    <div style="text-align: center;" class="form-group submit">
-                        <label class="control-label" for="submit"></label>
+                    <div style="text-align: center;" class="submit">
                         <button class="submit button button-block btn btn-primary btn-aceptar" id="submit">Guardar cambios</button>
                     </div>
 
@@ -156,5 +157,28 @@
     $('#provincia').on('change', function() {
         $("#localidad").load('/usuario/ajax/localidad', "provincia="+$("#provincia").val());
     });
+
+    function savePrestadorChanges(){
+        var data = {
+            nombre: $("#nombre").val(),
+            apellido: $("#apellido").val(),
+            documento: $("#documento").val(),
+            codArea: $("#codArea").val(),
+            telefono: $("#telefono").val(),
+            provincia: $("#provincia").val(),
+            localidad: $("#localidad").val()
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/usuario/perfi-prestador-json',
+            data: data,
+            success: function(message){
+                if(message.status != 'success'){
+
+                }
+            },
+            async:true
+        });
+    }
 </script>
 </html>
