@@ -283,7 +283,8 @@ body {
     height: 44px;
 }
 #signin .container .form-signin .checkbox{
-    padding: 15px 0 25px;
+    padding: 10px 0 15px;
+    padding-left: 10%;
 }
 
 #signin .container .form-signin .checkbox input[type=checkbox].css-checkbox {

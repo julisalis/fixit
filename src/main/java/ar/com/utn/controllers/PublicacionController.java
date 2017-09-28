@@ -8,6 +8,7 @@ import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,8 @@ import java.util.stream.Collectors;
 @Controller
 @RequestMapping(path="/publicacion")
 public class PublicacionController {
-
+    @Autowired
+    private Environment environment;
     @Autowired
     private PublicacionService publicacionService;
     @Autowired
@@ -73,7 +75,7 @@ public class PublicacionController {
             return multimedia.getPhotos()
                     .stream()
                     .map(publicacionPhoto ->
-                            new PublicacionFotoForm(publicacionPhoto, multimedia.getFolder())).collect(Collectors.toList());
+                            new PublicacionFotoForm(publicacionPhoto, environment.getProperty("app.file-system.image.root")+multimedia.getFolder())).collect(Collectors.toList());
         }
         else return new ArrayList<>();
     }
@@ -141,22 +143,6 @@ public class PublicacionController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{error:"+e.getMessage()+"}");
         }
 
-    }
-
-    @RequestMapping(value = "/uploadMultipleFile", method = RequestMethod.POST, produces = "application/json;charset=utf8")
-    @ResponseBody
-    public ResponseEntity uploadMultipleFileHandler(@RequestParam("inputFiles") MultipartFile[] files,@RequestParam("publicacionId")  long publicacionId ) throws IOException {
-
-        try{
-            for (int i = 0; i < files.length; i++) {
-                MultipartFile file = files[i];
-                publicacionService.saveImage(file, publicacionId);
-            }
-
-            return ResponseEntity.status(HttpStatus.OK).body("{}");
-        }catch(Exception e){
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("{error:"+e.getMessage()+"}");
-        }
     }
 
 }

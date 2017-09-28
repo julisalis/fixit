@@ -21,7 +21,10 @@ public class PublicacionPhoto extends PersistentEntity {
     private LocalDateTime uploadedDate;
     private boolean cover;
 
-    public PublicacionPhoto(Publicacion publicacion,boolean deleted, String extension,boolean cover) {
+    public PublicacionPhoto() {
+    }
+
+    public PublicacionPhoto(Publicacion publicacion, boolean deleted, String extension, boolean cover) {
         this.publicacion = publicacion;
         this.deleted = deleted;
         this.extension = extension;

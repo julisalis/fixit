@@ -73,7 +73,7 @@ function initializeFileInput(){
     fileInput = $("#input-images");
     fileInput.fileinput({
         language: "es",
-        uploadUrl: "/publicacion/uploadMultipleFile", // server upload action
+        uploadUrl: "/publicacion/uploadImage", // server upload action
         uploadAsync: false,
         showUpload: false,
         showRemove: false,
@@ -142,7 +142,6 @@ function successMessage(){
 
 function listPublicaciones(){
     window.location.href = "/publicacion/list";
-    location.reload();
 }
 
 function errorMessage(){

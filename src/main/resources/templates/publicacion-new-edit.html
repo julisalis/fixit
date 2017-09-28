@@ -110,9 +110,9 @@
                             </select>
                         </div>
 
-                        <div class="col-md-12 card-image-container" th:if="${publicacionFotoForms!= null && publicacionFotoForms.size() } ">
+                        <div class="col-md-12 card-image-container" th:if="${publicacion.publicacionFotoForms!= null && publicacion.publicacionFotoForms.size()>0 } ">
 
-                            <div class="col-md-3 card-image primary" th:if="${primaryImage} !=null">
+                            <div class="col-md-3 card-image primary" th:if="${publicacion.primaryImage} !=null">
                                 <div class="col-md-12">
                                     <img th:src="${primaryImage.folder}+${primaryImage.name}" class="img-responsive margin-standard">
                                 </div>
@@ -124,7 +124,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-3 card-image" th:each="foto : ${publicacionFotoForms}">
+                            <div class="col-md-3 card-image" th:each="foto : ${publicacion.publicacionFotoForms}">
                                 <div class="col-md-12">
                                     <img th:src="${foto.folder}+${foto.name}" class="img-responsive margin-standard">
                                 </div>
@@ -137,7 +137,7 @@
                             </div>
                         </div>
 
-                        <input type="hidden" id="imageSize" th:value="${publicacionFotoForms!= null && publicacionFotoForms.size()}">
+                        <input type="hidden" id="imageSize" th:value="${publicacion.publicacionFotoForms!= null && publicacion.publicacionFotoForms.size()>0}">
                         <div class="form-group col-md-12" id="file-input-container">
                             <label class="control-label" for="input-images">Imágenes</label>
                             <input id="input-images" type="file" name="inputFiles" multiple class="file-loading">

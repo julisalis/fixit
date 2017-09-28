@@ -82,7 +82,7 @@ public class PublicacionServiceImpl implements PublicacionService {
             throw new PublicacionException("El producto ha alcanzado el limite de imagenes");
         }
         String extension = file.getContentType().split("/")[1];
-        if(publicacion.getMultimedia().getPhotos().stream().anyMatch(foto -> foto.isCover())){
+        if(publicacion.getMultimedia().getPhotos()==null || publicacion.getMultimedia().getPhotos().stream().allMatch(foto -> !foto.isCover())){
            publicacionPhoto = publicacionPhotoRepository.save(new PublicacionPhoto(publicacion,false,extension,true));
         }else{
             publicacionPhoto =publicacionPhotoRepository.save(new PublicacionPhoto(publicacion,false,extension,false));
