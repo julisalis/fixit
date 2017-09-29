@@ -67,6 +67,8 @@ import java.util.stream.Collectors;
             return usuarioService.getProvincias().stream().map(provincia -> new SelectorForm(provincia.getId(),provincia.getNombre())).collect(Collectors.toList());
         }
 
+        @RequestMapping("/ajax/tiposTrabajo")
+        @ResponseBody
         public List<SelectorForm> generarTiposTrabajos() {
             return prestadorService.getTiposTrabajos().stream().map(tipoTrabajo -> new SelectorForm(tipoTrabajo.getId(),tipoTrabajo.getNombre())).collect(Collectors.toList());
         }

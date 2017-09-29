@@ -33,6 +33,11 @@ public class Prestador extends PersistentEntity {
         this.cuit = cuit;
     }
 
+    public Prestador(List<TipoTrabajo> tipos){
+        super();
+        this.tipos = tipos;
+    }
+
     public Prestador(Long cuit, boolean validationResult, List<TipoTrabajo> tipos, LocalDate nacimiento, Sexo sexo) {
         super();
         if(validationResult) {

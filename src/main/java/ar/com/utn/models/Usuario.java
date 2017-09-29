@@ -235,4 +235,8 @@ public class Usuario extends PersistentEntity {
             return true;
         }
     }
+
+    public void addRole(Rol rol) {
+        getRoles().add(rol);
+    }
 }

@@ -6,7 +6,9 @@ import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.*;
+import ar.com.utn.repositories.PrestadorRepository;
 import ar.com.utn.repositories.TipoTrabajoRepository;
+import ar.com.utn.repositories.TomadorRepository;
 import ar.com.utn.repositories.UsuarioRepository;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
@@ -35,6 +37,12 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PrestadorRepository prestadorRepository;
+
+    @Autowired
+    private TomadorRepository tomadorRepository;
 
     @Autowired
     private TipoTrabajoRepository tipoTrabajoRepository;
@@ -125,14 +133,14 @@ public class UsuarioController {
     @RequestMapping(value = "/editar", method = RequestMethod.POST)
     @ResponseBody
     public Map<String,Object> editarUsuario(HttpSession session,
-                                                  @RequestParam(value = "id") Usuario usuario,
-                                                  @RequestParam(value = "nombre") String nombre,
-                                                  @RequestParam(value = "apellido") String apellido,
-                                                  @RequestParam(value = "email") String email,
-                                                  @RequestParam(value = "documento") String documento,
-                                                  @RequestParam(value = "codArea") String codArea,
-                                                  @RequestParam(value = "telefono") String telefono,
-                                                  @RequestParam(value = "localidad") Localidad localidad){
+                                            @RequestParam(value = "id") Usuario usuario,
+                                            @RequestParam(value = "nombre") String nombre,
+                                            @RequestParam(value = "apellido") String apellido,
+                                            @RequestParam(value = "email") String email,
+                                            @RequestParam(value = "documento") String documento,
+                                            @RequestParam(value = "codArea") String codArea,
+                                            @RequestParam(value = "telefono") String telefono,
+                                            @RequestParam(value = "localidad") Localidad localidad){
         HashMap<String,Object> map = new HashMap<>();
         try{
             if(nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || documento.isEmpty() || codArea.isEmpty() || telefono.isEmpty() || localidad == null){
@@ -164,19 +172,52 @@ public class UsuarioController {
         return map;
     }
 
-    private Map buildErrorMessage(String message) {
-        return buildMessage("error", message);
+    @RequestMapping(value = "/crearPerfilPrestador", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> crearPerfilPrestador(HttpSession session,
+                                                   @RequestParam(value = "id") Usuario usuario,
+                                                   @RequestParam(value = "tiposTrabajo[]") List<TipoTrabajo> tipos){
+        HashMap<String,Object> map = new HashMap<>();
+        try{
+            if(tipos.isEmpty() || tipos==null){
+                map.put("success", false);
+                map.put("errors", "Todos los campos son obligatorios.");
+            }else{
+                Prestador p = new Prestador(tipos);
+                p=prestadorRepository.save(p);
+                usuario.setPrestador(p);
+                usuario.addRole(Rol.PRESTADOR);
+                usuarioRepository.save(usuario);
+                //TODO: CAMBIAR AUTHORITITES A PRESTADOR
+                map.put("success", true);
+                map.put("msg","Los cambios han sido guardados correctamente.");
+            }
+        }catch (Exception e) {
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
+        }
+        return map;
     }
 
-    private Map buildSuccessMessage(String message) {
-        return buildMessage("success", message);
-    }
-
-    private Map buildMessage(String status, String message) {
-        Map<String,String> aMap = new HashMap();
-        aMap.put("status", status);
-        aMap.put("message", message);
-        return aMap;
+    @RequestMapping(value = "/crearPerfilTomador", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> crearPerfilTomador(HttpSession session,
+                                                   @RequestParam(value = "id") Usuario usuario){
+        HashMap<String,Object> map = new HashMap<>();
+        try{
+            Tomador t = new Tomador();
+            t=tomadorRepository.save(t);
+            usuario.setTomador(t);
+            usuario.addRole(Rol.TOMADOR);
+            usuarioRepository.save(usuario);
+            //TODO: CAMBIAR AUTHORITITES A TOMADOR
+            map.put("success", true);
+            map.put("msg","Los cambios han sido guardados correctamente.");
+        }catch (Exception e) {
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
+        }
+        return map;
     }
 
     public List<SelectorForm> generarProvicias() {

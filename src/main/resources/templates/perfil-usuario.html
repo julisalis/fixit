@@ -15,6 +15,7 @@
     <div class="container">
         <h2>Mi Perfil</h2>
         <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')">Cliente</h4>
+        <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">Profesional</h4>
         <div class="col-md-12 form-container form-horizontal" id="perfil">
 
                 <!--<div th:if="${#fields.hasErrors()}" class="alert alert-danger error-msg" role="alert">
@@ -180,9 +181,10 @@
         });
     }
 
-    function prefilPrestador(exists) {
+    function perfilPrestador(exists) {
         if(!exists){
-            redirect('/usuario/crearPerfilProfesional');
+            showPerfilPrestadorDialog();
+            //redirect('/usuario/crearPerfilProfesional');
         }else{
             $.ajax({
                 type: 'POST',
@@ -200,6 +202,85 @@
                 }
             });
         }
+    }
+
+    function perfilTomador(exists) {
+        if(!exists) {
+            var url = '/usuario/crearPerfilTomador';
+        }else {
+            var url = '/usuario/cambiarATomador';
+        }
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: {
+                id: $("#id").val()
+            },
+            async: true,
+            success: function(message){
+                if(message.success){
+                    redirect("/usuario/perfil");
+                }else{
+                    swal("Error", message.msg, "error")
+                }
+            }
+        });
+    }
+
+    function showPerfilPrestadorDialog() {
+        $.ajax({
+            type: 'POST',
+            url: '/signup/ajax/tiposTrabajo',
+            //data: {},
+            async: true,
+            success: function(data) {
+                    var $content = $('<div class="row" style="margin-left: 0;">' +
+                        '            <div class="form-group">' +
+                        '                <label class="col-sm-4 control-label">Tipos de Trabajo:</label>' +
+                        '                <div class="col-sm-6">' +
+                        '                    <select id="newPrestador_TipoTrabajo" class="form-control" multiple="multiple">' +
+                        '                    </select>' +
+                        '                </div>' +
+                        '            </div>' +
+                        '        </div>');
+                    if (data.length != 0) {
+                        $.each(data, function (index, b) {
+                            $content.find('#newPrestador_TipoTrabajo').append($("<option></option>").attr("value", b.value).text(b.label));
+                        });
+
+                        BootstrapDialog.show({
+                            title: 'Crear Perfil Profesional',
+                            message: $content,
+                            buttons: [{
+                                label: 'Aceptar',
+                                action: function (dialog) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/usuario/crearPerfilPrestador',
+                                        data: {
+                                            id: $("#id").val(),
+                                            tiposTrabajo: $("#newPrestador_TipoTrabajo").val()
+                                        },
+                                        async: true,
+                                        success: function(message){
+                                            if(message.success){
+                                                redirect("/usuario/perfil");
+                                            }else{
+                                                swal("Error", message.msg, "error")
+                                            }
+                                        }
+                                    });
+                                }
+                            }],
+                            onshown: function(dialogRef){
+                                $("#newPrestador_TipoTrabajo").select2();
+                            },
+                        });
+                    } else {
+                        swal("Error", message.msg, "error")
+                    }
+            }
+        });
     }
 
     function getParamsForAjax(fieldContainerReference){
