@@ -86,7 +86,6 @@ public class PublicacionServiceImpl implements PublicacionService {
            publicacionPhoto = publicacionPhotoRepository.save(new PublicacionPhoto(publicacion,false,extension,true));
         }else{
             publicacionPhoto =publicacionPhotoRepository.save(new PublicacionPhoto(publicacion,false,extension,false));
-
         }
         publicacion.getMultimedia().getPhotos().add(publicacionPhoto);
         multimediaService.saveEcommerceImage(publicacionPhoto, file);

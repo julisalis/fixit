@@ -16,5 +16,5 @@ public interface MultimediaService {
     @Transactional
     void saveEcommerceImage(PublicacionPhoto publicacionPhoto, MultipartFile image) throws IllegalStateException, IOException;
 
-    PublicacionFotoForm findEcommerceImage(long imageId) throws IOException;
+    PublicacionFotoForm findEcommerceImage(Long imageId) throws IOException;
 }

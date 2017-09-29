@@ -2,6 +2,7 @@ package ar.com.utn.controllers;
 
 import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.dto.TipoTrabajoDTO;
+import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.implementation.PublicacionSearch;
 import ar.com.utn.services.PublicacionService;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import sun.misc.Request;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,6 +63,21 @@ public class IndexController {
     }
 
     public List<PublicacionDTO> getPublicacionesPorCatregoria (List<Publicacion> publicaciones, String slug) {
-        return publicaciones.stream().filter(p -> p.getTipoTrabajo().getSlug().equals(slug)).map(publicacion -> new PublicacionDTO(publicacion)).collect(Collectors.toList());
+        return publicaciones.stream().filter(p -> p.getTipoTrabajo().getSlug().equals(slug)).map(publicacion -> new PublicacionDTO(publicacion,buildFotoForms(publicacion.getMultimedia()),getCover(publicacion))).collect(Collectors.toList());
     }
+
+    private List<PublicacionFotoForm> buildFotoForms(PublicacionMultimedia multimedia) {
+        if (multimedia!=null && multimedia.getPhotos()!=null){
+            return multimedia.getPhotos()
+                    .stream()
+                    .map(publicacionPhoto -> new PublicacionFotoForm(publicacionPhoto)).collect(Collectors.toList());
+        }
+        else return new ArrayList<>();
+    }
+
+    private PublicacionFotoForm getCover(Publicacion publicacion) {
+        PublicacionPhoto publicacionPhoto = publicacionService.getCover(publicacion);
+        return new PublicacionFotoForm(publicacionPhoto);
+    }
+
 }

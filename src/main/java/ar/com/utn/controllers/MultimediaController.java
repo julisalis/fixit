@@ -22,7 +22,7 @@ public class MultimediaController{
     private MultimediaService multimediaService;
 
     @RequestMapping(value="/image/{imageId}", method = RequestMethod.GET)
-    public void getProfileImage(@PathVariable long imageId, ServletResponse servletResponse){
+    public void getProfileImage(@PathVariable Long imageId, ServletResponse servletResponse){
         try{
             PublicacionFotoForm foto = multimediaService.findEcommerceImage(imageId);
             if(foto!=null){

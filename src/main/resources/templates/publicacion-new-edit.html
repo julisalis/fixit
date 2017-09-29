@@ -110,16 +110,16 @@
                             </select>
                         </div>
 
-                        <div class="col-md-12 card-image-container" th:if="${publicacion.publicacionFotoForms!= null && publicacion.publicacionFotoForms.size()>0 } ">
+                        <div class="col-md-12 card-image-container" th:if="${publicacion?.publicacionFotoForms?.size()>0 or publicacion.primaryImage!=null} ">
 
-                            <div class="col-md-3 card-image primary" th:if="${publicacion.primaryImage} !=null">
+                            <div class="col-md-3 card-image primary" th:if="${publicacion.primaryImage}!=null">
                                 <div class="col-md-12">
-                                    <img th:src="'/multimedia/image/'+${primaryImage.id}" class="img-responsive margin-standard">
+                                    <img th:src="'/multimedia/image/'+${publicacion.primaryImage?.id}" class="img-responsive margin-standard">
                                 </div>
                                 <div class="col-md-12 panel text-center">
-                                    <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${primaryImage.id}">
+                                    <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${primaryImage?.id}">
                                         <i class="fa fa-star-o"></i></button>
-                                    <button type="button" class="btn btn-trash btn-fab btn-raised" th:attr="data-publicicacion-image-id=${primaryImage.id}">
+                                    <button type="button" class="btn btn-trash btn-fab btn-raised" th:attr="data-publicicacion-image-id=${primaryImage?.id}">
                                         <i class="material-icons">delete</i></button>
                                 </div>
                             </div>
