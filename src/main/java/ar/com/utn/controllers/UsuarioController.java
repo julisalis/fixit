@@ -5,8 +5,7 @@ import ar.com.utn.form.PerfilForm;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
-import ar.com.utn.models.TipoDoc;
-import ar.com.utn.models.Usuario;
+import ar.com.utn.models.*;
 import ar.com.utn.repositories.TipoTrabajoRepository;
 import ar.com.utn.repositories.UsuarioRepository;
 import ar.com.utn.services.UsuarioService;
@@ -20,6 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
@@ -120,6 +120,62 @@ public class UsuarioController {
         }
 
         return map;
+    }
+
+    @RequestMapping(value = "/updatePerfilPrestador", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> perfilPrestadorJson(HttpSession session,
+                                                  @RequestParam(value = "id") Usuario usuario,
+                                                  @RequestParam(value = "nombre") String nombre,
+                                                  @RequestParam(value = "apellido") String apellido,
+                                                  @RequestParam(value = "email") String email,
+                                                  @RequestParam(value = "documento") String documento,
+                                                  @RequestParam(value = "codArea") String codArea,
+                                                  @RequestParam(value = "telefono") String telefono,
+                                                  @RequestParam(value = "localidad") Localidad localidad){
+        HashMap<String,Object> map = new HashMap<>();
+        try{
+            if(nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || documento.isEmpty() || codArea.isEmpty() || telefono.isEmpty() || localidad == null){
+                map.put("success", false);
+                map.put("errors", "Todos los campos son obilgatorios");
+            }else{
+                if(!usuarioService.emailUnique(email)) {
+                    map.put("success", false);
+                    map.put("msg","La dirección de Email ya está en uso.");
+                    return map;
+                }
+                usuario.setNombre(nombre);
+                usuario.setApellido(apellido);
+                usuario.setDocumento(documento);
+                Telefono tel = usuario.getTelefono();
+                tel.setCodArea(codArea);
+                tel.setTelefono(telefono);
+                Ubicacion u = usuario.getUbicacion();
+                u.setLocalidad(localidad);
+                usuarioRepository.save(usuario);
+                map.put("success", true);
+                map.put("msg","Los cambios han sido guardados correctamente.");
+            }
+        }catch (Exception e) {
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
+        }
+        return map;
+    }
+
+    private Map buildErrorMessage(String message) {
+        return buildMessage("error", message);
+    }
+
+    private Map buildSuccessMessage(String message) {
+        return buildMessage("success", message);
+    }
+
+    private Map buildMessage(String status, String message) {
+        Map<String,String> aMap = new HashMap();
+        aMap.put("status", status);
+        aMap.put("message", message);
+        return aMap;
     }
 
     public List<SelectorForm> generarProvicias() {
