@@ -940,6 +940,13 @@ span {
     margin-top: 30px;
 }
 
+#publicacion .container h4{
+    letter-spacing: 6px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
 .white-body .navbar-fixed-top.navbar-default{
     background-color: #252525;
     box-shadow: 0 3px 10px #555;

@@ -226,4 +226,13 @@ public class Usuario extends PersistentEntity {
     public void setPrestador(Prestador prestador) {
         this.prestador = prestador;
     }
+
+    @Transient
+    public Boolean getPuedeEditarse(){
+        if(getPrestador()!=null){
+            return !getPrestador().getValidado();
+        }else{
+            return true;
+        }
+    }
 }

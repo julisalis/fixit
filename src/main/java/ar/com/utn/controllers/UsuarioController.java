@@ -122,9 +122,9 @@ public class UsuarioController {
         return map;
     }
 
-    @RequestMapping(value = "/updatePerfilPrestador", method = RequestMethod.POST)
+    @RequestMapping(value = "/editar", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> perfilPrestadorJson(HttpSession session,
+    public Map<String,Object> editarUsuario(HttpSession session,
                                                   @RequestParam(value = "id") Usuario usuario,
                                                   @RequestParam(value = "nombre") String nombre,
                                                   @RequestParam(value = "apellido") String apellido,
@@ -147,6 +147,7 @@ public class UsuarioController {
                 usuario.setNombre(nombre);
                 usuario.setApellido(apellido);
                 usuario.setDocumento(documento);
+                usuario.setEmail(email);
                 Telefono tel = usuario.getTelefono();
                 tel.setCodArea(codArea);
                 tel.setTelefono(telefono);
