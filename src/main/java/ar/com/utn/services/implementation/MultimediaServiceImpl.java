@@ -3,9 +3,13 @@ package ar.com.utn.services.implementation;
 import java.io.File;
 import java.io.IOException;
 
+import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.models.PublicacionMultimedia;
 import ar.com.utn.models.PublicacionPhoto;
+import ar.com.utn.repositories.PublicacionPhotoRepository;
+import ar.com.utn.repositories.PublicacionRepository;
 import ar.com.utn.services.MultimediaService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,16 +23,29 @@ public class MultimediaServiceImpl implements MultimediaService {
 
     @Value("${app.file-system.image.root}")
     private String imageRoot;
+    @Autowired
+    private PublicacionPhotoRepository publicacionPhotoRepository;
 
     @Override
     @Transactional
-    public void saveEcommerceImage(PublicacionPhoto publicacionPhoto, MultipartFile image, PublicacionMultimedia multimedia) throws IllegalStateException, IOException{
+    public void saveEcommerceImage(PublicacionPhoto publicacionPhoto, MultipartFile image) throws IllegalStateException, IOException{
 
-        File folder = publicacionPhoto.getDirectory(imageRoot, multimedia.getFolder());
+        File folder = publicacionPhoto.getDirectory(imageRoot);
         if(!folder.exists()){
             folder.mkdirs();
         }
-        File file = publicacionPhoto.getFile(imageRoot, multimedia.getFolder());
+        File file = publicacionPhoto.getFile(imageRoot);
         image.transferTo(file);
+    }
+
+    @Override
+    public PublicacionFotoForm findEcommerceImage(long imageId) throws IOException {
+        PublicacionPhoto publicacionPhoto = publicacionPhotoRepository.findOne(imageId);
+        if(publicacionPhoto!=null){
+            File file = publicacionPhoto.getFile(imageRoot);
+            return new PublicacionFotoForm(publicacionPhoto, file);
+        }else{
+            return null;
+        }
     }
 }

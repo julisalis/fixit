@@ -74,10 +74,14 @@ public class PublicacionController {
         if (multimedia!=null && multimedia.getPhotos()!=null){
             return multimedia.getPhotos()
                     .stream()
-                    .map(publicacionPhoto ->
-                            new PublicacionFotoForm(publicacionPhoto, environment.getProperty("app.file-system.image.root")+multimedia.getFolder())).collect(Collectors.toList());
+                    .map(publicacionPhoto -> new PublicacionFotoForm(publicacionPhoto)).collect(Collectors.toList());
         }
         else return new ArrayList<>();
+    }
+
+    private PublicacionFotoForm getCover(Publicacion publicacion) {
+        PublicacionPhoto publicacionPhoto = publicacionService.getCover(publicacion);
+        return new PublicacionFotoForm(publicacionPhoto);
     }
 
     @RequestMapping(path="/detalle")

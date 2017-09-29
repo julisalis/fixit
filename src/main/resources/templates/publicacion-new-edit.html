@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css"  th:href="@{/bootstrap-fileinput/css/fileinput.min.css}" media="all"/>
     <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-sweetalert/sweetalert.css}"/>
     <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/fileinput.min.js}"></script>
-    <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/locales/es.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/fileinput_locale_es.js}"></script>
     <script type="text/javascript" th:src="@{/bootstrap-sweetalert/sweetalert.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/publicacion.js}"></script>
 </head>
@@ -114,7 +114,7 @@
 
                             <div class="col-md-3 card-image primary" th:if="${publicacion.primaryImage} !=null">
                                 <div class="col-md-12">
-                                    <img th:src="${primaryImage.folder}+${primaryImage.name}" class="img-responsive margin-standard">
+                                    <img th:src="'/multimedia/image/'+${primaryImage.id}" class="img-responsive margin-standard">
                                 </div>
                                 <div class="col-md-12 panel text-center">
                                     <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${primaryImage.id}">
@@ -126,7 +126,7 @@
 
                             <div class="col-md-3 card-image" th:each="foto : ${publicacion.publicacionFotoForms}">
                                 <div class="col-md-12">
-                                    <img th:src="${foto.folder}+${foto.name}" class="img-responsive margin-standard">
+                                    <img th:src="'/multimedia/image/'+${foto.id}" class="img-responsive margin-standard">
                                 </div>
                                 <div class="col-md-12 panel text-center">
                                     <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${foto.id}">

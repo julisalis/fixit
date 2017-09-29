@@ -89,10 +89,15 @@ public class PublicacionServiceImpl implements PublicacionService {
 
         }
         publicacion.getMultimedia().getPhotos().add(publicacionPhoto);
-        multimediaService.saveEcommerceImage(publicacionPhoto, file, publicacion.getMultimedia());
+        multimediaService.saveEcommerceImage(publicacionPhoto, file);
     }
 
     public List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion) {
         return publicacionRepository.findAllByEstadoPublicacionEquals(estadoPublicacion);
+    }
+
+    @Override
+    public PublicacionPhoto getCover(Publicacion publicacion) {
+        return publicacionPhotoRepository.findByPublicacionAndCover(publicacion,true);
     }
 }

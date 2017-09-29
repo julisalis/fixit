@@ -16,7 +16,6 @@ public class PublicacionPhoto extends PersistentEntity {
     private Publicacion publicacion;
     @Column(name = "is_deleted")
     private boolean deleted = false;
-    @Column(name="extension",nullable = false)
     private String extension;
     private LocalDateTime uploadedDate;
     private boolean cover;
@@ -76,15 +75,15 @@ public class PublicacionPhoto extends PersistentEntity {
         this.cover = cover;
     }
 
-    public File getDirectory(String imageRoot, String folder) {
-        return new File(buildDirectory(imageRoot,folder));
+    public File getDirectory(String imageRoot) {
+        return new File(buildDirectory(imageRoot));
     }
-    private String buildDirectory(String imageRoot,String folder){
-        return imageRoot+"/"+folder;
+    private String buildDirectory(String imageRoot){
+        return imageRoot+this.publicacion.getMultimedia().getFolder()+'/'+this.publicacion.getId();
     }
 
-    public File getFile(String imageRoot,String folder){
-        File destination = new File(buildDirectory(imageRoot,folder), getName());
+    public File getFile(String imageRoot){
+        File destination = new File(buildDirectory(imageRoot), getName());
         return destination;
     }
 }
