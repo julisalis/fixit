@@ -49,7 +49,7 @@ public class PublicacionController {
     public String listPublicaciones(WebRequest request, Model model) {
         //todo add en security permisos solo para el tomaddor
         Usuario user = currentSession.getUser();
-        List<PublicacionDTO> misPublicaciones = user.getTomador().getPublicaciones().stream().map(publicacion -> new PublicacionDTO(publicacion)).collect(Collectors.toList());
+        List<PublicacionDTO> misPublicaciones = user.getTomador().getPublicaciones().stream().map(publicacion -> new PublicacionDTO(publicacion,buildFotoForms(publicacion.getMultimedia()),getCover(publicacion))).collect(Collectors.toList());
         model.addAttribute("publicacionesNuevas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.NUEVA)).collect(Collectors.toList()));
         model.addAttribute("publicacioneContratadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.CONTRATADA)).collect(Collectors.toList()));
         model.addAttribute("publicacionesFinalizadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.FINALIZADA)).collect(Collectors.toList()));
@@ -65,7 +65,7 @@ public class PublicacionController {
     @GetMapping(value="/edit/{publicacionId}")
     public String editPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
         Publicacion publicacion = publicacionService.findById(publicacionId);
-        addModelAttributes(model,new PublicacionForm(publicacion, buildFotoForms(publicacion.getMultimedia())),"edit");
+        addModelAttributes(model,new PublicacionForm(publicacion, buildFotoForms(publicacion.getMultimedia()),getCover(publicacion)),"edit");
         return "publicacion-new-edit";
     }
 
@@ -73,7 +73,7 @@ public class PublicacionController {
     private List<PublicacionFotoForm> buildFotoForms(PublicacionMultimedia multimedia) {
         if (multimedia!=null && multimedia.getPhotos()!=null){
             return multimedia.getPhotos()
-                    .stream()
+                    .stream().filter(publicacionPhoto -> !publicacionPhoto.isCover())
                     .map(publicacionPhoto -> new PublicacionFotoForm(publicacionPhoto)).collect(Collectors.toList());
         }
         else return new ArrayList<>();
@@ -88,7 +88,7 @@ public class PublicacionController {
     public  @ResponseBody Map<String,Object> detallePublicacion(Long publicacionId, WebRequest request, Model model) {
         HashMap<String,Object> map = new HashMap<>();
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
-        map.put("publicacion",new PublicacionDTO(mipublicacion));
+        map.put("publicacion",new PublicacionDTO(mipublicacion,buildFotoForms(mipublicacion.getMultimedia()),getCover(mipublicacion)));
         return map;
     }
 
@@ -104,7 +104,7 @@ public class PublicacionController {
             if(!result.hasErrors()){
                 Publicacion publicacion = publicacionService.createPublicacion(publicacionForm);
                 map.put("success", true);
-                map.put("publicacion", new PublicacionForm(publicacion,null));
+                map.put("publicacion", new PublicacionForm(publicacion,null,null));
                 map.put("msg","La publicación ha sido creada con éxito!");
             }else{
                 map.put("success", false);

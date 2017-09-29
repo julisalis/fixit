@@ -1,11 +1,14 @@
 package ar.com.utn.dto;
 
+import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.models.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by iaruedel on 12/09/17.
@@ -23,8 +26,10 @@ public class PublicacionDTO {
     private String urgencia;
     private LocalDate fecha;
     private EstadoPublicacion estado;
+    private PublicacionFotoForm primaryImage;
+    private List<PublicacionFotoForm> publicacionFotoForms = new ArrayList<>();
 
-    public PublicacionDTO(Publicacion publicacion) {
+    public PublicacionDTO(Publicacion publicacion,List<PublicacionFotoForm> publicacionFotoForms, PublicacionFotoForm primaryImage) {
         this.id = publicacion.getId();
         this.titulo = publicacion.getTitulo();
         this.descripcion = publicacion.getDescripcion();
@@ -36,6 +41,8 @@ public class PublicacionDTO {
         this.urgencia = publicacion.getUrgencia().name();
         this.fecha = publicacion.getFecha();
         this.estado = publicacion.getEstadoPublicacion();
+        this.primaryImage = primaryImage;
+        this.publicacionFotoForms = publicacionFotoForms;
     }
 
     public PublicacionDTO() {
@@ -127,5 +134,21 @@ public class PublicacionDTO {
 
     public void setEstado(EstadoPublicacion estado) {
         this.estado = estado;
+    }
+
+    public PublicacionFotoForm getPrimaryImage() {
+        return primaryImage;
+    }
+
+    public void setPrimaryImage(PublicacionFotoForm primaryImage) {
+        this.primaryImage = primaryImage;
+    }
+
+    public List<PublicacionFotoForm> getPublicacionFotoForms() {
+        return publicacionFotoForms;
+    }
+
+    public void setPublicacionFotoForms(List<PublicacionFotoForm> publicacionFotoForms) {
+        this.publicacionFotoForms = publicacionFotoForms;
     }
 }

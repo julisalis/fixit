@@ -39,13 +39,18 @@ public class MultimediaServiceImpl implements MultimediaService {
     }
 
     @Override
-    public PublicacionFotoForm findEcommerceImage(long imageId) throws IOException {
-        PublicacionPhoto publicacionPhoto = publicacionPhotoRepository.findOne(imageId);
-        if(publicacionPhoto!=null){
-            File file = publicacionPhoto.getFile(imageRoot);
-            return new PublicacionFotoForm(publicacionPhoto, file);
+    public PublicacionFotoForm findEcommerceImage(Long imageId) throws IOException {
+        if(imageId!=null){
+            PublicacionPhoto publicacionPhoto = publicacionPhotoRepository.findOne(imageId);
+            if(publicacionPhoto!=null){
+                File file = publicacionPhoto.getFile(imageRoot);
+                return new PublicacionFotoForm(publicacionPhoto, file);
+            }else{
+                return null;
+            }
         }else{
             return null;
         }
+
     }
 }

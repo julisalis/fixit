@@ -49,7 +49,7 @@ public class PublicacionForm {
         this.publicacionFotoForms = new ArrayList<>();
     }
 
-    public PublicacionForm(Publicacion publicacion,List<PublicacionFotoForm> publicacionFotoForms) {
+    public PublicacionForm(Publicacion publicacion,List<PublicacionFotoForm> publicacionFotoForms, PublicacionFotoForm primaryImage) {
         this.titulo = publicacion.getTitulo();
         this.descripcion = publicacion.getDescripcion();
         this.presupMax = publicacion.getPresupMax();
@@ -59,6 +59,7 @@ public class PublicacionForm {
         this.provincia = publicacion.getLocalidad().getProvincia().getId();
         this.urgencia = publicacion.getUrgencia();
         this.fecha = publicacion.getFecha();
+        this.primaryImage = primaryImage;
         this.publicacionFotoForms = publicacionFotoForms;
         this.id = publicacion.getId();
     }
