@@ -387,11 +387,14 @@ div.signup, #signin .container{
 }
 
 #signup .title{
-    font-size: 40px;
-    font-weight: 600;
     color: #a5a39d;
+    font-size: 30px;
     text-align: center;
-    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 9px;
+    margin-bottom: 30px;
+    font-weight: 200px;
+    font-weight: 600;
 }
 
 .has-error p{
@@ -1592,4 +1595,168 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
 #publicacion .container{
     padding-top: 120px;
 }
+
+#fixit-comofunciona #stepsline {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 90%;
+    position: relative;
+    transition: all .4s ease;
+}
+
+#fixit-comofunciona .scrolling-line {
+    width: 2px;
+    height: 150px;
+    background: #3ac58f;
+    left: 50%;
+    top: 150px;
+    bottom: 0;
+    position: absolute;
+    transform: translateX(-50%);
+    transition: all .2s;
+}
+
+#fixit-comofunciona .line-step.right {
+    clear: right;
+    width: 32.20339%;
+    float: right;
+    margin-left: 1.69492%;
+    margin-right: 5%;
+    margin-top: 20px;
+}
+
+#fixit-comofunciona .line-step.focus {
+    opacity: 1;
+}
+
+#fixit-comofunciona .line-step {
+    display: block;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    transition: all .4s;
+    opacity: .5;
+}
+
+#fixit-comofunciona .step-icon {
+    width: 300px;
+    height: 300px;
+    display: block;
+    margin: 0 auto;
+    background-repeat: no-repeat;
+    clear: none;
+    position: relative;
+    padding-bottom: 25em;
+    transition: all .4s;
+}
+
+#fixit-comofunciona .step-icon {
+    background-size: 150px 150px;
+    background-position: center top;
+}
+
+#fixit-comofunciona .step-icon.filled svg {
+    opacity: 1;
+}
+
+#fixit-comofunciona .step-icon svg {
+    background: transparent;
+    opacity: 0;
+    transition: opacity .6s ease-in-out;
+    will-change: opacity;
+}
+
+#fixit-comofunciona .step-icon img, #fixit-comofunciona .step-icon svg {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: 150px;
+    overflow: hidden;
+    transform: translateX(-50%);
+    z-index: 10;
+}
+
+#fixit-comofunciona .line-step.left {
+    clear: left;
+    width: 32.20339%;
+    float: left;
+    margin-left: 0;
+    margin-left: 8%;
+    margin-top: 20px;
+}
+
+#fixit-comofunciona .line-step h5 {
+    font-weight: bold;
+    text-transform: none;
+    font-size: 20px;
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+#fixit-comofunciona .line-step p {
+    font-size: 16px;
+    margin-top: 15px;
+    color: grey;
+}
+
+#fixit-comofunciona .step-icon.filled .circle {
+    animation-delay: .25s;
+    animation-duration: .75s;
+}
+
+#fixit-comofunciona .container .col-md-12.form-container {
+    background-color: white;
+    margin-bottom: 30px;
+}
+
+#fixit-comofunciona .container h2 {
+    letter-spacing: 12px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 50px;
+}
+
+#fixit-comofunciona circle {
+     stroke: #3ac58f;
+ }
+
+#fixit-comofunciona line {
+    stroke: #3ac58f;
+}
+
+#fixit-comofunciona path  {
+    stroke: #3ac58f;
+}
+
+#fixit-comofunciona polyline  {
+      stroke: #3ac58f;
+  }
+
+#fixit-comofunciona polygon  {
+    stroke: #3ac58f;
+}
+
+#fixit-comofunciona symbol  {
+    stroke: #3ac58f;
+}
+
+#fixit-recomendados .container .col-md-12.form-container {
+    background-color: white;
+    margin-bottom: 30px;
+}
+
+#fixit-recomendados .container h2 {
+    letter-spacing: 12px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 50px;
+}
+
+
+
+
 
