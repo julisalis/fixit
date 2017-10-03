@@ -4,6 +4,12 @@ var primaryImage = null;
 
 $(function () {
 
+    primaryImage = $(".card-image-container").find(".card-image.primary .btn-profile").data("publicicacionImageId");
+    if(typeof (primaryImage)!='undefined'){
+        $("#primaryImage").val(primaryImage);
+    }
+
+
    if($('#publicacionId').val() == ""){
         $.validate({
             lang : 'es',
@@ -107,7 +113,8 @@ function initializeImages(){
     $(".card-image-container").on("click",".btn-profile",function(){
         $(".card-image-container").find(".card-image.primary").removeClass("primary");
         $(this).closest(".card-image").addClass("primary");
-        primaryImage = $(this).data("publicacion-image-id");
+        primaryImage = $(this).data("publicicacionImageId");
+        $("#primaryImage").val(primaryImage);
     })
 }
 

@@ -110,17 +110,18 @@
                             </select>
                         </div>
 
-                        <input type="hidden" id="imageSize" th:value="${publicacion?.publicacionFotoForms?.size()}">
+                        <input type="hidden" id="primaryImage" name="primaryImage"/>
+
                         <div class="form-group col-md-12" id="file-input-container">
                             <label class="control-label" for="input-images">Imágenes</label>
-                            <div class="col-md-12 card-image-container" th:if="${publicacion?.publicacionFotoForms?.size()>0} ">
+                            <div class="col-md-12 card-image-container" th:if="${publicacion.publicacionFotoForms?.size()>0} ">
 
-                                <div class="col-md-3 card-image" th:each="foto : ${publicacion.publicacionFotoForms}">
+                                <div class="col-md-3 card-image" th:classappend="${foto.isCover()} ? 'primary' : ''" th:each="foto : ${publicacion.publicacionFotoForms}">
                                     <div class="col-md-12 image">
                                         <img th:src="'/multimedia/image/'+${foto.id}" class="img-responsive margin-standard">
                                     </div>
                                     <div class="col-md-12 panel text-center">
-                                        <button type="button" class="btn btn-profile btn-fab btn-raised" th:classappend="${foto.isCover()} ? primary : ''" th:attr="data-publicicacion-image-id=${foto.id}">
+                                        <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${foto.id}">
                                             <i class="fa fa-star-o "></i></button>
                                     </div>
                                 </div>

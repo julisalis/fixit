@@ -24,8 +24,8 @@ public class MultimediaController{
     @RequestMapping(value="/image/{imageId}", method = RequestMethod.GET)
     public void getProfileImage(@PathVariable Long imageId, ServletResponse servletResponse){
         try{
-            PublicacionFotoForm foto = multimediaService.findEcommerceImage(imageId);
-            if(foto!=null){
+            if(imageId!=null){
+                PublicacionFotoForm foto = multimediaService.findEcommerceImage(imageId);
                 servletResponse.setContentType("image/"+foto.getExtension());
                 servletResponse.getOutputStream().write(foto.getContent());
             }

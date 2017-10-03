@@ -115,7 +115,7 @@ public class PublicacionController {
     }
 
     @PostMapping(path="/edit")
-    public String editPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response) {
+    public String editPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm,@RequestParam Long primaryImage, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response) {
         try {
 
             if(publicacionForm.getUrgencia().equals(Urgencia.FECHA) && publicacionForm.getFecha()==null){
@@ -125,7 +125,7 @@ public class PublicacionController {
             if(!result.hasErrors()){
                 Publicacion  publicacion = publicacionService.findById(publicacionForm.getId());
                 if(publicacion!=null){
-                    publicacionService.editPublicacion(publicacionForm,publicacion);
+                    publicacionService.editPublicacion(publicacionForm,publicacion,primaryImage);
                     return "redirect:/publicacion/list";
                 }else return "redirect:/publicacion/list";
             }else{
