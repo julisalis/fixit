@@ -1,26 +1,28 @@
 // variables that the file uploader references
 var fileInput;
-var imagesToDelete = new Array();
 var primaryImage = null;
-var maxFiles = 5 - $("#imageSize").val();
-var minFiles = $("#imageSize").val()>0 ? 0 : 1;
 
 $(function () {
 
-    $.validate({
-        lang : 'es',
-        decimalSeparator: ',',
-        onSuccess : function($form) {
-            saveFunction($form);
-            return false; // Will stop the submission of the form
-        }
-    });
+   if($('#publicacionId').val() == ""){
+        $.validate({
+            lang : 'es',
+            decimalSeparator: '.',
+            onSuccess : function($form) {
+                saveFunction($form);
+                return false; // Will stop the submission of the form
+            }
+        });
+    }else{
+        $.validate({
+            lang: 'es',
+            decimalSeparator: '.',
+        });
+
+    }
 
     initializeImages();
     initializeFileInput();
-    if(maxFiles == 0){
-        $("#file-input-container").hide();
-    }
 
     $("#urgencia").change(function () {
         if($(this).val()=="FECHA"){
@@ -77,8 +79,8 @@ function initializeFileInput(){
         uploadAsync: false,
         showUpload: false,
         showRemove: false,
-        maxFileCount: maxFiles,
-        minFileCount: minFiles,
+        maxFileCount: 4,
+        minFileCount: 1,
         maxFileSize: 1000,
         validateInitialCount: true,
         overwriteInitial: false,
@@ -107,20 +109,6 @@ function initializeImages(){
         $(this).closest(".card-image").addClass("primary");
         primaryImage = $(this).data("publicacion-image-id");
     })
-
-    $(".card-image-container").on("click",".btn-trash",function(){
-        imagesToDelete.push($(this).data("publicacion-image-id"));
-        $(this).closest(".card-image").fadeOut();
-        maxFiles = maxFiles + 1;
-        if(maxFiles > 0){
-            $("#file-input-container").show();
-        }
-        updateMaxQuantityFile(maxFiles)
-    })
-}
-
-function updateMaxQuantityFile(maxQuantity){
-    fileInput.fileinput('refresh', {maxFileCount:maxQuantity});
 }
 
 function uploadFiles(){

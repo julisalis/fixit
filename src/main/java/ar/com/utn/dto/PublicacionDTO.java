@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Currency;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by iaruedel on 12/09/17.
@@ -29,7 +30,7 @@ public class PublicacionDTO {
     private PublicacionFotoForm primaryImage;
     private List<PublicacionFotoForm> publicacionFotoForms = new ArrayList<>();
 
-    public PublicacionDTO(Publicacion publicacion,List<PublicacionFotoForm> publicacionFotoForms, PublicacionFotoForm primaryImage) {
+    public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage) {
         this.id = publicacion.getId();
         this.titulo = publicacion.getTitulo();
         this.descripcion = publicacion.getDescripcion();
@@ -42,10 +43,19 @@ public class PublicacionDTO {
         this.fecha = publicacion.getFecha();
         this.estado = publicacion.getEstadoPublicacion();
         this.primaryImage = primaryImage;
-        this.publicacionFotoForms = publicacionFotoForms;
+        this.publicacionFotoForms = buildFotoForms(publicacion.getMultimedia());
     }
 
     public PublicacionDTO() {
+    }
+
+    private List<PublicacionFotoForm> buildFotoForms(PublicacionMultimedia multimedia) {
+        if (multimedia!=null && multimedia.getPhotos()!=null){
+            return multimedia.getPhotos()
+                    .stream()
+                    .map(publicacionPhoto -> new PublicacionFotoForm(publicacionPhoto)).collect(Collectors.toList());
+        }
+        else return new ArrayList<>();
     }
 
     public Long getId() {

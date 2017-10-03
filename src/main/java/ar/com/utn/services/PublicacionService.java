@@ -31,4 +31,6 @@ public interface PublicacionService {
     List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion);
 
     PublicacionPhoto getCover(Publicacion publicacion);
+
+    void editPublicacion(PublicacionForm publicacionForm, Publicacion publicacion);
 }

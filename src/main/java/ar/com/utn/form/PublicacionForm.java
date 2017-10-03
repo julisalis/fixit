@@ -39,7 +39,6 @@ public class PublicacionForm {
     private TiempoPublicacion tiempoPublicacion;
     @NotNull
     private Urgencia urgencia;
-    private PublicacionFotoForm primaryImage;
     private List<PublicacionFotoForm> publicacionFotoForms = new ArrayList<>();
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="MM-dd-yyyy")
@@ -49,7 +48,7 @@ public class PublicacionForm {
         this.publicacionFotoForms = new ArrayList<>();
     }
 
-    public PublicacionForm(Publicacion publicacion,List<PublicacionFotoForm> publicacionFotoForms, PublicacionFotoForm primaryImage) {
+    public PublicacionForm(Publicacion publicacion) {
         this.titulo = publicacion.getTitulo();
         this.descripcion = publicacion.getDescripcion();
         this.presupMax = publicacion.getPresupMax();
@@ -59,11 +58,19 @@ public class PublicacionForm {
         this.provincia = publicacion.getLocalidad().getProvincia().getId();
         this.urgencia = publicacion.getUrgencia();
         this.fecha = publicacion.getFecha();
-        this.primaryImage = primaryImage;
-        this.publicacionFotoForms = publicacionFotoForms;
+        this.publicacionFotoForms = buildFotoForms(publicacion.getMultimedia());
         this.id = publicacion.getId();
     }
 
+
+    private List<PublicacionFotoForm> buildFotoForms(PublicacionMultimedia multimedia) {
+        if (multimedia!=null && multimedia.getPhotos()!=null){
+            return multimedia.getPhotos()
+                    .stream()
+                    .map(publicacionPhoto -> new PublicacionFotoForm(publicacionPhoto)).collect(Collectors.toList());
+        }
+        else return new ArrayList<>();
+    }
 
 
     public TiempoPublicacion getTiempoPublicacion() {
@@ -160,14 +167,6 @@ public class PublicacionForm {
 
     public void setPublicacionFotoForms(List<PublicacionFotoForm> publicacionFotoForms) {
         this.publicacionFotoForms = publicacionFotoForms;
-    }
-
-    public PublicacionFotoForm getPrimaryImage() {
-        return primaryImage;
-    }
-
-    public void setPrimaryImage(PublicacionFotoForm primaryImage) {
-        this.primaryImage = primaryImage;
     }
 
     public Long getId() {
