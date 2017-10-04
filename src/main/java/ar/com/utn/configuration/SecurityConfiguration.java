@@ -47,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .usernameParameter("username")
                         .passwordParameter("password")
                         .successHandler(loginAuthenticationSuccessHandler)
-                        .defaultSuccessUrl("/", true)
+                        //.defaultSuccessUrl("/", true)
                         .permitAll()
                         .and()
                     .logout()

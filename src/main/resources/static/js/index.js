@@ -21,6 +21,25 @@ $(function () {
                 if(data.success) {
                     if (typeof(data.select_role) != 'undefined' && data.select_role == true) {
                         //mostrar selector de role
+                        swal("Elegiste Profesional");
+                        /*swal("¿Con qué perfil desea iniciar sesión?", {
+                            buttons: {
+                                prestador: "Profesional",
+                                tomador: "Cliente"
+                            },
+                        })
+                            .then((value) => {
+                            switch (value) {
+
+                            case "tomador":
+                                swal("Elegiste Cliente");
+                                break;
+
+                            case "prestador":
+                                swal("Elegiste Profesional");
+                                break;
+                            }
+                        });*/
                     } else {
                         if (typeof(data.url) != 'undefined') {
                             window.location = data.url;
