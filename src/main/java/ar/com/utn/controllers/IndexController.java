@@ -50,14 +50,15 @@ public class IndexController {
 
     @GetMapping(value = "/publicaciones/search")
     public String listPublicacionesSearch(@RequestParam(value="searchTerm") String searchTerm, Model model) {
-        List searchResults = null;
+        List<Publicacion> searchResults = null;
         try {
             searchResults = publicacionSearch.search(searchTerm);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        model.addAttribute("publicaciones", searchResults);
+        List<PublicacionDTO> publicacionDTOS = searchResults.stream().map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion))).collect(Collectors.toList());
+        model.addAttribute("publicaciones", publicacionDTOS);
         model.addAttribute("searchTerm",searchTerm);
         return "publicaciones-busqueda";
     }
