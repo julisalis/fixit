@@ -461,7 +461,6 @@ div.signup, #signin .container{
 }
 
 .btn-primary.btn-block.btn-login .btn.focus, .btn:focus, .btn:hover {
-    background-color: #3ac58f;
     text-decoration: blink;
     color: white;
     transition: all 200ms linear;

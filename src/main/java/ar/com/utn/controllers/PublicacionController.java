@@ -172,5 +172,19 @@ public class PublicacionController {
 
     }
 
+    @PostMapping(path="/delete/{publicacionId}")
+    public @ResponseBody Map<String,Object> deletePublicacion(@PathVariable Long publicacionId,Model model) {
+        HashMap<String,Object> map = new HashMap<>();
+        try {
+            Publicacion publicacion = publicacionService.findById(publicacionId);
+            publicacionService.deletePublicacion(publicacion);
+            map.put("success", true);
+        }catch (Exception e) {
+            map.put("success", false);
+        }
+        return map;
+    }
+
+
 }
 

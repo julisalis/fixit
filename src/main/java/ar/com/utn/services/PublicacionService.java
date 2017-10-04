@@ -33,4 +33,6 @@ public interface PublicacionService {
     PublicacionPhoto getCover(Publicacion publicacion);
 
     void editPublicacion(PublicacionForm publicacionForm, Publicacion publicacion, Long primaryImage);
+
+    void deletePublicacion(Publicacion publicacion);
 }

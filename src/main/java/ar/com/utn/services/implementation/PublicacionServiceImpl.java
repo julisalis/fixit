@@ -108,4 +108,10 @@ public class PublicacionServiceImpl implements PublicacionService {
         publicacion.getMultimedia().getPhotos().forEach(publicacionPhoto -> publicacionPhoto.setCover(false));
         publicacionPhotoRepository.findOne(primaryImage).setCover(true);
     }
+
+    @Override
+    @Transactional(rollbackOn={Exception.class})
+    public void deletePublicacion(Publicacion publicacion) {
+        publicacion.setEstadoPublicacion(EstadoPublicacion.ELIMINADA);
+    }
 }
