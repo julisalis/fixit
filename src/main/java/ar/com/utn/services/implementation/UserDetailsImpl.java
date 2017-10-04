@@ -36,6 +36,10 @@ public class UserDetailsImpl implements UserDetails {
         return usuario.getUsername();
     }
 
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

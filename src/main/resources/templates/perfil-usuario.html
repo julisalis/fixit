@@ -186,9 +186,34 @@
             showPerfilPrestadorDialog();
             //redirect('/usuario/crearPerfilProfesional');
         }else{
+            cambiarRol("PRESTADOR");
+        }
+    }
+
+    function cambiarRol(rol){
+        $.ajax({
+            type: 'POST',
+            url: '/usuario/cambiarRol',
+            data: {
+                id: $("#id").val(),
+                rol: rol
+            },
+            async: true,
+            success: function(message){
+                if(message.success){
+                    redirect("/usuario/perfil");
+                }else{
+                    swal("Error", message.msg, "error")
+                }
+            }
+        });
+    }
+
+    function perfilTomador(exists) {
+        if(!exists) {
             $.ajax({
                 type: 'POST',
-                url: '/usuario/cambiarAPrestador',
+                url: '/usuario/crearPerfilTomador',
                 data: {
                     id: $("#id").val()
                 },
@@ -201,30 +226,9 @@
                     }
                 }
             });
-        }
-    }
-
-    function perfilTomador(exists) {
-        if(!exists) {
-            var url = '/usuario/crearPerfilTomador';
         }else {
-            var url = '/usuario/cambiarATomador';
+            cambiarRol("TOMADOR");
         }
-        $.ajax({
-            type: 'POST',
-            url: url,
-            data: {
-                id: $("#id").val()
-            },
-            async: true,
-            success: function(message){
-                if(message.success){
-                    redirect("/usuario/perfil");
-                }else{
-                    swal("Error", message.msg, "error")
-                }
-            }
-        });
     }
 
     function showPerfilPrestadorDialog() {
@@ -254,6 +258,9 @@
                             buttons: [{
                                 label: 'Aceptar',
                                 action: function (dialog) {
+                                    if($("#newPrestador_TipoTrabajo").val().length === 0){
+                                        swal("Error", "Todos los campos son obligatorios.", "error")
+                                    }
                                     $.ajax({
                                         type: 'POST',
                                         url: '/usuario/crearPerfilPrestador',

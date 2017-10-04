@@ -14,6 +14,11 @@ import ar.com.utn.utils.CurrentSession;
 import ar.com.utn.utils.URLBuilder;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +26,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -175,6 +182,26 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
             return;
         }
         throw new TokenNotFoundException("The token does not exists");
+    }
+
+    @Override
+    public void setAuthority(Rol rol, Usuario usuario) {
+        try{
+            Authentication a = SecurityContextHolder.getContext().getAuthentication();
+            //UserDetailsImpl u = (UserDetailsImpl) a.getPrincipal();
+
+            if(usuario.getRoles().stream().noneMatch(r -> r.equals(rol))){
+                throw new RuntimeException("El usuario no cuenta con ese rol");
+            }
+
+            Collection<GrantedAuthority> authorities = new HashSet<GrantedAuthority>();
+            authorities.add(new SimpleGrantedAuthority(rol.toString()));
+
+            Authentication authentication = new UsernamePasswordAuthenticationToken(usuario.getUsername(), usuario.getPassword(), authorities);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+        }catch (Exception e){
+            throw new RuntimeException("Error al cambiar de rol. "+e.getMessage());
+        }
     }
 
     private void logInUser(String username) {

@@ -11,21 +11,27 @@ import ar.com.utn.repositories.TipoTrabajoRepository;
 import ar.com.utn.repositories.TomadorRepository;
 import ar.com.utn.repositories.UsuarioRepository;
 import ar.com.utn.services.UsuarioService;
+import ar.com.utn.services.implementation.UserDetailsImpl;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import sun.text.normalizer.ICUBinary;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -174,6 +180,7 @@ public class UsuarioController {
 
     @RequestMapping(value = "/crearPerfilPrestador", method = RequestMethod.POST)
     @ResponseBody
+    @Transactional
     public Map<String,Object> crearPerfilPrestador(HttpSession session,
                                                    @RequestParam(value = "id") Usuario usuario,
                                                    @RequestParam(value = "tiposTrabajo[]") List<TipoTrabajo> tipos){
@@ -188,7 +195,9 @@ public class UsuarioController {
                 usuario.setPrestador(p);
                 usuario.addRole(Rol.PRESTADOR);
                 usuarioRepository.save(usuario);
-                //TODO: CAMBIAR AUTHORITITES A PRESTADOR
+
+                usuarioService.setAuthority(Rol.PRESTADOR, usuario);
+
                 map.put("success", true);
                 map.put("msg","Los cambios han sido guardados correctamente.");
             }
@@ -210,9 +219,25 @@ public class UsuarioController {
             usuario.setTomador(t);
             usuario.addRole(Rol.TOMADOR);
             usuarioRepository.save(usuario);
-            //TODO: CAMBIAR AUTHORITITES A TOMADOR
+            usuarioService.setAuthority(Rol.TOMADOR, usuario);
             map.put("success", true);
             map.put("msg","Los cambios han sido guardados correctamente.");
+        }catch (Exception e) {
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
+        }
+        return map;
+    }
+
+    @RequestMapping(value = "/cambiarRol", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> cambiarRol(@RequestParam(value = "id") Usuario usuario,
+                                         @RequestParam(value = "rol") Rol rol){
+        HashMap<String,Object> map = new HashMap<>();
+        try{
+            usuarioService.setAuthority(rol, usuario);
+            map.put("success", true);
+            map.put("msg","Se ha cambiado el rol correctamente.");
         }catch (Exception e) {
             map.put("success", false);
             map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");

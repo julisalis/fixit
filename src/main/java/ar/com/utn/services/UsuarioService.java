@@ -5,6 +5,7 @@ import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.Prestador;
 import ar.com.utn.models.Provincia;
+import ar.com.utn.models.Rol;
 import ar.com.utn.models.Usuario;
 
 import java.util.List;
@@ -31,4 +32,6 @@ public interface UsuarioService {
     boolean emailUnique(String email);
 
     void activateUser(String token);
+
+    void setAuthority(Rol rol, Usuario usuario);
 }
