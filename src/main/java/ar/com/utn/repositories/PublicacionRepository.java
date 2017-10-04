@@ -3,6 +3,7 @@ package ar.com.utn.repositories;
 import ar.com.utn.models.EstadoPublicacion;
 import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.TipoTrabajo;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  */
 public interface PublicacionRepository extends CrudRepository<Publicacion, Long> {
     Integer countByTipoTrabajoAndEstadoPublicacionEquals(TipoTrabajo tipoTrabajo, EstadoPublicacion estadoPublicacion);
+    @Query(value = "select p from Publicacion p where p.estadoPublicacion = 3")
     List<Publicacion> findAll();
     List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion);
 }

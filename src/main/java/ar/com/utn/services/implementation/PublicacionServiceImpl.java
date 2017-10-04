@@ -99,4 +99,19 @@ public class PublicacionServiceImpl implements PublicacionService {
     public PublicacionPhoto getCover(Publicacion publicacion) {
         return publicacionPhotoRepository.findByPublicacionAndCover(publicacion,true);
     }
+
+    @Override
+    @Transactional(rollbackOn={Exception.class})
+    public void editPublicacion(PublicacionForm publicacionForm, Publicacion publicacion, Long primaryImage) {
+        Localidad localidad = localidadRepository.findOne(publicacionForm.getLocalidad());
+        publicacion.update(publicacionForm,localidad);
+        publicacion.getMultimedia().getPhotos().forEach(publicacionPhoto -> publicacionPhoto.setCover(false));
+        publicacionPhotoRepository.findOne(primaryImage).setCover(true);
+    }
+
+    @Override
+    @Transactional(rollbackOn={Exception.class})
+    public void deletePublicacion(Publicacion publicacion) {
+        publicacion.setEstadoPublicacion(EstadoPublicacion.ELIMINADA);
+    }
 }

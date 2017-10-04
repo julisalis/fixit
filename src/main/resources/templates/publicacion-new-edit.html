@@ -5,10 +5,8 @@
     <title>FixIT</title>
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
     <link rel="stylesheet" type="text/css"  th:href="@{/bootstrap-fileinput/css/fileinput.min.css}" media="all"/>
-    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-sweetalert/sweetalert.css}"/>
     <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/fileinput.min.js}"></script>
     <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/fileinput_locale_es.js}"></script>
-    <script type="text/javascript" th:src="@{/bootstrap-sweetalert/sweetalert.min.js}"></script>
     <script type="text/javascript" th:src="@{/js/publicacion.js}"></script>
 </head>
 <body class="white-body">
@@ -20,7 +18,7 @@
 
                 <h2>Publicación</h2>
 
-                <form id="publicacion-form" th:action="@{/publicacion/}+${form_action}" th:object="${publicacion}" method="post" role="form" class="form-horizontal col-xs-12 col-md-10 col-md-offset-1">
+                <form id="publicacion-form" th:action="@{/publicacion/}+${form_action}" th:object="${publicacion}" method="post" role="form" th:class="${form_action}+' form-horizontal col-xs-12 col-md-10 col-md-offset-1'">
 
                     <div th:if="${#fields.hasErrors()}" class="alert alert-danger error-msg" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
@@ -89,7 +87,7 @@
                                    class="form-control input-md"
                                    data-validation="required number"
                                    data-validation-allowing="range[1;1000000] float"
-                                   data-validation-decimal-separator=","/>
+                                   data-validation-decimal-separator="."/>
 
                             <select  th:field="*{currencyCode}" id="currencyCode" class="form-control">
                                 <option th:each="c: ${currencies}" th:id="${c}" th:value="${c}" th:text="${c}"></option>
@@ -110,42 +108,28 @@
                             </select>
                         </div>
 
-                        <div class="col-md-12 card-image-container" th:if="${publicacion?.publicacionFotoForms?.size()>0 or publicacion.primaryImage!=null} ">
+                        <input type="hidden" id="primaryImage" name="primaryImage"/>
 
-                            <div class="col-md-3 card-image primary" th:if="${publicacion.primaryImage}!=null">
-                                <div class="col-md-12">
-                                    <img th:src="'/multimedia/image/'+${publicacion.primaryImage?.id}" class="img-responsive margin-standard">
-                                </div>
-                                <div class="col-md-12 panel text-center">
-                                    <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${primaryImage?.id}">
-                                        <i class="fa fa-star-o"></i></button>
-                                    <button type="button" class="btn btn-trash btn-fab btn-raised" th:attr="data-publicicacion-image-id=${primaryImage?.id}">
-                                        <i class="material-icons">delete</i></button>
-                                </div>
-                            </div>
-
-                            <div class="col-md-3 card-image" th:each="foto : ${publicacion.publicacionFotoForms}">
-                                <div class="col-md-12">
-                                    <img th:src="'/multimedia/image/'+${foto.id}" class="img-responsive margin-standard">
-                                </div>
-                                <div class="col-md-12 panel text-center">
-                                    <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${foto.id}">
-                                        <i class="fa fa-star-o"></i></button>
-                                    <button type="button" class="btn btn-trash btn-fab btn-raised" th:attr="data-publicicacion-image-id=${foto.id}">
-                                        <i class="material-icons">delete</i></button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <input type="hidden" id="imageSize" th:value="${publicacion.publicacionFotoForms!= null && publicacion.publicacionFotoForms.size()>0}">
                         <div class="form-group col-md-12" id="file-input-container">
                             <label class="control-label" for="input-images">Imágenes</label>
-                            <input id="input-images" type="file" name="inputFiles" multiple class="file-loading">
+                            <div class="col-md-12 card-image-container" th:if="${publicacion.publicacionFotoForms?.size()>0} ">
+
+                                <div class="col-md-3 card-image" th:classappend="${foto.isCover()} ? 'primary' : ''" th:each="foto : ${publicacion.publicacionFotoForms}">
+                                    <div class="col-md-12 image">
+                                        <img th:src="'/multimedia/image/'+${foto.id}" class="img-responsive margin-standard">
+                                    </div>
+                                    <div class="col-md-12 panel text-center">
+                                        <button type="button" class="btn btn-profile btn-fab btn-raised" th:attr="data-publicicacion-image-id=${foto.id}">
+                                            <i class="fa fa-star-o "></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <input th:if="${form_action == 'new'}" id="input-images" type="file" name="inputFiles" multiple class="file-loading">
                         </div>
 
                         <!-- Button -->
                         <div class="form-group col-md-12 btn-publicacion">
-                            <button class="submit button button-block btn btn-primary btn-aceptar" id="submit-p">Publicar Trabajo</button>
+                            <button class="submit button button-block btn btn-primary btn-aceptar" id="submit-p">Publicar</button>
                         </div>
 
                     </fieldset>

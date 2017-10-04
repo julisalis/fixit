@@ -50,34 +50,28 @@ public class IndexController {
 
     @GetMapping(value = "/publicaciones/search")
     public String listPublicacionesSearch(@RequestParam(value="searchTerm") String searchTerm, Model model) {
-        List searchResults = null;
+        List<Publicacion> searchResults = null;
         try {
             searchResults = publicacionSearch.search(searchTerm);
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        model.addAttribute("publicaciones", searchResults);
+        List<PublicacionDTO> publicacionDTOS = searchResults.stream().map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion))).collect(Collectors.toList());
+        model.addAttribute("publicaciones", publicacionDTOS);
         model.addAttribute("searchTerm",searchTerm);
         return "publicaciones-busqueda";
     }
 
     public List<PublicacionDTO> getPublicacionesPorCatregoria (List<Publicacion> publicaciones, String slug) {
-        return publicaciones.stream().filter(p -> p.getTipoTrabajo().getSlug().equals(slug)).map(publicacion -> new PublicacionDTO(publicacion,buildFotoForms(publicacion.getMultimedia()),getCover(publicacion))).collect(Collectors.toList());
-    }
-
-    private List<PublicacionFotoForm> buildFotoForms(PublicacionMultimedia multimedia) {
-        if (multimedia!=null && multimedia.getPhotos()!=null){
-            return multimedia.getPhotos()
-                    .stream()
-                    .map(publicacionPhoto -> new PublicacionFotoForm(publicacionPhoto)).collect(Collectors.toList());
-        }
-        else return new ArrayList<>();
+        return publicaciones.stream().filter(p -> p.getTipoTrabajo().getSlug().equals(slug)).map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion))).collect(Collectors.toList());
     }
 
     private PublicacionFotoForm getCover(Publicacion publicacion) {
         PublicacionPhoto publicacionPhoto = publicacionService.getCover(publicacion);
-        return new PublicacionFotoForm(publicacionPhoto);
+        if(publicacionPhoto!=null){
+            return new PublicacionFotoForm(publicacionPhoto);
+        }else return null;
     }
 
 }

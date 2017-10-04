@@ -17,6 +17,7 @@ public class PublicacionFotoForm {
     private byte[] content;
     private String extension;
     private String name;
+    private boolean isCover;
 
     public PublicacionFotoForm() {
     }
@@ -27,12 +28,14 @@ public class PublicacionFotoForm {
         this.name = publicacionPhoto.getName();
         this.extension = publicacionPhoto.getExtension();
         this.content = IOUtils.toByteArray( new FileInputStream( file ));
+        this.isCover = publicacionPhoto.isCover();
     }
 
     public PublicacionFotoForm(PublicacionPhoto publicacionPhoto) {
         this.id = publicacionPhoto.getId();
         this.name = publicacionPhoto.getName();
         this.extension = publicacionPhoto.getExtension();
+        this.isCover = publicacionPhoto.isCover();
     }
 
     public long getId() {
@@ -65,5 +68,13 @@ public class PublicacionFotoForm {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public boolean isCover() {
+        return isCover;
+    }
+
+    public void setCover(boolean cover) {
+        isCover = cover;
     }
 }

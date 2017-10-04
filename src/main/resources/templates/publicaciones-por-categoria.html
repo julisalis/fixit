@@ -34,7 +34,7 @@
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper" th:each="publicacion : ${publicaciones}">
                         <div class="fixit-product-box  shadow-box">
                                 <a type="button" class="shadow-box-link modal-publicacion"  data-id="" th:attr="data-id=${publicacion.id}" data-target="#publicacion">
-                                    <img th:src="'/multimedia/image/'+${publicacion.primaryImage.id}" onerror="this.src='/images/publicaciones/not-found.png'" class="img-responsive" alt="Plomería">
+                                    <img th:src="'/multimedia/image/'+${publicacion.primaryImage?.id}" onerror="this.src='/images/publicaciones/not-found.png'" class="img-responsive" alt="Plomería">
                                 </a>
                             <div>
                                 <p class="installationType">

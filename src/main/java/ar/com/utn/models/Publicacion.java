@@ -1,4 +1,5 @@
 package ar.com.utn.models;
+import ar.com.utn.form.PublicacionForm;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
@@ -200,5 +201,17 @@ public class Publicacion extends PersistentEntity{
 
     public void setEstadoPublicacion(EstadoPublicacion estadoPublicacion) {
         this.estadoPublicacion = estadoPublicacion;
+    }
+
+    public void update(PublicacionForm publicacionForm,Localidad localidad) {
+        this.titulo = publicacionForm.getTitulo();
+        this.descripcion = publicacionForm.getDescripcion();
+        this.presupMax = publicacionForm.getPresupMax();
+        this.tipoTrabajo = publicacionForm.getTipoTrabajo();
+        this.localidad = localidad;
+        this.tiempoPublicacion = tiempoPublicacion;
+        this.fecha=publicacionForm.getFecha();
+        this.urgencia=publicacionForm.getUrgencia();
+        this.currency = Currency.getInstance(publicacionForm.getCurrencyCode())!=null? Currency.getInstance(publicacionForm.getCurrencyCode()) : Currency.getInstance("ARS");
     }
 }
