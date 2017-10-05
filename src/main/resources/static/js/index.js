@@ -11,35 +11,40 @@ $(function () {
         img.prop("src",'/images/'+name+".png");
     });
 
-    $(".modal-signin button.btn-login").click(function() {
+    $(".modal-signin button.btn-login").click(function(e) {
         var container = $(this).closest(".modal-signin");
         //Escondo el error
         $("div.error-msg",container).hide();
         var form = $(this).closest( "form" );
-        $.post(form.attr('action') , form.serialize() )
-            .done(function( data) {
+        $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: form.serialize(),
+            async: false,
+            success: function (data) {
                 if(data.success) {
                     if (typeof(data.select_role) != 'undefined' && data.select_role == true) {
                         //mostrar selector de role
                         swal("Elegiste Profesional");
                         /*swal("¿Con qué perfil desea iniciar sesión?", {
-                            buttons: {
-                                prestador: "Profesional",
-                                tomador: "Cliente"
-                            },
-                        })
-                            .then((value) => {
-                            switch (value) {
+                         buttons: {
+                         prestador: "Profesional",
+                         tomador: "Cliente"
+                         },
+                         })
+                         .then((value) => {
+                         switch (value) {
 
-                            case "tomador":
-                                swal("Elegiste Cliente");
-                                break;
+                         case "tomador":
+                         swal("Elegiste Cliente");
+                         break;
 
-                            case "prestador":
-                                swal("Elegiste Profesional");
-                                break;
-                            }
-                        });*/
+                         case "prestador":
+                         swal("Elegiste Profesional");
+                         break;
+                         }
+                         });*/
+                        e.preventDefault();
                     } else {
                         if (typeof(data.url) != 'undefined') {
                             window.location = data.url;
@@ -51,10 +56,8 @@ $(function () {
                     //Muestro error
                     $("div.error-msg",container).show();
                 }
-            }).fail(function () {
-                $("div.error-msg",container).show();
-            });
-
+            }
+        });
     });
 
     $(".modal-publicacion").on("click",  function () {
