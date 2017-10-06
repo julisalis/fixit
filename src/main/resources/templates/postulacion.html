@@ -4,10 +4,7 @@
 <head lang="en">
     <title>FixIT</title>
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
-    <link rel="stylesheet" type="text/css"  th:href="@{/bootstrap-fileinput/css/fileinput.min.css}" media="all"/>
-    <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/fileinput.min.js}"></script>
-    <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/fileinput_locale_es.js}"></script>
-    <script type="text/javascript" th:src="@{/js/publicacion.js}"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap-sweetalert/sweetalert.css}"/>
 </head>
 <body class="white-body">
 <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
@@ -57,38 +54,41 @@
                         </div>-->
 
                         <fieldset>
-                            <input type="hidden" id="postulacionId" th:value="${postulacion?.id}">
+                            <input type="hidden" id="postulacionId" th:value="${postulacion?.id}" class="apiParam">
+                            <input type="hidden" id="publicacionId" th:value="${publicacion.id}" class="apiParam">
 
                             <div class="form-group col-md-12">
-                                <label for="descripcion">Descripción</label>
-                                <textarea class="form-control" th:value="${postulacion?.descripcion}"
+                                <label for="descripcion">Descripción *</label>
+                                <textarea class="form-control apiParam" th:value="${postulacion?.descripcion}"
                                           id="descripcion" rows="5"/>
                             </div>
 
                             <div class="form-group col-md-6 price">
-                                <label for="presupAprox">Presupuesto Aproximado </label>
-                                <input type="text" th:value="${postulacion?.presupAprox}"
+                                <label for="presupAprox">Presupuesto Aproximado *</label>
+                                <input type="number" th:value="${postulacion?.presupAprox}"
                                        id="presupAprox"
-                                       class="form-control input-md"/>
+                                       class="form-control input-md apiParam"
+                                       step="0.01"/>
 
-                                <select id="currencyCode" class="form-control">
+                                <select id="currencyCode" class="form-control apiParam">
                                     <option th:each="c: ${currencies}" th:id="${c}" th:value="${c}" th:text="${c}" th:selected="${c == postulacion?.currency}"></option>
                                 </select>
                             </div>
 
                             <div class="form-group col-md-6">
-                                <label for="duracionAprox">Duración Aproximada </label>
+                                <label for="duracionAprox">Duración Aproximada *</label>
                                 <div class="input-group">
-                                    <input type="text" th:value="${postulacion?.duracionAprox}"
+                                    <input type="number" th:value="${postulacion?.duracionAprox}"
                                            id="duracionAprox"
-                                           class="form-control input-md"/>
+                                           class="form-control input-md apiParam"
+                                           step="0.01"/>
                                     <span class="input-group-addon" type="text" value="Horas">Horas</span>
                                 </div>
                             </div>
 
                             <div class="form-group col-md-12">
                                 <label for="comentarios">Comentarios adicionales</label>
-                                <textarea class="form-control" th:value="${postulacion?.comentarios}"
+                                <textarea class="form-control apiParam" th:value="${postulacion?.comentarios}"
                                           id="comentarios" rows="5"/>
                             </div>
 
@@ -108,4 +108,58 @@
 
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
+<script type="text/javascript" th:src="@{/bootstrap-sweetalert/sweetalert.min.js}"></script>
+<script>
+    function savePostulacion(){
+        if(!isPostulacionValid()){
+            swal("Error", "Complete todos los campos marcados con *.", "error");
+            return;
+        }else{
+            $.ajax({
+                type: 'POST',
+                url: '/postulacion/createPostulacion',
+                data: getParamsForAjax("#postulacion"),
+                async: true,
+                success: function(message){
+                    if(message.success){
+                        swal("Postulación guardada!", message.msg, "success")
+                    }else{
+                        swal("Error", message.msg, "error")
+                    }
+                }
+            });
+        }
+    }
+
+    function isPostulacionValid(){
+        if($("#descripcion").val()==""){
+            return false;
+        }
+        if($("#presupAprox").val()=="" || $("#presupAprox").val()<=0){
+            return false;
+        }
+        if($("#duracionAprox").val()=="" || $("#duracionAprox").val()<=0){
+            return false;
+        }
+        return true;
+    }
+
+    function getParamsForAjax(fieldContainerReference){
+        var params = [];
+        $(fieldContainerReference)
+            .find('.apiParam')
+            .each(
+                function(){
+                    var campo = $(this).attr('id');
+                    if ($(this).is(':checkbox')) {
+                        params.push( '"'+campo +'":"'+ $(this).prop('checked') + '"' );
+                    }else{
+                        params.push( '"'+campo +'":"'+ $(this).val() + '"' );
+                    }
+
+                }
+            );
+        return JSON.parse( '{' + params.join() + '}');
+    }
+</script>
 </html>
