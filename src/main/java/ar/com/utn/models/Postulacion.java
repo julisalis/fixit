@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import java.math.BigDecimal;
+import java.util.Currency;
 
 /**
  * Created by julis on 13/7/2017.
@@ -12,10 +14,12 @@ import javax.persistence.Table;
 @Table(name="postulaciones")
 public class Postulacion extends PersistentEntity {
 
-    private String solucion;
-    private Double presupOfrecido;
-    private Double duracionEst;
-    private String recursos;
+    private String descripcion;
+    private BigDecimal presupAprox;
+    private Currency currency;
+    private BigDecimal duracionAprox;
+    //private String recursos;
+    private String comentarios;
     private Boolean elegida;
 
     @ManyToOne
@@ -26,36 +30,58 @@ public class Postulacion extends PersistentEntity {
     @JoinColumn(name = "prestador", nullable = false)
     private Prestador prestador;
 
-    public String getSolucion() {
-        return solucion;
+    public Postulacion() {
     }
 
-    public void setSolucion(String solucion) {
-        this.solucion = solucion;
+    public Postulacion(String currency, String descripcion, BigDecimal presupAprox, BigDecimal duracionAprox, Boolean elegida, Publicacion publicacion, Prestador prestador, String comentarios) {
+        this.descripcion = descripcion;
+        this.presupAprox = presupAprox;
+        this.currency = Currency.getInstance(currency)!=null? Currency.getInstance(currency) : Currency.getInstance("ARS") ;
+        this.duracionAprox = duracionAprox;
+        this.elegida = elegida;
+        this.publicacion = publicacion;
+        this.prestador = prestador;
+        this.comentarios = comentarios;
     }
 
-    public Double getPresupOfrecido() {
-        return presupOfrecido;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setPresupOfrecido(Double presupOfrecido) {
-        this.presupOfrecido = presupOfrecido;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public Double getDuracionEst() {
-        return duracionEst;
+    public BigDecimal getPresupAprox() {
+        return presupAprox;
     }
 
-    public void setDuracionEst(Double duracionEst) {
-        this.duracionEst = duracionEst;
+    public void setPresupAprox(BigDecimal presupAprox) {
+        this.presupAprox = presupAprox;
     }
 
-    public String getRecursos() {
-        return recursos;
+    public BigDecimal getDuracionAprox() {
+        return duracionAprox;
     }
 
-    public void setRecursos(String recursos) {
-        this.recursos = recursos;
+    public void setDuracionAprox(BigDecimal duracionAprox) {
+        this.duracionAprox = duracionAprox;
+    }
+
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
+    }
+
+    public String getComentarios() {
+        return comentarios;
+    }
+
+    public void setComentarios(String comentarios) {
+        this.comentarios = comentarios;
     }
 
     public Boolean getElegida() {

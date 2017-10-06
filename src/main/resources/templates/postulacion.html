@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+    <title>FixIT</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <link rel="stylesheet" type="text/css"  th:href="@{/bootstrap-fileinput/css/fileinput.min.css}" media="all"/>
+    <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/fileinput.min.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/fileinput_locale_es.js}"></script>
+    <script type="text/javascript" th:src="@{/js/publicacion.js}"></script>
+</head>
+<body class="white-body">
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+<div id="postulacion">
+    <div class="container">
+        <div class="col-md-12 form-container">
+
+            <h2>Postulación</h2>
+
+            <row>
+                <div class="col-sm-4">
+                    <!-- Datos Publicacion -->
+                    <section id="datos-publicacion">
+                        <div class="pregunta">
+                            <div class="icons-publicacion-detalle"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
+                            <h4 class="preguntas-publicacion">Qué hay que hacer?</h4>
+                        </div>
+                        <h3 class="modal-descripcion publicaciones"></h3>
+                        <div class="pregunta">
+                            <div class="icons-publicacion-detalle"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+                            <h4 class="preguntas-publicacion">Dónde?</h4>
+                        </div>
+                        <h3 class="modal-ubicacion publicaciones"></h3>
+                        <div class="pregunta">
+                            <div class="icons-publicacion-detalle"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
+                            <h4 class="preguntas-publicacion">Cuánto quiere gastar?</h4>
+                        </div>
+                        <h3 class="modal-precio publicaciones"></h3>
+                        <div class="pregunta">
+                            <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                            <h4 class="preguntas-publicacion">Cuándo lo necesita?</h4>
+                        </div>
+                        <h3 class="modal-urgencia modal-fecha publicaciones"></h3>
+                    </section>
+                </div>
+                <div class="col-sm-8">
+                        <!--<div th:if="${#fields.hasErrors()}" class="alert alert-danger error-msg" role="alert">
+                            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                            <span>Error:</span>
+                            <ul>
+                                <li th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">
+                                    <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span>
+                                    <span th:text="${e.message}">The error message</span>
+                                </li>
+                            </ul>
+                        </div>-->
+
+                        <fieldset>
+                            <input type="hidden" id="postulacionId" th:value="${postulacion?.id}">
+
+                            <div class="form-group col-md-12">
+                                <label for="descripcion">Descripción</label>
+                                <textarea class="form-control" th:value="${postulacion?.descripcion}"
+                                          id="descripcion" rows="5"/>
+                            </div>
+
+                            <div class="form-group col-md-6 price">
+                                <label for="presupAprox">Presupuesto Aproximado </label>
+                                <input type="text" th:value="${postulacion?.presupAprox}"
+                                       id="presupAprox"
+                                       class="form-control input-md"/>
+
+                                <select id="currencyCode" class="form-control">
+                                    <option th:each="c: ${currencies}" th:id="${c}" th:value="${c}" th:text="${c}" th:selected="${c == postulacion?.currency}"></option>
+                                </select>
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                <label for="duracionAprox">Duración Aproximada </label>
+                                <div class="input-group">
+                                    <input type="text" th:value="${postulacion?.duracionAprox}"
+                                           id="duracionAprox"
+                                           class="form-control input-md"/>
+                                    <span class="input-group-addon" type="text" value="Horas">Horas</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group col-md-12">
+                                <label for="comentarios">Comentarios adicionales</label>
+                                <textarea class="form-control" th:value="${postulacion?.comentarios}"
+                                          id="comentarios" rows="5"/>
+                            </div>
+
+                            <!-- Button -->
+                            <div class="form-group col-md-12 btn-postulacion">
+                                <button class="submit button button-block btn btn-primary btn-aceptar" id="submit-p">Confirmar</button>
+                            </div>
+
+                        </fieldset>
+                </div>
+            </row>
+
+        </div>
+    </div>
+</div>
+
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>
