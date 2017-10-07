@@ -37,7 +37,7 @@
                                 <img th:src="@{/images/}+${publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                 <span th:text="${publicacion.tipoTrabajo.nombre}">asdasd</span>
                                 <a type="button" class="shadow-box-link modal-publicacion"  data-id="" th:attr="data-id=${publicacion.id}" data-target="#publicacion">
-                                    <img th:src="'/multimedia/image/'+${publicacion.primaryImage?.id}" onerror="this.src='/images/publicaciones/not-found.png'" class="img-responsive" alt="Plomería">
+                                    <img th:src="'/multimedia/image/'+${publicacion.primaryImage?.id}" onerror="this.src='/images/publicaciones/not-found.png'" class="img-responsive principal" alt="Plomería">
                                 </a>
                             <div>
                                 <p class="installationType">

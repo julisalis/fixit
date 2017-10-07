@@ -72,7 +72,35 @@ $(function () {
                     $("#publicacion .modal-ubicacion").text( data.publicacion.localidad.nombre+', '+data.publicacion.provincia.nombre);
                     $("#publicacion .modal-precio").text('Hasta '+ data.publicacion.presupMax+' '+data.publicacion.currency);
                     $("#publicacion .modal-urgencia").text( data.publicacion.urgencia);
-                    $("#publicacion .modal-fecha").text(data.publicacion.fecha.dayOfMonth+'/'+data.publicacion.fecha.monthValue+'/'+data.publicacion.fecha.year);
+                    if(data.publicacion.fecha != 'undefined' && data.publicacion.fecha != null){
+                        $("#publicacion .modal-fecha").text(data.publicacion.fecha.dayOfMonth+'/'+data.publicacion.fecha.monthValue+'/'+data.publicacion.fecha.year);
+                    }
+
+                    var listaImg = data.publicacion.publicacionFotoForms;
+                    var listaItems = $("#publicacion .item");
+                    var listaIndicadores = $(".carousel-indicators li");
+                    for(var i=0;i<listaImg.length;i++){
+                        var img = listaImg[i].id;
+                        var item = listaItems[i];
+                        var indicador = listaIndicadores[i];
+                        var foto = item.lastElementChild.lastElementChild.lastElementChild;
+                        $(foto).attr('src', '/multimedia/image/'+img);
+                        $(item).removeClass('oculto');
+                        $(indicador).removeClass('oculto');
+                    }
+                    $(".modal-content .oculto").remove();
+
+                    // $.each(listaImg, function (index, value) {
+                    //     var listaItems = $("#publicacion .item");
+                    //     var listaIndicadores = $(".carousel-indicators li");
+                    //
+                    //     var newItem = item.clone().prependTo('#imagenes-carrousel');
+                    //     newItem.removeClass('original');
+                    //     newItem.addClass('cloned');
+                    //     var foto = newItem.find(".modal-imagenes");
+                    //     $(foto).attr('src', '/multimedia/image/'+value.id);
+                    //     $(newItem).show();
+                    // })
                 }
 
 
@@ -81,5 +109,10 @@ $(function () {
         });
     });
 
+    $('#publicacion').on('hidden.bs.modal', function () {
+        var content = $('.modal-body #section-Clientes');
+        content.html('');
+        $('#section-copia #section-Clientes .section').clone().appendTo(content);
+    });
 
 });

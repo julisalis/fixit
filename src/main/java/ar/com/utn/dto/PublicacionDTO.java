@@ -5,10 +5,7 @@ import ar.com.utn.models.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -29,6 +26,7 @@ public class PublicacionDTO {
     private EstadoPublicacion estado;
     private PublicacionFotoForm primaryImage;
     private List<PublicacionFotoForm> publicacionFotoForms = new ArrayList<>();
+    private boolean canEdit;
 
     public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage) {
         this.id = publicacion.getId();
@@ -44,6 +42,11 @@ public class PublicacionDTO {
         this.estado = publicacion.getEstadoPublicacion();
         this.primaryImage = primaryImage;
         this.publicacionFotoForms = buildFotoForms(publicacion.getMultimedia());
+        this.canEdit = buildCanEdit(publicacion.getPostulaciones());
+    }
+
+    private boolean buildCanEdit(Set<Postulacion> postulaciones) {
+        return postulaciones.size()<=0;
     }
 
     public PublicacionDTO() {
@@ -160,5 +163,13 @@ public class PublicacionDTO {
 
     public void setPublicacionFotoForms(List<PublicacionFotoForm> publicacionFotoForms) {
         this.publicacionFotoForms = publicacionFotoForms;
+    }
+
+    public boolean isCanEdit() {
+        return canEdit;
+    }
+
+    public void setCanEdit(boolean canEdit) {
+        this.canEdit = canEdit;
     }
 }

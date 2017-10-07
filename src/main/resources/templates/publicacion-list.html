@@ -33,7 +33,10 @@
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
-                                        <a th:href="'/publicacion/edit/'+${nueva.id}"><img th:src="'/multimedia/image/'+${nueva.primaryImage?.id}" onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="img-responsive"></a>
+                                        <a th:href="'/publicacion/edit/'+${nueva.id}" th:onclick="'return '+${nueva.canEdit}"">
+                                            <img th:src="'/multimedia/image/'+${nueva.primaryImage?.id}"
+                                                 onerror="this.src='/images/publicaciones/not-found.png'"
+                                                 alt="Image" class="img-responsive"></a>
                                     </div><!-- item-image -->
                                 </div>
 
@@ -55,7 +58,7 @@
                                 <div class="button col-md-3">
                                     <a href="#" class="btn btn-primary tam-boton-100">Ver Postulaciones</a>
                                     <div class="edit-delete">
-                                    <a th:href="'/publicacion/edit/'+${nueva.id}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar </a>
+                                    <a th:href="'/publicacion/edit/'+${nueva.id}" th:onclick="'return '+${nueva.canEdit}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar </a>
                                     <a class="deletePublicacion" th:href="'/publicacion/delete/'+${nueva.id}"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar </a>
                                     </div>
                                 </div>
@@ -71,7 +74,7 @@
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
-                                        <a th:href="'/publicacion/edit/'+${contratada.id}"><img th:src="'/multimedia/image/'+${contratada.primaryImage?.id}" alt="Image" class="img-responsive"></a>
+                                        <img th:src="'/multimedia/image/'+${contratada.primaryImage?.id}" alt="Image" class="img-responsive">
                                     </div><!-- item-image -->
                                 </div>
 
@@ -105,7 +108,7 @@
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
-                                        <a th:href="'/publicacion/edit/'+${finalizada.id}"><img th:src="'/multimedia/image/'+${finalizada.primaryImage?.id}" onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="img-responsive"></a>
+                                        <img th:src="'/multimedia/image/'+${finalizada.primaryImage?.id}" onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="img-responsive">
                                     </div><!-- item-image -->
                                 </div>
 
