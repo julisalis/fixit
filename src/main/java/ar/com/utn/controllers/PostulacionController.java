@@ -8,6 +8,7 @@ import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.models.*;
 import ar.com.utn.services.PostulacionService;
 import ar.com.utn.services.PublicacionService;
+import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.validation.Valid;
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,12 +31,16 @@ public class PostulacionController {
     @Autowired
     private PublicacionService publicacionService;
 
-    /*@Autowired
-    private PostulacionService postulacionService;*/
+    @Autowired
+    private PostulacionService postulacionService;
 
-    @RequestMapping(value = "/new", method = RequestMethod.POST)
+    @Autowired
+    private CurrentSession currentSession;
+
+    @RequestMapping(value = "/new", method = RequestMethod.GET)
     public String newPostulacion(@RequestParam(value = "publicacionId") Publicacion publicacion, WebRequest request, Model model) {
-        addModelAttributes(model,new PostulacionForm(),"new");
+        //addModelAttributes(model,new PostulacionForm(),"new");
+        model.addAttribute("currencies", CurrencyCode.values());
         model.addAttribute("publicacion", new PublicacionDTO(publicacion,getCover(publicacion)));
         return "postulacion";
     }
@@ -52,24 +58,41 @@ public class PostulacionController {
         }else return null;
     }
 
-    /*@RequestMapping(value = "/createPostulacion", method = RequestMethod.POST)
+    @RequestMapping(value = "/createPostulacion", method = RequestMethod.POST)
     @ResponseBody
-    public Map<String,Object> newPostulacion() {
+    public Map<String,Object> newPostulacion(@RequestParam(value = "descripcion") String descripcion,
+                                             @RequestParam(value = "presupAprox") BigDecimal presupAprox,
+                                             @RequestParam(value = "duracionAprox") BigDecimal duracionAprox,
+                                             @RequestParam(value = "currencyCode") String currency,
+                                             @RequestParam(value = "comentarios") String comentarios,
+                                             @RequestParam(value = "publicacionId") Publicacion publicacion) {
         HashMap<String,Object> map = new HashMap<>();
+        Prestador prestador = currentSession.getUser().getPrestador();
         try {
-            if(!result.hasErrors()){
-                Postulacion postulacion = postulacionService.createPublicacion(postulacionForm);
-                map.put("success", true);
-                map.put("postulacion", new PostulacionForm(postulacion));
-                map.put("msg","La postulación ha sido creada con éxito!");
-            }else{
+            if(prestador.getPostulaciones().stream().anyMatch(p -> p.getPublicacion() == publicacion))
+            {
                 map.put("success", false);
-                map.put("errors", result.getAllErrors());
+                map.put("msg","Usted ya está postulado en esta publicación.");
+            }else{
+                if(!descripcion.isEmpty() && presupAprox != null && duracionAprox != null){
+                    if(presupAprox.doubleValue() > 0 && duracionAprox.doubleValue() > 0){
+                        Postulacion postulacion = new Postulacion(currency,descripcion,presupAprox,duracionAprox,publicacion,prestador,comentarios);
+                        postulacion = postulacionService.createPostulacion(postulacion);
+                        map.put("success", true);
+                        map.put("msg","La postulación ha sido creada con éxito!");
+                    }else{
+                        map.put("success", false);
+                        map.put("msg","La duracion y el presupuesto deben ser positivos.");
+                    }
+                }else{
+                    map.put("success", false);
+                    map.put("msg","Complete todos los campos obligatorios.");
+                }
             }
         }catch (Exception e) {
             map.put("success", false);
             map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
         }
         return map;
-    }*/
+    }
 }

@@ -1,9 +1,6 @@
 package ar.com.utn.models;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Currency;
 
@@ -20,7 +17,8 @@ public class Postulacion extends PersistentEntity {
     private BigDecimal duracionAprox;
     //private String recursos;
     private String comentarios;
-    private Boolean elegida;
+    @Column(columnDefinition="boolean default false", nullable = false)
+    private Boolean elegida = false;
 
     @ManyToOne
     @JoinColumn(name = "publicacion", nullable = false)
@@ -33,12 +31,11 @@ public class Postulacion extends PersistentEntity {
     public Postulacion() {
     }
 
-    public Postulacion(String currency, String descripcion, BigDecimal presupAprox, BigDecimal duracionAprox, Boolean elegida, Publicacion publicacion, Prestador prestador, String comentarios) {
+    public Postulacion(String currency, String descripcion, BigDecimal presupAprox, BigDecimal duracionAprox, Publicacion publicacion, Prestador prestador, String comentarios) {
         this.descripcion = descripcion;
         this.presupAprox = presupAprox;
         this.currency = Currency.getInstance(currency)!=null? Currency.getInstance(currency) : Currency.getInstance("ARS") ;
         this.duracionAprox = duracionAprox;
-        this.elegida = elegida;
         this.publicacion = publicacion;
         this.prestador = prestador;
         this.comentarios = comentarios;

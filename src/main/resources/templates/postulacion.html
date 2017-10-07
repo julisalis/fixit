@@ -9,7 +9,7 @@
 <body class="white-body">
 <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-<div id="postulacion">
+<div id="publicacion">
     <div class="container">
         <div class="col-md-12 form-container">
 
@@ -17,28 +17,29 @@
 
             <row>
                 <div class="col-sm-4">
+                    <h4 class="modal-title publicaciones" th:text="${publicacion.titulo}">Caño roto en baño</h4>
                     <!-- Datos Publicacion -->
                     <section id="datos-publicacion">
                         <div class="pregunta">
                             <div class="icons-publicacion-detalle"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
-                            <h4 class="preguntas-publicacion">Qué hay que hacer?</h4>
+                            <h4 class="preguntas-publicacion">¿Qué hay que hacer?</h4>
                         </div>
-                        <h3 class="modal-descripcion publicaciones"></h3>
+                        <h3 class="modal-descripcion publicaciones" th:text="${publicacion.descripcion}"></h3>
                         <div class="pregunta">
                             <div class="icons-publicacion-detalle"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
-                            <h4 class="preguntas-publicacion">Dónde?</h4>
+                            <h4 class="preguntas-publicacion">¿Dónde?</h4>
                         </div>
-                        <h3 class="modal-ubicacion publicaciones"></h3>
+                        <h3 class="modal-ubicacion publicaciones" th:text="${publicacion.localidad.nombre + ', ' + publicacion.localidad.provincia.nombre}"></h3>
                         <div class="pregunta">
                             <div class="icons-publicacion-detalle"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
-                            <h4 class="preguntas-publicacion">Cuánto quiere gastar?</h4>
+                            <h4 class="preguntas-publicacion">¿Cuánto quiere gastar?</h4>
                         </div>
-                        <h3 class="modal-precio publicaciones"></h3>
+                        <h3 class="modal-precio publicaciones" th:text="${'Hasta '+publicacion.presupMax + ' ' + publicacion.currency}"></h3>
                         <div class="pregunta">
                             <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                            <h4 class="preguntas-publicacion">Cuándo lo necesita?</h4>
+                            <h4 class="preguntas-publicacion">¿Cuándo lo necesita?</h4>
                         </div>
-                        <h3 class="modal-urgencia modal-fecha publicaciones"></h3>
+                        <h3 class="modal-urgencia modal-fecha publicaciones" th:text="${publicacion.urgencia}"></h3>
                     </section>
                 </div>
                 <div class="col-sm-8">
@@ -53,14 +54,14 @@
                             </ul>
                         </div>-->
 
-                        <fieldset>
+                        <fieldset id="postulacion-data">
                             <input type="hidden" id="postulacionId" th:value="${postulacion?.id}" class="apiParam">
                             <input type="hidden" id="publicacionId" th:value="${publicacion.id}" class="apiParam">
 
                             <div class="form-group col-md-12">
                                 <label for="descripcion">Descripción *</label>
                                 <textarea class="form-control apiParam" th:value="${postulacion?.descripcion}"
-                                          id="descripcion" rows="5"/>
+                                          id="descripcion"/>
                             </div>
 
                             <div class="form-group col-md-6 price">
@@ -89,12 +90,12 @@
                             <div class="form-group col-md-12">
                                 <label for="comentarios">Comentarios adicionales</label>
                                 <textarea class="form-control apiParam" th:value="${postulacion?.comentarios}"
-                                          id="comentarios" rows="5"/>
+                                          id="comentarios"/>
                             </div>
 
                             <!-- Button -->
                             <div class="form-group col-md-12 btn-postulacion">
-                                <button class="submit button button-block btn btn-primary btn-aceptar" id="submit-p">Confirmar</button>
+                                <button class="submit button button-block btn btn-primary btn-aceptar" onclick="savePostulacion()">Confirmar</button>
                             </div>
 
                         </fieldset>
@@ -118,7 +119,7 @@
             $.ajax({
                 type: 'POST',
                 url: '/postulacion/createPostulacion',
-                data: getParamsForAjax("#postulacion"),
+                data: getParamsForAjax("#postulacion-data"),
                 async: true,
                 success: function(message){
                     if(message.success){
