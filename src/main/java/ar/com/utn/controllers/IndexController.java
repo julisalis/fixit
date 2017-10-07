@@ -50,6 +50,11 @@ public class IndexController {
 
     @GetMapping(value = "/publicaciones/search")
     public String listPublicacionesSearch(@RequestParam(value="searchTerm") String searchTerm, Model model) {
+        if(searchTerm.isEmpty()) {
+            model.addAttribute("publicaciones",new ArrayList<PublicacionDTO>());
+            model.addAttribute("searchTerm",searchTerm);
+            return "publicaciones-busqueda";
+        }
         List<Publicacion> searchResults = null;
         try {
             searchResults = publicacionSearch.search(searchTerm);

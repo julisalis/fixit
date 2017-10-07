@@ -42,6 +42,7 @@ public class LoginAuthenticationSuccessHandler extends SavedRequestAwareAuthenti
             Map<String, Object> m = new HashMap<>();
             if(user.getRoles().size()>1){
                 m.put("select_role", true);
+                m.put("id",user.getId());
             }else{
                 m.put("select_role", false);
             }

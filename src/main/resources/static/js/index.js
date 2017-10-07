@@ -24,27 +24,54 @@ $(function () {
             success: function (data) {
                 if(data.success) {
                     if (typeof(data.select_role) != 'undefined' && data.select_role == true) {
-                        //mostrar selector de role
-                        swal("Elegiste Profesional");
-                        /*swal("¿Con qué perfil desea iniciar sesión?", {
-                         buttons: {
-                         prestador: "Profesional",
-                         tomador: "Cliente"
-                         },
-                         })
-                         .then((value) => {
-                         switch (value) {
-
-                         case "tomador":
-                         swal("Elegiste Cliente");
-                         break;
-
-                         case "prestador":
-                         swal("Elegiste Profesional");
-                         break;
-                         }
-                         });*/
                         e.preventDefault();
+                        //mostrar selector de role
+                        BootstrapDialog.show({
+                            title: 'Seleccionar rol',
+                            message: 'Por favor, seleccione con que rol quiere iniciar sesión.',
+                            closable: false,
+                            buttons: [{
+                                label: 'Cliente',
+                                action: function(dialog) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/usuario/cambiarRol',
+                                        data: {
+                                            id: data.id,
+                                            rol: "TOMADOR"
+                                        },
+                                        async: true,
+                                        success: function(message){
+                                            if(message.success){
+                                                window.location.href = "/";
+                                            }else{
+                                                swal("Error", message.msg, "error")
+                                            }
+                                        }
+                                    });
+                                }
+                            }, {
+                                label: 'Profesional',
+                                action: function(dialog) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/usuario/cambiarRol',
+                                        data: {
+                                            id: data.id,
+                                            rol: "PRESTADOR"
+                                        },
+                                        async: true,
+                                        success: function(message){
+                                            if(message.success){
+                                                window.location.href = "/";
+                                            }else{
+                                                swal("Error", message.msg, "error")
+                                            }
+                                        }
+                                    });
+                                }
+                            }]
+                        });
                     } else {
                         if (typeof(data.url) != 'undefined') {
                             window.location = data.url;
