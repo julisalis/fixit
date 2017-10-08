@@ -1,5 +1,6 @@
 package ar.com.utn.services.implementation;
 
+import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.exception.PublicacionException;
 import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.models.*;
@@ -113,5 +114,10 @@ public class PublicacionServiceImpl implements PublicacionService {
     @Transactional(rollbackOn={Exception.class})
     public void deletePublicacion(Publicacion publicacion) {
         publicacion.setEstadoPublicacion(EstadoPublicacion.ELIMINADA);
+    }
+
+    @Override
+    public List<Publicacion> getTrabajosRecomendados(List<TipoTrabajo> tipos) {
+        return publicacionRepository.findAllByTipoTrabajoIn(tipos);
     }
 }
