@@ -461,6 +461,7 @@ div.signup, #signin .container{
 }
 
 .btn-primary.btn-block.btn-login .btn.focus, .btn:focus, .btn:hover {
+    background-color: #3ac58f;
     text-decoration: blink;
     color: white;
     transition: all 200ms linear;
@@ -1797,6 +1798,10 @@ a:focus{
     height: 200px;
 }
 
+#publicacion .img-responsive.principal {
+    margin: 0 auto;
+    border-radius: 5px;
+}
 
 
 

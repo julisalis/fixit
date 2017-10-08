@@ -90,7 +90,7 @@ $(function () {
     $(".modal-publicacion").on("click",  function () {
         var publicacionId = $(this).data('id');
 
-        $.get('/publicacion/detalle', {publicacionId: publicacionId} )
+        $.get('/publicaciones/detalle', {publicacionId: publicacionId} )
             .done(function( data ) {
                 if (typeof(data.publicacion) != 'undefined'){
                     $('#publicacion').modal('toggle');
@@ -102,44 +102,18 @@ $(function () {
                     if(data.publicacion.fecha != 'undefined' && data.publicacion.fecha != null){
                         $("#publicacion .modal-fecha").text(data.publicacion.fecha.dayOfMonth+'/'+data.publicacion.fecha.monthValue+'/'+data.publicacion.fecha.year);
                     }
+                    var image = data.publicacion.primaryImage;
+                    var id = image.id;
+                    var foto =  $("#publicacion .modal-body img") ;
+                    $(foto).attr('src', '/multimedia/image/'+id);
 
-                    var listaImg = data.publicacion.publicacionFotoForms;
-                    var listaItems = $("#publicacion .item");
-                    var listaIndicadores = $(".carousel-indicators li");
-                    for(var i=0;i<listaImg.length;i++){
-                        var img = listaImg[i].id;
-                        var item = listaItems[i];
-                        var indicador = listaIndicadores[i];
-                        var foto = item.lastElementChild.lastElementChild.lastElementChild;
-                        $(foto).attr('src', '/multimedia/image/'+img);
-                        $(item).removeClass('oculto');
-                        $(indicador).removeClass('oculto');
-                    }
-                    $(".modal-content .oculto").remove();
-
-                    // $.each(listaImg, function (index, value) {
-                    //     var listaItems = $("#publicacion .item");
-                    //     var listaIndicadores = $(".carousel-indicators li");
-                    //
-                    //     var newItem = item.clone().prependTo('#imagenes-carrousel');
-                    //     newItem.removeClass('original');
-                    //     newItem.addClass('cloned');
-                    //     var foto = newItem.find(".modal-imagenes");
-                    //     $(foto).attr('src', '/multimedia/image/'+value.id);
-                    //     $(newItem).show();
-                    // })
+                    $("#publicacion #ver-mas").attr('href','/publicacion/mas/'+id);
                 }
 
 
             }).fail(function () {
             return false;
         });
-    });
-
-    $('#publicacion').on('hidden.bs.modal', function () {
-        var content = $('.modal-body #section-Clientes');
-        content.html('');
-        $('#section-copia #section-Clientes .section').clone().appendTo(content);
     });
 
 });

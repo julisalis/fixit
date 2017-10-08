@@ -81,15 +81,6 @@ public class PublicacionController {
 
     }
 
-    @RequestMapping(path="/detalle")
-    public  @ResponseBody Map<String,Object> detallePublicacion(Long publicacionId, WebRequest request, Model model) {
-        HashMap<String,Object> map = new HashMap<>();
-        Publicacion mipublicacion = publicacionService.findById(publicacionId);
-        map.put("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
-        return map;
-    }
-
-
     @PostMapping(path="/new")
     public @ResponseBody Map<String,Object> newPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm, BindingResult result, Model model) {
         HashMap<String,Object> map = new HashMap<>();
@@ -183,6 +174,13 @@ public class PublicacionController {
             map.put("success", false);
         }
         return map;
+    }
+
+    @GetMapping(value="/mas/{publicacionId}")
+    public String masPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
+        Publicacion mipublicacion = publicacionService.findById(publicacionId);
+        model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+        return "publicacion-mas";
     }
 
 
