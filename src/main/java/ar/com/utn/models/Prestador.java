@@ -13,18 +13,17 @@ public class Prestador extends PersistentEntity {
 
     @ManyToMany
     private List<TipoTrabajo> tipos;
-
     private Long cuit;
     @Column(columnDefinition = "DATETIME")
     private LocalDate nacimiento;
     @Enumerated(EnumType.STRING)
     private Sexo sexo;
-
     @Column(columnDefinition="boolean default false", nullable = false)
     private boolean validado;
-
     @OneToMany(mappedBy = "prestador")
     private List<Postulacion> postulaciones;
+    @OneToOne(mappedBy="prestador",cascade=CascadeType.ALL)
+    private MercadoPagoPrestador mpSeller;
 
     private Prestador(){}
 
