@@ -1,5 +1,6 @@
 package ar.com.utn.services;
 
+import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.models.EstadoPublicacion;
 import ar.com.utn.models.Publicacion;
@@ -35,4 +36,6 @@ public interface PublicacionService {
     void editPublicacion(PublicacionForm publicacionForm, Publicacion publicacion, Long primaryImage);
 
     void deletePublicacion(Publicacion publicacion);
+
+    List<Publicacion> getTrabajosRecomendados(List<TipoTrabajo> tipos);
 }

@@ -16,53 +16,10 @@
                     <h4 class="modal-title publicaciones"></h4>
                 </div>
                 <div class="modal-body">
+                    <img alt="Publicación" class="img-responsive principal" onerror="this.src='/images/publicaciones/not-found.png'"/>
                     <!-- Carrousel de imagenes -->
-                    <section id="section-Clientes">
-                            <div class="section category-items job-category-items text-center imagenes-publicacion">
-                                <div class="row">
-                                    <div id="ifix-carousel-howitworks" class="carousel slide publicaciones" data-ride="carousel">
-                                        <ol class="carousel-indicators">
-                                            <li data-target="#ifix-carousel-howitworks" data-slide-to="0" class="active"></li>
-                                            <li data-target="#ifix-carousel-howitworks" data-slide-to="1"></li>
-                                            <li data-target="#ifix-carousel-howitworks" data-slide-to="2"></li>
-                                        </ol>
-                                        <div class="carousel-inner" role="listbox">
-                                            <div class="item active">
-                                                <div class="row">
-                                                        <div class="ifix-publicacion-image">
-                                                            <img src="/images/laptop1.png" class="img-responsive" alt="como funciona">
-                                                        </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="row">
-                                                    <div class="ifix-publicacion-image">
-                                                            <img src="/images/laptop2.png" class="img-responsive" alt="como funciona">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="item">
-                                                <div class="row">
-                                                    <div class="ifix-publicacion-image">
-                                                        <img src="/images/laptop3.png" class="img-responsive" alt="como funciona">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="ifix-carousel-controls">
-                                            <a class="left carousel-control" href="#ifix-carousel-howitworks" role="button" data-slide="prev">
-                                                <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
-                                            </a>
-                                            <a class="right carousel-control" href="#ifix-carousel-howitworks" role="button" data-slide="next">
-                                                <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
 
+                </div>
                     <!-- Datos Publicacion -->
                     <section id="datos-publicacion">
                         <div class="pregunta">
@@ -95,11 +52,13 @@
                                 <span class="anim"></span>
                                 Postularme
                             </a>
+                            <a id="ver-mas" href="#" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated() ">
+                                <span class="anim"></span>
+                                Ver más
+                            </a>
                         </div>
                     </section>
-
                 </div>
-
         </div>
     </div>
 </div>
