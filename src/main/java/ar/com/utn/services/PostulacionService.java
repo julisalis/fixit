@@ -1,6 +1,9 @@
 package ar.com.utn.services;
 
 import ar.com.utn.models.Postulacion;
+import ar.com.utn.models.Publicacion;
+
+import java.util.List;
 
 /**
  * Created by julis on 15/7/2017.
@@ -8,4 +11,6 @@ import ar.com.utn.models.Postulacion;
 public interface PostulacionService {
 
     Postulacion createPostulacion(Postulacion postulacionNueva);
+
+    List<Postulacion> findByPublicacion(Publicacion mipublicacion);
 }

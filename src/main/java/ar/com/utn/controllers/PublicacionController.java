@@ -4,6 +4,7 @@ import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.form.*;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.implementation.PublicacionSearch;
+import ar.com.utn.services.PostulacionService;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
@@ -40,6 +41,8 @@ public class PublicacionController {
     private Environment environment;
     @Autowired
     private PublicacionService publicacionService;
+    @Autowired
+    private PostulacionService postulacionService;
     @Autowired
     private CurrentSession currentSession;
     @Autowired
@@ -187,6 +190,16 @@ public class PublicacionController {
 
     }
 
-
+    @GetMapping(value="/postulaciones/{publicacionId}")
+    public String verPostulaciones(@PathVariable Long publicacionId, WebRequest request, Model model) {
+        Publicacion mipublicacion = publicacionService.findById(publicacionId);
+        if(mipublicacion!=null){
+            List<Postulacion> postulaciones = postulacionService.findByPublicacion(mipublicacion);
+            model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+            model.addAttribute("postulaciones",postulaciones);
+            return "publicacion-postulaciones";
+        }
+        return "redirect:/";
+    }
 }
 
