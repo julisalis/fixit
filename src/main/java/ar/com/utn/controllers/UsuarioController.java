@@ -1,7 +1,5 @@
 package ar.com.utn.controllers;
 
-import ar.com.utn.dto.TomadorDTO;
-import ar.com.utn.form.PerfilForm;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
@@ -11,22 +9,14 @@ import ar.com.utn.repositories.TipoTrabajoRepository;
 import ar.com.utn.repositories.TomadorRepository;
 import ar.com.utn.repositories.UsuarioRepository;
 import ar.com.utn.services.UsuarioService;
-import ar.com.utn.services.implementation.UserDetailsImpl;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
-import sun.text.normalizer.ICUBinary;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
