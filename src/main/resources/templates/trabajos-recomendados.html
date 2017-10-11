@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+    <title>FixIT</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+</head>
+<body>
+<div id="recomendados">
+    <!--/*/ <th:block th:include="fragments/header-static :: header"></th:block> /*/-->
+
+    <!-- Foto inicial -->
+    <section id="section-foto">
+        <div class="jumbotron-categoria text-center">
+            <div class="container">
+                <h1 class="titulo-prin-static">Pensados para vos</h1>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trabajos Recomendados -->
+    <section sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" id="fixit-recomendados" class="full-width">
+        <div class="container">
+            <div class="col-md-12 form-container">
+                <h2>Trabajos Recomendados</h2>
+                <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3 ifix-product-box-wrapper" th:each="publicacion : ${trabajosRecomendados}">
+                    <div class="fixit-product-box  shadow-box">
+                        <a type="button" class="shadow-box-link modal-publicacion"  data-id="" th:attr="data-id=${publicacion.id}" data-target="#publicacion">
+                            <img th:src="'/multimedia/image/'+${publicacion.primaryImage?.id}" onerror="this.src='/images/publicaciones/not-found.png'" class="img-responsive principal" alt="Plomería">
+                        </a>
+                        <div>
+                            <p class="installationType">
+                                <strong th:text="${publicacion.titulo}"></strong>
+                            <div class="icons-publicacion"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+                            <small th:text="${publicacion.localidad?.nombre}+' ,'+${publicacion.provincia?.nombre}" class="btn-price-AR"></small> <br>
+                            <div class="icons-publicacion"> <i class="fa fa-credit-card" aria-hidden="true"></i></div>
+                            <small th:text="'Hasta '+${publicacion.presupMax}+' '+${publicacion.currency}" class="btn-price-AR"></small> <br>
+                            <div class="icons-publicacion"> <i class="fa fa-calendar" aria-hidden="true"></i></div>
+                            <small th:text="${publicacion.urgencia}" class="btn-price-AR"></small>
+                            <small th:text="${publicacion.fecha}" class="btn-price-AR"></small>
+                            </p>
+                            <!--Solo ve el "POSTULARME" en caso que sea el prestador-->
+                            <a href="#" th:href="@{/postulacion/new(publicacionId=${publicacion.id})}" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') ">
+                                <span class="anim"></span>
+                                Postularme
+                            </a>
+                        </div>
+                    </div>
+                </div >
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Modal publicacion-->
+    <!--/*/ <th:block th:include="modals/publicacion :: publicacion"></th:block> /*/-->
+
+    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+</div>
+</body>
+</html>

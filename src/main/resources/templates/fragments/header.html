@@ -31,8 +31,10 @@
                 <li sec:authorize="!isAuthenticated()" ><a class="searchbychar" href="#section-Destacados" data-target="section-Destacados">Trabajos Destacados</a></li>
                 <li sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" > <a href="/publicacion/new">Nueva Publicación</a></li>
                 <li sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" ><a href="/publicacion/list">Mis Publicaciones</a></li>
-                <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="#about">Mis Postulaciones</a></li>
-                <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="#contact">Trabajos Realizados</a></li>
+                <li sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" ><a href="#">Reputación</a></li>
+                <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="/publicacion/recomendados">Trabajos Recomendados</a></li>
+                <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="/postulacion/list">Mis Postulaciones</a></li>
+                <li sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') "><a href="#">Reputación</a></li>
             </ul>
 
             <div class="navbar-text navbar-right">
