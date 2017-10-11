@@ -20,6 +20,9 @@ public class Postulacion extends PersistentEntity {
     @Column(columnDefinition="boolean default false", nullable = false)
     private Boolean elegida = false;
 
+    @Enumerated
+    private EstadoPostulacion estadoPostulacion = EstadoPostulacion.NUEVA;
+
     @ManyToOne
     @JoinColumn(name = "publicacion", nullable = false)
     private Publicacion publicacion;
@@ -103,5 +106,13 @@ public class Postulacion extends PersistentEntity {
 
     public void setPrestador(Prestador prestador) {
         this.prestador = prestador;
+    }
+
+    public EstadoPostulacion getEstadoPostulacion() {
+        return estadoPostulacion;
+    }
+
+    public void setEstadoPostulacion(EstadoPostulacion estadoPostulacion) {
+        this.estadoPostulacion = estadoPostulacion;
     }
 }
