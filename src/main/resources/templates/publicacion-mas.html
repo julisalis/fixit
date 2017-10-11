@@ -7,7 +7,7 @@
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </head>
 <body>
-<div th:fragment="sections-no-logged">
+<div id="publicacion-mas">
     <!--/*/ <th:block th:include="fragments/header-static :: header"></th:block> /*/-->
 
     <!-- Modal logIn-->
@@ -21,14 +21,11 @@
             </div>
         </div>
     </section>
-
-    <!-- Publicaciones por categoría -->
     <section id="section-publicaciones">
         <div class="container">
             <h3 class="subtitulo-jobs" th:text="${publicacion.titulo}"></h3>
             <div class="col-md-12 form-container">
-                <div class="row">
-
+                <div class="col-lg-8 col-md-12 col-xs-12">
                     <section id="section-Clientes">
                         <div class="section category-items job-category-items text-center imagenes-publicacion">
                             <div class="row">
@@ -58,7 +55,8 @@
                             </div>
                         </div>
                     </section>
-
+                </div>
+                <div class="col-lg-4 col-md-12 col-xs-12">
                     <!-- Datos Publicacion -->
                     <section id="datos-publicacion">
                         <div class="pregunta">
@@ -92,17 +90,14 @@
                         </div>
 
                     </section>
-
-                    <!-- Boton -->
-                    <section id="boton-postularme">
-                        <div class="btn-postulacion">
-                            <!--Solo ve el "POSTULARME" en caso que sea el prestador-->
-                            <a href="#" th:href="@{/postulacion/new(publicacionId=${publicacion.id})}" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') ">
-                                <span class="anim"></span>
-                                Postularme
-                            </a>
-                        </div>
-                    </section>
+                </div>
+                <!-- Boton -->
+                <div class="btn-postulacion col-lg-12 col-md-12 col-xs-12">
+                    <!--Solo ve el "POSTULARME" en caso que sea el prestador-->
+                    <a href="#" th:href="@{/postulacion/new(publicacionId=${publicacion.id})}" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') ">
+                        <span class="anim"></span>
+                        Postularme
+                    </a>
                 </div>
             </div>
         </div>
