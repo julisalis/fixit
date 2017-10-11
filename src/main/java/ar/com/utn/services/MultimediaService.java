@@ -13,7 +13,6 @@ import java.io.IOException;
  */
 public interface MultimediaService {
 
-    @Transactional
     void saveEcommerceImage(PublicacionPhoto publicacionPhoto, MultipartFile image) throws IllegalStateException, IOException;
 
     PublicacionFotoForm findEcommerceImage(Long imageId) throws IOException;

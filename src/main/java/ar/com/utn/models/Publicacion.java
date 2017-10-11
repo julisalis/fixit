@@ -34,7 +34,7 @@ public class Publicacion extends PersistentEntity{
     @JoinColumn(name="localidad_fk",nullable = false)
     private Localidad localidad;
     @Enumerated
-    private EstadoPublicacion estadoPublicacion = EstadoPublicacion.NUEVA;
+    private EstadoPublicacion estadoPublicacion = EstadoPublicacion.ELIMINADA;
     @Enumerated
     private TipoPublicacion tipoPublicacion = TipoPublicacion.REGULAR;
     @Enumerated
