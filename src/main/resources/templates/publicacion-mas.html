@@ -83,6 +83,13 @@
                             </div>
                             <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.fecha.dayOfMonth+'/'+publicacion.fecha.monthValue+'/'+publicacion.fecha.year}"></h3>
                         </div>
+                        <div th:if="${publicacion.fecha == null}">
+                            <div class="pregunta">
+                                <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                <h4 class="preguntas-publicacion">Cuándo lo necesito?</h4>
+                            </div>
+                            <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.urgencia}"></h3>
+                        </div>
 
                     </section>
 
