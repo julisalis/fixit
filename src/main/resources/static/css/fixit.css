@@ -1821,8 +1821,17 @@ a:focus{
 
 #imagenes-carrousel .fixit-publicacion-image img {
     margin: 0 auto;
-    max-height: 400px;
+    height: 300px;
     width: auto;
+}
+
+#publicacion-mas .container .section.category-items.job-category-items.text-center.imagenes-publicacion{
+    width: 100%;
+}
+
+#publicacion-mas #section-publicaciones .ifix-carousel-controls .carousel-control {
+    margin-left: 0px;
+    margin-right: 0px;
 }
 
 #imagenes-carrousel .img-responsive {
