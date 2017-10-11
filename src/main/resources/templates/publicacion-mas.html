@@ -25,84 +25,79 @@
         <div class="container">
             <h3 class="subtitulo-jobs" th:text="${publicacion.titulo}"></h3>
             <div class="col-md-12 form-container">
-                <div class="row">
-
-                    <div class="col-lg-8 col-md-12 col-xs-12">
-                        <section id="section-Clientes">
-                            <div class="section category-items job-category-items text-center imagenes-publicacion">
-                                <div class="row">
-                                    <div id="ifix-carousel-howitworks" class="carousel slide publicaciones" data-ride="carousel">
-                                        <ol class="carousel-indicators">
-                                            <li th:each="image,iterStat : ${publicacion.publicacionFotoForms}" data-target="#ifix-carousel-howitworks" th:attr="data-slide-to =${iterStat.index}"  th:class="${iterStat.index == 0}? 'active' : ''" ></li>
-                                        </ol>
-                                        <div id="imagenes-carrousel" class="carousel-inner" role="listbox">
-                                            <div class="item "  th:classappend="${iterStat.index == 0}? 'active' : ''" th:each="image,iterStat : ${publicacion.publicacionFotoForms}">
-                                                <div class="row">
-                                                    <div class="fixit-publicacion-image">
-                                                        <img th:src="'/multimedia/image/'+${image.id}" onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="modal-imagenes img-responsive">
-                                                    </div>
+                <div class="col-lg-8 col-md-12 col-xs-12">
+                    <section id="section-Clientes">
+                        <div class="section category-items job-category-items text-center imagenes-publicacion">
+                            <div class="row">
+                                <div id="ifix-carousel-howitworks" class="carousel slide publicaciones" data-ride="carousel">
+                                    <ol class="carousel-indicators">
+                                        <li th:each="image,iterStat : ${publicacion.publicacionFotoForms}" data-target="#ifix-carousel-howitworks" th:attr="data-slide-to =${iterStat.index}"  th:class="${iterStat.index == 0}? 'active' : ''" ></li>
+                                    </ol>
+                                    <div id="imagenes-carrousel" class="carousel-inner" role="listbox">
+                                        <div class="item "  th:classappend="${iterStat.index == 0}? 'active' : ''" th:each="image,iterStat : ${publicacion.publicacionFotoForms}">
+                                            <div class="row">
+                                                <div class="fixit-publicacion-image">
+                                                    <img th:src="'/multimedia/image/'+${image.id}" onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="modal-imagenes img-responsive">
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
 
-                                        <div class="ifix-carousel-controls">
-                                            <a class="left carousel-control" href="#ifix-carousel-howitworks" role="button" data-slide="prev">
-                                                <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
-                                            </a>
-                                            <a class="right carousel-control" href="#ifix-carousel-howitworks" role="button" data-slide="next">
-                                                <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
-                                            </a>
-                                        </div>
+                                    <div class="ifix-carousel-controls">
+                                        <a class="left carousel-control" href="#ifix-carousel-howitworks" role="button" data-slide="prev">
+                                            <i class="fa fa-angle-left fa-3x" aria-hidden="true"></i>
+                                        </a>
+                                        <a class="right carousel-control" href="#ifix-carousel-howitworks" role="button" data-slide="next">
+                                            <i class="fa fa-angle-right fa-3x" aria-hidden="true"></i>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
-                        </section>
-                    </div>
-                    <div class="col-lg-4 col-md-12 col-xs-12">
-                        <!-- Datos Publicacion -->
-                        <section id="datos-publicacion">
-                            <div class="pregunta">
-                                <div class="icons-publicacion-detalle"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
-                                <h4 class="preguntas-publicacion">Qué hay que hacer?</h4>
-                            </div>
-                            <h3 class="modal-descripcion publicaciones" th:text="${publicacion.descripcion}"></h3>
-                            <div class="pregunta">
-                                <div class="icons-publicacion-detalle"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
-                                <h4 class="preguntas-publicacion">Dónde?</h4>
-                            </div>
-                            <h3 class="modal-ubicacion publicaciones"  th:text="${publicacion.localidad.nombre+', '+publicacion.provincia.nombre}" ></h3>
-                            <div class="pregunta">
-                                <div class="icons-publicacion-detalle"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
-                                <h4 class="preguntas-publicacion"  >Cuánto quiero gastar?</h4>
-                            </div>
-                            <h3 class="modal-precio publicaciones" th:text="${'Hasta '+publicacion.presupMax+' '+publicacion.currency}"></h3>
-                            <div th:if="${publicacion.fecha != null}">
-                                <div class="pregunta">
-                                    <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                                    <h4 class="preguntas-publicacion">Cuándo lo necesito?</h4>
-                                </div>
-                                <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.fecha.dayOfMonth+'/'+publicacion.fecha.monthValue+'/'+publicacion.fecha.year}"></h3>
-                            </div>
-                            <div th:if="${publicacion.fecha == null}">
-                                <div class="pregunta">
-                                    <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                                    <h4 class="preguntas-publicacion">Cuándo lo necesito?</h4>
-                                </div>
-                                <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.urgencia}"></h3>
-                            </div>
-
-                        </section>
-                    </div>
-                    <!-- Boton -->
-                    <section id="boton-postularme">
-                        <div class="btn-postulacion">
-                            <!--Solo ve el "POSTULARME" en caso que sea el prestador-->
-                            <a href="#" th:href="@{/postulacion/new(publicacionId=${publicacion.id})}" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') ">
-                                <span class="anim"></span>
-                                Postularme
-                            </a>
                         </div>
                     </section>
+                </div>
+                <div class="col-lg-4 col-md-12 col-xs-12">
+                    <!-- Datos Publicacion -->
+                    <section id="datos-publicacion">
+                        <div class="pregunta">
+                            <div class="icons-publicacion-detalle"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
+                            <h4 class="preguntas-publicacion">Qué hay que hacer?</h4>
+                        </div>
+                        <h3 class="modal-descripcion publicaciones" th:text="${publicacion.descripcion}"></h3>
+                        <div class="pregunta">
+                            <div class="icons-publicacion-detalle"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+                            <h4 class="preguntas-publicacion">Dónde?</h4>
+                        </div>
+                        <h3 class="modal-ubicacion publicaciones"  th:text="${publicacion.localidad.nombre+', '+publicacion.provincia.nombre}" ></h3>
+                        <div class="pregunta">
+                            <div class="icons-publicacion-detalle"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
+                            <h4 class="preguntas-publicacion"  >Cuánto quiero gastar?</h4>
+                        </div>
+                        <h3 class="modal-precio publicaciones" th:text="${'Hasta '+publicacion.presupMax+' '+publicacion.currency}"></h3>
+                        <div th:if="${publicacion.fecha != null}">
+                            <div class="pregunta">
+                                <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                <h4 class="preguntas-publicacion">Cuándo lo necesito?</h4>
+                            </div>
+                            <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.fecha.dayOfMonth+'/'+publicacion.fecha.monthValue+'/'+publicacion.fecha.year}"></h3>
+                        </div>
+                        <div th:if="${publicacion.fecha == null}">
+                            <div class="pregunta">
+                                <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                <h4 class="preguntas-publicacion">Cuándo lo necesito?</h4>
+                            </div>
+                            <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.urgencia}"></h3>
+                        </div>
+
+                    </section>
+                </div>
+                <!-- Boton -->
+                <div class="btn-postulacion col-lg-12 col-md-12 col-xs-12">
+                    <!--Solo ve el "POSTULARME" en caso que sea el prestador-->
+                    <a href="#" th:href="@{/postulacion/new(publicacionId=${publicacion.id})}" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') ">
+                        <span class="anim"></span>
+                        Postularme
+                    </a>
                 </div>
             </div>
         </div>

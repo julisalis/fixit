@@ -1825,6 +1825,11 @@ a:focus{
     width: auto;
 }
 
+#publicacion-mas #section-publicaciones .btn-secondary-alt {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
 #publicacion-mas .container .section.category-items.job-category-items.text-center.imagenes-publicacion{
     width: 100%;
 }
