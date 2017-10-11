@@ -1543,18 +1543,29 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     letter-spacing: 3px;
 }
 
+#datos-publicacion{
+    text-align: center;
+}
+
+#publicacion-mas #datos-publicacion{
+    text-align: left;
+}
+#publicacion-mas #section-publicaciones .subtitulo-jobs{
+    color: grey;
+    margin-bottom: 60px;
+}
+
+
 #datos-publicacion h3{
     margin-top: 5px;
     margin-bottom: 20px;
     font-family: 'Varela', sans-serif;
-    text-align: center;
     font-size: 20px;
     color: grey;
 }
 
 #datos-publicacion h4{
     margin-top: 20px;
-    text-align: center;
     display: inline;
     color: #3ac58f;
 }
@@ -1573,7 +1584,6 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
 }
 
 #datos-publicacion .pregunta {
-    text-align: center;
     margin-top: 25px;
     margin-bottom: 10px;
 }
@@ -1810,8 +1820,9 @@ a:focus{
 }
 
 #imagenes-carrousel .fixit-publicacion-image img {
-    padding-top: 0;
-    width: 100%;
+    margin: 0 auto;
+    max-height: 400px;
+    width: auto;
 }
 
 #imagenes-carrousel .img-responsive {
