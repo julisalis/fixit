@@ -179,8 +179,12 @@ public class PublicacionController {
     @GetMapping(value="/mas/{publicacionId}")
     public String masPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
-        model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
-        return "publicacion-mas";
+        if(mipublicacion!=null){
+            model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+            return "publicacion-mas";
+        }
+        return "redirect:/";
+
     }
 
 

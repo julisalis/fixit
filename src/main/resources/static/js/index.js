@@ -107,7 +107,7 @@ $(function () {
                     var foto =  $("#publicacion .modal-body img") ;
                     $(foto).attr('src', '/multimedia/image/'+id);
 
-                    $("#publicacion #ver-mas").attr('href','/publicacion/mas/'+id);
+                    $("#publicacion #ver-mas").attr('href','/publicacion/mas/'+data.publicacion.id);
                 }
 
 
