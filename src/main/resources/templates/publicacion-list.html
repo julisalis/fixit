@@ -56,7 +56,7 @@
                                 </div><!-- ad-info -->
 
                                 <div class="button col-md-3">
-                                    <a href="#" class="btn btn-primary tam-boton-100">Ver Postulaciones</a>
+                                    <a th:href="'/publicacion/postulaciones/'+${nueva.id}" class="btn btn-primary tam-boton-100">Ver Postulaciones</a>
                                     <div class="edit-delete">
                                     <a th:href="'/publicacion/edit/'+${nueva.id}" th:onclick="'return '+${nueva.canEdit}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar </a>
                                     <a class="deletePublicacion" th:href="'/publicacion/delete/'+${nueva.id}"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar </a>

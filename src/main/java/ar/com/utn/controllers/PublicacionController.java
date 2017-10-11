@@ -1,5 +1,6 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.dto.PostulacionDTO;
 import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.form.*;
 import ar.com.utn.models.*;
@@ -195,8 +196,9 @@ public class PublicacionController {
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
         if(mipublicacion!=null){
             List<Postulacion> postulaciones = postulacionService.findByPublicacion(mipublicacion);
+            List<PostulacionDTO> postulacionDTOS = postulaciones.stream().map(postulacion -> new PostulacionDTO(postulacion)).collect(Collectors.toList());
             model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
-            model.addAttribute("postulaciones",postulaciones);
+            model.addAttribute("postulaciones",postulacionDTOS);
             return "publicacion-postulaciones";
         }
         return "redirect:/";
