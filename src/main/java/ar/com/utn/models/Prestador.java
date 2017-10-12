@@ -23,7 +23,7 @@ public class Prestador extends PersistentEntity {
     @OneToMany(mappedBy = "prestador")
     private List<Postulacion> postulaciones;
     @OneToOne(mappedBy="prestador",cascade=CascadeType.ALL)
-    private MercadoPagoPrestador mpSeller;
+    private MercadoPagoPrestador mpPrestador;
 
     private Prestador(){}
 
@@ -80,5 +80,33 @@ public class Prestador extends PersistentEntity {
 
     public void setTipos(List<TipoTrabajo> tipos) {
         this.tipos = tipos;
+    }
+
+    public LocalDate getNacimiento() {
+        return nacimiento;
+    }
+
+    public void setNacimiento(LocalDate nacimiento) {
+        this.nacimiento = nacimiento;
+    }
+
+    public Sexo getSexo() {
+        return sexo;
+    }
+
+    public void setSexo(Sexo sexo) {
+        this.sexo = sexo;
+    }
+
+    public boolean isValidado() {
+        return validado;
+    }
+
+    public MercadoPagoPrestador getMpPrestador() {
+        return mpPrestador;
+    }
+
+    public void setMpPrestador(MercadoPagoPrestador mpPrestador) {
+        this.mpPrestador = mpPrestador;
     }
 }

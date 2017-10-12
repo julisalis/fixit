@@ -1,6 +1,9 @@
 package ar.com.utn.models;
 
+import ar.com.utn.mercadopago.model.ClientCredentials;
+
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import java.util.Date;
@@ -8,9 +11,10 @@ import java.util.Date;
 /**
  * Created by julian on 07/10/17.
  */
-public class MercadoPagoPrestador {
+@Entity
+public class MercadoPagoPrestador extends PersistentEntity{
     @OneToOne
-    @JoinColumn(name="prestador_id")
+    @JoinColumn(name="prestador")
     private Prestador prestador;
     @Column(name="access_token")
     private String accessToken;
@@ -28,15 +32,15 @@ public class MercadoPagoPrestador {
     public MercadoPagoPrestador() {
     }
 
-//    public MercadoPagoSeller(Prestador prestador,ClientCredentials clientCredentials){
-//        this.accessToken = clientCredentials.getAccess_token();
-//        this.publicKey = clientCredentials.getPublic_key();
-//        this.refreshToken = clientCredentials.getPublic_key();
-//        this.userId = clientCredentials.getUser_id();
-//        this.expiresIn = clientCredentials.getExpires_in();
-//        this.prestador = prestador;
-//        this.renewTime = new Date();
-//    }
+    public MercadoPagoPrestador(Prestador prestador,ClientCredentials clientCredentials){
+        this.accessToken = clientCredentials.getAccess_token();
+        this.publicKey = clientCredentials.getPublic_key();
+        this.refreshToken = clientCredentials.getPublic_key();
+        this.userId = clientCredentials.getUser_id();
+        this.expiresIn = clientCredentials.getExpires_in();
+        this.prestador = prestador;
+        this.renewTime = new Date();
+    }
 
     public boolean isCredentialsExpired(){
         Date today = new Date();
