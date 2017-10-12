@@ -79,7 +79,7 @@ public class PublicacionPhoto extends PersistentEntity {
         return new File(buildDirectory(imageRoot));
     }
     private String buildDirectory(String imageRoot){
-        return imageRoot+this.publicacion.getMultimedia().getFolder()+'/'+this.publicacion.getId();
+        return imageRoot+this.publicacion.getMultimedia().getFolder();
     }
 
     public File getFile(String imageRoot){

@@ -1,9 +1,11 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.dto.PostulacionDTO;
 import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.form.*;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.implementation.PublicacionSearch;
+import ar.com.utn.services.PostulacionService;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
@@ -40,6 +42,8 @@ public class PublicacionController {
     private Environment environment;
     @Autowired
     private PublicacionService publicacionService;
+    @Autowired
+    private PostulacionService postulacionService;
     @Autowired
     private CurrentSession currentSession;
     @Autowired
@@ -179,10 +183,37 @@ public class PublicacionController {
     @GetMapping(value="/mas/{publicacionId}")
     public String masPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
-        model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
-        return "publicacion-mas";
+        if(mipublicacion!=null){
+            model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+            return "publicacion-mas";
+        }
+        return "redirect:/";
+
     }
 
+    @GetMapping(value="/postulaciones/{publicacionId}")
+    public String verPostulaciones(@PathVariable Long publicacionId, WebRequest request, Model model) {
+        Publicacion mipublicacion = publicacionService.findById(publicacionId);
+        if(mipublicacion!=null){
+            List<Postulacion> postulaciones = postulacionService.findByPublicacion(mipublicacion);
+            List<PostulacionDTO> postulacionDTOS = postulaciones.stream().map(postulacion -> new PostulacionDTO(postulacion)).collect(Collectors.toList());
+            model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+            model.addAttribute("postulaciones",postulacionDTOS);
+            return "publicacion-postulaciones";
+        }
+        return "redirect:/";
+    }
+
+    @GetMapping(value="/recomendados")
+    public String listRecomendados(WebRequest request, Model model) {
+        Usuario usuario = currentSession.getUser();
+        if(usuario!=null && usuario.getPrestador()!=null){
+            List<PublicacionDTO> publicacionDTOS = publicacionService.getTrabajosRecomendados(usuario.getPrestador().getTipos()).stream()
+                    .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion))).collect(Collectors.toList());
+            model.addAttribute("trabajosRecomendados", publicacionDTOS);
+        }
+        return "trabajos-recomendados";
+    }
 
 }
 

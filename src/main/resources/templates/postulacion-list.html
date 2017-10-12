@@ -12,10 +12,10 @@
 <section id="section-publicaciones" class="public-list">
     <div class="container">
         <div class="col-md-12 form-container">
-            <h3 class="subtitulo-jobs">Mis Publicaciones</h3>
+            <h3 class="subtitulo-jobs">Mis Postulaciones</h3>
             <div class="section latest-jobs-ads">
                 <div class="section-title tab-manu">
-                    <h4>Estado Publicaciones</h4>
+                    <h4>Estado Postulaciones</h4>
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                         <li role="presentation" class="active"><a href="#nuevas" data-toggle="tab" aria-expanded="true">Nuevas</a></li>
@@ -26,40 +26,35 @@
 
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane fade active in" id="nuevas">
-                        <div th:if="${#lists.isEmpty(publicacionesNuevas)}">
-                            <h3>No hay publicaciones nuevas</h3>
+                        <div th:if="${#lists.isEmpty(postulacionesNuevas)}">
+                            <h3>No hay postulaciones nuevas</h3>
                         </div>
-                        <div class="job-ad-item" th:each="nueva : ${publicacionesNuevas}">
+                        <div class="job-ad-item" th:each="nueva : ${postulacionesNuevas}">
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
-                                        <a th:href="'/publicacion/edit/'+${nueva.id}" th:onclick="'return '+${nueva.canEdit}"">
-                                            <img th:src="'/multimedia/image/'+${nueva.primaryImage?.id}"
-                                                 onerror="this.src='/images/publicaciones/not-found.png'"
-                                                 alt="Image" class="img-responsive"></a>
+                                        <a th:href="'/postulacion/edit/'+${nueva.id}"></a>
                                     </div><!-- item-image -->
                                 </div>
 
                                 <div class="ad-info fixit-job-box col-md-7">
                                     <p class="installationType">
-                                    <span><strong th:text="${nueva.titulo}"></strong></span>
+                                        <span><strong th:text="${nueva.descripcion}"></strong></span>
                                     </p>
-                                    <span th:text="${nueva.descripcion}"></span>
+                                    <span th:text="${nueva.comentarios}"></span>
                                     <div class="ad-meta">
                                         <ul>
-                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${nueva.localidad?.nombre}+', '+${nueva.provincia?.nombre}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${nueva.presupMax}+' '+${nueva.currency}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${nueva.urgencia}" class="btn-price-AR"></small>
-                                                <small th:text="${nueva.fecha}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${nueva.presupAprox}+' '+${nueva.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${nueva.duracionAprox}" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
                                 </div><!-- ad-info -->
 
                                 <div class="button col-md-3">
-                                    <a th:href="'/publicacion/postulaciones/'+${nueva.id}" class="btn btn-primary tam-boton-100">Ver Postulaciones</a>
+                                    <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                     <div class="edit-delete">
-                                    <a th:href="'/publicacion/edit/'+${nueva.id}" th:onclick="'return '+${nueva.canEdit}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar </a>
-                                    <a class="deletePublicacion" th:href="'/publicacion/delete/'+${nueva.id}"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar </a>
+                                        <a th:href="'/publicacion/edit/'+${nueva.id}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar </a>
+                                        <a class="deletePublicacion" th:href="'/publicacion/delete/'+${nueva.id}"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar </a>
                                     </div>
                                 </div>
                             </div><!-- item-info -->
@@ -67,28 +62,25 @@
                     </div><!-- tab-pane -->
 
                     <div role="tabpanel" class="tab-pane fade" id="contratadas">
-                        <div th:if="${#lists.isEmpty(publicacionesContratadas)}">
-                            <h3>No hay publicaciones contratadas</h3>
+                        <div th:if="${#lists.isEmpty(postulacionesContratadas)}">
+                            <h3>No hay postulaciones contratadas</h3>
                         </div>
-                        <div class="job-ad-item" th:each="contratada : ${publicacionesContratadas}">
+                        <div class="job-ad-item" th:each="contratada : ${postulacionesContratadas}">
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
-                                        <img th:src="'/multimedia/image/'+${contratada.primaryImage?.id}" alt="Image" class="img-responsive">
                                     </div><!-- item-image -->
                                 </div>
 
                                 <div class="ad-info fixit-job-box col-md-7">
                                     <p class="installationType">
-                                        <span><strong th:text="${contratada.titulo}"></strong></span>
+                                        <span><strong th:text="${contratada.descripcion}"></strong></span>
                                     </p>
-                                    <span th:text="${contratada.descripcion}"></span>
+                                    <span th:text="${contratada.comentarios}"></span>
                                     <div class="ad-meta">
                                         <ul>
-                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${contratada.localidad?.nombre}+', '+${contratada.provincia?.nombre}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${contratada.presupMax}+' '+${contratada.currency}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${contratada.urgencia}" class="btn-price-AR"></small>
-                                                <small th:text="${contratada.fecha}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${contratada.presupAprox}+' '+${contratada.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${contratada.duracionAprox}" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
                                 </div><!-- ad-info -->
@@ -101,28 +93,25 @@
                     </div><!-- tab-pane -->
 
                     <div role="tabpanel" class="tab-pane fade" id="finalizadas">
-                        <div th:if="${#lists.isEmpty(publicacionesFinalizadas)}">
-                            <h3>No hay publicaciones finalizadas</h3>
+                        <div th:if="${#lists.isEmpty(postulacionesFinalizadas)}">
+                            <h3>No hay postulaciones finalizadas</h3>
                         </div>
-                        <div class="job-ad-item" th:each="finalizada : ${publicacionesFinalizadas}">
+                        <div class="job-ad-item" th:each="finalizada : ${postulacionesFinalizadas}">
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
-                                        <img th:src="'/multimedia/image/'+${finalizada.primaryImage?.id}" onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="img-responsive">
                                     </div><!-- item-image -->
                                 </div>
 
                                 <div class="ad-info fixit-job-box col-md-7">
                                     <p class="installationType">
-                                        <span><strong th:text="${finalizada.titulo}"></strong></span>
+                                        <span><strong th:text="${finalizada.descripcion}"></strong></span>
                                     </p>
-                                    <span th:text="${finalizada.descripcion}"></span>
+                                    <span th:text="${finalizada.comentarios}"></span>
                                     <div class="ad-meta">
                                         <ul>
-                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${finalizada.localidad?.nombre}+', '+${finalizada.provincia?.nombre}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${finalizada.presupMax}+' '+${finalizada.currency}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${finalizada.urgencia}" class="btn-price-AR"></small>
-                                                <small th:text="${finalizada.fecha}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${finalizada.presupAprox}+' '+${finalizada.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${finalizada.duracionAprox}" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
                                 </div><!-- ad-info -->

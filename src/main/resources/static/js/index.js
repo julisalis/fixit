@@ -104,10 +104,11 @@ $(function () {
                     }
                     var image = data.publicacion.primaryImage;
                     var id = image.id;
-                    var foto =  $("#publicacion .modal-body img") ;
+                    var foto =  $("#publicacion .modal-body img");
                     $(foto).attr('src', '/multimedia/image/'+id);
 
-                    $("#publicacion #ver-mas").attr('href','/publicacion/mas/'+id);
+                    $("#publicacion #ver-mas").attr('href','/publicacion/mas/'+data.publicacion.id);
+                    $("#publicacion #postular").attr('href','/postulacion/new/?publicacionId='+data.publicacion.id);
                 }
 
 

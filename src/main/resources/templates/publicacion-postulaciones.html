@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+    <title>FixIT</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <script type="text/javascript" th:src="@{/js/publicacion-list.js}"></script>
+</head>
+<body class="white-body">
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
+<section id="section-publicaciones" class="public-list">
+    <div class="container">
+        <div class="col-md-12 form-container">
+            <h3 class="subtitulo-jobs">Postulaciones</h3>
+            <div class="section latest-jobs-ads">
+                <div class="section-title tab-manu">
+                    <h4 th:text="${publicacion.titulo}"></h4>
+                </div>
+                <div role="tabpanel" class="tab-pane fade active in" id="nuevas">
+                    <div th:if="${#lists.isEmpty(postulaciones)}">
+                        <h3>No hay postulaciones nuevas</h3>
+                    </div>
+                    <div class="job-ad-item" th:each="postulacion : ${postulaciones}">
+                        <div class="item-info">
+                            <div class="item-image-box col-md-2">
+                                <div class="item-image">
+                                </div><!-- item-image -->
+                            </div>
+
+                            <div class="ad-info fixit-job-box col-md-7">
+                                <p class="installationType">
+                                    <span><strong th:text="${postulacion.descripcion}"></strong></span>
+                                </p>
+                                <span th:text="${postulacion.comentarios}"></span>
+                                <div class="ad-meta">
+                                    <ul>
+                                        <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
+                                        <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${postulacion.duracionAprox}" class="btn-price-AR"></small>
+                                    </ul>
+                                </div><!-- ad-meta -->
+                            </div><!-- ad-info -->
+
+                            <div class="button col-md-3">
+                                <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                <a href="#" class="btn btn-primary tam-boton-100">Contratar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+</body>
+</html>

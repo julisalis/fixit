@@ -27,7 +27,6 @@ public class MultimediaServiceImpl implements MultimediaService {
     private PublicacionPhotoRepository publicacionPhotoRepository;
 
     @Override
-    @Transactional
     public void saveEcommerceImage(PublicacionPhoto publicacionPhoto, MultipartFile image) throws IllegalStateException, IOException{
 
         File folder = publicacionPhoto.getDirectory(imageRoot);

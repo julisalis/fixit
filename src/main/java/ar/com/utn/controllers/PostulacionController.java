@@ -1,5 +1,6 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.dto.PostulacionDTO;
 import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.form.CurrencyCode;
 import ar.com.utn.form.PostulacionForm;
@@ -19,7 +20,9 @@ import org.springframework.web.context.request.WebRequest;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by julis on 15/7/2017.
@@ -94,5 +97,15 @@ public class PostulacionController {
             map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
         }
         return map;
+    }
+
+    @GetMapping(value="/list")
+    public String listPostulaciones(WebRequest request, Model model) {
+        Usuario user = currentSession.getUser();
+        List<PostulacionDTO> misPostulaciones = user.getPrestador().getPostulaciones().stream().map(postulacion -> new PostulacionDTO(postulacion)).collect(Collectors.toList());
+        model.addAttribute("postulacionesNuevas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.NUEVA)).collect(Collectors.toList()));
+        model.addAttribute("postulacionesContratadas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.CONTRATADA)).collect(Collectors.toList()));
+        model.addAttribute("postulacionesFinalizadas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.FINALIZADA)).collect(Collectors.toList()));
+        return "postulacion-list";
     }
 }

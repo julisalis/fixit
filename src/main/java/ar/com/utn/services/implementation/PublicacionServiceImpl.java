@@ -90,6 +90,7 @@ public class PublicacionServiceImpl implements PublicacionService {
         }
         publicacion.getMultimedia().getPhotos().add(publicacionPhoto);
         multimediaService.saveEcommerceImage(publicacionPhoto, file);
+        publicacion.setEstadoPublicacion(EstadoPublicacion.NUEVA);
     }
 
     public List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion) {
