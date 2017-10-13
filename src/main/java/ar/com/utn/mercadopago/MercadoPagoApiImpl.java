@@ -5,8 +5,8 @@ import ar.com.utn.mercadopago.model.UserMP;
 import ar.com.utn.models.Usuario;
 import com.mercadopago.MP;
 import org.apache.log4j.Logger;
-import org.codehaus.jettison.json.JSONException;
-import org.codehaus.jettison.json.JSONObject;
+//import org.codehaus.jettison.json.JSONException;
+//import org.codehaus.jettison.json.JSONObject;
 
 /**
  * Created by julian on 12/10/17.
