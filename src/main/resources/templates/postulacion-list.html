@@ -55,7 +55,7 @@
                                 </div><!-- ad-info -->
 
                                 <div class="button col-md-3">
-                                    <div class="tipo-trabajo-postulacion"
+                                    <div class="tipo-trabajo-postulacion">
                                         <img th:src="@{/images/}+${nueva.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${nueva.publicacion.tipoTrabajo.nombre}">asdasd</span>
                                     </div>
@@ -65,8 +65,8 @@
                                         <a class="deletePublicacion" th:href="'/postulacion/delete/'+${nueva.id}"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar </a>
                                     </div>
                                 </div>
-                            </div><!-- item-info -->
-                        </div><!-- ad-item -->
+                            </div>
+                        </div><!-- item-info -->
                     </div><!-- tab-pane -->
 
                     <div role="tabpanel" class="tab-pane fade" id="contratadas">

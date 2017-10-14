@@ -13,4 +13,6 @@ public interface PostulacionService {
     Postulacion createPostulacion(Postulacion postulacionNueva);
 
     List<Postulacion> findByPublicacion(Publicacion mipublicacion);
+
+    Postulacion findById(Long postulacionId);
 }
