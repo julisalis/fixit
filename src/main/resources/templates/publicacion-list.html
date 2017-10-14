@@ -33,7 +33,7 @@
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
-                                        <a th:href="'/publicacion/edit/'+${nueva.id}" th:onclick="'return '+${nueva.canEdit}"">
+                                        <a th:href="'/publicacion/edit/'+${nueva.id}" th:onclick="'return '+${nueva.canEdit}">
                                             <img th:src="'/multimedia/image/'+${nueva.primaryImage?.id}"
                                                  onerror="this.src='/images/publicaciones/not-found.png'"
                                                  alt="Image" class="img-responsive"></a>
@@ -56,6 +56,10 @@
                                 </div><!-- ad-info -->
 
                                 <div class="button col-md-3">
+                                    <div class="tipo-trabajo-postulacion"
+                                        <img th:src="@{/images/}+${nueva.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
+                                        <span th:text="${nueva.tipoTrabajo.nombre}">asdasd</span>
+                                    </div>
                                     <a th:href="'/publicacion/postulaciones/'+${nueva.id}" class="btn btn-primary tam-boton-100">Ver Postulaciones</a>
                                     <div class="edit-delete">
                                     <a th:href="'/publicacion/edit/'+${nueva.id}" th:onclick="'return '+${nueva.canEdit}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar </a>
@@ -94,7 +98,12 @@
                                 </div><!-- ad-info -->
 
                                 <div class="button col-md-3">
+                                    <div class="tipo-trabajo-postulacion"
+                                        <img th:src="@{/images/}+${nueva.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
+                                        <span th:text="${nueva.tipoTrabajo.nombre}">asdasd</span>
+                                    </div>
                                     <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                    <a href="#" class="btn btn-primary tam-boton-100">Generar Código de Seguridad</a>
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->
@@ -128,7 +137,12 @@
                                 </div><!-- ad-info -->
 
                                 <div class="button col-md-3">
+                                    <div class="tipo-trabajo-postulacion"
+                                        <img th:src="@{/images/}+${nueva.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
+                                        <span th:text="${nueva.tipoTrabajo.nombre}">asdasd</span>
+                                    </div>
                                     <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                    <a href="#" class="btn btn-primary tam-boton-100">Calificar</a>
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->

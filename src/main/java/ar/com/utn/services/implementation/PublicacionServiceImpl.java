@@ -119,6 +119,6 @@ public class PublicacionServiceImpl implements PublicacionService {
 
     @Override
     public List<Publicacion> getTrabajosRecomendados(List<TipoTrabajo> tipos) {
-        return publicacionRepository.findAllByTipoTrabajoIn(tipos);
+        return publicacionRepository.findAllByTipoTrabajoInAndAndEstadoPublicacionEquals(tipos, EstadoPublicacion.NUEVA);
     }
 }

@@ -1,14 +1,14 @@
 package ar.com.utn.dto;
 
-import ar.com.utn.models.EstadoPostulacion;
-import ar.com.utn.models.Postulacion;
-import ar.com.utn.models.Prestador;
+import ar.com.utn.form.PublicacionFotoForm;
+import ar.com.utn.models.*;
+import ar.com.utn.services.PublicacionService;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.util.Currency;
 
 public class PostulacionDTO {
-
     private Long id;
     private String descripcion;
     private BigDecimal presupAprox;
@@ -18,8 +18,9 @@ public class PostulacionDTO {
     private Prestador prestador;
     private EstadoPostulacion estado;
     private Boolean elegida;
+    private PublicacionDTO publicacion;
 
-    public PostulacionDTO(Postulacion postulacion) {
+    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage) {
         this.id = postulacion.getId();
         this.descripcion = postulacion.getDescripcion();
         this.presupAprox = postulacion.getPresupAprox();
@@ -29,6 +30,7 @@ public class PostulacionDTO {
         this.prestador = postulacion.getPrestador();
         this.estado = postulacion.getEstadoPostulacion();
         this.elegida = postulacion.getElegida();
+        this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
     }
 
     public PostulacionDTO() {
@@ -104,6 +106,14 @@ public class PostulacionDTO {
 
     public void setElegida(Boolean elegida) {
         this.elegida = elegida;
+    }
+
+    public PublicacionDTO getPublicacion() {
+        return publicacion;
+    }
+
+    public void setPublicacion(PublicacionDTO publicacion) {
+        this.publicacion = publicacion;
     }
 }
 

@@ -16,5 +16,5 @@ public interface PublicacionRepository extends CrudRepository<Publicacion, Long>
     @Query(value = "select p from Publicacion p where p.estadoPublicacion = 3")
     List<Publicacion> findAll();
     List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion);
-    List<Publicacion> findAllByTipoTrabajoIn(List<TipoTrabajo> tipoTrabajos);
+    List<Publicacion> findAllByTipoTrabajoInAndAndEstadoPublicacionEquals(List<TipoTrabajo> tipoTrabajos, EstadoPublicacion estadoPublicacion);
 }

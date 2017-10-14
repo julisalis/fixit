@@ -33,7 +33,10 @@
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
-                                        <a th:href="'/postulacion/edit/'+${nueva.id}"></a>
+                                        <a th:href="'/postulacion/edit/'+${nueva.id}">
+                                        <img th:src="'/multimedia/image/'+${nueva.publicacion.primaryImage?.id}"
+                                             onerror="this.src='/images/publicaciones/not-found.png'"
+                                             alt="Image" class="img-tipotrabajo"></a>
                                     </div><!-- item-image -->
                                 </div>
 
@@ -44,17 +47,22 @@
                                     <span th:text="${nueva.comentarios}"></span>
                                     <div class="ad-meta">
                                         <ul>
+                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${nueva.publicacion.localidad.nombre}+', '+${nueva.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
                                             <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${nueva.presupAprox}+' '+${nueva.currency}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${nueva.duracionAprox}" class="btn-price-AR"></small>
+                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${nueva.duracionAprox} + ' Horas'" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
                                 </div><!-- ad-info -->
 
                                 <div class="button col-md-3">
-                                    <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                    <div class="tipo-trabajo-postulacion"
+                                        <img th:src="@{/images/}+${nueva.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
+                                        <span th:text="${nueva.publicacion.tipoTrabajo.nombre}">asdasd</span>
+                                    </div>
+                                    <a th:href="'/postulacion/detalle/'+${nueva.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                     <div class="edit-delete">
-                                        <a th:href="'/publicacion/edit/'+${nueva.id}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar </a>
-                                        <a class="deletePublicacion" th:href="'/publicacion/delete/'+${nueva.id}"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar </a>
+                                        <a th:href="'/postulacion/edit/'+${nueva.id}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar </a>
+                                        <a class="deletePublicacion" th:href="'/postulacion/delete/'+${nueva.id}"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar </a>
                                     </div>
                                 </div>
                             </div><!-- item-info -->
@@ -69,6 +77,9 @@
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
+                                        <img th:src="'/multimedia/image/'+${nueva.publicacion.primaryImage?.id}"
+                                             onerror="this.src='/images/publicaciones/not-found.png'"
+                                             alt="Image" class="img-tipotrabajo">
                                     </div><!-- item-image -->
                                 </div>
 
@@ -79,8 +90,9 @@
                                     <span th:text="${contratada.comentarios}"></span>
                                     <div class="ad-meta">
                                         <ul>
+                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${nueva.publicacion.localidad.nombre}+', '+${nueva.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
                                             <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${contratada.presupAprox}+' '+${contratada.currency}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${contratada.duracionAprox}" class="btn-price-AR"></small>
+                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${contratada.duracionAprox}" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
                                 </div><!-- ad-info -->
@@ -100,6 +112,9 @@
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
+                                        <img th:src="'/multimedia/image/'+${nueva.publicacion.primaryImage?.id}"
+                                             onerror="this.src='/images/publicaciones/not-found.png'"
+                                             alt="Image" class="img-tipotrabajo">
                                     </div><!-- item-image -->
                                 </div>
 
@@ -110,8 +125,9 @@
                                     <span th:text="${finalizada.comentarios}"></span>
                                     <div class="ad-meta">
                                         <ul>
+                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${nueva.publicacion.localidad.nombre}+', '+${nueva.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
                                             <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${finalizada.presupAprox}+' '+${finalizada.currency}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${finalizada.duracionAprox}" class="btn-price-AR"></small>
+                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${finalizada.duracionAprox}" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
                                 </div><!-- ad-info -->
