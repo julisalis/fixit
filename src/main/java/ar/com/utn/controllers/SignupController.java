@@ -3,20 +3,25 @@ package ar.com.utn.controllers;
 import ar.com.utn.afip.AfipHandler;
 import ar.com.utn.afip.domain.Persona;
 import ar.com.utn.afip.enums.AfipWs;
+import ar.com.utn.exception.MercadoPagoException;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
+import ar.com.utn.mercadopago.MercadoPagoAdapter;
+import ar.com.utn.mercadopago.model.ClientCredentials;
 import ar.com.utn.models.*;
 import ar.com.utn.services.PrestadorService;
 import ar.com.utn.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import sr.puc.server.ws.soap.a4.Actividad;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,14 +42,21 @@ import java.util.stream.Collectors;
     @RequestMapping(path="/signup")
     public class SignupController {
 
+        @Value("${app.mercadopago.app_id}")
+        private String MP_APP_ID;
+        @Value("${application.url}")
+        private String URL;
         @Autowired
         private UsuarioService usuarioService;
-
         @Autowired
         private PrestadorService prestadorService;
+        @Autowired
+        private MercadoPagoAdapter mercadoPagoAdapter;
 
         @GetMapping(value="/prestador")
         public String signupPrestador(WebRequest request,Model model) {
+            model.addAttribute("app_id_mp",MP_APP_ID);
+            model.addAttribute("redirect_uri",URL+"/signup/mercadoPagoToken");
             model.addAttribute("prestadorForm",new PrestadorForm());
             model.addAttribute("provincias",generarProvicias());
             model.addAttribute("telefono",new TelefonoForm());
@@ -73,205 +85,240 @@ import java.util.stream.Collectors;
             return prestadorService.getTiposTrabajos().stream().map(tipoTrabajo -> new SelectorForm(tipoTrabajo.getId(),tipoTrabajo.getNombre())).collect(Collectors.toList());
         }
 
-    @RequestMapping("/ajax/localidad")
-    public String ajaxBrands(@RequestParam("provincia") String provinceId, Model model) {
-        List<SelectorForm> models = usuarioService.findAllLocalidadByProvince(Long.parseLong(provinceId));
-        model.addAttribute("localidades", models);
-        return "signup-tomador :: localidad-fragment ";
-    }
+        @RequestMapping("/ajax/localidad")
+        public String ajaxBrands(@RequestParam("provincia") String provinceId, Model model) {
+            List<SelectorForm> models = usuarioService.findAllLocalidadByProvince(Long.parseLong(provinceId));
+            model.addAttribute("localidades", models);
+            return "signup-tomador :: localidad-fragment ";
+        }
 
-    @PostMapping(path="/prestador")
-    public String signupPrestador(@Valid @ModelAttribute("prestadorForm") PrestadorForm prestadorForm, BindingResult result, Model model){
-        validarTelefono(prestadorForm.getTelefono());
+        @PostMapping(path="/prestador")
+        public String signupPrestador(@Valid @ModelAttribute("prestadorForm") PrestadorForm prestadorForm, BindingResult result, Model model){
+            validarTelefono(prestadorForm.getTelefono());
 
-        try{
-            if(!result.hasErrors()){
-                boolean validationResult=false;
-                //Prestador prestador = new Prestador(prestadorForm.getCuit(),validationResult);
-                usuarioService.registrarPrestador(prestadorForm);
-                return "/";
-            }else{
+            try{
+                if(!result.hasErrors()){
+                    boolean validationResult=false;
+                    //Prestador prestador = new Prestador(prestadorForm.getCuit(),validationResult);
+                    usuarioService.registrarPrestador(prestadorForm);
+                    return "/";
+                }else{
+                    return "signup-prestador";
+                }
+            }catch (Exception e) {
                 return "signup-prestador";
             }
-        }catch (Exception e) {
-            return "signup-prestador";
         }
-    }
 
-    @RequestMapping(path="/prestador-json")
-    public  @ResponseBody Map<String,Object> signupPrestadorJson(@Valid @ModelAttribute("prestadorForm") PrestadorForm prestadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
-        HashMap<String,Object> map = new HashMap<>();
-        try{
-            validarTelefono(prestadorForm.getTelefono());
-            boolean userUnique = usuarioService.usernameUnique(prestadorForm.getUsername());
-            boolean mailUnique = usuarioService.emailUnique(prestadorForm.getEmail());
-            boolean cuitUnique = prestadorService.cuitUnique(prestadorForm.getCuit());
-            if(!userUnique){
-                result.rejectValue("username","username.repeat","El nombre de usuario ingresado ya existe");
-            }
-            if (!mailUnique){
-                result.rejectValue("email","email.repeat","El email ingresado ya existe");
-            }
-
-            if(prestadorForm.getValidar()) {
-                if(prestadorForm.getCuit()==null || prestadorForm.getNacimiento() == null || prestadorForm.getSexo() == null) {
-                    result.rejectValue("validar","validar.campos", "Todos los campos obligatorios");
+        @RequestMapping(path="/prestador-json")
+        public  @ResponseBody Map<String,Object> signupPrestadorJson(@Valid @ModelAttribute("prestadorForm") PrestadorForm prestadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
+            HashMap<String,Object> map = new HashMap<>();
+            try{
+                validarTelefono(prestadorForm.getTelefono());
+                boolean userUnique = usuarioService.usernameUnique(prestadorForm.getUsername());
+                boolean mailUnique = usuarioService.emailUnique(prestadorForm.getEmail());
+                boolean cuitUnique = prestadorService.cuitUnique(prestadorForm.getCuit());
+                if(!userUnique){
+                    result.rejectValue("username","username.repeat","El nombre de usuario ingresado ya existe");
                 }
-            }
+                if (!mailUnique){
+                    result.rejectValue("email","email.repeat","El email ingresado ya existe");
+                }
 
-            if (prestadorForm.getCuit()!=null && !cuitUnique){
-                result.rejectValue("cuit","cuit.repeat","El cuit ingresado ya existe");
-            }
+                if(prestadorForm.getValidar()) {
+                    if(prestadorForm.getCuit()==null || prestadorForm.getNacimiento() == null || prestadorForm.getSexo() == null) {
+                        result.rejectValue("validar","validar.campos", "Todos los campos obligatorios");
+                    }
+                }
 
-            if(!result.hasErrors()){
-                if(prestadorForm.getValidar()){
-                    AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l, prestadorService);
-                    Persona personaAfip = afip.getPersona(prestadorForm.getCuit());
-                    String actividades = !personaAfip.getActividades().isEmpty()?personaAfip.getActividades().get(0).getDescripcionActividad():"Ninguna";
-                    if(!validarPersonaConAfip(personaAfip,prestadorForm)) {
-                        map.put("success", false);
-                        map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados o deseleccione la validación.\n" +
-                                "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
-                                "Cuit: "+personaAfip.getIdPersona().toString()+"\n"+
-                                "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
-                                "Sexo: "+personaAfip.getSexo().getName()+"\n" +
-                                "Actividad Principal: "+actividades+"\n"+
-                                "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
+                if (prestadorForm.getCuit()!=null && !cuitUnique){
+                    result.rejectValue("cuit","cuit.repeat","El cuit ingresado ya existe");
+                }
+
+                if(!result.hasErrors()){
+                    if(prestadorForm.getValidar()){
+                        AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l, prestadorService);
+                        Persona personaAfip = afip.getPersona(prestadorForm.getCuit());
+                        String actividades = !personaAfip.getActividades().isEmpty()?personaAfip.getActividades().get(0).getDescripcionActividad():"Ninguna";
+                        if(!validarPersonaConAfip(personaAfip,prestadorForm)) {
+                            map.put("success", false);
+                            map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados o deseleccione la validación.\n" +
+                                    "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
+                                    "Cuit: "+personaAfip.getIdPersona().toString()+"\n"+
+                                    "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
+                                    "Sexo: "+personaAfip.getSexo().getName()+"\n" +
+                                    "Actividad Principal: "+actividades+"\n"+
+                                    "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
+                        }else{
+                            usuarioService.registrarPrestador(prestadorForm);
+                            map.put("success", true);
+                            map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.\n" +
+                                    "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
+                                    "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
+                                    "Sexo: "+personaAfip.getSexo().getName()+"\n" +
+                                    "Actividad Principal: "+actividades+"\n"+
+                                    "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
+                        }
                     }else{
                         usuarioService.registrarPrestador(prestadorForm);
                         map.put("success", true);
-                        map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.\n" +
-                                "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
-                                "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
-                                "Sexo: "+personaAfip.getSexo().getName()+"\n" +
-                                "Actividad Principal: "+actividades+"\n"+
-                                "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
+                        map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
                     }
                 }else{
-                    usuarioService.registrarPrestador(prestadorForm);
-                    map.put("success", true);
-                    map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
+                    map.put("success", false);
+                    map.put("errors", result.getAllErrors());
                 }
-            }else{
+            }catch (Exception e) {
                 map.put("success", false);
-                map.put("errors", result.getAllErrors());
+                map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
+                e.printStackTrace();
             }
-        }catch (Exception e) {
-            map.put("success", false);
-            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
-            e.printStackTrace();
+
+            return map;
         }
 
-        return map;
-    }
-
-    private boolean validarPersonaConAfip(Persona personaAfip, PrestadorForm pf) {
-        if(!normalizarTexto(personaAfip.getNombreCompleto()).equalsIgnoreCase(normalizarTexto(pf.getApellido().trim() + " " +pf.getNombre().trim()))) {
-            return false;
-        }
-
-        if(!personaAfip.getNacimiento().equals(pf.getNacimiento())) {
-            return false;
-        }
-
-        if(!pf.getSexo().equalsAfip(personaAfip.getSexo())) {
-            return false;
-        }
-
-        if(!actividadValida(personaAfip.getActividades())) {
-            return false;
-        }
-
-        return true;
-    }
-
-    private String normalizarTexto(String s) {
-        s = Normalizer.normalize(s, Normalizer.Form.NFD);
-        s = s.replaceAll("[^\\p{ASCII}]", "");
-        s = s.replaceAll("[^-a-zA-Z0-9]", "");
-        s = s.replaceAll("[AEIOUaeiou]", "");
-        return s;
-    }
-
-    private boolean actividadValida(List<Actividad> actividades) {
-        Boolean valido = false;
-        for (Actividad a : actividades) {
-            if (prestadorService.getActividadesAfip().stream().anyMatch(af -> af.getDescripcion().trim().equalsIgnoreCase(a.getDescripcionActividad().trim()))) {
-                valido = true;
+        private boolean validarPersonaConAfip(Persona personaAfip, PrestadorForm pf) {
+            if(!normalizarTexto(personaAfip.getNombreCompleto()).equalsIgnoreCase(normalizarTexto(pf.getApellido().trim() + " " +pf.getNombre().trim()))) {
+                return false;
             }
+
+            if(!personaAfip.getNacimiento().equals(pf.getNacimiento())) {
+                return false;
+            }
+
+            if(!pf.getSexo().equalsAfip(personaAfip.getSexo())) {
+                return false;
+            }
+
+            if(!actividadValida(personaAfip.getActividades())) {
+                return false;
+            }
+
+            return true;
         }
-        return valido;
-    }
 
-        private boolean validarTelefono(@Valid TelefonoForm telefono) {
-        return true;
-    }
+        private String normalizarTexto(String s) {
+            s = Normalizer.normalize(s, Normalizer.Form.NFD);
+            s = s.replaceAll("[^\\p{ASCII}]", "");
+            s = s.replaceAll("[^-a-zA-Z0-9]", "");
+            s = s.replaceAll("[AEIOUaeiou]", "");
+            return s;
+        }
 
-    @PostMapping(path="/tomador")
-    public String signupTomador(@Valid @ModelAttribute("tomadorForm") TomadorForm tomadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
-        try{
-            validarTelefono(tomadorForm.getTelefono());
-            boolean userUnique = usuarioService.usernameUnique(tomadorForm.getUsername());
-            boolean mailUnique = usuarioService.emailUnique(tomadorForm.getEmail());
-            if(!userUnique){
-                result.rejectValue("username","username.repeat","El nombre de usuario ingresado ya existe");
+        private boolean actividadValida(List<Actividad> actividades) {
+            Boolean valido = false;
+            for (Actividad a : actividades) {
+                if (prestadorService.getActividadesAfip().stream().anyMatch(af -> af.getDescripcion().trim().equalsIgnoreCase(a.getDescripcionActividad().trim()))) {
+                    valido = true;
+                }
             }
-            if (!mailUnique){
-                result.rejectValue("email","email.repeat","El email ingresado ya existe");
-            }
-            if(!result.hasErrors()){
-                usuarioService.registrarTomador(tomadorForm);
-                return "index";
-            }else{
+            return valido;
+        }
+
+            private boolean validarTelefono(@Valid TelefonoForm telefono) {
+            return true;
+        }
+
+        @PostMapping(path="/tomador")
+        public String signupTomador(@Valid @ModelAttribute("tomadorForm") TomadorForm tomadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
+            try{
+                validarTelefono(tomadorForm.getTelefono());
+                boolean userUnique = usuarioService.usernameUnique(tomadorForm.getUsername());
+                boolean mailUnique = usuarioService.emailUnique(tomadorForm.getEmail());
+                if(!userUnique){
+                    result.rejectValue("username","username.repeat","El nombre de usuario ingresado ya existe");
+                }
+                if (!mailUnique){
+                    result.rejectValue("email","email.repeat","El email ingresado ya existe");
+                }
+                if(!result.hasErrors()){
+                    usuarioService.registrarTomador(tomadorForm);
+                    return "index";
+                }else{
+                    model.addAttribute("provincias",generarProvicias());
+                    model.addAttribute("documentos", TipoDoc.values());
+                    return "signup-tomador";
+                }
+            }catch (Exception e) {
                 model.addAttribute("provincias",generarProvicias());
                 model.addAttribute("documentos", TipoDoc.values());
                 return "signup-tomador";
             }
-        }catch (Exception e) {
-            model.addAttribute("provincias",generarProvicias());
-            model.addAttribute("documentos", TipoDoc.values());
-            return "signup-tomador";
         }
-    }
 
-    @RequestMapping(path="/tomador-json")
-    public  @ResponseBody Map<String,Object> signupTomadorJson(@Valid @ModelAttribute("tomadorForm") TomadorForm tomadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
-        HashMap<String,Object> map = new HashMap<>();
-        try{
-            validarTelefono(tomadorForm.getTelefono());
-            boolean userUnique = usuarioService.usernameUnique(tomadorForm.getUsername());
-            boolean mailUnique = usuarioService.emailUnique(tomadorForm.getEmail());
-            if(!userUnique){
-                result.rejectValue("username","username.repeat","El nombre de usuario ingresado ya existe");
-            }
-            if (!mailUnique){
-                result.rejectValue("email","email.repeat","El email ingresado ya existe");
-            }
-            if(!result.hasErrors()){
-                usuarioService.registrarTomador(tomadorForm);
-                map.put("success", true);
-                map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
-            }else{
+        @RequestMapping(path="/tomador-json")
+        public  @ResponseBody Map<String,Object> signupTomadorJson(@Valid @ModelAttribute("tomadorForm") TomadorForm tomadorForm, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response){
+            HashMap<String,Object> map = new HashMap<>();
+            try{
+                validarTelefono(tomadorForm.getTelefono());
+                boolean userUnique = usuarioService.usernameUnique(tomadorForm.getUsername());
+                boolean mailUnique = usuarioService.emailUnique(tomadorForm.getEmail());
+                if(!userUnique){
+                    result.rejectValue("username","username.repeat","El nombre de usuario ingresado ya existe");
+                }
+                if (!mailUnique){
+                    result.rejectValue("email","email.repeat","El email ingresado ya existe");
+                }
+                if(!result.hasErrors()){
+                    usuarioService.registrarTomador(tomadorForm);
+                    map.put("success", true);
+                    map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
+                }else{
+                    map.put("success", false);
+                    map.put("errors", result.getAllErrors());
+                }
+            }catch (Exception e) {
                 map.put("success", false);
-                map.put("errors", result.getAllErrors());
+                map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
             }
-        }catch (Exception e) {
-            map.put("success", false);
-            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
+
+            return map;
         }
 
-        return map;
-    }
 
-
-    @GetMapping(value="/activate/{token}")
-    public String activateAccount(@PathVariable("token") String token){
-        try{
-            usuarioService.activateUser(token);
-        }catch (Exception e) {
+        @GetMapping(value="/activate/{token}")
+        public String activateAccount(@PathVariable("token") String token){
+            try{
+                usuarioService.activateUser(token);
+            }catch (Exception e) {
+            }
+            return "redirect:/";
         }
-        return "redirect:/";
-    }
+
+        /**
+         * use the token (code) given by mercadoPago to ask for the user credentials
+         * @param code given by MercadoPago.
+         * @param error
+         * @param redirectAttributes
+         * @param request
+         * @return
+         */
+        @RequestMapping(value="/mercadoPagoToken")
+        public String mercadoPagoToken(@RequestParam(required=false) String code,
+                                       @RequestParam(required=false) String error,RedirectAttributes redirectAttributes,
+                                       HttpServletRequest request){
+            if(error!=null){
+                if(error.equals("access-denied")){
+                    error = "Debes darnos permisos a tu cuenta de MercadoPago para poder continuar";
+                }
+            }else if(code != null){
+                //permissions conceded
+                try {
+                    String contextPath = request.getContextPath();
+                    ClientCredentials clientCredentials = mercadoPagoAdapter.getClientCredentials(code, this.URL+contextPath+"/signup/mercadoPagoToken");
+                    prestadorService.completeCredentials(clientCredentials);
+                } catch (MercadoPagoException e) {
+                    e.printStackTrace();
+                    error = "Se ha producido un error al obtener datos de MercadoPago";
+                }
+            }
+            if(error != null){
+
+                redirectAttributes.addFlashAttribute("errorMsg", error);
+            }
+
+            return "redirect:/seller/";
+        }
 
 
 }

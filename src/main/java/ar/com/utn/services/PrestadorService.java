@@ -1,6 +1,7 @@
 package ar.com.utn.services;
 
 import ar.com.utn.afip.TicketAcceso;
+import ar.com.utn.mercadopago.model.ClientCredentials;
 import ar.com.utn.models.ActividadAfip;
 import ar.com.utn.models.TipoTrabajo;
 
@@ -17,4 +18,6 @@ public interface PrestadorService {
     TicketAcceso getLastTicketAcceso();
 
     void saveTicketAcceso(TicketAcceso ta);
+
+    void completeCredentials(ClientCredentials clientCredentials);
 }

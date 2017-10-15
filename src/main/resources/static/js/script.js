@@ -50,8 +50,6 @@ $(function () {
                             div.append($("<p>").text(data.errors[i].defaultMessage));
                         }
                     }else{
-                        /*$("#signup div.error-msg ul").html("<li>Error en registro de usuario</li>");
-                        $("#signup div.error-msg").show();*/
                         BootstrapDialog.show({
                             title: 'Error',
                             message: data.msg,
