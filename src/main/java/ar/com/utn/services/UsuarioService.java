@@ -34,4 +34,6 @@ public interface UsuarioService {
     void activateUser(String token);
 
     void setAuthority(Rol rol, Usuario usuario);
+
+    Usuario findByPrestador(Prestador prestador);
 }

@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
@@ -213,6 +215,36 @@ public class PublicacionController {
             model.addAttribute("trabajosRecomendados", publicacionDTOS);
         }
         return "trabajos-recomendados";
+    }
+
+    @PreAuthorize("hasAuthority('TOMADOR')")
+    @RequestMapping(value = "/contratar", method = RequestMethod.POST)
+    @ResponseBody
+    @Transactional
+    public Map<String,Object> contratarPostulacion(@RequestParam(value = "postulacionId") Postulacion postulacion){
+        Usuario usuario = currentSession.getUser();
+        Publicacion publicacion = postulacion.getPublicacion();
+
+        Usuario usuarioPostulacion = usuarioService.findByPrestador(postulacion.getPrestador());
+
+        HashMap<String,Object> map = new HashMap<>();
+        try{
+            if(usuario.getTomador() != publicacion.getTomador()){
+                map.put("success", false);
+                map.put("msg","La publicación no es del usuario o está iniciado como profesional.");
+                return map;
+            }
+
+            publicacion = publicacionService.setContratada(publicacion);
+            postulacion = postulacionService.setContratada(postulacion);
+
+            map.put("success", true);
+            map.put("msg","Ha contratado a " + usuarioPostulacion.getUsername() + " correctamente.");
+        }catch (Exception e) {
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
+        }
+        return map;
     }
 
 }

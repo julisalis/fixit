@@ -1,5 +1,6 @@
 package ar.com.utn.repositories;
 
+import ar.com.utn.models.Prestador;
 import ar.com.utn.models.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
@@ -20,4 +21,6 @@ public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
     public Usuario findByUsernameIgnoreCase(String username);
 
     Usuario findByActivationToken(String token);
+
+    Usuario findByPrestador(Prestador prestador);
 }

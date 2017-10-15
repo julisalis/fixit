@@ -20,7 +20,7 @@ import java.util.List;
  * Created by iaruedel on 13/08/17.
  */
 @Service
-public class PublicacionServiceImpl implements PublicacionService {
+public class PublicacionServiceImpl implements PublicacionService, ar.com.utn.services.implementation.PublicacionService {
     @Autowired
     private TipoTrabajoRepository tipoTrabajoRepository;
     @Autowired
@@ -115,6 +115,14 @@ public class PublicacionServiceImpl implements PublicacionService {
     @Transactional(rollbackOn={Exception.class})
     public void deletePublicacion(Publicacion publicacion) {
         publicacion.setEstadoPublicacion(EstadoPublicacion.ELIMINADA);
+    }
+
+    @Override
+    @Transactional(rollbackOn={Exception.class})
+    public Publicacion setContratada(Publicacion publicacion) {
+        publicacion.setEstadoPublicacion(EstadoPublicacion.CONTRATADA);
+        publicacion = publicacionRepository.save(publicacion);
+        return publicacion;
     }
 
     @Override

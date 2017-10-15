@@ -38,4 +38,6 @@ public interface PublicacionService {
     void deletePublicacion(Publicacion publicacion);
 
     List<Publicacion> getTrabajosRecomendados(List<TipoTrabajo> tipos);
+
+    Publicacion setContratada(Publicacion publicacion);
 }
