@@ -7,7 +7,7 @@
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </head>
 <body>
-<div id="publicacion-mas">
+<div id="postulacion-mas">
     <!--/*/ <th:block th:include="fragments/header-static :: header"></th:block> /*/-->
 
     <!-- Modal logIn-->
@@ -17,14 +17,44 @@
     <section id="section-foto">
         <div class="jumbotron-categoria2 text-center">
             <div class="container">
-                <h1 class="titulo-prin-static">DETALLE PUBLICACIÓN</h1>
+                <h1 class="titulo-prin-static">DETALLE POSTULACIÓN</h1>
             </div>
         </div>
     </section>
+
     <section id="section-publicaciones">
         <div class="container">
             <h3 class="subtitulo-jobs" th:text="${publicacion.titulo}"></h3>
-            <div class="col-md-12 form-container">
+            <h6 class="titulo-postulacion">Mi Postulación</h6>
+            <div class="job-ad-item">
+                <div class="item-info">
+                    <div class="item-image-box col-md-2">
+                        <div class="item-image detalle">
+                                <img th:src="@{/images/}+${publicacion.tipoTrabajo.imagen}"
+                                     onerror="this.src='/images/publicaciones/not-found.png'"
+                                     alt="Image" class="img-tipotrabajo">
+                        </div><!-- item-image -->
+                    </div>
+
+                    <div class="ad-info fixit-job-box col-md-7">
+                        <p class="installationType">
+                            <span><strong th:text="${postulacion.descripcion}"></strong></span>
+                        </p>
+                        <span th:text="'Comentarios: ' +${postulacion.comentarios}"></span>
+                        <span th:text="'Categoría: ' +${publicacion.tipoTrabajo.nombre}"></span>
+                    </div>
+                        <div class="ad-meta col-md-3 detalle-iconos">
+                            <ul>
+                                <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${publicacion.localidad.nombre}+', '+${publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
+                                <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
+                                <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${postulacion.duracionAprox} + ' Horas'" class="btn-price-AR"></small>
+                            </ul>
+                        </div><!-- ad-meta -->
+                    <!-- ad-info -->
+                </div>
+            </div><!-- item-info -->
+
+            <div class="col-md-12 form-container publicacion-postulacion">
                 <div class="col-lg-8 col-md-12 col-xs-12">
                     <section id="section-Clientes">
                         <div class="section category-items job-category-items text-center imagenes-publicacion">
@@ -88,18 +118,19 @@
                             </div>
                             <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.urgencia}"></h3>
                         </div>
-
                     </section>
                 </div>
-                <!-- Boton -->
-                <div class="btn-postulacion col-lg-12 col-md-12 col-xs-12">
-                    <!--Solo ve el "POSTULARME" en caso que sea el prestador-->
-                    <a href="#" th:href="@{/postulacion/new(publicacionId=${publicacion.id})}" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR') ">
-                        <span class="anim"></span>
-                        Postularme
+            </div>
+
+            <section id="boton-regresar">
+                <div class="regresar">
+                    <a href="/postulacion/list" class="regresar-postulaciones">
+                        <h5 class="titulo-postulacion">Mis Postulacines</h5>
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
                     </a>
                 </div>
-            </div>
+            </section>
+
         </div>
     </section>
 

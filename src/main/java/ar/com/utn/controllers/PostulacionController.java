@@ -108,4 +108,16 @@ public class PostulacionController {
         model.addAttribute("postulacionesFinalizadas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.FINALIZADA)).collect(Collectors.toList()));
         return "postulacion-list";
     }
+
+    @GetMapping(value="/detalle/{postulacionId}")
+    public String detallePpostulacion(@PathVariable Long postulacionId, WebRequest request, Model model) {
+        Postulacion mipostulacion = postulacionService.findById(postulacionId);
+        Publicacion mipublicacion = publicacionService.findById(mipostulacion.getPublicacion().getId());
+        if(mipostulacion!=null){
+            model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion)));
+            model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+            return "postulacion-detalle";
+        }
+        return "redirect:/";
+    }
 }

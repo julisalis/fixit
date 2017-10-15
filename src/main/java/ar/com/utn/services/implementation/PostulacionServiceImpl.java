@@ -25,4 +25,9 @@ public class PostulacionServiceImpl implements PostulacionService {
     public List<Postulacion> findByPublicacion(Publicacion mipublicacion) {
         return postulacionRepository.findByPublicacion(mipublicacion);
     }
+
+    @Override
+    public Postulacion findById(Long postulacionId) {
+        return postulacionRepository.findOne(postulacionId);
+    }
 }
