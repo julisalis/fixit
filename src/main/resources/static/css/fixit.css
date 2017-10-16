@@ -393,7 +393,7 @@ div.signup, #signin .container{
     text-transform: uppercase;
     letter-spacing: 9px;
     margin-bottom: 30px;
-    font-weight: 200px;
+    font-weight: 200;
     font-weight: 600;
 }
 
@@ -2022,6 +2022,34 @@ a:focus{
      font-weight: 600;
     display: inline-block;
  }
+
+.btn-secondary-profile{
+    width: 100%;
+    background-color: transparent;
+    border-color: rgba(2,58,143,1);
+    color:  rgba(2,58,143,1);
+    font-size: 20px;
+}
+
+.btn-secondary-profile:hover {
+    background-color: rgba(2,58,143,1);
+    text-decoration: blink;
+    color: white;
+    transition: all 200ms linear;
+}
+#mercadoPagoProfile{
+    border-top: 1px solid rgba(128, 128, 128, 0.61);
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+}
+.submit-profile{
+    text-align: center;
+    margin-top: 30px;
+}
 
 .job-ad-item .item-image.prestador {
     margin-top: 10px;

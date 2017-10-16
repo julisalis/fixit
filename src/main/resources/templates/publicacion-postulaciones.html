@@ -64,7 +64,7 @@
                                     <img th:src="@{/images/}+${postulacion.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                     <span th:text="${postulacion.publicacion.tipoTrabajo.nombre}"></span>
                                 </div>
-                                <a href="#" th:href="@{/publicacion/contratar(postulacionId=${postulacion.id})}" class="btn btn-primary prestador tam-boton-100">Contratar Profesional</a>
+                                <a href="#" th:href="@{/publicacion/contratar(postulacionId=${postulacion.id})}" th:onclick="${'contratar('+postulacion.id+')'}" class="btn btn-primary prestador tam-boton-100">Contratar Profesional</a>
                             </div>
                         </div>
                     </div>
@@ -77,4 +77,29 @@
 
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
+<script>
+    function contratar(publicacionId) {
+        $.ajax({
+            type: 'POST',
+            url: '/publicacion/contratar',
+            data: {
+                publicacionId: publicacionId
+            },
+            async: true,
+            success: function(message){
+                if(message.success){
+                    swal({
+                        title: "Postulación contratada!",
+                        text: message.msg,
+                        type: "success",
+                    },function (e) {
+                        window.location.href="/publicacion/list";
+                    });
+                }else{
+                    swal("Error", message.msg, "error")
+                }
+            }
+        });
+    }
+</script>
 </html>

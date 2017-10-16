@@ -2420,5 +2420,5 @@ INSERT INTO telefono(cod_area, cod_pais, telefono) VALUES(11,54,123456789);
 INSERT INTO tomador() VALUES();
 INSERT INTO ubicacion(id_localidad) VALUES(38);
 INSERT INTO user_rol (usuario_id, rol) VALUES(1, 'TOMADOR');
-INSERT INTO usuarios(activado, apellido, documento, email, fecha_creacion, nombre, password, tipo_doc, username, id_telefono, tomador_id, id_ubicacion)
-VALUES(1,'admin', '38457302',  'melaniejarabroviski@hotmail.com', '2017-09-24', 'admin', '$2a$10$iJWyKdOPydsJsEjKm0UFc.QmgAbSFjwHSsEighFW3oyOj21ofLBH2', 'DNI', 'admin', 1, 1, 1);
+INSERT INTO usuarios(activado, apellido, documento, email, fecha_creacion, nombre, password, tipo_doc, username, id_telefono, tomador_id, id_ubicacion, calificacion_promedio)
+VALUES(1,'admin', '38457302',  'melaniejarabroviski@hotmail.com', '2017-09-24', 'admin', '$2a$10$iJWyKdOPydsJsEjKm0UFc.QmgAbSFjwHSsEighFW3oyOj21ofLBH2', 'DNI', 'admin', 1, 1, 1, 0.0);

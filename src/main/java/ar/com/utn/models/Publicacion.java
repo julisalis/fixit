@@ -33,11 +33,11 @@ public class Publicacion extends PersistentEntity{
     @ManyToOne
     @JoinColumn(name="localidad_fk",nullable = false)
     private Localidad localidad;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private EstadoPublicacion estadoPublicacion = EstadoPublicacion.ELIMINADA;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private TipoPublicacion tipoPublicacion = TipoPublicacion.REGULAR;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private TiempoPublicacion tiempoPublicacion;
     @OneToMany(mappedBy = "publicacion")
     private Set<Postulacion> postulaciones;
@@ -48,7 +48,7 @@ public class Publicacion extends PersistentEntity{
     private Tomador tomador;
     @Embedded
     private PublicacionMultimedia multimedia;
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private Urgencia urgencia;
     private LocalDate fecha;
     private LocalDateTime fechaCreacion;

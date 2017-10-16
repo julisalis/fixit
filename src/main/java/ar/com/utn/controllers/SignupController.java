@@ -42,21 +42,13 @@ import java.util.stream.Collectors;
     @RequestMapping(path="/signup")
     public class SignupController {
 
-        @Value("${app.mercadopago.app_id}")
-        private String MP_APP_ID;
-        @Value("${application.url}")
-        private String URL;
         @Autowired
         private UsuarioService usuarioService;
         @Autowired
         private PrestadorService prestadorService;
-        @Autowired
-        private MercadoPagoAdapter mercadoPagoAdapter;
 
         @GetMapping(value="/prestador")
         public String signupPrestador(WebRequest request,Model model) {
-            model.addAttribute("app_id_mp",MP_APP_ID);
-            model.addAttribute("redirect_uri",URL+"/signup/mercadoPagoToken");
             model.addAttribute("prestadorForm",new PrestadorForm());
             model.addAttribute("provincias",generarProvicias());
             model.addAttribute("telefono",new TelefonoForm());
@@ -283,41 +275,6 @@ import java.util.stream.Collectors;
             }catch (Exception e) {
             }
             return "redirect:/";
-        }
-
-        /**
-         * use the token (code) given by mercadoPago to ask for the user credentials
-         * @param code given by MercadoPago.
-         * @param error
-         * @param redirectAttributes
-         * @param request
-         * @return
-         */
-        @RequestMapping(value="/mercadoPagoToken")
-        public String mercadoPagoToken(@RequestParam(required=false) String code,
-                                       @RequestParam(required=false) String error,RedirectAttributes redirectAttributes,
-                                       HttpServletRequest request){
-            if(error!=null){
-                if(error.equals("access-denied")){
-                    error = "Debes darnos permisos a tu cuenta de MercadoPago para poder continuar";
-                }
-            }else if(code != null){
-                //permissions conceded
-                try {
-                    String contextPath = request.getContextPath();
-                    ClientCredentials clientCredentials = mercadoPagoAdapter.getClientCredentials(code, this.URL+contextPath+"/signup/mercadoPagoToken");
-                    prestadorService.completeCredentials(clientCredentials);
-                } catch (MercadoPagoException e) {
-                    e.printStackTrace();
-                    error = "Se ha producido un error al obtener datos de MercadoPago";
-                }
-            }
-            if(error != null){
-
-                redirectAttributes.addFlashAttribute("errorMsg", error);
-            }
-
-            return "redirect:/seller/";
         }
 
 

@@ -1,22 +1,29 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.exception.MercadoPagoException;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
+import ar.com.utn.mercadopago.MercadoPagoAdapter;
+import ar.com.utn.mercadopago.model.ClientCredentials;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.PrestadorRepository;
 import ar.com.utn.repositories.TipoTrabajoRepository;
 import ar.com.utn.repositories.TomadorRepository;
 import ar.com.utn.repositories.UsuarioRepository;
+import ar.com.utn.services.PrestadorService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -31,6 +38,10 @@ import java.util.stream.Collectors;
 @RequestMapping(path="/usuario")
 public class UsuarioController {
 
+    @Value("${app.mercadopago.app_id}")
+    private String MP_APP_ID;
+    @Value("${application.url}")
+    private String URL;
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -51,6 +62,11 @@ public class UsuarioController {
 
     @Autowired
     private CurrentSession currentSession;
+
+    @Autowired
+    private MercadoPagoAdapter mercadoPagoAdapter;
+    @Autowired
+    private PrestadorService prestadorService;
 
     @GetMapping(path="/add") // Map ONLY GET Requests
     public @ResponseBody String addNewUser (@RequestParam String name
@@ -73,11 +89,10 @@ public class UsuarioController {
 
     @GetMapping(value="/perfil")
     public String perfilUsuario(WebRequest request, Model model) {
-        //model.addAttribute("tomadorForm",new TomadorForm(currentSession.getUser()));
-        //model.addAttribute("perfilForm",new PerfilForm(currentSession.getUser()));
+        model.addAttribute("app_id_mp",MP_APP_ID);
+        model.addAttribute("redirect_uri",URL+"/usuario/mercadoPagoToken");
         model.addAttribute("user",currentSession.getUser());
         model.addAttribute("provincias", signupController.generarProvicias());
-        //model.addAttribute("telefono",new TelefonoForm());
         model.addAttribute("documentos", TipoDoc.values());
         model.addAttribute("tiposTrabajo",tipoTrabajoRepository.findAll());
         return "perfil-usuario";
@@ -266,5 +281,40 @@ public class UsuarioController {
             model.addAttribute("documentos", TipoDoc.values());
             return "perfil-usuario";
         }
+    }
+
+    /**
+     * use the token (code) given by mercadoPago to ask for the user credentials
+     * @param code given by MercadoPago.
+     * @param error
+     * @param redirectAttributes
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/mercadoPagoToken")
+    public String mercadoPagoToken(@RequestParam(required=false) String code,
+                                   @RequestParam(required=false) String error,RedirectAttributes redirectAttributes,
+                                   HttpServletRequest request){
+        if(error!=null){
+            if(error.equals("access-denied")){
+                error = "Debes darnos permisos a tu cuenta de MercadoPago para poder continuar";
+            }
+        }else if(code != null){
+            //permissions conceded
+            try {
+                String contextPath = request.getContextPath();
+                ClientCredentials clientCredentials = mercadoPagoAdapter.getClientCredentials(code, this.URL+contextPath+"/usuario/mercadoPagoToken");
+                prestadorService.completeCredentials(clientCredentials);
+            } catch (MercadoPagoException e) {
+                e.printStackTrace();
+                error = "Se ha producido un error al obtener datos de MercadoPago";
+            }
+        }
+        if(error != null){
+
+            redirectAttributes.addFlashAttribute("errorMsg", error);
+        }
+
+        return "redirect:/usuario/perfil";
     }
 }

@@ -36,7 +36,7 @@ public class Usuario extends PersistentEntity {
     @JoinColumn(name="id_telefono",nullable = false)
     private Telefono telefono;
 
-    private Double calificacionPromedio;
+    private Double calificacionPromedio = 0.0;
 
     @ManyToOne
     @JoinColumn(name="id_ubicacion",nullable = false)
@@ -78,7 +78,6 @@ public class Usuario extends PersistentEntity {
         this.telefono = telefono;
         this.ubicacion=ubicacion;
         this.email = email;
-        this.calificacionPromedio = 0.0;
     }
 
     public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Long cuit, Prestador prestador, Ubicacion ubicacion,String email) {
