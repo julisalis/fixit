@@ -20,7 +20,7 @@ public class Postulacion extends PersistentEntity {
     @Column(columnDefinition="boolean default false", nullable = false)
     private Boolean elegida = false;
 
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     private EstadoPostulacion estadoPostulacion = EstadoPostulacion.NUEVA;
 
     @ManyToOne
