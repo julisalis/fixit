@@ -1,7 +1,17 @@
 # Get access token
 AT=`curl -s -X POST -H 'content-type: application/x-www-form-urlencoded' 'https://api.mercadopago.com/oauth/token' -d 'grant_type=client_credentials' -d 'client_id=721654308644323' -d 'client_secret=tpl1fFuLIEUitI342zKF87jEckovxE1O'`
 
-curl -X POST \
--H "Content-Type: application/json" \
-"https://api.mercadopago.com/users/test_user?access_token=$AT" \
--d '{"site_id":"SITE_ID"}'
+
+{"access_token":"APP_USR-721654308644323-101616-b50cd31789dcd6e82133b120de24aa98__G_E__-278315026",
+"refresh_token":"TG-59e51afae4b03acbec75ece4-278315026",
+"live_mode":true,"user_id":278315026,"token_type":"bearer",
+"expires_in":21600,"scope":"offline_access read write"}
+
+curl -X POST -H "Content-Type: application/json" "https://api.mercadopago.com/users/test_user?access_token=APP_USR-721654308644323-101616-b50cd31789dcd6e82133b120de24aa98__G_E__-278315026" -d '{"site_id":"MLA"}'
+
+usuario para crear la app:
+{"id":278594985,"nickname":"TESTHBJYGMJN","password":"qatest8550","site_status":"active","email":"test_user_57908191@testuser.com"}
+
+usuarios:
+{"id":278593063,"nickname":"TETE4720641","password":"qatest7329","site_status":"active","email":"test_user_6851491@testuser.com"}
+{"id":278593083,"nickname":"TETE4025511","password":"qatest998","site_status":"active","email":"test_user_32051530@testuser.com"}

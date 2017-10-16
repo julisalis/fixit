@@ -17,4 +17,5 @@ public interface PublicacionRepository extends CrudRepository<Publicacion, Long>
     List<Publicacion> findAll();
     List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion);
     List<Publicacion> findAllByTipoTrabajoInAndAndEstadoPublicacionEquals(List<TipoTrabajo> tipoTrabajos, EstadoPublicacion estadoPublicacion);
+
 }
