@@ -9,6 +9,8 @@ import ar.com.utn.services.MultimediaService;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -123,6 +125,12 @@ public class PublicacionServiceImpl implements PublicacionService {
         publicacion.setEstadoPublicacion(EstadoPublicacion.CONTRATADA);
         //publicacion = publicacionRepository.save(publicacion);
         return publicacion;
+    }
+
+    @Override
+    public List<Publicacion> getDestacados() {
+        Pageable pegeable = new PageRequest(0,3);
+        return publicacionRepository.findDestacados(pegeable);
     }
 
     @Override

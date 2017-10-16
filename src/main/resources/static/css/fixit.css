@@ -922,6 +922,7 @@ span {
 
 #section-Destacados .btn-secondary-alt{
     margin-bottom: 6%;
+    margin-top: 15px;
 }
 
 #publicacion{
@@ -1446,6 +1447,7 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     font-size: 20px;
     font-weight: 300;
 }
+
 .job-ad-item .ad-meta {
     position: inherit;
     background-color: transparent;
@@ -1454,6 +1456,7 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     min-height: inherit;
     display: inline;
 }
+
 .job-ad-item .ad-meta li:first-child {
     margin-left: 0;
 }
@@ -2062,6 +2065,32 @@ a:focus{
 .job-ad-item .ad-info .username-prestador img{
     width: 8%;
 }
+
+.job-ad-item .ad-meta.detalle-iconos {
+    position: inherit;
+    background-color: transparent;
+    border-top: none;
+    padding-left: 15px;
+    min-height: inherit;
+    display: inline;
+}
+
+.icons-publicacion.no-logged {
+    display: inline;
+}
+
+#section-Destacados .publicacion-destacados small {
+    display: inline;
+}
+
+#section-Destacados .installationType{
+    margin-bottom: 15px;
+}
+
+.ifix-product-box.destacados small {
+    font-size: 16px;
+}
+
 
 
 

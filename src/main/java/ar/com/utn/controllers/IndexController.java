@@ -40,6 +40,7 @@ public class IndexController {
     @RequestMapping("/")
     String index(Model model) {
         model.addAttribute("tipotrabajos", getTiposTrabajos(publicacionService.getTipostrabajos()));
+        model.addAttribute("destacados", publicacionService.getDestacados().stream().map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion))).collect(Collectors.toList()));
         Usuario usuario = currentSession.getUser();
         if(usuario!=null && usuario.getPrestador()!=null){
             List<PublicacionDTO> publicacionDTOS = publicacionService.getTrabajosRecomendados(usuario.getPrestador().getTipos()).stream()
