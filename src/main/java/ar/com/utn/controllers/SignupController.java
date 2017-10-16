@@ -46,8 +46,6 @@ import java.util.stream.Collectors;
         private UsuarioService usuarioService;
         @Autowired
         private PrestadorService prestadorService;
-        @Autowired
-        private MercadoPagoAdapter mercadoPagoAdapter;
 
         @GetMapping(value="/prestador")
         public String signupPrestador(WebRequest request,Model model) {
@@ -277,41 +275,6 @@ import java.util.stream.Collectors;
             }catch (Exception e) {
             }
             return "redirect:/";
-        }
-
-        /**
-         * use the token (code) given by mercadoPago to ask for the user credentials
-         * @param code given by MercadoPago.
-         * @param error
-         * @param redirectAttributes
-         * @param request
-         * @return
-         */
-        @RequestMapping(value="/mercadoPagoToken")
-        public String mercadoPagoToken(@RequestParam(required=false) String code,
-                                       @RequestParam(required=false) String error,RedirectAttributes redirectAttributes,
-                                       HttpServletRequest request){
-            if(error!=null){
-                if(error.equals("access-denied")){
-                    error = "Debes darnos permisos a tu cuenta de MercadoPago para poder continuar";
-                }
-            }else if(code != null){
-                //permissions conceded
-                try {
-                    String contextPath = request.getContextPath();
-                    ClientCredentials clientCredentials = mercadoPagoAdapter.getClientCredentials(code, this.URL+contextPath+"/signup/mercadoPagoToken");
-                    prestadorService.completeCredentials(clientCredentials);
-                } catch (MercadoPagoException e) {
-                    e.printStackTrace();
-                    error = "Se ha producido un error al obtener datos de MercadoPago";
-                }
-            }
-            if(error != null){
-
-                redirectAttributes.addFlashAttribute("errorMsg", error);
-            }
-
-            return "redirect:/seller/";
         }
 
 

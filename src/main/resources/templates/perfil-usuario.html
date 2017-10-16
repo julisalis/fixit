@@ -13,30 +13,13 @@
 <div id="publicacion">
 
     <div class="container">
-        <h2>Mi Perfil</h2>
-        <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')">Cliente</h4>
-        <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">Profesional</h4>
-        <div class="col-md-12 form-container form-horizontal" id="perfil">
-
-                <!--<div th:if="${#fields.hasErrors()}" class="alert alert-danger error-msg" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span>Error:</span>
-                    <ul>
-                        <li th:each="e : ${#fields.detailedErrors()}" th:class="${e.global}? globalerr : fielderr">
-                            <span th:text="${e.global}? '*' : ${e.fieldName}">The field name</span>
-                            <span th:text="${e.message}">The error message</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div style="display: none;" class="alert alert-danger error-msg" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span>Errores:</span>
-                    <ul>
-                    </ul>
-                </div>-->
-
-                <fieldset>
+        <div class="form-container form-horizontal" id="perfil">
+            <div class="form-group">
+                <h2>Mi Perfil</h2>
+                <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')">Cliente</h4>
+                <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">Profesional</h4>
+            </div>
+            <fieldset>
 
                     <input type="hidden" th:value="${user.id}" id="id" class="form-control input-md apiParam"/>
                     <!-- Text input-->
@@ -166,7 +149,6 @@
                     </div>
 
                 </fieldset>
-
         </div>
     </div>
 </div>

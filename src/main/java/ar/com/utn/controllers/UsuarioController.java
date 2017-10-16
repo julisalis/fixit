@@ -1,13 +1,17 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.exception.MercadoPagoException;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
+import ar.com.utn.mercadopago.MercadoPagoAdapter;
+import ar.com.utn.mercadopago.model.ClientCredentials;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.PrestadorRepository;
 import ar.com.utn.repositories.TipoTrabajoRepository;
 import ar.com.utn.repositories.TomadorRepository;
 import ar.com.utn.repositories.UsuarioRepository;
+import ar.com.utn.services.PrestadorService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +22,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -56,6 +62,11 @@ public class UsuarioController {
 
     @Autowired
     private CurrentSession currentSession;
+
+    @Autowired
+    private MercadoPagoAdapter mercadoPagoAdapter;
+    @Autowired
+    private PrestadorService prestadorService;
 
     @GetMapping(path="/add") // Map ONLY GET Requests
     public @ResponseBody String addNewUser (@RequestParam String name
@@ -270,5 +281,40 @@ public class UsuarioController {
             model.addAttribute("documentos", TipoDoc.values());
             return "perfil-usuario";
         }
+    }
+
+    /**
+     * use the token (code) given by mercadoPago to ask for the user credentials
+     * @param code given by MercadoPago.
+     * @param error
+     * @param redirectAttributes
+     * @param request
+     * @return
+     */
+    @RequestMapping(value="/mercadoPagoToken")
+    public String mercadoPagoToken(@RequestParam(required=false) String code,
+                                   @RequestParam(required=false) String error,RedirectAttributes redirectAttributes,
+                                   HttpServletRequest request){
+        if(error!=null){
+            if(error.equals("access-denied")){
+                error = "Debes darnos permisos a tu cuenta de MercadoPago para poder continuar";
+            }
+        }else if(code != null){
+            //permissions conceded
+            try {
+                String contextPath = request.getContextPath();
+                ClientCredentials clientCredentials = mercadoPagoAdapter.getClientCredentials(code, this.URL+contextPath+"/signup/mercadoPagoToken");
+                prestadorService.completeCredentials(clientCredentials);
+            } catch (MercadoPagoException e) {
+                e.printStackTrace();
+                error = "Se ha producido un error al obtener datos de MercadoPago";
+            }
+        }
+        if(error != null){
+
+            redirectAttributes.addFlashAttribute("errorMsg", error);
+        }
+
+        return "redirect:/seller/";
     }
 }
