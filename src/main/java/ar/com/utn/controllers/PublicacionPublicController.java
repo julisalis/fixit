@@ -70,7 +70,8 @@ public class PublicacionPublicController {
         catch (Exception e) {
             e.printStackTrace();
         }
-        List<PublicacionDTO> publicacionDTOS = searchResults.stream().map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion))).collect(Collectors.toList());
+        List<PublicacionDTO> publicacionDTOS = searchResults.stream().filter(publicacion -> publicacion.getEstadoPublicacion() == EstadoPublicacion.NUEVA)
+                                                                     .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion))).collect(Collectors.toList());
         model.addAttribute("publicaciones", publicacionDTOS);
         model.addAttribute("searchTerm",searchTerm);
         return "publicaciones-busqueda";
