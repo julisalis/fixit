@@ -124,6 +124,7 @@
                 success: function(message){
                     if(message.success){
                         swal("Postulación guardada!", message.msg, "success")
+                        window.location.href = "/postulacion/list";
                     }else{
                         swal("Error", message.msg, "error")
                     }

@@ -121,7 +121,7 @@ public class PublicacionServiceImpl implements PublicacionService, ar.com.utn.se
     @Transactional(rollbackOn={Exception.class})
     public Publicacion setContratada(Publicacion publicacion) {
         publicacion.setEstadoPublicacion(EstadoPublicacion.CONTRATADA);
-        publicacion = publicacionRepository.save(publicacion);
+        //publicacion = publicacionRepository.save(publicacion);
         return publicacion;
     }
 
