@@ -1981,6 +1981,22 @@ a:focus{
     margin-bottom: 50px;
 }
 
+.btn-secondary-profile{
+    width: 100%;
+    background-color: transparent;
+    border-color: rgba(2,58,143,1);
+    color:  rgba(2,58,143,1);
+    font-size: 20px;
+}
+
+.btn-secondary-profile:hover {
+    background-color: rgba(2,58,143,1);
+    text-decoration: blink;
+    color: white;
+    transition: all 200ms linear;
+}
+
+
 
 
 

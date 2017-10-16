@@ -131,20 +131,38 @@
                         </div>
                     </div>
 
-                    <!--<div class="form-group">
-                        <label class="col-md-4 control-label" for="password">Nueva contraseña*</label>
-                        <div class="col-md-6">
-                            <input type="password" id="password" th:field="*{password}" class="form-control" autocomplete="new-password" />
-                        </div>
-                    </div>-->
 
+                    <div class="form-group" sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')">
+                        <label class="col-md-4 control-label" for="changeToPrestador">Rol del usuario</label>
+                        <div class="col-md-6">
+                            <input type="button" class="submit btn btn-secondary-profile" id="changeToPrestador" th:onclick="${'perfilPrestador('+(user.prestador!=null)+')'}" value="Cambiar a profesional"/>
+                        </div>
+                    </div>
+                    <div class="form-group" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
+                        <label class="col-md-4 control-label" for="changeToTomador">Rol del usuario</label>
+                        <div class="col-md-6" >
+                            <input type="button" class="submit btn btn-secondary-profile" id="changeToTomador" th:onclick="${'perfilTomador('+(user.tomador!=null)+')'}" value="Cambiar a cliente"/>
+                        </div>
+                    </div>
+                    <div class="form-group"sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
+                        <label class="col-md-4 control-label" for="validarAfip">Validación</label>
+                        <div class="col-md-6">
+                            <button th:if="${!user.prestador?.validado}" class="submit btn btn-secondary-profile" id="validarAfip" onclick="savePrestadorChanges()">Validar AFIP</button>
+                        </div>
+                    </div>
+
+                    <div class="form-group"sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
+                            <label class="col-md-4 control-label" for="mercadopago">Cuenta en MercadoPago*</label>
+                            <div class="col-md-6">
+                                <a th:href="'https://auth.mercadopago.com.ar/authorization?client_id='
+                                +${app_id_mp}+'&response_type=code&platform_id=mp&redirect_uri='
+                                +${redirect_uri}" id="mercadoPago" class="submit btn btn-secondary-profile">Iniciar Sesión con Mercado Pago</a>
+                            </div>
+                    </div>
 
                     <!-- Button -->
                     <div style="text-align: center;" class="submit">
                         <button class="submit button button-block btn btn-primary" id="submit" onclick="savePrestadorChanges()">Guardar cambios</button>
-                        <button sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="submit button button-block btn btn-primary" id="changeToPrestador" th:onclick="${'perfilPrestador('+(user.prestador!=null)+')'}">Cambiar a profesional</button>
-                        <button sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="submit button button-block btn btn-primary" id="changeToTomador" th:onclick="${'perfilTomador('+(user.tomador!=null)+')'}">Cambiar a cliente</button>
-                        <button sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" th:if="${!user.prestador?.validado}" class="submit button button-block btn btn-primary" id="validarAfip" onclick="savePrestadorChanges()">Validar AFIP</button>
                     </div>
 
                 </fieldset>

@@ -11,6 +11,7 @@ import ar.com.utn.repositories.UsuarioRepository;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -31,6 +32,10 @@ import java.util.stream.Collectors;
 @RequestMapping(path="/usuario")
 public class UsuarioController {
 
+    @Value("${app.mercadopago.app_id}")
+    private String MP_APP_ID;
+    @Value("${application.url}")
+    private String URL;
     @Autowired
     private UsuarioRepository usuarioRepository;
 
@@ -73,11 +78,10 @@ public class UsuarioController {
 
     @GetMapping(value="/perfil")
     public String perfilUsuario(WebRequest request, Model model) {
-        //model.addAttribute("tomadorForm",new TomadorForm(currentSession.getUser()));
-        //model.addAttribute("perfilForm",new PerfilForm(currentSession.getUser()));
+        model.addAttribute("app_id_mp",MP_APP_ID);
+        model.addAttribute("redirect_uri",URL+"/signup/mercadoPagoToken");
         model.addAttribute("user",currentSession.getUser());
         model.addAttribute("provincias", signupController.generarProvicias());
-        //model.addAttribute("telefono",new TelefonoForm());
         model.addAttribute("documentos", TipoDoc.values());
         model.addAttribute("tiposTrabajo",tipoTrabajoRepository.findAll());
         return "perfil-usuario";

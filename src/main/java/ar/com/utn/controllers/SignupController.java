@@ -42,10 +42,6 @@ import java.util.stream.Collectors;
     @RequestMapping(path="/signup")
     public class SignupController {
 
-        @Value("${app.mercadopago.app_id}")
-        private String MP_APP_ID;
-        @Value("${application.url}")
-        private String URL;
         @Autowired
         private UsuarioService usuarioService;
         @Autowired
@@ -55,8 +51,6 @@ import java.util.stream.Collectors;
 
         @GetMapping(value="/prestador")
         public String signupPrestador(WebRequest request,Model model) {
-            model.addAttribute("app_id_mp",MP_APP_ID);
-            model.addAttribute("redirect_uri",URL+"/signup/mercadoPagoToken");
             model.addAttribute("prestadorForm",new PrestadorForm());
             model.addAttribute("provincias",generarProvicias());
             model.addAttribute("telefono",new TelefonoForm());
