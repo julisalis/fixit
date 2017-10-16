@@ -15,4 +15,6 @@ public interface PostulacionService {
     List<Postulacion> findByPublicacion(Publicacion mipublicacion);
 
     Postulacion findById(Long postulacionId);
+
+    Postulacion setContratada(Postulacion postulacion);
 }

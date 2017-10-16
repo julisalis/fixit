@@ -118,6 +118,14 @@ public class PublicacionServiceImpl implements PublicacionService {
     }
 
     @Override
+    @Transactional(rollbackOn={Exception.class})
+    public Publicacion setContratada(Publicacion publicacion) {
+        publicacion.setEstadoPublicacion(EstadoPublicacion.CONTRATADA);
+        //publicacion = publicacionRepository.save(publicacion);
+        return publicacion;
+    }
+
+    @Override
     public List<Publicacion> getTrabajosRecomendados(List<TipoTrabajo> tipos) {
         return publicacionRepository.findAllByTipoTrabajoInAndAndEstadoPublicacionEquals(tipos, EstadoPublicacion.NUEVA);
     }

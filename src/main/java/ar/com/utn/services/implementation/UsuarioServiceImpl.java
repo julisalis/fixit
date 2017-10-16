@@ -75,6 +75,11 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         return usuarioRepository.findByUsernameIgnoreCase(username);
     }
 
+    @Override
+    public Usuario findByPrestador(Prestador prestador) {
+        return usuarioRepository.findByPrestador(prestador);
+    }
+
     /*@Override
     @Transactional
     public Usuario registrarPrestador(PrestadorForm prestadorForm, Prestador prestador) {
