@@ -60,7 +60,7 @@ public class PublicacionController {
         Usuario user = currentSession.getUser();
         List<PublicacionDTO> misPublicaciones = user.getTomador().getPublicaciones().stream().map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion))).collect(Collectors.toList());
         model.addAttribute("publicacionesNuevas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.NUEVA)).collect(Collectors.toList()));
-        model.addAttribute("publicacioneContratadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.CONTRATADA)).collect(Collectors.toList()));
+        model.addAttribute("publicacionesContratadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.CONTRATADA)).collect(Collectors.toList()));
         model.addAttribute("publicacionesFinalizadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.FINALIZADA)).collect(Collectors.toList()));
         return "publicacion-list";
     }
@@ -218,7 +218,7 @@ public class PublicacionController {
     }
 
     @PreAuthorize("hasAuthority('TOMADOR')")
-    @RequestMapping(value = "/contratar", method = RequestMethod.POST)
+    @RequestMapping(value = "/contratar", method = RequestMethod.GET)
     @ResponseBody
     @Transactional
     public Map<String,Object> contratarPostulacion(@RequestParam(value = "postulacionId") Postulacion postulacion){
@@ -238,7 +238,7 @@ public class PublicacionController {
             publicacion = publicacionService.setContratada(publicacion);
             postulacion = postulacionService.setContratada(postulacion);
 
-            map.put("success", true);
+                map.put("success", true);
             map.put("msg","Ha contratado a " + usuarioPostulacion.getUsername() + " correctamente.");
         }catch (Exception e) {
             map.put("success", false);

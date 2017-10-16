@@ -123,13 +123,12 @@
                 async: true,
                 success: function(message){
                     if(message.success){
-                        //swal("Postulación guardada!", message.msg, "success")
                         swal({
                             title: "Postulación guardada!",
                             text: message.msg,
                             type: "success",
                         },function (e) {
-                            location.href="/postulacion/list";
+                            window.location.href="/postulacion/list";
                         });
                     }else{
                         swal("Error", message.msg, "error")

@@ -40,7 +40,7 @@ public class PostulacionServiceImpl implements PostulacionService {
         try {
             postulacion.setEstadoPostulacion(EstadoPostulacion.CONTRATADA);
             postulacion.setElegida(true);
-            postulacion = postulacionRepository.save(postulacion);
+            //postulacion = postulacionRepository.save(postulacion);
             return postulacion;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
