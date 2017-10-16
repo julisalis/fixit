@@ -15,22 +15,22 @@ public class PostulacionDTO {
     private Currency currency;
     private BigDecimal duracionAprox;
     private String comentarios;
-    private Prestador prestador;
     private EstadoPostulacion estado;
     private Boolean elegida;
     private PublicacionDTO publicacion;
+    private UsuarioDTO usuarioPrestador;
 
-    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage) {
+    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario) {
         this.id = postulacion.getId();
         this.descripcion = postulacion.getDescripcion();
         this.presupAprox = postulacion.getPresupAprox();
         this.currency = postulacion.getCurrency();
         this.duracionAprox = postulacion.getDuracionAprox();
         this.comentarios = postulacion.getComentarios();
-        this.prestador = postulacion.getPrestador();
         this.estado = postulacion.getEstadoPostulacion();
         this.elegida = postulacion.getElegida();
         this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
+        this.usuarioPrestador = new UsuarioDTO(usuario);
     }
 
     public PostulacionDTO() {
@@ -84,14 +84,6 @@ public class PostulacionDTO {
         this.comentarios = comentarios;
     }
 
-    public Prestador getPrestador() {
-        return prestador;
-    }
-
-    public void setPrestador(Prestador prestador) {
-        this.prestador = prestador;
-    }
-
     public EstadoPostulacion getEstado() {
         return estado;
     }
@@ -114,6 +106,14 @@ public class PostulacionDTO {
 
     public void setPublicacion(PublicacionDTO publicacion) {
         this.publicacion = publicacion;
+    }
+
+    public UsuarioDTO getUsuarioPrestador() {
+        return usuarioPrestador;
+    }
+
+    public void setUsuarioPrestador(UsuarioDTO usuarioPrestador) {
+        this.usuarioPrestador = usuarioPrestador;
     }
 }
 

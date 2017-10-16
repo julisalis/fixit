@@ -36,7 +36,7 @@ public class Usuario extends PersistentEntity {
     @JoinColumn(name="id_telefono",nullable = false)
     private Telefono telefono;
 
-    private Double calificacionPromedio;
+    private Double calificacionPromedio = 0.0;
 
     @ManyToOne
     @JoinColumn(name="id_ubicacion",nullable = false)
