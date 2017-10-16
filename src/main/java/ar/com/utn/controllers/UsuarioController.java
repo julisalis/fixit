@@ -90,7 +90,7 @@ public class UsuarioController {
     @GetMapping(value="/perfil")
     public String perfilUsuario(WebRequest request, Model model) {
         model.addAttribute("app_id_mp",MP_APP_ID);
-        model.addAttribute("redirect_uri",URL+"/signup/mercadoPagoToken");
+        model.addAttribute("redirect_uri",URL+"/usuario/mercadoPagoToken");
         model.addAttribute("user",currentSession.getUser());
         model.addAttribute("provincias", signupController.generarProvicias());
         model.addAttribute("documentos", TipoDoc.values());
@@ -303,7 +303,7 @@ public class UsuarioController {
             //permissions conceded
             try {
                 String contextPath = request.getContextPath();
-                ClientCredentials clientCredentials = mercadoPagoAdapter.getClientCredentials(code, this.URL+contextPath+"/signup/mercadoPagoToken");
+                ClientCredentials clientCredentials = mercadoPagoAdapter.getClientCredentials(code, this.URL+contextPath+"/usuario/mercadoPagoToken");
                 prestadorService.completeCredentials(clientCredentials);
             } catch (MercadoPagoException e) {
                 e.printStackTrace();
@@ -315,6 +315,6 @@ public class UsuarioController {
             redirectAttributes.addFlashAttribute("errorMsg", error);
         }
 
-        return "redirect:/seller/";
+        return "redirect:/usuario/perfil";
     }
 }
