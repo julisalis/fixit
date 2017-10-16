@@ -76,10 +76,12 @@ public class PostulacionController {
         HashMap<String,Object> map = new HashMap<>();
         Prestador prestador = currentSession.getUser().getPrestador();
         try {
-            if(prestador.getPostulaciones().stream().anyMatch(p -> p.getPublicacion() == publicacion))
-            {
+            if(prestador.getPostulaciones().stream().anyMatch(p -> p.getPublicacion() == publicacion)) {
                 map.put("success", false);
-                map.put("msg","Usted ya está postulado en esta publicación.");
+                map.put("msg", "Usted ya está postulado en esta publicación.");
+            }else if(prestador.getMpPrestador()==null){
+                map.put("success", false);
+                map.put("msg", "Ingrese a su perfil para Iniciar Sesión con Mercado Pago.");
             }else{
                 if(!descripcion.isEmpty() && presupAprox != null && duracionAprox != null){
                     if(presupAprox.doubleValue() > 0 && duracionAprox.doubleValue() > 0){

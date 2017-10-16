@@ -317,4 +317,18 @@ public class UsuarioController {
 
         return "redirect:/usuario/perfil";
     }
+
+    @GetMapping(path="/validateMercadoPago")
+    public @ResponseBody Map<String,Object> validateMercadoPago () {
+        HashMap<String,Object> map = new HashMap<>();
+        Usuario usuario = currentSession.getUser();
+        if( usuario!=null && usuario.getPrestador()!=null && usuario.getPrestador().getMpPrestador()!=null){
+            map.put("success", true);
+        }else{
+            map.put("success", false);
+        }
+
+        return map;
+    }
+
 }

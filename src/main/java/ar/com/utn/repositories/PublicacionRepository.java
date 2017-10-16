@@ -18,7 +18,6 @@ public interface PublicacionRepository extends CrudRepository<Publicacion, Long>
     List<Publicacion> findAll();
     List<Publicacion> findAllByEstadoPublicacionEquals(EstadoPublicacion estadoPublicacion);
     List<Publicacion> findAllByTipoTrabajoInAndAndEstadoPublicacionEquals(List<TipoTrabajo> tipoTrabajos, EstadoPublicacion estadoPublicacion);
-
     @Query(value = "select p from Publicacion p where p.estadoPublicacion = 'NUEVA' order by function('RAND')")
     List<Publicacion> findDestacados(Pageable pageable);
 }
