@@ -23,22 +23,48 @@
                     </div>
                     <div class="job-ad-item" th:each="postulacion : ${postulaciones}">
                         <div class="item-info">
-                            <div class="ad-info fixit-job-box col-md-9">
-                                <p class="installationType">
-                                    <span><strong th:text="${postulacion.descripcion}"></strong></span>
-                                </p>
-                                <span th:text="${postulacion.comentarios}"></span>
-                                <div class="ad-meta">
-                                    <ul>
-                                        <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
-                                        <li><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="${postulacion.duracionAprox}" class="btn-price-AR"></small>
-                                    </ul>
-                                </div><!-- ad-meta -->
-                            </div><!-- ad-info -->
+                            <div class="item-image-box col-md-2">
+                                <div class="item-image prestador">
+                                        <img src='/images/perfil-prestador.png'
+                                             onerror="this.src='/images/publicaciones/not-found.png'"
+                                             alt="Image" class="img-responsive">
+                                </div><!-- item-image -->
+                            </div>
+
+                            <div class="ad-info tab-postulaciones fixit-job-box col-md-3">
+                                <div class="datos-prestador">
+                                    <div class="username-prestador">
+                                        <span th:text="'@'+${postulacion.usuarioPrestador.username}"></span>
+                                        <img th:if="${postulacion.usuarioPrestador.prestador.validado}" src='/images/validado.png' onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="img-validado">
+                                    </div>
+                                    <div class="calificacion-user">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                        <span th:text="${postulacion.usuarioPrestador.calificacionPromedio}"></span>
+                                    </div>
+                                    <div class="historia-prestador">
+                                        <span th:text="'Trabajos Realizados: '+${postulacion.usuarioPrestador.prestador.cantContrataciones}"></span>
+                                        <span th:text="'Desde: '+${postulacion.usuarioPrestador.fechaCreacion}"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                                <div class="ad-info tab-postulaciones fixit-job-box col-md-4">
+                                    <p class="installationType">
+                                        <span><strong th:text="${postulacion.descripcion}"></strong></span>
+                                    </p>
+                                    <span th:text="${postulacion.comentarios}"></span>
+                                    <div class="ad-meta">
+                                        <div class="iconos-postulacion"><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></div>
+                                        <div class="iconos-postulacion"><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="'Duración: '+${postulacion.duracionAprox}+ ' Horas'" class="btn-price-AR"></small></div>
+                                    </div><!-- ad-meta -->
+                                </div><!-- ad-info -->
 
                             <div class="button col-md-3">
-                                <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
-                                <a href="#" th:href="@{/publicacion/contratar(postulacionId=${postulacion.id})}" class="btn btn-primary tam-boton-100">Contratar</a>
+                                <div class="tipo-trabajo-postulacion">
+                                    <img th:src="@{/images/}+${postulacion.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
+                                    <span th:text="${postulacion.publicacion.tipoTrabajo.nombre}"></span>
+                                </div>
+                                <a href="#" th:href="@{/publicacion/contratar(postulacionId=${postulacion.id})}" class="btn btn-primary prestador tam-boton-100">Contratar Profesional</a>
                             </div>
                         </div>
                     </div>

@@ -1421,7 +1421,7 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     padding: 5px 25px;
     text-align: left;
 }
-.job-ad-item .item-image-box, .job-ad-item .ad-info {
+.job-ad-item .item-image-box, .job-ad-item .ad-info.tab-nuevas {
     float: left;
     margin-top: 12px;
 }
@@ -1981,8 +1981,59 @@ a:focus{
     margin-bottom: 50px;
 }
 
+#contratadas .job-ad-item .item-image-box, .job-ad-item .ad-info {
+    float: left;
+    margin-top: 20px;
+}
 
+.btn-primary.active, .btn-primary:active, .open>.dropdown-toggle.btn-primary {
+    color: #fff;
+    background-color: #3ac58f;
+    border-color: #3ac58f;
+}
 
+.btn-primary.focus, .btn-primary:focus {
+    border-color: #3ac58f;
+}
+
+.job-ad-item .ad-info .calificacion-user span {
+    display: inline-block;
+    color: #3ac58f;
+}
+
+.job-ad-item .ad-info .calificacion-user{
+    color: #3ac58f;
+}
+
+.job-ad-item .item-image-box, .job-ad-item .ad-info.tab-postulaciones {
+    float: left;
+    margin-top: 10px;
+}
+
+.iconos-postulacion {
+    margin-bottom: 8px;
+    color: #a0a0a0;
+}
+
+.job-ad-item .ad-info .username-prestador span {
+     color: #000;
+     font-size: 16px;
+     line-height: 17px;
+     font-weight: 600;
+    display: inline-block;
+ }
+
+.job-ad-item .item-image.prestador {
+    margin-top: 10px;
+}
+
+.job-ad-item .btn.btn-primary.prestador {
+    margin-top: 10%;
+}
+
+.job-ad-item .ad-info .username-prestador img{
+    width: 8%;
+}
 
 
 

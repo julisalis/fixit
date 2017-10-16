@@ -40,7 +40,7 @@
                                     </div><!-- item-image -->
                                 </div>
 
-                                <div class="ad-info fixit-job-box col-md-7">
+                                <div class="ad-info tab-nuevas fixit-job-box col-md-7">
                                     <p class="installationType">
                                         <span><strong th:text="${nueva.descripcion}"></strong></span>
                                     </p>
@@ -62,7 +62,7 @@
                                     <a th:href="'/postulacion/detalle/'+${nueva.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                     <div class="edit-delete">
                                         <a th:href="'/postulacion/edit/'+${nueva.id}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar </a>
-                                        <a class="deletePublicacion" th:href="'/postulacion/delete/'+${nueva.id}"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar </a>
+                                        <a class="deletePostulacion" th:href="'/postulacion/delete/'+${nueva.id}"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar </a>
                                     </div>
                                 </div>
                             </div>
@@ -98,6 +98,10 @@
                                 </div><!-- ad-info -->
 
                                 <div class="button col-md-3">
+                                    <div class="tipo-trabajo-postulacion">
+                                        <img th:src="@{/images/}+${contratada.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
+                                        <span th:text="${contratada.publicacion.tipoTrabajo.nombre}">asdasd</span>
+                                    </div>
                                     <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                 </div>
                             </div><!-- item-info -->
@@ -133,6 +137,10 @@
                                 </div><!-- ad-info -->
 
                                 <div class="button col-md-3">
+                                    <div class="tipo-trabajo-postulacion">
+                                        <img th:src="@{/images/}+${finalizada.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
+                                        <span th:text="${finalizada.publicacion.tipoTrabajo.nombre}">asdasd</span>
+                                    </div>
                                     <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                 </div>
                             </div><!-- item-info -->

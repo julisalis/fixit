@@ -78,6 +78,7 @@ public class Usuario extends PersistentEntity {
         this.telefono = telefono;
         this.ubicacion=ubicacion;
         this.email = email;
+        this.calificacionPromedio = 0.0;
     }
 
     public Usuario(String username, String nombre, String apellido, String documento, TipoDoc tipoDoc, String password, Telefono telefono, Long cuit, Prestador prestador, Ubicacion ubicacion,String email) {
