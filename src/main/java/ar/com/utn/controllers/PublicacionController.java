@@ -218,7 +218,7 @@ public class PublicacionController {
     }
 
     @PreAuthorize("hasAuthority('TOMADOR')")
-    @RequestMapping(value = "/contratar", method = RequestMethod.GET)
+    @RequestMapping(value = "/contratar", method = RequestMethod.POST)
     @ResponseBody
     @Transactional
     public Map<String,Object> contratarPostulacion(@RequestParam(value = "postulacionId") Postulacion postulacion){
@@ -238,7 +238,9 @@ public class PublicacionController {
             publicacion = publicacionService.setContratada(publicacion);
             postulacion = postulacionService.setContratada(postulacion);
 
-                map.put("success", true);
+            //TODO: Mandar mail al prestador avisandole.
+
+            map.put("success", true);
             map.put("msg","Ha contratado a " + usuarioPostulacion.getUsername() + " correctamente.");
         }catch (Exception e) {
             map.put("success", false);

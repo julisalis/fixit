@@ -38,7 +38,7 @@
 
                             <div class="button col-md-3">
                                 <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
-                                <a href="#" th:href="@{/publicacion/contratar(postulacionId=${postulacion.id})}" class="btn btn-primary tam-boton-100">Contratar</a>
+                                <a href="#" th:href="@{/publicacion/contratar(postulacionId=${postulacion.id})}" th:onclick="${'contratar('+postulacion.id+')'}" class="btn btn-primary tam-boton-100">Contratar</a>
                             </div>
                         </div>
                     </div>
@@ -51,4 +51,29 @@
 
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
+<script>
+    function contratar(publicacionId) {
+        $.ajax({
+            type: 'POST',
+            url: '/publicacion/contratar',
+            data: {
+                publicacionId: publicacionId
+            },
+            async: true,
+            success: function(message){
+                if(message.success){
+                    swal({
+                        title: "Postulación contratada!",
+                        text: message.msg,
+                        type: "success",
+                    },function (e) {
+                        window.location.href="/publicacion/list";
+                    });
+                }else{
+                    swal("Error", message.msg, "error")
+                }
+            }
+        });
+    }
+</script>
 </html>
