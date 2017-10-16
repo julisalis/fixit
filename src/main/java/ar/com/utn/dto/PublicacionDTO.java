@@ -27,6 +27,7 @@ public class PublicacionDTO {
     private PublicacionFotoForm primaryImage;
     private List<PublicacionFotoForm> publicacionFotoForms = new ArrayList<>();
     private boolean canEdit;
+    private Integer cantidadPostulaciones;
 
     public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage) {
         this.id = publicacion.getId();
@@ -43,6 +44,7 @@ public class PublicacionDTO {
         this.primaryImage = primaryImage;
         this.publicacionFotoForms = buildFotoForms(publicacion.getMultimedia());
         this.canEdit = buildCanEdit(publicacion.getPostulaciones());
+        this.cantidadPostulaciones = publicacion.getPostulaciones().size();
     }
 
     private boolean buildCanEdit(Set<Postulacion> postulaciones) {
@@ -171,5 +173,13 @@ public class PublicacionDTO {
 
     public void setCanEdit(boolean canEdit) {
         this.canEdit = canEdit;
+    }
+
+    public Integer getCantidadPostulaciones() {
+        return cantidadPostulaciones;
+    }
+
+    public void setCantidadPostulaciones(Integer cantidadPostulaciones) {
+        this.cantidadPostulaciones = cantidadPostulaciones;
     }
 }

@@ -20,7 +20,7 @@ import java.util.List;
  * Created by iaruedel on 13/08/17.
  */
 @Service
-public class PublicacionServiceImpl implements PublicacionService, ar.com.utn.services.implementation.PublicacionService {
+public class PublicacionServiceImpl implements PublicacionService {
     @Autowired
     private TipoTrabajoRepository tipoTrabajoRepository;
     @Autowired
