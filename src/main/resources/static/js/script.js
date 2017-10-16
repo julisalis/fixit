@@ -71,6 +71,32 @@ $(function () {
             });
 
     });
+
+    $("#postular").click(function (e) {
+        $.ajax({
+            url: "/usuario/validateMercadoPago",
+            async: false,
+            method: "GET",
+            success: function( data) {
+                if(!data.success) {
+                    swal({
+                        title: "Error",
+                        text: "Debe iniciar sesión en Mercado Pago",
+                        type: "error",
+                    },function () {
+                        window.location.href = "/usuario/perfil";
+                    });
+                    e.preventDefault();
+                    return false;
+                }
+            },
+            error: function ( jqXHR, textStatus, errorThrown){
+                e.preventDefault();
+                return false;
+            }
+        });
+
+    });
 });
 
 
