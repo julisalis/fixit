@@ -32,4 +32,13 @@ public interface MercadoPagoClient{
     Call<ClientCredentials> renewClientCredentials(@Field("client_secret") String clientSecret,
                                                    @Field("grant_type") String grantType,@Field("refresh_token") String refreshToken);
 
+
+    @Headers({
+            "accept: application/json",
+            "content-type: application/x-www-form-urlencoded"
+    })
+    @FormUrlEncoded
+    @POST("/users")
+    Call<ClientCredentials> getUserInformation(@Field("User_id") String userId);
+
 }

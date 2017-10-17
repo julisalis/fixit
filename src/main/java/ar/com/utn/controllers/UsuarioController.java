@@ -14,6 +14,8 @@ import ar.com.utn.repositories.UsuarioRepository;
 import ar.com.utn.services.PrestadorService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
+import com.mercadopago.MP;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -89,8 +91,29 @@ public class UsuarioController {
 
     @GetMapping(value="/perfil")
     public String perfilUsuario(WebRequest request, Model model) {
-        model.addAttribute("app_id_mp",MP_APP_ID);
-        model.addAttribute("redirect_uri",URL+"/usuario/mercadoPagoToken");
+
+        if(currentSession.getUser()!=null && currentSession.getUser().getPrestador()!=null){
+            model.addAttribute("app_id_mp",MP_APP_ID);
+            model.addAttribute("redirect_uri",URL+"/usuario/mercadoPagoToken");
+
+            if(currentSession.getUser().getPrestador().getMpPrestador()!=null){
+                MP mp = new MP (currentSession.getUser().getPrestador().getMpPrestador().getAccessToken());
+                try {
+                    JSONObject response = mp.get ("/users/"+currentSession.getUser().getPrestador().getMpPrestador().getUserId());
+                    JSONObject userMP = (JSONObject)response.get("response");
+                    model.addAttribute("mp_name",userMP.get("first_name"));
+                    model.addAttribute("mp_lastname",userMP.get("last_name"));
+                    model.addAttribute("mp_username",userMP.get("nickname"));
+                    model.addAttribute("mp_email",userMP.get("email"));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
+
+
         model.addAttribute("user",currentSession.getUser());
         model.addAttribute("provincias", signupController.generarProvicias());
         model.addAttribute("documentos", TipoDoc.values());
