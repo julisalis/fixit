@@ -5,6 +5,7 @@ import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.form.*;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.implementation.PublicacionSearch;
+import ar.com.utn.services.MailService;
 import ar.com.utn.services.PostulacionService;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
@@ -50,6 +51,9 @@ public class PublicacionController {
     private CurrentSession currentSession;
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private PublicacionSearch publicacionSearch;
@@ -238,7 +242,7 @@ public class PublicacionController {
             publicacion = publicacionService.setContratada(publicacion);
             postulacion = postulacionService.setContratada(postulacion);
 
-            //TODO: Mandar mail al prestador avisandole.
+            mailService.sendPostulacionElegidaMail(usuario,usuarioPostulacion,postulacion);
 
             map.put("success", true);
             map.put("msg","Ha contratado a " + usuarioPostulacion.getUsername() + " correctamente.");
