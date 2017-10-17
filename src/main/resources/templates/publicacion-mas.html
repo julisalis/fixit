@@ -6,22 +6,15 @@
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
 </head>
-<body>
+<body class="white-body">
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
+
 <div id="publicacion-mas">
-    <!--/*/ <th:block th:include="fragments/header-static :: header"></th:block> /*/-->
 
     <!-- Modal logIn-->
     <!--/*/ <th:block th:include="modals/login :: login"></th:block> /*/-->
 
-    <!-- Foto inicial -->
-    <section id="section-foto">
-        <div class="jumbotron-categoria2 text-center">
-            <div class="container">
-                <h1 class="titulo-prin-static">DETALLE PUBLICACIÓN</h1>
-            </div>
-        </div>
-    </section>
-    <section id="section-publicaciones">
+    <section id="section-publicaciones" class="public-list">
         <div class="container">
             <h3 class="subtitulo-jobs" th:text="${publicacion.titulo}"></h3>
             <div class="col-md-12 form-container">

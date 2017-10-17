@@ -40,4 +40,6 @@ public interface PublicacionService {
     List<Publicacion> getTrabajosRecomendados(List<TipoTrabajo> tipos);
 
     Publicacion setContratada(Publicacion publicacion);
+
+    List<Publicacion> getDestacados();
 }

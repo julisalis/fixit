@@ -15,7 +15,11 @@
             <div class="form-group">
                 <h2>Mi Perfil</h2>
                 <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')">Cliente</h4>
-                <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">Profesional</h4>
+                <div class="prestador-validado">
+                    <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">Profesional
+                    <img th:if="${user.prestador.validado}" src='/images/validado.png' onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="img-validado">
+                    </h4>
+                </div>
             </div>
             <fieldset>
 
