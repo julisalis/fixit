@@ -28,6 +28,7 @@ public class PublicacionDTO {
     private List<PublicacionFotoForm> publicacionFotoForms = new ArrayList<>();
     private boolean canEdit;
     private Integer cantidadPostulaciones;
+    private boolean prestadorPuedePostularse = true;
 
     public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage) {
         this.id = publicacion.getId();
@@ -45,6 +46,25 @@ public class PublicacionDTO {
         this.publicacionFotoForms = buildFotoForms(publicacion.getMultimedia());
         this.canEdit = buildCanEdit(publicacion.getPostulaciones());
         this.cantidadPostulaciones = publicacion.getPostulaciones().size();
+    }
+
+    public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage, Prestador prestador) {
+        this.id = publicacion.getId();
+        this.titulo = publicacion.getTitulo();
+        this.descripcion = publicacion.getDescripcion();
+        this.presupMax = publicacion.getPresupMax();
+        this.currency = publicacion.getCurrency().getCurrencyCode();
+        this.tipoTrabajo = publicacion.getTipoTrabajo();
+        this.localidad = publicacion.getLocalidad();
+        this.provincia = publicacion.getLocalidad().getProvincia();
+        this.urgencia = publicacion.getUrgencia().name();
+        this.fecha = publicacion.getFecha();
+        this.estado = publicacion.getEstadoPublicacion();
+        this.primaryImage = primaryImage;
+        this.publicacionFotoForms = buildFotoForms(publicacion.getMultimedia());
+        this.canEdit = buildCanEdit(publicacion.getPostulaciones());
+        this.cantidadPostulaciones = publicacion.getPostulaciones().size();
+        this.prestadorPuedePostularse = !publicacion.getPostulaciones().stream().anyMatch(p -> p.getPrestador() == prestador);
     }
 
     private boolean buildCanEdit(Set<Postulacion> postulaciones) {
@@ -181,5 +201,13 @@ public class PublicacionDTO {
 
     public void setCantidadPostulaciones(Integer cantidadPostulaciones) {
         this.cantidadPostulaciones = cantidadPostulaciones;
+    }
+
+    public boolean getPrestadorPuedePostularse() {
+        return prestadorPuedePostularse;
+    }
+
+    public void setPrestadorPuedePostularse(boolean prestadorPuedePostularse) {
+        this.prestadorPuedePostularse = prestadorPuedePostularse;
     }
 }

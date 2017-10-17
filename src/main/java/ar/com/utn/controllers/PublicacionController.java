@@ -211,7 +211,7 @@ public class PublicacionController {
         Usuario usuario = currentSession.getUser();
         if(usuario!=null && usuario.getPrestador()!=null){
             List<PublicacionDTO> publicacionDTOS = publicacionService.getTrabajosRecomendados(usuario.getPrestador().getTipos()).stream()
-                    .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion))).collect(Collectors.toList());
+                    .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion),usuario.getPrestador())).collect(Collectors.toList());
             model.addAttribute("trabajosRecomendados", publicacionDTOS);
         }
         return "trabajos-recomendados";
