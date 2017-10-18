@@ -1,5 +1,7 @@
 package ar.com.utn.models;
 
+import ar.com.utn.form.PostulacionForm;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Currency;
@@ -34,14 +36,22 @@ public class Postulacion extends PersistentEntity {
     public Postulacion() {
     }
 
-    public Postulacion(String currency, String descripcion, BigDecimal presupAprox, BigDecimal duracionAprox, Publicacion publicacion, Prestador prestador, String comentarios) {
-        this.descripcion = descripcion;
-        this.presupAprox = presupAprox;
-        this.currency = Currency.getInstance(currency)!=null? Currency.getInstance(currency) : Currency.getInstance("ARS") ;
-        this.duracionAprox = duracionAprox;
+    public Postulacion(PostulacionForm postulacionForm, Prestador prestador, Publicacion publicacion) {
+        this.descripcion = postulacionForm.getDescripcion();
+        this.presupAprox = postulacionForm.getPresupAprox();
+        this.currency = Currency.getInstance(postulacionForm.getCurrencyCode())!=null? Currency.getInstance(postulacionForm.getCurrencyCode()) : Currency.getInstance("ARS") ;
+        this.duracionAprox = postulacionForm.getDuracionAprox();
         this.publicacion = publicacion;
         this.prestador = prestador;
-        this.comentarios = comentarios;
+        this.comentarios = postulacionForm.getComentarios();
+    }
+
+    public void update(PostulacionForm postulacionForm) {
+        this.descripcion = postulacionForm.getDescripcion();
+        this.presupAprox = postulacionForm.getPresupAprox();
+        this.currency = Currency.getInstance(postulacionForm.getCurrencyCode())!=null? Currency.getInstance(postulacionForm.getCurrencyCode()) : Currency.getInstance("ARS") ;
+        this.duracionAprox = postulacionForm.getDuracionAprox();
+        this.comentarios = postulacionForm.getComentarios();
     }
 
     public String getDescripcion() {

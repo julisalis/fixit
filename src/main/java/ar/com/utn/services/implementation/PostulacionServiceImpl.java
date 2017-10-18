@@ -1,5 +1,6 @@
 package ar.com.utn.services.implementation;
 
+import ar.com.utn.form.PostulacionForm;
 import ar.com.utn.models.EstadoPostulacion;
 import ar.com.utn.models.EstadoPublicacion;
 import ar.com.utn.models.Postulacion;
@@ -44,6 +45,15 @@ public class PostulacionServiceImpl implements PostulacionService {
             return postulacion;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
+        }
+    }
+
+    @Override
+    @Transactional(rollbackOn={Exception.class})
+    public void editPostulacion(PostulacionForm postulacionForm) {
+        Postulacion postulacion = findById(postulacionForm.getId());
+        if(postulacion!=null){
+            postulacion.update(postulacionForm);
         }
     }
 }
