@@ -59,4 +59,10 @@ public class PostulacionServiceImpl implements PostulacionService {
             postulacion.update(postulacionForm);
         }
     }
+
+    @Override
+    @Transactional(rollbackOn={Exception.class})
+    public void deletePostulacion(Postulacion postulacion) {
+        postulacionRepository.delete(postulacion);
+    }
 }

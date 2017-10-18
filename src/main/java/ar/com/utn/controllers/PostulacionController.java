@@ -127,7 +127,7 @@ public class PostulacionController {
                             && postulacionForm.getDuracionAprox().doubleValue() > 0){
                         postulacionService.editPostulacion(postulacionForm);
                         map.put("success", true);
-                        map.put("msg","La postulación ha sido editada con éxito!");
+                        map.put("msg","La postulación ha sido editado con éxito!");
                     }else{
                         map.put("success", false);
                         map.put("msg","La duracion y el presupuesto deben ser positivos.");
@@ -167,4 +167,21 @@ public class PostulacionController {
         }
         return "redirect:/";
     }
+
+    @PostMapping(path="/delete/{postulacionId}")
+    public @ResponseBody Map<String,Object> deletePostulacion(@PathVariable Long postulacionId,Model model) {
+        HashMap<String,Object> map = new HashMap<>();
+        try {
+            Postulacion postulacion = postulacionService.findById(postulacionId);
+            if(postulacion!=null && postulacion.getPrestador() == currentSession.getUser().getPrestador()) {
+                postulacionService.deletePostulacion(postulacion);
+                map.put("success", true);
+            }else map.put("success", false);
+        }catch (Exception e) {
+            map.put("success", false);
+        }
+        return map;
+    }
+
+
 }

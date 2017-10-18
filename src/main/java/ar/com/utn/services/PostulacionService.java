@@ -20,4 +20,6 @@ public interface PostulacionService {
     Postulacion setContratada(Postulacion postulacion);
 
     void editPostulacion(PostulacionForm postulacionForm);
+
+    void deletePostulacion(Postulacion postulacion);
 }
