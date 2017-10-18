@@ -21,6 +21,7 @@
                         <li role="presentation" class="active"><a href="#nuevas" data-toggle="tab" aria-expanded="true">Nuevas</a></li>
                         <li role="presentation" class=""><a href="#contratadas" data-toggle="tab" aria-expanded="false">Contratadas</a></li>
                         <li role="presentation" class=""><a href="#finalizadas" data-toggle="tab" aria-expanded="false">Finalizadas</a></li>
+                        <li role="presentation" class=""><a href="#rechazadas" data-toggle="tab" aria-expanded="false">Rechazadas</a></li>
                     </ul>
                 </div>
 
@@ -140,6 +141,45 @@
                                     <div class="tipo-trabajo-postulacion">
                                         <img th:src="@{/images/}+${finalizada.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${finalizada.publicacion.tipoTrabajo.nombre}">asdasd</span>
+                                    </div>
+                                    <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                </div>
+                            </div><!-- item-info -->
+                        </div><!-- ad-item -->
+                    </div><!-- tab-pane -->
+
+                    <div role="tabpanel" class="tab-pane fade" id="rechazadas">
+                        <div th:if="${#lists.isEmpty(postulacionesRechazadas)}">
+                            <h3>No hay postulaciones rechazadas</h3>
+                        </div>
+                        <div class="job-ad-item" th:each="rechazada : ${postulacionesRechazadas}">
+                            <div class="item-info">
+                                <div class="item-image-box col-md-2">
+                                    <div class="item-image">
+                                        <img th:src="'/multimedia/image/'+${rechazada.publicacion.primaryImage?.id}"
+                                             onerror="this.src='/images/publicaciones/not-found.png'"
+                                             alt="Image" class="img-tipotrabajo">
+                                    </div><!-- item-image -->
+                                </div>
+
+                                <div class="ad-info fixit-job-box col-md-7">
+                                    <p class="installationType">
+                                        <span><strong th:text="${rechazada.descripcion}"></strong></span>
+                                    </p>
+                                    <span th:text="${rechazada.comentarios}"></span>
+                                    <div class="ad-meta">
+                                        <ul>
+                                            <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${rechazada.publicacion.localidad.nombre}+', '+${rechazada.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${rechazada.presupAprox}+' '+${rechazada.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${rechazada.duracionAprox}" class="btn-price-AR"></small>
+                                        </ul>
+                                    </div><!-- ad-meta -->
+                                </div><!-- ad-info -->
+
+                                <div class="button col-md-3">
+                                    <div class="tipo-trabajo-postulacion">
+                                        <img th:src="@{/images/}+${rechazada.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
+                                        <span th:text="${rechazada.publicacion.tipoTrabajo.nombre}">asdasd</span>
                                     </div>
                                     <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                 </div>

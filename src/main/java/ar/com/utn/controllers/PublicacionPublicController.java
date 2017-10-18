@@ -2,9 +2,7 @@ package ar.com.utn.controllers;
 
 import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.form.PublicacionFotoForm;
-import ar.com.utn.models.EstadoPublicacion;
-import ar.com.utn.models.Publicacion;
-import ar.com.utn.models.PublicacionPhoto;
+import ar.com.utn.models.*;
 import ar.com.utn.repositories.implementation.PublicacionSearch;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
@@ -44,8 +42,13 @@ public class PublicacionPublicController {
     public  @ResponseBody
     Map<String,Object> detallePublicacion(Long publicacionId, WebRequest request, Model model) {
         HashMap<String,Object> map = new HashMap<>();
+        Usuario usuario = currentSession.getUser();
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
-        map.put("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+        if(usuario.getPrestador() != null){
+            map.put("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion),usuario.getPrestador()));
+        }else{
+            map.put("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+        }
         return map;
     }
 
