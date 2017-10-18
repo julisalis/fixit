@@ -39,8 +39,11 @@ public class PostulacionServiceImpl implements PostulacionService {
     @Transactional(rollbackOn={Exception.class})
     public Postulacion setContratada(Postulacion postulacion) {
         try {
+            postulacion.getPublicacion().getPostulaciones().stream().filter(p -> p != postulacion).forEach(p -> p.setEstadoPostulacion(EstadoPostulacion.RECHAZADA));
+
             postulacion.setEstadoPostulacion(EstadoPostulacion.CONTRATADA);
             postulacion.setElegida(true);
+
             //postulacion = postulacionRepository.save(postulacion);
             return postulacion;
         } catch (Exception e) {
