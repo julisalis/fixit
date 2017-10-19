@@ -56,10 +56,15 @@ public class ContratacionController {
     @Autowired
     private PublicacionSearch publicacionSearch;
 
-    @GetMapping
-    public String contratar(@RequestParam(value = "postulacionId") Postulacion postulacion,WebRequest request, Model model) {
-        model.addAttribute("postulacion",new PostulacionDTO(postulacion,getCover(postulacion.getPublicacion()),usuarioService.findByPrestador(postulacion.getPrestador())));
-        return "contratar-postulacion";
+    @GetMapping(value = "/{postulacionId}")
+    public String contratar(@PathVariable(value = "postulacionId") Long postulacionId,WebRequest request, Model model) {
+        Postulacion postulacion = postulacionService.findById(postulacionId);
+        if (postulacion!=null){
+            Usuario usuario = usuarioService.findByPrestador(postulacion.getPrestador());
+            model.addAttribute("postulacion",new PostulacionDTO(postulacion,getCover(postulacion.getPublicacion()),usuario));
+            return "contratacion-postulacion";
+        }
+        return "redirect:/";
     }
 
     @PreAuthorize("hasAuthority('TOMADOR')")

@@ -48,7 +48,7 @@
                                 </div>
                             </div>
 
-                                <div class="ad-info tab-postulaciones fixit-job-box col-md-4">
+                            <div class="ad-info tab-postulaciones fixit-job-box col-md-4">
                                     <p class="installationType">
                                         <span><strong th:text="${postulacion.descripcion}"></strong></span>
                                     </p>
@@ -64,7 +64,7 @@
                                     <img th:src="@{/images/}+${postulacion.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                     <span th:text="${postulacion.publicacion.tipoTrabajo.nombre}"></span>
                                 </div>
-                                <a href="#" th:onclick="${'contratar('+postulacion.id+')'}" class="btn btn-primary prestador tam-boton-100">Contratar Profesional</a>
+                                <a th:href="'/contratar/'+${postulacion.id}" class="btn btn-primary prestador tam-boton-100">Contratar Profesional</a>
                             </div>
                         </div>
                     </div>
@@ -73,33 +73,6 @@
         </div>
     </div>
 </section>
-
-
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
-<script>
-    function contratar(postulacionId) {
-        $.ajax({
-            type: 'POST',
-            url: '/publicacion/contratar',
-            data: {
-                postulacionId: postulacionId
-            },
-            async: true,
-            success: function(message){
-                if(message.success){
-                    swal({
-                        title: "Postulación contratada!",
-                        text: message.msg,
-                        type: "success",
-                    },function (e) {
-                        window.location.href="/publicacion/list";
-                    });
-                }else{
-                    swal("Error", message.msg, "error")
-                }
-            }
-        });
-    }
-</script>
 </html>
