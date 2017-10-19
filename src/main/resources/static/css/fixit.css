@@ -1554,6 +1554,10 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     text-align: center;
 }
 
+#postulacion-mas #section-publicaciones #datos-publicacion{
+    text-align: left;
+}
+
 #publicacion-mas #datos-publicacion, #postulacion #datos-publicacion{
     text-align: left;
 }
