@@ -58,10 +58,7 @@ public class ContratacionController {
 
     @GetMapping
     public String contratar(@RequestParam(value = "postulacionId") Postulacion postulacion,WebRequest request, Model model) {
-        //todo add en security permisos solo para el tomaddor
-        Usuario user = currentSession.getUser();
-        //PublicacionFotoForm primaryImage =
-        model.addAttribute("postulacion",new PostulacionDTO(postulacion,null));
+        model.addAttribute("postulacion",new PostulacionDTO(postulacion,getCover(postulacion.getPublicacion())));
         return "contratar-postulacion";
     }
 
@@ -92,5 +89,13 @@ public class ContratacionController {
             map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
         }
         return map;
+    }
+
+    private PublicacionFotoForm getCover(Publicacion publicacion) {
+        PublicacionPhoto publicacionPhoto = publicacionService.getCover(publicacion);
+        if(publicacionPhoto!=null){
+            return new PublicacionFotoForm(publicacionPhoto);
+        }else return null;
+
     }
 }
