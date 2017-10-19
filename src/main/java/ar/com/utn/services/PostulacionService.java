@@ -1,5 +1,6 @@
 package ar.com.utn.services;
 
+import ar.com.utn.form.PostulacionForm;
 import ar.com.utn.models.Postulacion;
 import ar.com.utn.models.Publicacion;
 
@@ -17,4 +18,8 @@ public interface PostulacionService {
     Postulacion findById(Long postulacionId);
 
     Postulacion setContratada(Postulacion postulacion);
+
+    void editPostulacion(PostulacionForm postulacionForm);
+
+    void deletePostulacion(Postulacion postulacion);
 }

@@ -3,10 +3,7 @@ package ar.com.utn.services;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TomadorForm;
-import ar.com.utn.models.Prestador;
-import ar.com.utn.models.Provincia;
-import ar.com.utn.models.Rol;
-import ar.com.utn.models.Usuario;
+import ar.com.utn.models.*;
 
 import java.util.List;
 
@@ -36,4 +33,6 @@ public interface UsuarioService {
     void setAuthority(Rol rol, Usuario usuario);
 
     Usuario findByPrestador(Prestador prestador);
+
+    Usuario findByTomador(Tomador tomador);
 }

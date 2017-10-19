@@ -5,6 +5,7 @@ import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.form.*;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.implementation.PublicacionSearch;
+import ar.com.utn.services.MailService;
 import ar.com.utn.services.PostulacionService;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
@@ -50,6 +51,9 @@ public class PublicacionController {
     private CurrentSession currentSession;
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private MailService mailService;
 
     @Autowired
     private PublicacionSearch publicacionSearch;
@@ -211,43 +215,10 @@ public class PublicacionController {
         Usuario usuario = currentSession.getUser();
         if(usuario!=null && usuario.getPrestador()!=null){
             List<PublicacionDTO> publicacionDTOS = publicacionService.getTrabajosRecomendados(usuario.getPrestador().getTipos()).stream()
-                    .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion))).collect(Collectors.toList());
+                    .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion),usuario.getPrestador())).collect(Collectors.toList());
             model.addAttribute("trabajosRecomendados", publicacionDTOS);
         }
         return "trabajos-recomendados";
     }
-
-    @PreAuthorize("hasAuthority('TOMADOR')")
-    @RequestMapping(value = "/contratar", method = RequestMethod.POST)
-    @ResponseBody
-    @Transactional
-    public Map<String,Object> contratarPostulacion(@RequestParam(value = "postulacionId") Postulacion postulacion){
-        Usuario usuario = currentSession.getUser();
-        Publicacion publicacion = postulacion.getPublicacion();
-
-        Usuario usuarioPostulacion = usuarioService.findByPrestador(postulacion.getPrestador());
-
-        HashMap<String,Object> map = new HashMap<>();
-        try{
-            if(usuario.getTomador() != publicacion.getTomador()){
-                map.put("success", false);
-                map.put("msg","La publicación no es del usuario o está iniciado como profesional.");
-                return map;
-            }
-
-            publicacion = publicacionService.setContratada(publicacion);
-            postulacion = postulacionService.setContratada(postulacion);
-
-            //TODO: Mandar mail al prestador avisandole.
-
-            map.put("success", true);
-            map.put("msg","Ha contratado a " + usuarioPostulacion.getUsername() + " correctamente.");
-        }catch (Exception e) {
-            map.put("success", false);
-            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
-        }
-        return map;
-    }
-
 }
 

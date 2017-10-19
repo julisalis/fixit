@@ -1,5 +1,6 @@
 package ar.com.utn.services.implementation;
 
+import ar.com.utn.form.PostulacionForm;
 import ar.com.utn.models.EstadoPostulacion;
 import ar.com.utn.models.EstadoPublicacion;
 import ar.com.utn.models.Postulacion;
@@ -38,12 +39,30 @@ public class PostulacionServiceImpl implements PostulacionService {
     @Transactional(rollbackOn={Exception.class})
     public Postulacion setContratada(Postulacion postulacion) {
         try {
+            postulacion.getPublicacion().getPostulaciones().stream().filter(p -> p != postulacion).forEach(p -> p.setEstadoPostulacion(EstadoPostulacion.RECHAZADA));
+
             postulacion.setEstadoPostulacion(EstadoPostulacion.CONTRATADA);
             postulacion.setElegida(true);
+
             //postulacion = postulacionRepository.save(postulacion);
             return postulacion;
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    @Override
+    @Transactional(rollbackOn={Exception.class})
+    public void editPostulacion(PostulacionForm postulacionForm) {
+        Postulacion postulacion = findById(postulacionForm.getId());
+        if(postulacion!=null){
+            postulacion.update(postulacionForm);
+        }
+    }
+
+    @Override
+    @Transactional(rollbackOn={Exception.class})
+    public void deletePostulacion(Postulacion postulacion) {
+        postulacionRepository.delete(postulacion);
     }
 }
