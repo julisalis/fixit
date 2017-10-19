@@ -82,7 +82,7 @@ public class MailServiceImpl implements MailService {
         ctx.setVariable("principal_url", environment.getProperty("application.url"));
         ctx.setVariable("facebook_url", environment.getProperty("facebook.url"));
         ctx.setVariable("instagram_url", environment.getProperty("instagram.url"));
-        ctx.setVariable("images_url", environment.getProperty("application.url"));
+        ctx.setVariable("images_url", environment.getProperty("application.url.multimedia"));
         ctx.setVariable("terms_cond_url", urlBuilder.makeOfflineAbsolutePathLink(environment.getProperty("termscond.url")));
         final String htmlContent = this.templateEngine.process(html, ctx);
         String from = environment.getProperty("mail.from");
