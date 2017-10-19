@@ -45,7 +45,7 @@ public class PublicacionPublicController {
         Usuario usuario = currentSession.getUser();
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
         if(usuario.getPrestador() != null){
-            map.put("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion),usuario.getPrestador()));
+            map.put("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
         }else{
             map.put("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
         }

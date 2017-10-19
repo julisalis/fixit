@@ -48,7 +48,7 @@ public class PublicacionDTO {
         this.cantidadPostulaciones = publicacion.getPostulaciones().size();
     }
 
-    public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage, Prestador prestador) {
+    public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage, Usuario usuario) {
         this.id = publicacion.getId();
         this.titulo = publicacion.getTitulo();
         this.descripcion = publicacion.getDescripcion();
@@ -64,7 +64,7 @@ public class PublicacionDTO {
         this.publicacionFotoForms = buildFotoForms(publicacion.getMultimedia());
         this.canEdit = buildCanEdit(publicacion.getPostulaciones());
         this.cantidadPostulaciones = publicacion.getPostulaciones().size();
-        this.prestadorPuedePostularse = !publicacion.getPostulaciones().stream().anyMatch(p -> p.getPrestador() == prestador);
+        this.prestadorPuedePostularse = !publicacion.getPostulaciones().stream().anyMatch(p -> p.getUsuario() == usuario);
     }
 
     private boolean buildCanEdit(Set<Postulacion> postulaciones) {

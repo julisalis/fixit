@@ -30,19 +30,19 @@ public class Postulacion extends PersistentEntity {
     private Publicacion publicacion;
 
     @ManyToOne
-    @JoinColumn(name = "prestador", nullable = false)
-    private Prestador prestador;
+    @JoinColumn(name = "usuario", nullable = false)
+    private Usuario usuario;
 
     public Postulacion() {
     }
 
-    public Postulacion(PostulacionForm postulacionForm, Prestador prestador, Publicacion publicacion) {
+    public Postulacion(PostulacionForm postulacionForm, Usuario usuario, Publicacion publicacion) {
         this.descripcion = postulacionForm.getDescripcion();
         this.presupAprox = postulacionForm.getPresupAprox();
         this.currency = Currency.getInstance(postulacionForm.getCurrencyCode())!=null? Currency.getInstance(postulacionForm.getCurrencyCode()) : Currency.getInstance("ARS") ;
         this.duracionAprox = postulacionForm.getDuracionAprox();
         this.publicacion = publicacion;
-        this.prestador = prestador;
+        this.usuario = usuario;
         this.comentarios = postulacionForm.getComentarios();
     }
 
@@ -110,12 +110,12 @@ public class Postulacion extends PersistentEntity {
         this.publicacion = publicacion;
     }
 
-    public Prestador getPrestador() {
-        return prestador;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setPrestador(Prestador prestador) {
-        this.prestador = prestador;
+    public void setPrestador(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     public EstadoPostulacion getEstadoPostulacion() {

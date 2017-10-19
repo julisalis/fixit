@@ -202,7 +202,7 @@ public class PublicacionController {
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
         if(mipublicacion!=null){
             List<Postulacion> postulaciones = postulacionService.findByPublicacion(mipublicacion);
-            List<PostulacionDTO> postulacionDTOS = postulaciones.stream().map(postulacion -> new PostulacionDTO(postulacion, getCover(publicacionService.findById(postulacion.getPublicacion().getId())), usuarioService.findByPrestador(postulacion.getPrestador()))).collect(Collectors.toList());
+            List<PostulacionDTO> postulacionDTOS = postulaciones.stream().map(postulacion -> new PostulacionDTO(postulacion, getCover(publicacionService.findById(postulacion.getPublicacion().getId())))).collect(Collectors.toList());
             model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
             model.addAttribute("postulaciones",postulacionDTOS);
             return "publicacion-postulaciones";
@@ -215,43 +215,10 @@ public class PublicacionController {
         Usuario usuario = currentSession.getUser();
         if(usuario!=null && usuario.getPrestador()!=null){
             List<PublicacionDTO> publicacionDTOS = publicacionService.getTrabajosRecomendados(usuario.getPrestador().getTipos()).stream()
-                    .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion),usuario.getPrestador())).collect(Collectors.toList());
+                    .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion),usuario)).collect(Collectors.toList());
             model.addAttribute("trabajosRecomendados", publicacionDTOS);
         }
         return "trabajos-recomendados";
     }
-
-    @PreAuthorize("hasAuthority('TOMADOR')")
-    @RequestMapping(value = "/contratar", method = RequestMethod.POST)
-    @ResponseBody
-    @Transactional
-    public Map<String,Object> contratarPostulacion(@RequestParam(value = "postulacionId") Postulacion postulacion){
-        Usuario usuario = currentSession.getUser();
-        Publicacion publicacion = postulacion.getPublicacion();
-
-        Usuario usuarioPostulacion = usuarioService.findByPrestador(postulacion.getPrestador());
-
-        HashMap<String,Object> map = new HashMap<>();
-        try{
-            if(usuario.getTomador() != publicacion.getTomador()){
-                map.put("success", false);
-                map.put("msg","La publicación no es del usuario o está iniciado como profesional.");
-                return map;
-            }
-
-            publicacion = publicacionService.setContratada(publicacion);
-            postulacion = postulacionService.setContratada(postulacion);
-
-            mailService.sendPostulacionElegidaMail(usuario,usuarioPostulacion,postulacion);
-
-            map.put("success", true);
-            map.put("msg","Ha contratado a " + usuarioPostulacion.getUsername() + " correctamente.");
-        }catch (Exception e) {
-            map.put("success", false);
-            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
-        }
-        return map;
-    }
-
 }
 

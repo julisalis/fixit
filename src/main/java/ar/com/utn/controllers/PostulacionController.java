@@ -81,6 +81,7 @@ public class PostulacionController {
     @PostMapping(value = "/new")
     public @ResponseBody Map<String,Object> newPostulacion(@RequestParam(value = "publicacionId") Publicacion publicacion,@Valid @ModelAttribute("postulacion") PostulacionForm postulacionForm,BindingResult result) {
         HashMap<String,Object> map = new HashMap<>();
+        Usuario usuario = currentSession.getUser();
         Prestador prestador = currentSession.getUser().getPrestador();
         try {
             if(prestador.getPostulaciones().stream().anyMatch(p -> p.getPublicacion()==publicacion)) {
@@ -93,7 +94,7 @@ public class PostulacionController {
                 if(!result.hasErrors()){
                     if(postulacionForm.getPresupAprox().doubleValue() > 0
                             && postulacionForm.getDuracionAprox().doubleValue() > 0){
-                        Postulacion postulacion = new Postulacion(postulacionForm,prestador,publicacion);
+                        Postulacion postulacion = new Postulacion(postulacionForm,usuario,publicacion);
                         postulacionService.createPostulacion(postulacion);
                         map.put("success", true);
                         map.put("msg","La postulación ha sido creada con éxito!");
@@ -148,7 +149,7 @@ public class PostulacionController {
     @GetMapping(value="/list")
     public String listPostulaciones(WebRequest request, Model model) {
         Usuario user = currentSession.getUser();
-        List<PostulacionDTO> misPostulaciones = user.getPrestador().getPostulaciones().stream().map(postulacion -> new PostulacionDTO(postulacion, getCover(publicacionService.findById(postulacion.getPublicacion().getId())), user)).collect(Collectors.toList());
+        List<PostulacionDTO> misPostulaciones = user.getPrestador().getPostulaciones().stream().map(postulacion -> new PostulacionDTO(postulacion, getCover(publicacionService.findById(postulacion.getPublicacion().getId())))).collect(Collectors.toList());
         model.addAttribute("postulacionesNuevas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.NUEVA)).collect(Collectors.toList()));
         model.addAttribute("postulacionesContratadas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.CONTRATADA)).collect(Collectors.toList()));
         model.addAttribute("postulacionesFinalizadas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.FINALIZADA)).collect(Collectors.toList()));
@@ -161,7 +162,7 @@ public class PostulacionController {
         Postulacion mipostulacion = postulacionService.findById(postulacionId);
         Publicacion mipublicacion = publicacionService.findById(mipostulacion.getPublicacion().getId());
         if(mipostulacion!=null){
-            model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion),usuarioService.findByPrestador(mipostulacion.getPrestador())));
+            model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion)));
             model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
             return "postulacion-detalle";
         }
@@ -173,7 +174,7 @@ public class PostulacionController {
         HashMap<String,Object> map = new HashMap<>();
         try {
             Postulacion postulacion = postulacionService.findById(postulacionId);
-            if(postulacion!=null && postulacion.getPrestador() == currentSession.getUser().getPrestador()) {
+            if(postulacion!=null && postulacion.getUsuario() == currentSession.getUser()) {
                 postulacionService.deletePostulacion(postulacion);
                 map.put("success", true);
             }else map.put("success", false);
