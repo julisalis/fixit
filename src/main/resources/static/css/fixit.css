@@ -925,7 +925,7 @@ span {
     margin-top: 15px;
 }
 
-#publicacion{
+#publicacion,#postulacion {
     padding-top: 90px;
     background-color: rgba(211, 211, 211, 0.58);
     padding-bottom: 50px;
@@ -1097,12 +1097,16 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
 }
 
 
-#publicacion .form-horizontal .form-group.price input{
+#publicacion .form-horizontal .form-group.price input,#postulacion .form-group.price input{
     width: 79%;
     display: inline-block;
 }
 
-#publicacion .form-horizontal .form-group.price select{
+#postulacion .container .form-container{
+    text-align: left;
+}
+
+#publicacion .form-horizontal .form-group.price select,#postulacion .form-group.price select{
     width: 20%;
     display: inline-block;
 }
@@ -1183,7 +1187,7 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     padding-bottom: 50px;
 }
 
-#section-publicaciones .container {
+#section-publicaciones .container ,#postulacion .container{
     background-color: white;
     padding-top: 50px;
     padding-bottom: 50px;
@@ -1191,7 +1195,7 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     text-align: center;
 }
 
-#section-publicaciones .subtitulo-jobs {
+#section-publicaciones .subtitulo-jobs,#postulacion .container .subtitulo-jobs {
     font-size: 30px;
     letter-spacing: 12px;
     margin-top: 0px;
@@ -1200,7 +1204,7 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     text-transform: uppercase;
 }
 
-#section-publicaciones.public-list {
+#section-publicaciones.public-list ,#postulacion {
     padding-top: 120px;
 }
 
@@ -1550,10 +1554,10 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     text-align: center;
 }
 
-#publicacion-mas #datos-publicacion{
+#publicacion-mas #datos-publicacion, #postulacion #datos-publicacion{
     text-align: left;
 }
-#publicacion-mas #section-publicaciones .subtitulo-jobs{
+#publicacion-mas #section-publicaciones .subtitulo-jobs, #postulacion .container .subtitulo-jobs{
     color: grey;
     margin-bottom: 60px;
 }
@@ -1578,7 +1582,7 @@ label.category-item > input.input-radio + img{ /* IMAGE STYLES */
     color: #3ac58f;
 }
 
-#publicacion {
+#publicacion{
     padding-top: 20px;
 }
 
