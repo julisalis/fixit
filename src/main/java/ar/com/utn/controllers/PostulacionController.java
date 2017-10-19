@@ -7,6 +7,7 @@ import ar.com.utn.form.PostulacionForm;
 import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.models.*;
+import ar.com.utn.services.MailService;
 import ar.com.utn.services.PostulacionService;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
@@ -43,6 +44,9 @@ public class PostulacionController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private MailService mailService;
 
     @GetMapping(value = "/new")
     public String newPostulacion(@RequestParam(value = "publicacionId") Publicacion publicacion, WebRequest request, Model model) {
@@ -82,6 +86,8 @@ public class PostulacionController {
     public @ResponseBody Map<String,Object> newPostulacion(@RequestParam(value = "publicacionId") Publicacion publicacion,@Valid @ModelAttribute("postulacion") PostulacionForm postulacionForm,BindingResult result) {
         HashMap<String,Object> map = new HashMap<>();
         Prestador prestador = currentSession.getUser().getPrestador();
+        Usuario prof = currentSession.getUser();
+        Usuario cliente = usuarioService.findByTomador(publicacion.getTomador());
         try {
             if(prestador.getPostulaciones().stream().anyMatch(p -> p.getPublicacion()==publicacion)) {
                 map.put("success", false);
@@ -95,6 +101,7 @@ public class PostulacionController {
                             && postulacionForm.getDuracionAprox().doubleValue() > 0){
                         Postulacion postulacion = new Postulacion(postulacionForm,prestador,publicacion);
                         postulacionService.createPostulacion(postulacion);
+                        mailService.sendPostulacionNuevaMail(cliente,prof,publicacion,postulacion);
                         map.put("success", true);
                         map.put("msg","La postulación ha sido creada con éxito!");
                     }else{
