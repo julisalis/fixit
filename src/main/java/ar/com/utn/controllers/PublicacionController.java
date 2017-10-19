@@ -202,7 +202,7 @@ public class PublicacionController {
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
         if(mipublicacion!=null){
             List<Postulacion> postulaciones = postulacionService.findByPublicacion(mipublicacion);
-            List<PostulacionDTO> postulacionDTOS = postulaciones.stream().map(postulacion -> new PostulacionDTO(postulacion, getCover(publicacionService.findById(postulacion.getPublicacion().getId())))).collect(Collectors.toList());
+            List<PostulacionDTO> postulacionDTOS = postulaciones.stream().map(postulacion -> new PostulacionDTO(postulacion, getCover(publicacionService.findById(postulacion.getPublicacion().getId())), usuarioService.findByPrestador(postulacion.getPrestador()))).collect(Collectors.toList());
             model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
             model.addAttribute("postulaciones",postulacionDTOS);
             return "publicacion-postulaciones";
@@ -215,7 +215,7 @@ public class PublicacionController {
         Usuario usuario = currentSession.getUser();
         if(usuario!=null && usuario.getPrestador()!=null){
             List<PublicacionDTO> publicacionDTOS = publicacionService.getTrabajosRecomendados(usuario.getPrestador().getTipos()).stream()
-                    .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion),usuario)).collect(Collectors.toList());
+                    .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion),usuario.getPrestador())).collect(Collectors.toList());
             model.addAttribute("trabajosRecomendados", publicacionDTOS);
         }
         return "trabajos-recomendados";

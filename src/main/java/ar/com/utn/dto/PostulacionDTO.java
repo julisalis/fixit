@@ -20,7 +20,7 @@ public class PostulacionDTO {
     private PublicacionDTO publicacion;
     private UsuarioDTO usuarioPrestador;
 
-    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage) {
+    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario) {
         this.id = postulacion.getId();
         this.descripcion = postulacion.getDescripcion();
         this.presupAprox = postulacion.getPresupAprox();
@@ -30,7 +30,7 @@ public class PostulacionDTO {
         this.estado = postulacion.getEstadoPostulacion();
         this.elegida = postulacion.getElegida();
         this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
-        this.usuarioPrestador = new UsuarioDTO(postulacion.getUsuario());
+        this.usuarioPrestador = new UsuarioDTO(usuario);
     }
 
     public PostulacionDTO() {

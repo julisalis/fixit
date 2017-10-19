@@ -58,7 +58,7 @@ public class ContratacionController {
 
     @GetMapping
     public String contratar(@RequestParam(value = "postulacionId") Postulacion postulacion,WebRequest request, Model model) {
-        model.addAttribute("postulacion",new PostulacionDTO(postulacion,getCover(postulacion.getPublicacion())));
+        model.addAttribute("postulacion",new PostulacionDTO(postulacion,getCover(postulacion.getPublicacion()),usuarioService.findByPrestador(postulacion.getPrestador())));
         return "contratar-postulacion";
     }
 
@@ -69,6 +69,9 @@ public class ContratacionController {
     public Map<String, Object> contratarPostulacion(@RequestParam(value = "postulacionId") Postulacion postulacion) {
         Usuario usuario = currentSession.getUser();
         Publicacion publicacion = postulacion.getPublicacion();
+
+        Usuario usuarioPostulacion = usuarioService.findByPrestador(postulacion.getPrestador());
+
         HashMap<String, Object> map = new HashMap<>();
         try {
             if (usuario.getTomador() != publicacion.getTomador()) {
@@ -80,10 +83,10 @@ public class ContratacionController {
             publicacion = publicacionService.setContratada(publicacion);
             postulacion = postulacionService.setContratada(postulacion);
 
-            mailService.sendPostulacionElegidaMail(usuario, postulacion.getUsuario(), postulacion);
+            mailService.sendPostulacionElegidaMail(usuario, usuarioPostulacion, postulacion);
 
             map.put("success", true);
-            map.put("msg", "Ha contratado a " + postulacion.getUsuario().getUsername() + " correctamente.");
+            map.put("msg", "Ha contratado a " + usuarioPostulacion.getUsername() + " correctamente.");
         } catch (Exception e) {
             map.put("success", false);
             map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
