@@ -1,5 +1,6 @@
 package ar.com.utn.models;
 import ar.com.utn.form.PublicacionForm;
+import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Indexed;
 
@@ -20,11 +21,9 @@ import java.util.Set;
 @Indexed
 public class Publicacion extends PersistentEntity{
 
-    @Field
     private String titulo;
-    @Field
+    @Type(type="text")
     private String descripcion;
-
     private BigDecimal presupMax;
     private Currency currency;
     @ManyToOne

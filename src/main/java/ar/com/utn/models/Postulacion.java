@@ -1,6 +1,7 @@
 package ar.com.utn.models;
 
 import ar.com.utn.form.PostulacionForm;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,12 +13,13 @@ import java.util.Currency;
 @Entity
 @Table(name="postulaciones")
 public class Postulacion extends PersistentEntity {
-
+    @Type(type="text")
     private String descripcion;
     private BigDecimal presupAprox;
     private Currency currency;
     private BigDecimal duracionAprox;
     //private String recursos;
+    @Type(type="text")
     private String comentarios;
     @Column(columnDefinition="boolean default false", nullable = false)
     private Boolean elegida = false;

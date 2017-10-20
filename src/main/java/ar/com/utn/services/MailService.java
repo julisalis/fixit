@@ -3,6 +3,7 @@ package ar.com.utn.services;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.Postulacion;
+import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.Usuario;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,4 +17,6 @@ public interface MailService {
     void sendRegistrationMailPrestador(PrestadorForm user, String link);
 
     void sendPostulacionElegidaMail(Usuario cliente, Usuario prestador, Postulacion postulacion);
+
+    void sendPostulacionNuevaMail(Usuario cliente, Usuario prestador, Publicacion publicacion, Postulacion postulacion);
 }

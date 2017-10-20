@@ -101,20 +101,20 @@
                         <h3 class="modal-ubicacion publicaciones"  th:text="${publicacion.localidad.nombre+', '+publicacion.provincia.nombre}" ></h3>
                         <div class="pregunta">
                             <div class="icons-publicacion-detalle"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
-                            <h4 class="preguntas-publicacion"  >Cuánto quiero gastar?</h4>
+                            <h4 class="preguntas-publicacion"  >Cuánto quiere gastar?</h4>
                         </div>
                         <h3 class="modal-precio publicaciones" th:text="${'Hasta '+publicacion.presupMax+' '+publicacion.currency}"></h3>
                         <div th:if="${publicacion.fecha != null}">
                             <div class="pregunta">
                                 <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                                <h4 class="preguntas-publicacion">Cuándo lo necesito?</h4>
+                                <h4 class="preguntas-publicacion">Cuándo lo necesita?</h4>
                             </div>
                             <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.fecha.dayOfMonth+'/'+publicacion.fecha.monthValue+'/'+publicacion.fecha.year}"></h3>
                         </div>
                         <div th:if="${publicacion.fecha == null}">
                             <div class="pregunta">
                                 <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                                <h4 class="preguntas-publicacion">Cuándo lo necesito?</h4>
+                                <h4 class="preguntas-publicacion">Cuándo lo necesita?</h4>
                             </div>
                             <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.urgencia}"></h3>
                         </div>

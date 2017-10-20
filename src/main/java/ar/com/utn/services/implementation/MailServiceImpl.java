@@ -3,6 +3,7 @@ package ar.com.utn.services.implementation;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.Postulacion;
+import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.Usuario;
 import ar.com.utn.services.MailService;
 import ar.com.utn.utils.EmailApi;
@@ -96,11 +97,27 @@ public class MailServiceImpl implements MailService {
         sendBasicMail("¡Tu postulación ha sido elegida!", dest, "email/postulacion-elegida",ctx);
     }
 
+    @Override
+    @Transactional(readOnly=true)
+    public void sendPostulacionNuevaMail(Usuario cliente, Usuario profesional, Publicacion publicacion, Postulacion postulacion) {
+        final Context ctx = new Context(new Locale("es","AR"));
+        ctx.setVariable("name", cliente.getUsername());
+        //ctx.setVariable("linkConfirm", link);
+        ctx.setVariable("title", "Postulación elegida");
+
+        String dest= cliente.getEmail();
+        if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
+            dest =(environment.getProperty("mail.info"));
+        }
+
+        sendBasicMail("Nueva postulación", dest, "email/postulacion-nueva",ctx);
+    }
+
     public void sendBasicMail(String subject,String dest,String html,Context ctx) {
         ctx.setVariable("principal_url", environment.getProperty("application.url"));
         ctx.setVariable("facebook_url", environment.getProperty("facebook.url"));
         ctx.setVariable("instagram_url", environment.getProperty("instagram.url"));
-        ctx.setVariable("images_url", environment.getProperty("application.url"));
+        ctx.setVariable("images_url", environment.getProperty("application.url.multimedia"));
         ctx.setVariable("terms_cond_url", urlBuilder.makeOfflineAbsolutePathLink(environment.getProperty("termscond.url")));
         final String htmlContent = this.templateEngine.process(html, ctx);
         String from = environment.getProperty("mail.from");
