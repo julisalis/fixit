@@ -96,23 +96,23 @@ public class UsuarioController {
             model.addAttribute("app_id_mp",MP_APP_ID);
             model.addAttribute("redirect_uri",URL+"/usuario/mercadoPagoToken");
 
-            if(currentSession.getUser().getPrestador().getMpPrestador()!=null){
+            if(currentSession.getUser().getPrestador().getMpPrestador()!=null && currentSession.getActualRol().stream().anyMatch(o -> o.getAuthority().equalsIgnoreCase("PRESTADOR"))){
                 MP mp = new MP (currentSession.getUser().getPrestador().getMpPrestador().getAccessToken());
                 try {
                     JSONObject response = mp.get ("/users/"+currentSession.getUser().getPrestador().getMpPrestador().getUserId());
                     JSONObject userMP = (JSONObject)response.get("response");
-                    model.addAttribute("mp_name",userMP.get("first_name"));
-                    model.addAttribute("mp_lastname",userMP.get("last_name"));
-                    model.addAttribute("mp_username",userMP.get("nickname"));
-                    model.addAttribute("mp_email",userMP.get("email"));
+                    if(userMP!=null){
+                        model.addAttribute("mp_name",userMP.get("first_name"));
+                        model.addAttribute("mp_lastname",userMP.get("last_name"));
+                        model.addAttribute("mp_username",userMP.get("nickname"));
+                        model.addAttribute("mp_email",userMP.get("email"));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
 
         }
-
-
 
         model.addAttribute("user",currentSession.getUser());
         model.addAttribute("provincias", signupController.generarProvicias());

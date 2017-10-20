@@ -92,6 +92,9 @@ public class PostulacionController {
             if(prestador.getPostulaciones().stream().anyMatch(p -> p.getPublicacion()==publicacion)) {
                 map.put("success", false);
                 map.put("msg", "Usted ya está postulado en esta publicación.");
+            }else if(prof.getTomador()!=null && prof.getTomador().getPublicaciones().contains(publicacion)){
+                map.put("success", false);
+                map.put("msg", "No se puede postular a una publicación propia.");
             }else if(prestador.getMpPrestador()==null){
                 map.put("success", false);
                 map.put("msg", "Ingrese a su perfil para Iniciar Sesión con Mercado Pago.");

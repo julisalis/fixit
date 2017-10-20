@@ -3,6 +3,7 @@ package ar.com.utn.repositories;
 import ar.com.utn.models.EstadoPublicacion;
 import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.TipoTrabajo;
+import ar.com.utn.models.Tomador;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

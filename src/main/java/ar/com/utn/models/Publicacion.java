@@ -20,9 +20,10 @@ import java.util.Set;
 @Table(name="publicacion")
 @Indexed
 public class Publicacion extends PersistentEntity{
-
+    @Field
     private String titulo;
     @Type(type="text")
+    @Field
     private String descripcion;
     private BigDecimal presupMax;
     private Currency currency;

@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.io.IOException;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by iaruedel on 13/08/17.
@@ -135,6 +136,13 @@ public class PublicacionServiceImpl implements PublicacionService {
 
     @Override
     public List<Publicacion> getTrabajosRecomendados(List<TipoTrabajo> tipos) {
-        return publicacionRepository.findAllByTipoTrabajoInAndAndEstadoPublicacionEquals(tipos, EstadoPublicacion.NUEVA);
+        Usuario user = currentSession.getUser();
+        List<Publicacion> publicacionList = publicacionRepository.findAllByTipoTrabajoInAndAndEstadoPublicacionEquals(tipos, EstadoPublicacion.NUEVA);
+        if(user.getTomador()!=null){
+           return publicacionList.stream().filter(publicacion -> publicacion.getTomador() != user.getTomador()).collect(Collectors.toList());
+        }else{
+            return  publicacionList;
+        }
+
     }
 }

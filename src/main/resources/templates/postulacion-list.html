@@ -103,7 +103,7 @@
                                         <img th:src="@{/images/}+${contratada.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${contratada.publicacion.tipoTrabajo.nombre}">asdasd</span>
                                     </div>
-                                    <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                    <a th:href="'/postulacion/detalle/'+${contratada.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->
@@ -142,7 +142,7 @@
                                         <img th:src="@{/images/}+${finalizada.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${finalizada.publicacion.tipoTrabajo.nombre}">asdasd</span>
                                     </div>
-                                    <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                    <a th:href="'/postulacion/detalle/'+${finalizada.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->
@@ -181,7 +181,7 @@
                                         <img th:src="@{/images/}+${rechazada.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${rechazada.publicacion.tipoTrabajo.nombre}">asdasd</span>
                                     </div>
-                                    <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                    <a  th:href="'/postulacion/detalle/'+${rechazada.id}"  class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->

@@ -29,6 +29,7 @@ public class PublicacionDTO {
     private boolean canEdit;
     private Integer cantidadPostulaciones;
     private boolean prestadorPuedePostularse = true;
+    private boolean esMiPublicacion = true;
 
     public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage) {
         this.id = publicacion.getId();
@@ -48,7 +49,7 @@ public class PublicacionDTO {
         this.cantidadPostulaciones = publicacion.getPostulaciones().size();
     }
 
-    public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage, Prestador prestador) {
+    public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage, Usuario user) {
         this.id = publicacion.getId();
         this.titulo = publicacion.getTitulo();
         this.descripcion = publicacion.getDescripcion();
@@ -64,8 +65,14 @@ public class PublicacionDTO {
         this.publicacionFotoForms = buildFotoForms(publicacion.getMultimedia());
         this.canEdit = buildCanEdit(publicacion.getPostulaciones());
         this.cantidadPostulaciones = publicacion.getPostulaciones().size();
-        this.prestadorPuedePostularse = !publicacion.getPostulaciones().stream().anyMatch(p -> p.getPrestador() == prestador);
+        this.prestadorPuedePostularse = !publicacion.getPostulaciones().stream().anyMatch(p -> p.getPrestador() == user.getPrestador());
+        this.esMiPublicacion = tomadorPublicacion(publicacion,user);
     }
+
+    private boolean tomadorPublicacion(Publicacion publicacion, Usuario user) {
+        return user.getTomador()!=null && user.getTomador().getPublicaciones()!=null && user.getTomador().getPublicaciones().contains(publicacion);
+    }
+
 
     private boolean buildCanEdit(Set<Postulacion> postulaciones) {
         return postulaciones.size()<=0;
@@ -210,4 +217,13 @@ public class PublicacionDTO {
     public void setPrestadorPuedePostularse(boolean prestadorPuedePostularse) {
         this.prestadorPuedePostularse = prestadorPuedePostularse;
     }
+
+    public boolean getEsMiPublicacion() {
+        return esMiPublicacion;
+    }
+
+    public void setEsMiPublicacion(boolean esMiPublicacion) {
+        this.esMiPublicacion = esMiPublicacion;
+    }
+
 }
