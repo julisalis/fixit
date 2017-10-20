@@ -1,4 +1,5 @@
 package ar.com.utn.models;
+
 import ar.com.utn.form.PublicacionForm;
 import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.Field;
@@ -17,21 +18,21 @@ import java.util.Set;
  * Created by julis on 13/7/2017.
  */
 @Entity
-@Table(name="publicacion")
+@Table(name = "publicacion")
 @Indexed
-public class Publicacion extends PersistentEntity{
+public class Publicacion extends PersistentEntity {
     @Field
     private String titulo;
-    @Type(type="text")
+    @Type(type = "text")
     @Field
     private String descripcion;
     private BigDecimal presupMax;
     private Currency currency;
     @ManyToOne
-    @JoinColumn(name="tipotrabajo_fk",nullable = false)
+    @JoinColumn(name = "tipotrabajo_fk", nullable = false)
     private TipoTrabajo tipoTrabajo;
     @ManyToOne
-    @JoinColumn(name="localidad_fk",nullable = false)
+    @JoinColumn(name = "localidad_fk", nullable = false)
     private Localidad localidad;
     @Enumerated(EnumType.STRING)
     private EstadoPublicacion estadoPublicacion = EstadoPublicacion.ELIMINADA;
@@ -61,7 +62,7 @@ public class Publicacion extends PersistentEntity{
         this.fechaCreacion = LocalDateTime.now();
     }
 
-    public Publicacion(String currency,String titulo, String descripcion, BigDecimal presupMax, TipoTrabajo tipoTrabajo, Localidad localidad, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia,LocalDate fecha,Urgencia urgencia) {
+    public Publicacion(String currency, String titulo, String descripcion, BigDecimal presupMax, TipoTrabajo tipoTrabajo, Localidad localidad, TiempoPublicacion tiempoPublicacion, Tomador tomador, PublicacionMultimedia multimedia, LocalDate fecha, Urgencia urgencia) {
         this.titulo = titulo;
         this.descripcion = descripcion;
         this.presupMax = presupMax;
@@ -70,9 +71,9 @@ public class Publicacion extends PersistentEntity{
         this.tiempoPublicacion = tiempoPublicacion;
         this.tomador = tomador;
         this.multimedia = multimedia;
-        this.fecha=fecha;
-        this.urgencia=urgencia;
-        this.currency = Currency.getInstance(currency)!=null? Currency.getInstance(currency) : Currency.getInstance("ARS") ;
+        this.fecha = fecha;
+        this.urgencia = urgencia;
+        this.currency = Currency.getInstance(currency) != null ? Currency.getInstance(currency) : Currency.getInstance("ARS");
     }
 
     public String getTitulo() {
@@ -203,15 +204,15 @@ public class Publicacion extends PersistentEntity{
         this.estadoPublicacion = estadoPublicacion;
     }
 
-    public void update(PublicacionForm publicacionForm,Localidad localidad) {
+    public void update(PublicacionForm publicacionForm, Localidad localidad) {
         this.titulo = publicacionForm.getTitulo();
         this.descripcion = publicacionForm.getDescripcion();
         this.presupMax = publicacionForm.getPresupMax();
         this.tipoTrabajo = publicacionForm.getTipoTrabajo();
         this.localidad = localidad;
         this.tiempoPublicacion = tiempoPublicacion;
-        this.fecha=publicacionForm.getFecha();
-        this.urgencia=publicacionForm.getUrgencia();
-        this.currency = Currency.getInstance(publicacionForm.getCurrencyCode())!=null? Currency.getInstance(publicacionForm.getCurrencyCode()) : Currency.getInstance("ARS");
+        this.fecha = publicacionForm.getFecha();
+        this.urgencia = publicacionForm.getUrgencia();
+        this.currency = Currency.getInstance(publicacionForm.getCurrencyCode()) != null ? Currency.getInstance(publicacionForm.getCurrencyCode()) : Currency.getInstance("ARS");
     }
 }
