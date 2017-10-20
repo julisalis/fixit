@@ -163,7 +163,7 @@
                             <small th:text="${publicacion.fecha}" class="btn-price-AR"></small>
                             </p>
                             <!--Solo ve el "POSTULARME" en caso que sea el prestador-->
-                            <div th:unless="${publicacion.esMiPublicacion}"  sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
+                            <div  sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
                             <a th:if="${publicacion.prestadorPuedePostularse}" id="postular" href="#" th:href="@{/postulacion/new(publicacionId=${publicacion.id})}" class="ifix-product-btn btn btn-secondary btn-secondary-alt hoverable btn-letter-spacing-1">
                                 <span class="anim"></span>
                                 Postularme

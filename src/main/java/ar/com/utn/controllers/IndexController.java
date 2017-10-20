@@ -44,10 +44,9 @@ public class IndexController {
         Usuario usuario = currentSession.getUser();
         if(usuario!=null && usuario.getPrestador()!=null){
             List<PublicacionDTO> publicacionDTOS = publicacionService.getTrabajosRecomendados(usuario.getPrestador().getTipos()).stream()
-                    .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion))).collect(Collectors.toList());
+                    .map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion),usuario)).collect(Collectors.toList());
             model.addAttribute("trabajosRecomendados", publicacionDTOS);
         }
-
         return "index";
     }
 
