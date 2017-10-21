@@ -3,6 +3,7 @@ package ar.com.utn.afip;
 import ar.com.utn.afip.domain.Persona;
 import ar.com.utn.afip.enums.AfipWs;
 import ar.com.utn.services.PrestadorService;
+import org.springframework.beans.factory.annotation.Value;
 import sr.puc.server.ws.soap.a4.GetPersona;
 import sr.puc.server.ws.soap.a4.PersonaReturn;
 import sr.puc.server.ws.soap.a4.PersonaServiceA4;
@@ -22,6 +23,20 @@ public class AfipHandler {
     private AfipWs service;
     private Long cuit;
     private PrestadorService prestadorService;
+
+
+    @Value("${app.afip.ws.endpoint}")
+    private String endpoint;
+    @Value("${app.afip.ws.dstdn}")
+    private String dstdn;
+    @Value("${app.afip.ws.p12file}")
+    private String p12file;
+    @Value("${app.afip.ws.signer}")
+    private String signer;
+    @Value("${app.afip.ws.p12pass}")
+    private String p12pass;
+    @Value("${app.afip.ws.ticketTime}")
+    private Long ticketTime;
 
     /*public static void main(String[] args){
         AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237L);
@@ -83,15 +98,15 @@ public class AfipHandler {
 
     private TicketAcceso autenticar(){
 
-        Properties config = new Properties();
+        //Properties config = new Properties();
 
-        try {
+        /*try {
             config.load(new FileInputStream("./src/main/resources/afip/wsaa_client.properties"));
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
-        String endpoint = config.getProperty("endpoint");
+        /*String endpoint = config.getProperty("endpoint");
         //String service = config.getProperty("service");
         String dstDN = config.getProperty("dstdn");
 
@@ -103,11 +118,11 @@ public class AfipHandler {
        // System.setProperty("javax.net.ssl.trustStore", config.getProperty("trustStore"));
        // System.setProperty("javax.net.ssl.trustStorePassword",config.getProperty("trustStore_password",""));
 
-        Long TicketTime = new Long(config.getProperty("TicketTime"));
+        Long TicketTime = new Long(config.getProperty("TicketTime"));*/
 
         AutenticadorConfig autConfig =
                 new AutenticadorConfig(p12file, p12pass,
-                        signer, dstDN, this.service.getText(), TicketTime);
+                        signer, dstdn, this.service.getText(), ticketTime);
 
         LoginTicketRequest loginTicketRequest = autenticador.buildLoginTicketRequest(autConfig);
 
