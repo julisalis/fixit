@@ -1,6 +1,8 @@
 package ar.com.utn.services.implementation;
 
 import ar.com.utn.afip.TicketAcceso;
+import ar.com.utn.exception.MercadoPagoException;
+import ar.com.utn.mercadopago.MercadoPagoAdapter;
 import ar.com.utn.mercadopago.model.ClientCredentials;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.*;
@@ -23,6 +25,9 @@ public class PrestadorServiceImpl implements PrestadorService {
     PrestadorRepository prestadorRepository;
 
     @Autowired
+    UsuarioRepository  usuarioRepository;
+
+    @Autowired
     ActividadAfipRepository actividadAfipRepository;
 
     @Autowired
@@ -33,6 +38,9 @@ public class PrestadorServiceImpl implements PrestadorService {
 
     @Autowired
     MercadoPagoPrestadorRepository mercadoPagoPrestadorRepository;
+
+    @Autowired
+    private MercadoPagoAdapter mercadoPagoAdapter;
 
     @Override
     public boolean cuitUnique(Long cuit){
@@ -85,4 +93,16 @@ public class PrestadorServiceImpl implements PrestadorService {
             mercadoPagoPrestadorRepository.save(mpSeller);
         }
     }
+
+    @Override
+    @Transactional(rollbackFor={Exception.class})
+    public Usuario findByPrestadorRenewMP(Prestador prestador) throws MercadoPagoException {
+        Usuario usuario =  usuarioRepository.findByPrestador(prestador);
+        if(usuario.getPrestador().getMpPrestador()!=null && usuario.getPrestador().getMpPrestador().isCredentialsExpired()) {
+            ClientCredentials credentials = mercadoPagoAdapter.renewClientCredentials(prestador.getMpPrestador().getRefreshToken());
+            this.completeCredentials(credentials);
+        }
+        return  usuario;
+    }
+
 }

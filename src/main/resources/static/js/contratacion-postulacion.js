@@ -1,18 +1,96 @@
-/**
- * Created by julian on 20/10/17.
- */
 $(function () {
+    initializeCheckoutButtons();
     initializePaymentMethod();
-    // initializeMP();
+    initializeMP();
+    $.validate({
+        lang: 'es',
+        onSuccess : function() {
+            $("#payButton").trigger( "click" );
+        }
+    });
 });
 
-function contratar(postulacionId) {
+function initializePaymentMethod(){
+    $('#cartForm').card({
+        container: $("#cardContainer"),
+        formSelectors: {
+            expiryInput: 'input[name="expiry_month"], input[name="expiry_year"]'
+        }
+    });
+    $("#cartForm input").val("");
+}
+
+function initializeCheckoutButtons(){
+    $("#payButton").on("click",function(e){
+        var data = {};
+        extractCardForm(data);
+        extractPostulacionForm(data);
+        swal({
+                title: "Validación",
+                text: "Se validará la tarjeta de crédito",
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            },
+            function(){
+                setTimeout(function(){
+                    createTokenMP(callbackSuccessCreditCard,callbackErrorCreditCard);
+                }, 1000);
+
+            });
+    });
+}
+function extractCardForm(data){
+    data.creditCardPayed = true;
+    data.tokenMP = $("#tokenMP").val();
+    data.paymentMethodId = $("#paymentMethodId").val();
+}
+function extractPostulacionForm(data){
+    data.postulacionId = $("#postulacionId").val();
+}
+
+function callbackSuccessCreditCard(){
+
+    swal({
+            title: "Validación correcta",
+            text: "Tarjeta de crédito validada",
+            type: "success",
+            closeOnConfirm: true,
+            showLoaderOnConfirm: false
+        },
+        function(){
+            swal({
+                    title: "Pago",
+                    text: "Se procederá a procesar el pago",
+                    type: "info",
+                    showCancelButton: true,
+                    closeOnConfirm: false,
+                    showLoaderOnConfirm: true
+                },
+                function(){
+                    setTimeout(function(){
+                        contratar(data);
+                    }, 1000);
+
+                });
+        });
+}
+function callbackErrorCreditCard(){
+    swal({
+        title: "Tarjeta inválida",
+        text: "Revisa los datos ingresados",
+        type: "error",
+        closeOnConfirm: true,
+        showLoaderOnConfirm: false
+    });
+}
+
+function contratar(data) {
     $.ajax({
         type: 'POST',
         url: '/contratar',
-        data: {
-            postulacionId: postulacionId
-        },
+        data: data,
         async: true,
         success: function(message){
             if(message.success){
@@ -30,16 +108,6 @@ function contratar(postulacionId) {
     });
 }
 
-function initializePaymentMethod(){
-    //initialize card animation
-    $('#cartForm').card({
-        // a selector or DOM element for the container
-        // where you want the card to appear
-        container: $("#cardContainer"),
-        formSelectors: {
-            expiryInput: 'input[name="expiry_month"], input[name="expiry_year"]'
-        }
-    });
-    $("#cardRow").fadeIn("slow");
-    $("#cartForm input").val("");
-}
+
+
+

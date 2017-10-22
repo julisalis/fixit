@@ -5,6 +5,8 @@ import ar.com.utn.mercadopago.model.UserMP;
 import ar.com.utn.models.Usuario;
 import com.mercadopago.MP;
 import org.apache.log4j.Logger;
+
+import java.math.BigDecimal;
 //import org.codehaus.jettison.json.JSONException;
 //import org.codehaus.jettison.json.JSONObject;
 
@@ -30,6 +32,17 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
         return userMP;
     }
 
+    @Override
+    public AdditionalInfoMP buildAdditionalInfoMP(Usuario usuario) {
+        return new AdditionalInfoMP(usuario);
+    }
+
+    @Override
+    public PaymentMP buildPaymentMP(BigDecimal presupAprox, String tokenMP, String title, int installments, String paymentMethodId, UserMP userMP, AdditionalInfoMP additionalInfoMP, BigDecimal commission) {
+        PaymentMP paymentMP = new PaymentMP( presupAprox, tokenMP, title,installments, paymentMethodId, userMP,additionalInfoMP,commission);
+        return paymentMP;
+    }
+
 
     @Override
     public void setAccessToken(String accessToken) {
@@ -37,7 +50,7 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
     }
 
 
-    //    private String getPaymentMPId(JSONObject jsonObject) throws JSONException {
+//    private String getPaymentMPId(JSONObject jsonObject) throws JSONException {
 //        return jsonObject.getJSONObject("response").getString("id");
 //    }
 
@@ -67,16 +80,5 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
 //        }
 //    }
 
-//    @Override
-//    public PaymentMP buildPaymentMP(double amount,String tokenMP,String title,int installments,
-//                                    String paymentMethodId,UserMP userMP,AdditionalInfoMP additionalInfoMP,double commission){
-//        PaymentMP paymentMP = new PaymentMP( amount, tokenMP, title,installments,
-//                paymentMethodId, userMP,additionalInfoMP,commission);
-//        return paymentMP;
-//    }
-//
-//    @Override
-//    public AdditionalInfoMP buildAdditionalInfoMP(OrderCustomer orderCustomer){
-//        return new AdditionalInfoMP(orderCustomer);
-//    }
+
 }
