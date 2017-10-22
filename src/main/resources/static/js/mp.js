@@ -1,5 +1,3 @@
-//TODO: Establecer temporizador una vez creado el token de MP
-
 function initializeMP(){
 	Mercadopago.setPublishableKey(MPPublicKey);
 	Mercadopago.clearSession();

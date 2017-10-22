@@ -1,11 +1,12 @@
 $(function () {
-    initializeCheckoutButtons();
     initializePaymentMethod();
     initializeMP();
-    $.validate({
+
+    $('#cartForm').validate({
         lang: 'es',
+        decimalSeparator: '.',
         onSuccess : function() {
-            $("#payButton").trigger( "click" );
+            validateCardAndSubmit();
         }
     });
 });
@@ -20,26 +21,24 @@ function initializePaymentMethod(){
     $("#cartForm input").val("");
 }
 
-function initializeCheckoutButtons(){
-    $("#payButton").on("click",function(e){
-        var data = {};
-        extractCardForm(data);
-        extractPostulacionForm(data);
-        swal({
-                title: "Validación",
-                text: "Se validará la tarjeta de crédito",
-                type: "info",
-                showCancelButton: true,
-                closeOnConfirm: false,
-                showLoaderOnConfirm: true
-            },
-            function(){
-                setTimeout(function(){
-                    createTokenMP(callbackSuccessCreditCard,callbackErrorCreditCard);
-                }, 1000);
+function validateCardAndSubmit(){
+    var data = {};
+    extractCardForm(data);
+    extractPostulacionForm(data);
+    swal({
+            title: "Validación",
+            text: "Se validará la tarjeta de crédito",
+            type: "info",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            showLoaderOnConfirm: true
+        },
+        function(){
+            setTimeout(function(){
+                createTokenMP(callbackSuccessCreditCard,callbackErrorCreditCard);
+            }, 1000);
 
-            });
-    });
+        });
 }
 function extractCardForm(data){
     data.creditCardPayed = true;

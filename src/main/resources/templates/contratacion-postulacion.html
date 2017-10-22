@@ -4,6 +4,9 @@
 <head lang="en">
     <title>FixIT</title>
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <script th:inline="javascript">
+        var MPPublicKey = /*[[${MPPublicKey}]]*/;
+    </script>
     <script type="text/javascript" th:src="@{/js/contratacion-postulacion.js}"></script>
     <script type="text/javascript" th:src="@{/js/mp.js}"></script>
     <script type="text/javascript" th:src="@{/js/jquery.card.js}"></script>
@@ -79,35 +82,40 @@
                                     <div class="form-group">
                                         <input class="form-control" type="text" name="number"
                                                data-checkout="cardNumber" id="cardNumber"
-                                               placeholder="Número de tarjeta">
+                                               placeholder="Número de tarjeta"
+                                               data-validation="required"/>
                                     </div>
                                 </div>
                                 <div class="col-md-3">
                                     <div class="form-group">
                                         <input class="form-control" type="text"
                                                id="cardExpirationMonth" data-checkout="cardExpirationMonth"
-                                               name="expiry_month" placeholder="MM"/>
+                                               name="expiry_month" placeholder="MM"
+                                               data-validation="required"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <input class="form-control" type="text"
                                                id="cardExpirationYear" data-checkout="cardExpirationYear"
-                                               name="expiry_year" placeholder="YYYY"/>
+                                               name="expiry_year" placeholder="YYYY"
+                                               data-validation="required"/>
                                     </div>
                                 </div>
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <input class="form-control" type="text" name="cvc"
                                                id="securityCode" data-checkout="securityCode"
-                                               placeholder="CVC"/>
+                                               placeholder="CVC"
+                                               data-validation="required"/>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <input class="form-control" type="text"
                                                id="cardholderName" data-checkout="cardholderName"
-                                               name="name" placeholder="Nombre completo"/>
+                                               name="name" placeholder="Nombre completo"
+                                               data-validation="required"/>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -120,10 +128,11 @@
                                     <div class="form-group">
                                         <input class="form-control" type="text"
                                                id="docNumber" data-checkout="docNumber"
-                                               placeholder="Nro de Documento" />
+                                               placeholder="Nro de Documento"
+                                               data-validation="required" />
                                     </div>
                                 </div>
-                                <a class="btn btn-primary prestador tam-boton-100">Contratar Profesional</a>
+                                <input type="submit" id="payButton" class="btn btn-primary prestador tam-boton-100" value="Contratar Profesional"/>
                             </div>
                             <div class="col-md-6" id="cardContainer">
 
