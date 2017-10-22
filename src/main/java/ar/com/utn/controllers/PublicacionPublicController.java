@@ -44,8 +44,8 @@ public class PublicacionPublicController {
         HashMap<String,Object> map = new HashMap<>();
         Usuario usuario = currentSession.getUser();
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
-        if(usuario.getPrestador() != null){
-            map.put("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+        if(usuario != null && usuario.getPrestador() != null){
+            map.put("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion),usuario));
         }else{
             map.put("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
         }

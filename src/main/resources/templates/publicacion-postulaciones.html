@@ -48,13 +48,13 @@
                                 </div>
                             </div>
 
-                            <div class="ad-info tab-postulaciones fixit-job-box col-md-4">
+                            <div class="ad-info tab-postulaciones fixit-job-box postulacion-desc col-md-4">
                                     <p class="installationType">
-                                        <span><strong th:text="${postulacion.descripcion}"></strong></span>
+                                        <span><strong th:text="${#strings.capitalize(postulacion.descripcion)}"></strong></span>
                                     </p>
                                     <span th:text="${postulacion.comentarios}"></span>
                                     <div class="ad-meta">
-                                        <div class="iconos-postulacion"><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></div>
+                                        <div class="iconos-postulacion"><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Desde '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></div>
                                         <div class="iconos-postulacion"><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="'Duración: '+${postulacion.duracionAprox}+ ' Horas'" class="btn-price-AR"></small></div>
                                     </div><!-- ad-meta -->
                                 </div><!-- ad-info -->

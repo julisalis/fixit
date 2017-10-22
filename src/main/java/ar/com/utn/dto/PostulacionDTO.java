@@ -30,7 +30,7 @@ public class PostulacionDTO {
         this.estado = postulacion.getEstadoPostulacion();
         this.elegida = postulacion.getElegida();
         this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
-        this.usuarioPrestador = new UsuarioDTO(usuario);
+        this.usuarioPrestador = new UsuarioDTO(usuario, true);
     }
 
     public PostulacionDTO() {
