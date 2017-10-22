@@ -36,9 +36,9 @@
                         </div><!-- item-image -->
                     </div>
 
-                    <div class="ad-info fixit-job-box col-md-7">
+                    <div class="ad-info fixit-job-box postulacion-desc col-md-7">
                         <p class="installationType">
-                            <span><strong th:text="${postulacion.descripcion}"></strong></span>
+                            <span><strong th:text="${#strings.capitalize(postulacion.descripcion)}"></strong></span>
                         </p>
                         <span th:text="'Comentarios: ' +${postulacion.comentarios}"></span>
                         <span th:text="'Categoría: ' +${publicacion.tipoTrabajo.nombre}"></span>
@@ -46,7 +46,7 @@
                         <div class="ad-meta col-md-3 detalle-iconos">
                             <ul>
                                 <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${publicacion.localidad.nombre}+', '+${publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
-                                <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
+                                <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Desde '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
                                 <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${postulacion.duracionAprox} + ' Horas'" class="btn-price-AR"></small>
                             </ul>
                         </div><!-- ad-meta -->

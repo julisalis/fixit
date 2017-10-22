@@ -41,15 +41,15 @@
                                     </div><!-- item-image -->
                                 </div>
 
-                                <div class="ad-info tab-nuevas fixit-job-box col-md-7">
+                                <div class="ad-info tab-nuevas fixit-job-box postulacion-desc col-md-7">
                                     <p class="installationType">
-                                        <span><strong th:text="${nueva.descripcion}"></strong></span>
+                                        <span><strong th:text="${#strings.capitalize(nueva.descripcion)}"></strong></span>
                                     </p>
                                     <span th:text="${nueva.comentarios}"></span>
                                     <div class="ad-meta">
                                         <ul>
                                             <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${nueva.publicacion.localidad.nombre}+', '+${nueva.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${nueva.presupAprox}+' '+${nueva.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Desde '+${nueva.presupAprox}+' '+${nueva.currency}" class="btn-price-AR"></small></li>
                                             <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${nueva.duracionAprox} + ' Horas'" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->

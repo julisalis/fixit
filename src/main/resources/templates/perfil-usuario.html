@@ -8,7 +8,7 @@
 <body class="white-body">
 <!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
-<div id="publicacion">
+<div id="publicacion" class="perfil">
 
     <div class="container">
         <div class="form-container form-horizontal" id="perfil">
@@ -145,8 +145,8 @@
                 </fieldset>
 
             <section th:if="${user.prestador != null}" id="mercadoPagoProfile" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
-                <div class="form-group">
-                    <h4>Mercado Pago</h4>
+                <div class="form-group mercado-pago">
+                    <img src='/images/mercado-pago.png' alt="Image">
                 </div>
                 <div th:switch="${user.prestador?.mpPrestador}" class="form-group">
                     <div th:case="null" class="form-group" >

@@ -10,6 +10,7 @@ import ar.com.utn.services.PostulacionService;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
+import org.hibernate.mapping.UnionSubclass;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -188,9 +189,15 @@ public class PublicacionController {
 
     @GetMapping(value="/mas/{publicacionId}")
     public String masPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
+        Usuario user = currentSession.getUser();
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
         if(mipublicacion!=null){
-            model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+            if (user != null && user.getPrestador() != null) {
+                model.addAttribute("publicacion", new PublicacionDTO(mipublicacion, getCover(mipublicacion), user));
+            }
+            else {
+                model.addAttribute("publicacion", new PublicacionDTO(mipublicacion, getCover(mipublicacion)));
+            }
             return "publicacion-mas";
         }
         return "redirect:/";
