@@ -5,8 +5,9 @@ $(function () {
     $('#cartForm').validate({
         lang: 'es',
         decimalSeparator: '.',
-        onSuccess : function() {
+        onSuccess : function(e) {
             validateCardAndSubmit();
+            e.preventDefault();
         }
     });
 });
@@ -18,10 +19,10 @@ function initializePaymentMethod(){
             expiryInput: 'input[name="expiry_month"], input[name="expiry_year"]'
         }
     });
-    $("#cartForm input").val("");
 }
 
 function validateCardAndSubmit(){
+    debugger;
     var data = {};
     extractCardForm(data);
     extractPostulacionForm(data);

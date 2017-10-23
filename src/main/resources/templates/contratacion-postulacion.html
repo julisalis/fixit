@@ -4,13 +4,6 @@
 <head lang="en">
     <title>FixIT</title>
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
-    <script th:inline="javascript">
-        var MPPublicKey = /*[[${MPPublicKey}]]*/;
-    </script>
-    <script type="text/javascript" th:src="@{/js/contratacion-postulacion.js}"></script>
-    <script type="text/javascript" th:src="@{/js/mp.js}"></script>
-    <script type="text/javascript" th:src="@{/js/jquery.card.js}"></script>
-
 </head>
 <body>
 <div id="contratacion">
@@ -63,7 +56,7 @@
                             <span><strong th:text="${postulacion.descripcion}"></strong></span>
                             <span th:text="${postulacion.comentarios}"></span>
                             <div class="ad-meta">
-                                <div class="iconos-postulacion"><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></div>
+                                <div class="iconos-postulacion"><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Desde '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></div>
                                 <div class="iconos-postulacion"><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="'Duración: '+${postulacion.duracionAprox}+ ' Horas'" class="btn-price-AR"></small></div>
                             </div>
                         </div>
@@ -121,7 +114,9 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="docType">Tipo de documento:</label>
-                                        <select class="form-control" id="docType" data-checkout="docType"></select>
+                                        <select class="form-control" id="docType" data-checkout="docType">
+                                            <option value="DNI">DNI</option><option value="CI">Cédula</option><option value="LC">L.C.</option><option value="LE">L.E.</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -132,16 +127,12 @@
                                                data-validation="required" />
                                     </div>
                                 </div>
-                                <input type="submit" id="payButton" class="btn btn-primary prestador tam-boton-100" value="Contratar Profesional"/>
+                                <input type="submit" id="payButton" class="btn btn-primary prestador tam-boton-100" value="Contratar Profesional">
                             </div>
-                            <div class="col-md-6" id="cardContainer">
-
-
-                            </div>
-
+                            <div class="col-md-6" id="cardContainer"></div>
                         </form>
                     </div>
-
+                    <p style="text-align: left;color: #b1afaf;font-size: 11px;">*No se efectuarán cargos sobre su tarjeta hasta que el trabajo finalice y ambas partes hayan confirmado. En caso de reclamos comunicarse mediante nuestro correo y estaremos dispuesto a ayudarlo.</p>
 
                 </div>
             </div>
@@ -155,7 +146,12 @@
 
 </div>
 </body>
-<script>
-
+<script th:inline="javascript">
+    var MPPublicKey = /*[[${MPPublicKey}]]*/;
 </script>
+<script type="text/javascript" th:src="@{/js/contratacion-postulacion.js}"></script>
+<script type="text/javascript" th:src="@{/js/mp.js}"></script>
+<script type="text/javascript" th:src="@{/js/jquery.card.js}"></script>
+<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
+
 </html>
