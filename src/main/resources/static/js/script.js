@@ -16,7 +16,7 @@ $(function () {
 
     $.validate({
         lang : 'es',
-        decimalSeparator : ',',
+        decimalSeparator : '.',
     });
 
     //*******************Form de register***********************

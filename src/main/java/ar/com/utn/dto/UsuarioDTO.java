@@ -18,8 +18,9 @@ public class UsuarioDTO {
     private Double calificacionPromedio;
     private Ubicacion ubicacion;
     private PrestadorDTO prestador;
+    private TomadorDTO tomador;
 
-    public UsuarioDTO(Usuario usuario) {
+    public UsuarioDTO(Usuario usuario, boolean soyPrestador) {
         this.username = usuario.getUsername();
         this.email = usuario.getEmail();
         this.nombre = usuario.getNombre();
@@ -28,7 +29,12 @@ public class UsuarioDTO {
         this.telefono = usuario.getTelefono();
         this.calificacionPromedio = usuario.getCalificacionPromedio();
         this.ubicacion = usuario.getUbicacion();
-        this.prestador = new PrestadorDTO(usuario.getPrestador());
+        if (soyPrestador) {
+            this.prestador = new PrestadorDTO(usuario.getPrestador());
+        }
+        else {
+            this.tomador = new TomadorDTO(usuario);
+        }
     }
 
     public UsuarioDTO() {
