@@ -18,12 +18,10 @@ import org.bouncycastle.cms.CMSSignedDataGenerator;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
+import org.springframework.core.io.ClassPathResource;
 
 import javax.xml.rpc.ParameterMode;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
+import java.io.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.security.KeyStore;
@@ -57,7 +55,7 @@ public class Autenticador {
         try {
             // Create a keystore using keys from the pkcs#12 p12file
             KeyStore ks = KeyStore.getInstance("pkcs12");
-            FileInputStream p12stream = new FileInputStream ( configuration.getP12Filename() ) ;
+            InputStream p12stream = new ClassPathResource(configuration.getP12Filename()).getInputStream() ;
             ks.load(p12stream, configuration.getP12pass().toCharArray());
             p12stream.close();
 
