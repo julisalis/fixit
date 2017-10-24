@@ -64,7 +64,7 @@ public class ContratacionController {
     @PreAuthorize("hasAuthority('TOMADOR')")
     @PostMapping
     @ResponseBody
-    @Transactional
+    @Transactional(rollbackFor={Exception.class})
     public Map<String, Object> contratarPostulacion(
                                                     @RequestParam(required=false) String tokenMP,
                                                     @RequestParam(required=false) String paymentMethodId,
@@ -76,18 +76,14 @@ public class ContratacionController {
         HashMap<String, Object> map = new HashMap<>();
         Usuario usuarioPostulacion = usuarioService.findByPrestador(postulacion.getPrestador());
         try {
-
             if (usuario.getTomador() != publicacion.getTomador()) {
                 map.put("success", false);
-                map.put("msg", "La publicación no es del usuario o está iniciado como profesional.");
+                map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
                 return map;
             }
-
             publicacion = publicacionService.setContratada(publicacion);
             postulacion = postulacionService.setContratada(postulacion);
-
             moneyFlowService.makePaymentMP(postulacion, tokenMP, paymentMethodId, usuario);
-
             mailService.sendPostulacionElegidaMail(usuario, usuarioPostulacion, postulacion);
 
             map.put("success", true);

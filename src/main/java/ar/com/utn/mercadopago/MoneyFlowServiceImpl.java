@@ -22,7 +22,6 @@ public class MoneyFlowServiceImpl implements MoneyFlowService {
 
 
     @Override
-    @Transactional(rollbackFor={Exception.class})
     public void makePaymentMP(Postulacion postulacion, String tokenMP, String paymentMethodId, Usuario usuario) {
         UserMP userMP = mercadoPagoApi.buildUserMP(usuario);
         AdditionalInfoMP additionalInfoMP = mercadoPagoApi.buildAdditionalInfoMP(usuario);

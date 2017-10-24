@@ -4,12 +4,27 @@ $(function () {
 
     $('#cartForm').validate({
         lang: 'es',
-        decimalSeparator: '.',
-        onSuccess : function(e) {
-            validateCardAndSubmit();
-            e.preventDefault();
-        }
+        decimalSeparator: '.'
     });
+
+
+    $("#payButton").click(function (e) {
+        swal({
+                title: "Validación",
+                text: "Se validará la tarjeta de crédito",
+                type: "info",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                showLoaderOnConfirm: true
+            },
+            function(){
+                setTimeout(function(){
+                    createTokenMP(callbackSuccessCreditCard,callbackErrorCreditCard);
+                }, 1000);
+
+            });
+    });
+
 });
 
 function initializePaymentMethod(){
@@ -21,59 +36,21 @@ function initializePaymentMethod(){
     });
 }
 
-function validateCardAndSubmit(){
-    debugger;
-    var data = {};
-    extractCardForm(data);
-    extractPostulacionForm(data);
+function callbackSuccessCreditCard(){
+
     swal({
-            title: "Validación",
-            text: "Se validará la tarjeta de crédito",
-            type: "info",
+            title: "Validación correcta",
+            text: "Tarjeta de crédito validada, procederemos a efectuar la contratación",
+            type: "success",
             showCancelButton: true,
             closeOnConfirm: false,
             showLoaderOnConfirm: true
         },
         function(){
             setTimeout(function(){
-                createTokenMP(callbackSuccessCreditCard,callbackErrorCreditCard);
+                contratar();
             }, 1000);
 
-        });
-}
-function extractCardForm(data){
-    data.creditCardPayed = true;
-    data.tokenMP = $("#tokenMP").val();
-    data.paymentMethodId = $("#paymentMethodId").val();
-}
-function extractPostulacionForm(data){
-    data.postulacionId = $("#postulacionId").val();
-}
-
-function callbackSuccessCreditCard(){
-
-    swal({
-            title: "Validación correcta",
-            text: "Tarjeta de crédito validada",
-            type: "success",
-            closeOnConfirm: true,
-            showLoaderOnConfirm: false
-        },
-        function(){
-            swal({
-                    title: "Pago",
-                    text: "Se procederá a procesar el pago",
-                    type: "info",
-                    showCancelButton: true,
-                    closeOnConfirm: false,
-                    showLoaderOnConfirm: true
-                },
-                function(){
-                    setTimeout(function(){
-                        contratar(data);
-                    }, 1000);
-
-                });
         });
 }
 function callbackErrorCreditCard(){
@@ -86,7 +63,10 @@ function callbackErrorCreditCard(){
     });
 }
 
-function contratar(data) {
+function contratar() {
+    var data = {};
+    extractCardForm(data);
+    extractPostulacionForm(data);
     $.ajax({
         type: 'POST',
         url: '/contratar',
@@ -106,6 +86,14 @@ function contratar(data) {
             }
         }
     });
+}
+function extractCardForm(data){
+    data.creditCardPayed = true;
+    data.tokenMP = $("#tokenMP").val();
+    data.paymentMethodId = $("#paymentMethodId").val();
+}
+function extractPostulacionForm(data){
+    data.postulacionId = $("#postulacionId").val();
 }
 
 
