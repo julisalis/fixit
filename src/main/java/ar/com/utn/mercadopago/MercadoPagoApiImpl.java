@@ -8,6 +8,7 @@ import com.mercadopago.MP;
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -23,7 +24,7 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
 
     private final String PAYMENTS_URL = "/v1/payments";
 
-    //@Value("${app.mercadopago.access_token}")
+    @Value("${app.mercadopago.access_token}")
     private String accessToken;
 
     private MP getMPInstance(){

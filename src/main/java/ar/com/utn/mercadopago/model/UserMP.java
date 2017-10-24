@@ -13,6 +13,9 @@ public class UserMP {
 
     private String email;
 
+    public UserMP() {
+    }
+
     public UserMP(String email){
         this.email = email;
     }

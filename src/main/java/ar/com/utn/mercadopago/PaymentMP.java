@@ -12,7 +12,7 @@ import java.math.BigDecimal;
  * Created by julian on 22/10/17.
  */
 @Entity
-@Table(name = "PaymentMP")
+@Table(name = "paymentMP")
 public class PaymentMP extends PersistentEntity {
     private boolean binary_mode;
     private String status;

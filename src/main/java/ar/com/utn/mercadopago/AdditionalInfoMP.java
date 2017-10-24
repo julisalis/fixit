@@ -21,6 +21,9 @@ public class AdditionalInfoMP {
         this.last_name = user.getApellido();
     }
 
+    public AdditionalInfoMP() {
+    }
+
     public String getFirst_name() {
         return first_name;
     }

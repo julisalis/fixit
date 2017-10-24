@@ -19,11 +19,15 @@ public class MoneyFlowServiceImpl implements MoneyFlowService {
     @Autowired
     private MercadoPagoApi mercadoPagoApi;
 
+    @Autowired
+    private PaymentMPRepository paymentMPRepository;
+
 
     @Override
     public void makePaymentMP(Postulacion postulacion, String tokenMP, String paymentMethodId, Usuario usuario) {
         UserMP userMP = mercadoPagoApi.buildUserMP(usuario);
         AdditionalInfoMP additionalInfoMP = mercadoPagoApi.buildAdditionalInfoMP(usuario);
         PaymentMP paymentMP = mercadoPagoApi.buildPaymentMP(postulacion.getPresupAprox(), tokenMP,"Contratación FiIT",1, paymentMethodId, userMP,additionalInfoMP,commission);
+        paymentMPRepository.save(paymentMP);
     }
 }
