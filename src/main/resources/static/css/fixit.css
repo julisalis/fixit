@@ -2177,5 +2177,32 @@ a:focus{
     color: #b1afaf;
 }
 
+#publicacion.perfil .form-horizontal .form-group.afip img {
+    margin-top: -10px;
+    margin-bottom: 0px;
+}
 
+#afipProfile{
+    border-top: 1px solid rgba(128, 128, 128, 0.61);
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+}
 
+#publicacion .profile img{
+    width: 10%;
+}
+
+#publicacion.perfil .form-horizontal .form-group .prestador-validado img {
+    width: 2%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.job-ad-item .item-image.prestador img {
+    width: inherit;
+    height: auto;
+}
