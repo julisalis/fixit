@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+    <title>FixIT</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <link rel="stylesheet" type="text/css"  th:href="@{/bootstrap-fileinput/css/fileinput.min.css}" media="all"/>
+    <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/fileinput.min.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap-fileinput/js/fileinput_locale_es.js}"></script>
+    <script type="text/javascript" th:src="@{/js/publicacion.js}"></script>
 </head>
-<body>
+<body class="white-body">
+<!--/*/ <th:block th:include="fragments/header :: header"></th:block> /*/-->
 
+<div id="reputacion">
+    <div class="container">
+        <div class="col-md-12 form-container">
+
+            <h2>Mi Reputación</h2>
+
+            <div class="job-profile section">
+                <div class="user-profile">
+                    <div sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="user-images">
+                        <img src="/images/tomador-icon-profile.png" alt="User Images" class="img-responsive">
+                    </div>
+
+                    <div sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="user-images">
+                        <img src="/images/prestador-icon-profile.png" alt="User Images" class="img-responsive">
+                    </div>
+
+                    <div class="user">
+                        <h4>Hola, <a th:text="${user.username}"></a></h4>
+                        <h5 th:text="'Usuario de la plataforma desde: '+${user.fechaCreacion}"></h5>
+
+                        <div class="engranajes-reputacion">
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                            <i class="fa fa-cog" aria-hidden="true"></i>
+                        </div>
+                    </div>
+
+                    <div sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="favorites-user">
+                        <div class="my-ads">
+                            <a th:text="${user.tomador.cantPublicaciones}"></a><small>Publicaciones</small>
+                        </div>
+                        <div class="favorites">
+                            <a th:text="${user.tomador.cantContrataciones}"></a><small>Contrataciones</small>
+                        </div>
+                    </div>
+
+                    <div sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="favorites-user">
+                        <div class="my-ads">
+                            <a th:text="${user.prestador.cantContrataciones}"></a><small>Publicaciones</small>
+                        </div>
+                        <div class="favorites">
+                            <a th:text="${user.prestador.cantContrataciones}"></a><small>Contrataciones</small>
+                        </div>
+                    </div>
+                </div><!-- user-profile -->
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 </html>

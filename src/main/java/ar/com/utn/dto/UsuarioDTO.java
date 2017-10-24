@@ -111,4 +111,12 @@ public class UsuarioDTO {
     public void setPrestador(PrestadorDTO prestadorDTO) {
         this.prestador = prestadorDTO;
     }
+
+    public TomadorDTO getTomador() {
+        return tomador;
+    }
+
+    public void setTomador(TomadorDTO tomador) {
+        this.tomador = tomador;
+    }
 }

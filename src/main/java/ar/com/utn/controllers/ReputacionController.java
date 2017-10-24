@@ -20,12 +20,15 @@ public class ReputacionController {
     @GetMapping
     public String showReputacion(Model model) {
         Usuario user = currentSession.getUser();
-        if (currentSession.getActualRol() != null && currentSession.getActualRol().equals("PRESTADOR")){
-            model.addAttribute("user", new UsuarioDTO(user, true));
-        }
-        else {
-            model.addAttribute("user", new UsuarioDTO(user, false));
-        }
+        //no funciona el getActualRol
+//        if (currentSession.getActualRol() != null && currentSession.getUser().getRoles().contains("PRESTADOR")){
+//            model.addAttribute("user", new UsuarioDTO(user, true));
+//        }
+//        else {
+//            model.addAttribute("user", new UsuarioDTO(user, false));
+//        }
+
+        model.addAttribute("user", new UsuarioDTO(user, false));
 
         return "reputacion-usuario";
     }
