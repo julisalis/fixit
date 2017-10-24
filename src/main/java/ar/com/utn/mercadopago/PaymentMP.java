@@ -1,15 +1,19 @@
 package ar.com.utn.mercadopago;
 
 import ar.com.utn.mercadopago.model.UserMP;
+import ar.com.utn.models.PersistentEntity;
 
+import javax.persistence.Embedded;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.math.BigDecimal;
 
 /**
  * Created by julian on 22/10/17.
  */
-public class PaymentMP {
-
-    private String id;
+@Entity
+@Table(name = "paymentMP")
+public class PaymentMP extends PersistentEntity {
     private boolean binary_mode;
     private String status;
     private String status_detail;
@@ -19,7 +23,9 @@ public class PaymentMP {
     private String description;
     private int installments;
     private String payment_method_id;
+    @Embedded
     private UserMP payer;
+    @Embedded
     private AdditionalInfoMP additional_info;
 
     public PaymentMP(){

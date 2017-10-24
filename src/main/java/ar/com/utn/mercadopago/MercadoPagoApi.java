@@ -20,4 +20,5 @@ public interface MercadoPagoApi {
 
     AdditionalInfoMP buildAdditionalInfoMP(Usuario usuario);
 
+    String makePayment(PaymentMP paymentMP) throws Exception;
 }

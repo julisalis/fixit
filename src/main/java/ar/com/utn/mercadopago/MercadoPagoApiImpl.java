@@ -3,8 +3,13 @@ package ar.com.utn.mercadopago;
 import ar.com.utn.exception.MercadoPagoException;
 import ar.com.utn.mercadopago.model.UserMP;
 import ar.com.utn.models.Usuario;
+import com.google.gson.Gson;
 import com.mercadopago.MP;
 import org.apache.log4j.Logger;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 //import org.codehaus.jettison.json.JSONException;
@@ -13,12 +18,13 @@ import java.math.BigDecimal;
 /**
  * Created by julian on 12/10/17.
  */
+@Component
 public class MercadoPagoApiImpl implements MercadoPagoApi {
     static final Logger logger = Logger.getLogger(MercadoPagoApiImpl.class);
 
     private final String PAYMENTS_URL = "/v1/payments";
 
-    //@Value("${app.mercadopago.access_token}")
+    @Value("${app.mercadopago.access_token}")
     private String accessToken;
 
     private MP getMPInstance(){
@@ -50,35 +56,36 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
     }
 
 
-//    private String getPaymentMPId(JSONObject jsonObject) throws JSONException {
-//        return jsonObject.getJSONObject("response").getString("id");
-//    }
+    private String getPaymentMPId(JSONObject jsonObject) throws JSONException {
+        return jsonObject.getJSONObject("response").getString("id");
+    }
 
-//    @Override
-//    public String makePayment(PaymentMP paymentMP) throws Exception{
-//        MP mp = getMPInstance();
-//        Gson gson = new Gson();
-//        String paymentMPJson = gson.toJson(paymentMP);
-//        JSONObject payment = mp.post(PAYMENTS_URL, paymentMPJson);
-//        controlResponse(payment);
-//        controlResponsePayment(payment);
-//        return getPaymentMPId(payment);
-//    }
-//    private void controlResponsePayment(JSONObject jsonObject)throws Exception{
-//        if(!jsonObject.getJSONObject("response").getString("status").equals("approved")){
-//            logger.error(jsonObject);
-//            throw new MercadoPagoException();
-//        }
-//    }
-//
-//
-//    private void controlResponse(JSONObject jsonObject)throws Exception{
-//        if(jsonObject.getInt("status") == 400 || jsonObject.getInt("status") == 401 ||
-//                jsonObject.getInt("status") == 404){
-//            logger.error(jsonObject);
-//            throw new MercadoPagoException();
-//        }
-//    }
+    @Override
+    public String makePayment(PaymentMP paymentMP) throws Exception{
+        MP mp = getMPInstance();
+        Gson gson = new Gson();
+        String paymentMPJson = gson.toJson(paymentMP);
+        JSONObject payment = mp.post(PAYMENTS_URL, paymentMPJson);
+        controlResponse(payment);
+        controlResponsePayment(payment);
+        return getPaymentMPId(payment);
+    }
+
+    private void controlResponsePayment(JSONObject jsonObject)throws Exception{
+        if(!jsonObject.getJSONObject("response").getString("status").equals("approved")){
+            logger.error(jsonObject);
+            throw new MercadoPagoException();
+        }
+    }
+
+
+    private void controlResponse(JSONObject jsonObject)throws Exception{
+        if(jsonObject.getInt("status") == 400 || jsonObject.getInt("status") == 401 ||
+                jsonObject.getInt("status") == 404){
+            logger.error(jsonObject);
+            throw new MercadoPagoException();
+        }
+    }
 
 
 }
