@@ -5,13 +5,12 @@ import ar.com.utn.models.Postulacion;
 import ar.com.utn.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
-/**
- * Created by julian on 21/10/17.
- */
+@Service
 public class MoneyFlowServiceImpl implements MoneyFlowService {
 
     @Value("${app.mercadopago.application_fee}")

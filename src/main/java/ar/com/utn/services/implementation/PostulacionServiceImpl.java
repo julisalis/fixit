@@ -36,7 +36,6 @@ public class PostulacionServiceImpl implements PostulacionService {
     }
 
     @Override
-    @Transactional(rollbackOn={Exception.class})
     public Postulacion setContratada(Postulacion postulacion) {
         try {
             postulacion.getPublicacion().getPostulaciones().stream().filter(p -> p != postulacion).forEach(p -> p.setEstadoPostulacion(EstadoPostulacion.RECHAZADA));

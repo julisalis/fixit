@@ -37,15 +37,16 @@ public class ContratacionController {
     private UsuarioService usuarioService;
     @Autowired
     private MailService mailService;
-
     @Autowired
-    private PublicacionSearch publicacionSearch;
     private MoneyFlowService moneyFlowService;
 
     @GetMapping(value = "/{postulacionId}")
     public String contratar(@PathVariable(value = "postulacionId") Long postulacionId,WebRequest request, Model model) {
         Postulacion postulacion = postulacionService.findById(postulacionId);
         if (postulacion!=null){
+            if(postulacion.getEstadoPostulacion().equals(EstadoPostulacion.CONTRATADA)) {
+                return "redirect:/";
+            }
             Usuario usuario = null;
             try {
                 usuario = prestadorService.findByPrestadorRenewMP(postulacion.getPrestador());
@@ -63,9 +64,8 @@ public class ContratacionController {
 
     @PreAuthorize("hasAuthority('TOMADOR')")
     @PostMapping
-    @ResponseBody
     @Transactional(rollbackFor={Exception.class})
-    public Map<String, Object> contratarPostulacion(
+    public @ResponseBody Map<String, Object> contratarPostulacion(
                                                     @RequestParam(required=false) String tokenMP,
                                                     @RequestParam(required=false) String paymentMethodId,
                                                     @RequestParam(value = "postulacionId") Postulacion postulacion
@@ -75,17 +75,17 @@ public class ContratacionController {
         Publicacion publicacion = postulacion.getPublicacion();
         HashMap<String, Object> map = new HashMap<>();
         Usuario usuarioPostulacion = usuarioService.findByPrestador(postulacion.getPrestador());
+        if (usuario.getTomador() != publicacion.getTomador()) {
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
+            return map;
+        }
+
         try {
-            if (usuario.getTomador() != publicacion.getTomador()) {
-                map.put("success", false);
-                map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
-                return map;
-            }
+            moneyFlowService.makePaymentMP(postulacion, tokenMP, paymentMethodId, usuario);
             publicacion = publicacionService.setContratada(publicacion);
             postulacion = postulacionService.setContratada(postulacion);
-            moneyFlowService.makePaymentMP(postulacion, tokenMP, paymentMethodId, usuario);
             mailService.sendPostulacionElegidaMail(usuario, usuarioPostulacion, postulacion);
-
             map.put("success", true);
             map.put("msg", "Ha contratado a " + usuarioPostulacion.getUsername() + " correctamente.");
         } catch (Exception e) {
