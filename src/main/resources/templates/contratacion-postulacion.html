@@ -3,7 +3,9 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head lang="en">
     <title>FixIT</title>
+
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+
 </head>
 <body>
 <div id="contratacion">
@@ -114,9 +116,7 @@
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <label for="docType">Tipo de documento:</label>
-                                        <select class="form-control" id="docType" data-checkout="docType">
-                                            <option value="DNI">DNI</option><option value="CI">Cédula</option><option value="LC">L.C.</option><option value="LE">L.E.</option>
-                                        </select>
+                                        <select class="form-control" id="docType" data-checkout="docType"></select>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
@@ -152,6 +152,4 @@
 <script type="text/javascript" th:src="@{/js/contratacion-postulacion.js}"></script>
 <script type="text/javascript" th:src="@{/js/mp.js}"></script>
 <script type="text/javascript" th:src="@{/js/jquery.card.js}"></script>
-<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
-
 </html>

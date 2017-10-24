@@ -53,7 +53,7 @@ public class ContratacionController {
                 return "redirect:/";
             }
             PostulacionDTO postulacionDTO = new PostulacionDTO(postulacion,getCover(postulacion.getPublicacion()),usuario);
-            model.addAttribute("MPPublicKey", postulacion.getPrestador().getMpPrestador().getAccessToken());
+            model.addAttribute("MPPublicKey", postulacion.getPrestador().getMpPrestador().getPublicKey());
 
             model.addAttribute("postulacion",postulacionDTO);
             return "contratacion-postulacion";
