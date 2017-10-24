@@ -2184,5 +2184,151 @@ a:focus{
     color: #b1afaf;
 }
 
+#publicacion.perfil .form-horizontal .form-group.afip img {
+    margin-top: -10px;
+    margin-bottom: 0px;
+}
 
+#afipProfile{
+    border-top: 1px solid rgba(128, 128, 128, 0.61);
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 5%;
+    margin-right: 5%;
+    text-align: center;
+}
 
+#publicacion .profile img{
+    width: 10%;
+}
+
+#publicacion.perfil .form-horizontal .form-group .prestador-validado img {
+    width: 2%;
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+.job-ad-item .item-image.prestador img {
+    width: inherit;
+    height: auto;
+}
+
+#reputacion .container{
+    padding-top: 50px;
+}
+
+#reputacion{
+    padding-top: 90px;
+    background-color: rgba(211, 211, 211, 0.58);
+    padding-bottom: 50px;
+}
+
+#reputacion .container .form-container {
+    background-color: white;
+    padding-top: 20px;
+    padding-bottom: 50px;
+    border-radius: 7px;
+}
+
+#reputacion .container h2 {
+    letter-spacing: 12px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-top: 30px;
+}
+
+.job-profile {
+    background-color: #fff;
+    overflow: hidden;
+    padding: 0;
+}
+
+.user-profile {
+    overflow: hidden;
+    padding: 0 25px;
+}
+
+.user-images {
+    float: left;
+    margin-top: 30px;
+    border: 1px solid #fcfcfc;
+    width: 15%;
+}
+
+.job-profile .user {
+    float: left;
+    padding-left: 30px;
+    margin-top: 8px;
+}
+
+.job-profile .user h4 {
+    font-weight: 300;
+    color: #2a2a2a;
+    margin-top: 30px;
+    font-size: 30px;
+    margin-bottom: 10px;
+    line-height: 1.1;
+}
+
+.job-profile .user h4 a {
+     font-weight: 700;
+     color: #3ac58f;
+ }
+
+.job-profile .user h4,a:hover {
+    text-decoration: none;
+}
+
+.job-profile .user h5 {
+    color: #9fa4a4;
+    font-size: 16px;
+}
+
+.favorites-user {
+    float: right;
+    margin-top: 20px;
+}
+
+.job-profile .my-ads, .job-profile .favorites {
+    float: left;
+    padding: 30px 40px;
+    text-align: center;
+    border-left: 1px solid #f5f5f5;
+}
+
+.job-profile .user-menu {
+    border-top: 1px solid #f5f5f5;
+}
+
+.profile-info  .job-profile .user-menu li.active a, .job-profile .user-menu li a:hover, .job-profile .user h2 a, .job-profile .favorites-user a, .job-profile .favorites-user small:hover {
+    color: #3ac58f;
+}
+
+.job-profile .favorites-user a {
+    font-size: 48px;
+    color: #3ac58f;
+    display: block;
+}
+
+.job-profile .favorites-user a:hover {
+    text-decoration: none;
+}
+
+.job-profile .favorites-user small {
+    display: block;
+    font-size: 16px;
+    color: #000;
+    line-height: 0;
+}
+
+.engranajes-reputacion {
+    margin-top: 40px;
+}
+
+.engranajes-reputacion i{
+    font-size: 40px;
+    margin-right: 12px;
+    color:#FFD700;
+}

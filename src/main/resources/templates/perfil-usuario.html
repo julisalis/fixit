@@ -12,7 +12,7 @@
 
     <div class="container">
         <div class="form-container form-horizontal" id="perfil">
-            <div class="form-group">
+            <div class="form-group profile">
                 <h2>Mi Perfil</h2>
                 <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')">Cliente</h4>
                 <div class="prestador-validado">
@@ -22,7 +22,6 @@
                 </div>
             </div>
             <fieldset>
-
                     <input type="hidden" th:value="${user.id}" id="id" class="form-control input-md apiParam"/>
                     <!-- Text input-->
                     <div class="form-group">
@@ -129,12 +128,6 @@
                             <input type="button" class="submit btn btn-secondary-profile" id="changeToTomador" th:onclick="${'perfilTomador('+(user.tomador!=null)+')'}" value="Cambiar a cliente"/>
                         </div>
                     </div>
-                    <div class="form-group" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
-                        <label class="col-md-3 control-label" for="validarAfip">Validación</label>
-                        <div class="col-md-3">
-                            <button th:if="${!user.prestador?.validado}" class="submit btn btn-secondary-profile" id="validarAfip" onclick="savePrestadorChanges()">Validar AFIP</button>
-                        </div>
-                    </div>
 
                     <!-- Button -->
                     <div class="form-group submit-profile">
@@ -146,8 +139,8 @@
 
             <section th:if="${user.prestador != null}" id="mercadoPagoProfile" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
                 <div class="form-group mercado-pago">
-                    <img src='/images/mercado-pago.png' alt="Image">
-                </div>
+                <img src='/images/mercado-pago.png' alt="Image">
+            </div>
                 <div th:switch="${user.prestador?.mpPrestador}" class="form-group">
                     <div th:case="null" class="form-group" >
                         <div class="col-md-4 col-md-offset-4">
@@ -194,6 +187,44 @@
                     </div>
                 </div>
             </section>
+
+            <section th:if="${user.prestador != null}" id="afipProfile" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
+                <div class="form-group mercado-pago afip">
+                    <img src='/images/afip.png' alt="Image">
+                </div>
+                        <div class="form-group">
+                            <div class="col-md-4 col-md-offset-4">
+                                <button th:if="${!user.prestador?.validado}" class="submit btn btn-secondary-profile" id="validarAfip" onclick="savePrestadorChanges()">Validarme con AFIP</button>
+                            </div>
+                        </div>
+
+                <div class="form-group">
+                    <label class="col-md-3 control-label">CUIT</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled value="" id="afip_cuit" class="form-control input-md apiParam"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Razón Social</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled value="" id="afip_razon" class="form-control input-md apiParam"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Fecha Inscipción</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled value="" id="afip_fecha" class="form-control input-md apiParam"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-3 control-label">Actividades</label>
+                    <div class="col-md-6">
+                        <input type="text" disabled value="" id="afip_actividades" class="form-control input-md apiParam"/>
+                    </div>
+                </div>
+
+            </section>
+
         </div>
     </div>
 </div>
