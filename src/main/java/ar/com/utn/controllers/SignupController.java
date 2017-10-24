@@ -1,6 +1,7 @@
 package ar.com.utn.controllers;
 
 import ar.com.utn.afip.AfipHandler;
+import ar.com.utn.afip.AutenticadorConfig;
 import ar.com.utn.afip.domain.Persona;
 import ar.com.utn.afip.enums.AfipWs;
 import ar.com.utn.form.PrestadorForm;
@@ -11,6 +12,7 @@ import ar.com.utn.models.*;
 import ar.com.utn.services.PrestadorService;
 import ar.com.utn.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,6 +42,22 @@ import java.util.stream.Collectors;
         private UsuarioService usuarioService;
         @Autowired
         private PrestadorService prestadorService;
+
+
+        //AFIP//
+        @Value("${app.afip.ws.endpoint}")
+        private String endpoint;
+        @Value("${app.afip.ws.dstdn}")
+        private String dstdn;
+        @Value("${app.afip.ws.p12file}")
+        private String p12file;
+        @Value("${app.afip.ws.signer}")
+        private String signer;
+        @Value("${app.afip.ws.p12pass}")
+        private String p12pass;
+        @Value("${app.afip.ws.ticketTime}")
+        private Long ticketTime;
+        //AFIP//
 
         @GetMapping(value="/prestador")
         public String signupPrestador(WebRequest request,Model model) {
@@ -123,7 +141,10 @@ import java.util.stream.Collectors;
 
                 if(!result.hasErrors()){
                     if(prestadorForm.getValidar()){
-                        AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l, prestadorService);
+                        AutenticadorConfig autConfig =
+                                new AutenticadorConfig(p12file, p12pass,
+                                        signer, dstdn, AfipWs.PADRON_CUATRO.getText(), ticketTime, endpoint);
+                        AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l, prestadorService, autConfig);
                         Persona personaAfip = afip.getPersona(prestadorForm.getCuit());
                         String actividades = !personaAfip.getActividades().isEmpty()?personaAfip.getActividades().get(0).getDescripcionActividad():"Ninguna";
                         if(!validarPersonaConAfip(personaAfip,prestadorForm)) {

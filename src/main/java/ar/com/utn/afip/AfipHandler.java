@@ -23,20 +23,7 @@ public class AfipHandler {
     private AfipWs service;
     private Long cuit;
     private PrestadorService prestadorService;
-
-
-    @Value("${app.afip.ws.endpoint}")
-    private String endpoint;
-    @Value("${app.afip.ws.dstdn}")
-    private String dstdn;
-    @Value("${app.afip.ws.p12file}")
-    private String p12file;
-    @Value("${app.afip.ws.signer}")
-    private String signer;
-    @Value("${app.afip.ws.p12pass}")
-    private String p12pass;
-    @Value("${app.afip.ws.ticketTime}")
-    private Long ticketTime;
+    private AutenticadorConfig autenticadorConfig;
 
     /*public static void main(String[] args){
         AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237L);
@@ -83,11 +70,12 @@ public class AfipHandler {
         this.ta = at;
     }
 
-    public AfipHandler(AfipWs service, Long cuitRepresentada, PrestadorService prestadorService) {
+    public AfipHandler(AfipWs service, Long cuitRepresentada, PrestadorService prestadorService, AutenticadorConfig authConfig) {
         this.autenticador = new Autenticador();
         this.service = service;
         this.cuit = cuitRepresentada;
         this.prestadorService = prestadorService;
+        this.autenticadorConfig = authConfig;
         TicketAcceso taOld = prestadorService.getLastTicketAcceso();
         if(taOld!=null){
             if(taOld.getVencimiento().isAfter(LocalDateTime.now())) {
@@ -120,13 +108,13 @@ public class AfipHandler {
 
         Long TicketTime = new Long(config.getProperty("TicketTime"));*/
 
-        AutenticadorConfig autConfig =
+        /*AutenticadorConfig autConfig =
                 new AutenticadorConfig(p12file, p12pass,
-                        signer, dstdn, this.service.getText(), ticketTime);
+                        signer, dstdn, this.service.getText(), ticketTime);*/
 
-        LoginTicketRequest loginTicketRequest = autenticador.buildLoginTicketRequest(autConfig);
+        LoginTicketRequest loginTicketRequest = autenticador.buildLoginTicketRequest(this.autenticadorConfig);
 
-        LoginTicketResponse loginTicketResponse = autenticador.invokeWSAA(loginTicketRequest, endpoint);
+        LoginTicketResponse loginTicketResponse = autenticador.invokeWSAA(loginTicketRequest, this.autenticadorConfig.getEndpoint());
 
         return autenticador.obtenerTA(loginTicketResponse);
     }

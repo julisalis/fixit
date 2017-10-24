@@ -11,14 +11,16 @@ public class AutenticadorConfig {
     private String dstDN;
     private String service;
     private Long ticketTime;
+    private String endpoint;
 
-    public AutenticadorConfig(String p12Filename, String p12pass, String signer, String dstDN, String service, Long ticketTime) {
+    public AutenticadorConfig(String p12Filename, String p12pass, String signer, String dstDN, String service, Long ticketTime, String endpoint) {
         this.p12Filename = p12Filename;
         this.p12pass = p12pass;
         this.signer = signer;
         this.dstDN = dstDN;
         this.service = service;
         this.ticketTime = ticketTime;
+        this.endpoint = endpoint;
     }
 
     public String getP12Filename() {
@@ -45,4 +47,7 @@ public class AutenticadorConfig {
         return ticketTime;
     }
 
+    public String getEndpoint() {
+        return endpoint;
+    }
 }
