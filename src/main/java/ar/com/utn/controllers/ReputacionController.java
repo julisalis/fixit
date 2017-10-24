@@ -21,12 +21,11 @@ public class ReputacionController {
     public String showReputacion(Model model) {
         Usuario user = currentSession.getUser();
         //no funciona el getActualRol
-//        if (currentSession.getActualRol() != null && currentSession.getUser().getRoles().contains("PRESTADOR")){
-//            model.addAttribute("user", new UsuarioDTO(user, true));
-//        }
-//        else {
-//            model.addAttribute("user", new UsuarioDTO(user, false));
-//        }
+        if (currentSession.getActualRol() != null && currentSession.getActualRol().stream().anyMatch(o -> o.getAuthority().equalsIgnoreCase("PRESTADOR"))){
+        }
+        else {
+            model.addAttribute("user", new UsuarioDTO(user, false));
+        }
 
         model.addAttribute("user", new UsuarioDTO(user, false));
 
