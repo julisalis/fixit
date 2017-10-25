@@ -69,8 +69,8 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
     @Autowired
     private CurrentSession currentSession;
 
-    public UsuarioServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder) {
-        this.passwordEncoder = bCryptPasswordEncoder;
+    public UsuarioServiceImpl() {
+        this.passwordEncoder = new BCryptPasswordEncoder();
     }
 
     @Override

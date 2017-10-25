@@ -23,16 +23,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    @Lazy
+    //@Lazy
     private UserDetailsService userDetailsService;
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    /*@Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;*/
     @Autowired
     private LoginAuthenticationSuccessHandler loginAuthenticationSuccessHandler;
 
-    @Autowired
-    public void configureAuth(AuthenticationManagerBuilder auth) throws Exception{
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
 
     @Override
