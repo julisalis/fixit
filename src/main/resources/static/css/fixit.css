@@ -2332,3 +2332,39 @@ a:focus{
     margin-right: 12px;
     color:#FFD700;
 }
+
+#contratacion .jumbotron-categoria2 {
+    background-image: url("../images/contratacion.jpg");
+}
+
+#contratacion .select-pay-method h3{
+    font-size: 20px;
+    letter-spacing: 8px;
+    margin-top: 30px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+
+#contratacion .select-pay-method img{
+    height: 130px;
+    width: 200px;
+}
+#contratacion .select-pay-method .col-md-6{
+    padding-top: 50px;
+}
+#contratacion .select-pay-method .col-md-6 p{
+    margin-top: 10px;
+    color: #3ac58f;
+    letter-spacing: 4px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+#contratacion #payButton{
+    width: 100%;
+}
+
+a:focus {
+    outline: none;
+}

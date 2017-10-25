@@ -6,7 +6,6 @@ import ar.com.utn.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -24,10 +23,11 @@ public class MoneyFlowServiceImpl implements MoneyFlowService {
 
 
     @Override
-    public void makePaymentMP(Postulacion postulacion, String tokenMP, String paymentMethodId, Usuario usuario) {
+    public PaymentMP makePaymentMP(Postulacion postulacion, String tokenMP, String paymentMethodId, Usuario usuario) {
         UserMP userMP = mercadoPagoApi.buildUserMP(usuario);
         AdditionalInfoMP additionalInfoMP = mercadoPagoApi.buildAdditionalInfoMP(usuario);
         PaymentMP paymentMP = mercadoPagoApi.buildPaymentMP(postulacion.getPresupAprox(), tokenMP,"Contratación FiIT",1, paymentMethodId, userMP,additionalInfoMP,commission);
         paymentMPRepository.save(paymentMP);
+        return paymentMP;
     }
 }

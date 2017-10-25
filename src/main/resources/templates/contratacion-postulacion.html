@@ -25,7 +25,7 @@
 
     <section id="section-publicaciones">
         <div class="container">
-            <h3 class="subtitulo-jobs" th:text="'Contratación'"></h3>
+            <h3 class="subtitulo-jobs" th:text="${postulacion.publicacion.titulo}"></h3>
             <div class="job-ad-item col-md-12 col-xs-12">
                 <div class=" col-md-4 col-xs-12 postulacion-info">
                     <div class="item-info">
@@ -65,8 +65,24 @@
 
                     </div>
                 </div>
+                <div class="col-md-8 col-xs-12 select-pay-method">
+                    <h3>Elija el medio de pago</h3>
+                    <div class="col-md-6">
+                        <a id="cash-selected" href="#">
+                            <img src="/images/cash.png">
 
-                <div class="col-md-8 col-xs-12 credit-card-info">
+                        </a>
+                        <p>Efectivo</p>
+                    </div>
+                    <div class="col-md-6">
+                        <a id="credit-selected" href="#">
+                            <img src="/images/credit.png">
+
+                        </a>
+                        <p>Tarjeta de crédito</p>
+                    </div>
+                </div>
+                <div hidden class="col-md-8 col-xs-12 credit-card-info">
                     <div class="row" id="cardRow">
                         <form id="cartForm">
                             <div class="col-md-6 ">
@@ -132,9 +148,18 @@
                             <div class="col-md-6" id="cardContainer"></div>
                         </form>
                     </div>
-                    <p style="text-align: left;color: #b1afaf;font-size: 11px;">*No se efectuarán cargos sobre su tarjeta hasta que el trabajo finalice y ambas partes hayan confirmado. En caso de reclamos comunicarse mediante nuestro correo y estaremos dispuesto a ayudarlo.</p>
 
+                    <p style="text-align: left;color: #b1afaf;font-size: 11px;">*No se efectuarán cargos sobre su tarjeta hasta que el trabajo finalice y ambas partes hayan confirmado. En caso de reclamos comunicarse mediante nuestro correo y estaremos dispuesto a ayudarlo.</p>
+                    <section id="boton-regresar">
+                        <div class="regresar">
+                            <a class="regresar-postulaciones" href="#" id="return-payMethod">
+                                <h5 class="titulo-postulacion">Medios de pago</h5>
+                                <i aria-hidden="true" class="fa fa-arrow-left"></i>
+                            </a>
+                        </div>
+                    </section>
                 </div>
+
             </div>
         </div>
 

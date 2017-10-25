@@ -4,8 +4,9 @@ import ar.com.utn.dto.PostulacionDTO;
 import ar.com.utn.exception.MercadoPagoException;
 import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.mercadopago.MoneyFlowService;
+import ar.com.utn.mercadopago.PaymentMP;
 import ar.com.utn.models.*;
-import ar.com.utn.repositories.implementation.PublicacionSearch;
+import ar.com.utn.repositories.ContratacionRepository;
 import ar.com.utn.services.*;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,8 @@ public class ContratacionController {
     private MailService mailService;
     @Autowired
     private MoneyFlowService moneyFlowService;
+    @Autowired
+    private ContratacionRepository contratacionRepository;
 
     @GetMapping(value = "/{postulacionId}")
     public String contratar(@PathVariable(value = "postulacionId") Long postulacionId,WebRequest request, Model model) {
@@ -71,28 +74,17 @@ public class ContratacionController {
                                                     @RequestParam(value = "postulacionId") Postulacion postulacion
                                                     ,Model model) {
 
-        Usuario usuario = currentSession.getUser();
-        Publicacion publicacion = postulacion.getPublicacion();
-        HashMap<String, Object> map = new HashMap<>();
-        Usuario usuarioPostulacion = usuarioService.findByPrestador(postulacion.getPrestador());
-        if (usuario.getTomador() != publicacion.getTomador()) {
-            map.put("success", false);
-            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
-            return map;
-        }
+       return contratarPostu(postulacion,PayMethod.CASH,tokenMP,paymentMethodId);
+    }
 
-        try {
-            moneyFlowService.makePaymentMP(postulacion, tokenMP, paymentMethodId, usuario);
-            publicacion = publicacionService.setContratada(publicacion);
-            postulacion = postulacionService.setContratada(postulacion);
-            mailService.sendPostulacionElegidaMail(usuario, usuarioPostulacion, postulacion);
-            map.put("success", true);
-            map.put("msg", "Ha contratado a " + usuarioPostulacion.getUsername() + " correctamente.");
-        } catch (Exception e) {
-            map.put("success", false);
-            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
-        }
-        return map;
+    @PreAuthorize("hasAuthority('TOMADOR')")
+    @PostMapping(value = "/contratarCash")
+    @Transactional(rollbackFor={Exception.class})
+    public @ResponseBody Map<String, Object> contratarPostulacionCash(
+            @RequestParam(value = "postulacionId") Postulacion postulacion
+            ,Model model) {
+
+        return contratarPostu(postulacion,PayMethod.CASH,null,null);
     }
 
     private PublicacionFotoForm getCover(Publicacion publicacion) {
@@ -101,5 +93,38 @@ public class ContratacionController {
             return new PublicacionFotoForm(publicacionPhoto);
         }else return null;
 
+    }
+
+    private HashMap<String, Object> contratarPostu(Postulacion postulacion, PayMethod payMethod,String tokenMP, String paymentMethodId) {
+        Publicacion publicacion = postulacion.getPublicacion();
+        Usuario usuario = currentSession.getUser();
+        HashMap<String, Object> map = new HashMap<>();
+        Contratacion contratacion;
+        Usuario usuarioPostulacion = usuarioService.findByPrestador(postulacion.getPrestador());
+        if (usuario.getTomador() != publicacion.getTomador()) {
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
+            return map;
+        }
+
+        try {
+            publicacionService.setContratada(publicacion);
+            postulacionService.setContratada(postulacion);
+            if (payMethod.equals(PayMethod.CREDIT_CART)){
+                PaymentMP paymentMP = moneyFlowService.makePaymentMP(postulacion, tokenMP, paymentMethodId, usuario);
+                contratacion = new Contratacion(postulacion,payMethod,paymentMP);
+
+            }else{
+                contratacion = new Contratacion(postulacion,payMethod);
+            }
+            contratacionRepository.save(contratacion);
+            mailService.sendPostulacionElegidaMail(usuario, usuarioPostulacion, postulacion);
+            map.put("success", true);
+            map.put("msg", "Ha contratado a " + usuarioPostulacion.getUsername() + " correctamente.");
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
+        }
+        return map;
     }
 }
