@@ -46,10 +46,10 @@ public class ContratacionController {
     private ContratacionService contratacionService;
 
     @GetMapping(value = "/{postulacionId}")
-    public String contratar(@PathVariable(value = "postulacionId") Long postulacionId,WebRequest request, Model model) {
+    public String contratar(@PathVariable(value = "postulacionId") Long postulacionId, WebRequest request, Model model) {
         Postulacion postulacion = postulacionService.findById(postulacionId);
-        if (postulacion!=null){
-            if(postulacion.getEstadoPostulacion().equals(EstadoPostulacion.CONTRATADA)) {
+        if (postulacion != null) {
+            if (postulacion.getEstadoPostulacion().equals(EstadoPostulacion.CONTRATADA)) {
                 return "redirect:/";
             }
             Usuario usuario = null;
@@ -58,10 +58,10 @@ public class ContratacionController {
             } catch (MercadoPagoException e) {
                 return "redirect:/";
             }
-            PostulacionDTO postulacionDTO = new PostulacionDTO(postulacion,getCover(postulacion.getPublicacion()),usuario);
+            PostulacionDTO postulacionDTO = new PostulacionDTO(postulacion, getCover(postulacion.getPublicacion()), usuario);
             model.addAttribute("MPPublicKey", postulacion.getPrestador().getMpPrestador().getPublicKey());
 
-            model.addAttribute("postulacion",postulacionDTO);
+            model.addAttribute("postulacion", postulacionDTO);
             return "contratacion-postulacion";
         }
         return "redirect:/";
@@ -69,35 +69,37 @@ public class ContratacionController {
 
     @PreAuthorize("hasAuthority('TOMADOR')")
     @PostMapping
-    @Transactional(rollbackFor={Exception.class})
-    public @ResponseBody Map<String, Object> contratarPostulacion(
-                                                    @RequestParam(required=false) String tokenMP,
-                                                    @RequestParam(required=false) String paymentMethodId,
-                                                    @RequestParam(value = "postulacionId") Postulacion postulacion
-                                                    ,Model model) {
+    @Transactional(rollbackFor = {Exception.class})
+    public @ResponseBody
+    Map<String, Object> contratarPostulacion(
+            @RequestParam(required = false) String tokenMP,
+            @RequestParam(required = false) String paymentMethodId,
+            @RequestParam(value = "postulacionId") Postulacion postulacion
+            , Model model) {
 
-       return contratarPostu(postulacion,PayMethod.CASH,tokenMP,paymentMethodId);
+        return contratarPostu(postulacion, PayMethod.CASH, tokenMP, paymentMethodId);
     }
 
     @PreAuthorize("hasAuthority('TOMADOR')")
     @PostMapping(value = "/contratarCash")
-    @Transactional(rollbackFor={Exception.class})
-    public @ResponseBody Map<String, Object> contratarPostulacionCash(
+    @Transactional(rollbackFor = {Exception.class})
+    public @ResponseBody
+    Map<String, Object> contratarPostulacionCash(
             @RequestParam(value = "postulacionId") Postulacion postulacion
-            ,Model model) {
+            , Model model) {
 
-        return contratarPostu(postulacion,PayMethod.CASH,null,null);
+        return contratarPostu(postulacion, PayMethod.CASH, null, null);
     }
 
     private PublicacionFotoForm getCover(Publicacion publicacion) {
         PublicacionPhoto publicacionPhoto = publicacionService.getCover(publicacion);
-        if(publicacionPhoto!=null){
+        if (publicacionPhoto != null) {
             return new PublicacionFotoForm(publicacionPhoto);
-        }else return null;
+        } else return null;
 
     }
 
-    private HashMap<String, Object> contratarPostu(Postulacion postulacion, PayMethod payMethod,String tokenMP, String paymentMethodId) {
+    private HashMap<String, Object> contratarPostu(Postulacion postulacion, PayMethod payMethod, String tokenMP, String paymentMethodId) {
         Publicacion publicacion = postulacion.getPublicacion();
         Usuario usuario = currentSession.getUser();
         HashMap<String, Object> map = new HashMap<>();
@@ -105,19 +107,19 @@ public class ContratacionController {
         Usuario usuarioPostulacion = usuarioService.findByPrestador(postulacion.getPrestador());
         if (usuario.getTomador() != publicacion.getTomador()) {
             map.put("success", false);
-            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
+            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
             return map;
         }
 
         try {
             publicacionService.setContratada(publicacion);
             postulacionService.setContratada(postulacion);
-            if (payMethod.equals(PayMethod.CREDIT_CART)){
+            if (payMethod.equals(PayMethod.CREDIT_CART)) {
                 PaymentMP paymentMP = moneyFlowService.makePaymentMP(postulacion, tokenMP, paymentMethodId, usuario);
-                contratacion = new Contratacion(postulacion,payMethod,paymentMP);
+                contratacion = new Contratacion(postulacion, payMethod, paymentMP);
 
-            }else{
-                contratacion = new Contratacion(postulacion,payMethod);
+            } else {
+                contratacion = new Contratacion(postulacion, payMethod);
             }
             contratacionRepository.save(contratacion);
             mailService.sendPostulacionElegidaMail(usuario, usuarioPostulacion, postulacion);
@@ -131,34 +133,34 @@ public class ContratacionController {
     }
 
 
-    @PreAuthorize("hasAuthority('TOMADOR')")
+ /*   @PreAuthorize("hasAuthority('TOMADOR')")
     @PostMapping
-    @Transactional(rollbackFor={Exception.class})
+    @Transactional(rollbackFor = {Exception.class})
     public @ResponseBody Map<String, Object> calificarPagar(
             @RequestParam(value = "contratacionId") Contratacion contratacion,
-             @RequestParam(value = "calificacion") Integer calificacion
-            ,Model model) {
+            @RequestParam(value = "calificacion") Integer calificacion
+            , Model model) {
         HashMap<String, Object> map = new HashMap<>();
         Usuario usuario = currentSession.getUser();
         Postulacion postulacion = contratacion.getPostulacion();
-        if (postulacion!=null){
+        if (postulacion != null) {
             Publicacion publicacion = postulacion.getPublicacion();
 
             try {
-                if(contratacion.getPayMethod().equals(PayMethod.CREDIT_CART)){
-                    String paymentId= contratacionService.efectuarPago(contratacion);
+                if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CART)) {
+                    String paymentId = contratacionService.efectuarPago(contratacion);
                     contratacion.setPaymentId(paymentId);
                 }
                 publicacionService.setFinalizada(publicacion);
                 postulacionService.setFinalizada(postulacion);
-//              mailService.sendPostulacionFinalizadaMail(contratacion);
+    //          mailService.sendPostulacionFinalizadaMail(contratacion);
                 map.put("success", true);
                 map.put("msg", "El trabajo ah finalizado con éxito, gracias por confiar en FixIT.");
             } catch (Exception e) {
                 map.put("success", false);
                 map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
             }
-        }else {
+        } else {
             map.put("success", false);
             map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
 
@@ -167,25 +169,16 @@ public class ContratacionController {
 
         return map;
 
-    }
+    }*/
 
     @GetMapping(value = "/{contratacionId}")
-    public String calificar(@PathVariable(value = "contratacionId") Long contratacionId,WebRequest request, Model model) {
+    public String calificar(@PathVariable(value = "contratacionId") Long contratacionId, WebRequest request, Model model) {
         Contratacion contratacion = contratacionRepository.findOne(contratacionId);
-        if (contratacion!=null){
-            model.addAttribute("contratacion",contratacion);
+        if (contratacion != null) {
+            model.addAttribute("contratacion", contratacion);
             return "calificar-postulacion";
         }
         return "redirect:/";
     }
-
-
-
-
-
-
-
-
-
 
 }
