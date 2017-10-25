@@ -1,6 +1,5 @@
 package ar.com.utn.services.implementation;
 
-import ar.com.utn.afip.enums.AfipWs;
 import ar.com.utn.exception.TokenNotFoundException;
 import ar.com.utn.exception.UserNotActiveException;
 import ar.com.utn.form.PrestadorForm;
@@ -58,8 +57,8 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
     @Autowired
     private TelefonoRepository telefonoRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder encoder;
+    //@Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private MailService mailService;
@@ -69,6 +68,10 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
 
     @Autowired
     private CurrentSession currentSession;
+
+    public UsuarioServiceImpl(BCryptPasswordEncoder bCryptPasswordEncoder) {
+        this.passwordEncoder = bCryptPasswordEncoder;
+    }
 
     @Override
     public Usuario findByUsername(String username) {
@@ -117,7 +120,7 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
 
         Prestador prestador = prestadorRepository.save(new Prestador(prestadorForm.getCuit(),valido,prestadorForm.getTipos(),prestadorForm.getNacimiento(),prestadorForm.getSexo()));
         Usuario usuario = new Usuario(prestadorForm.getUsername(),prestadorForm.getNombre(),prestadorForm.getApellido(),prestadorForm.getDocumento(),
-                prestadorForm.getTipoDoc(),encoder.encode(prestadorForm.getPassword()),telefono,ubicacion,prestadorForm.getEmail(),prestador);
+                prestadorForm.getTipoDoc(), passwordEncoder.encode(prestadorForm.getPassword()),telefono,ubicacion,prestadorForm.getEmail(),prestador);
         Usuario usuarioGenerado = usuarioRepository.save(usuario);
 
         String token = RandomStringUtils.random(50, 64, 168, true, true);
@@ -137,7 +140,7 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         telefonoRepository.save(telefono);
         Tomador tomador = tomadorRepository.save(new Tomador());
         Usuario usuario = new Usuario(tomadorForm.getUsername(),tomadorForm.getNombre(),tomadorForm.getApellido(),tomadorForm.getDocumento(),
-                tomadorForm.getTipoDoc(),encoder.encode(tomadorForm.getPassword()),telefono,ubicacion,tomadorForm.getEmail(),tomador);
+                tomadorForm.getTipoDoc(), passwordEncoder.encode(tomadorForm.getPassword()),telefono,ubicacion,tomadorForm.getEmail(),tomador);
         Usuario usuarioGenerado = usuarioRepository.save(usuario);
 
         String token = RandomStringUtils.random(50, 64, 168, true, true);
