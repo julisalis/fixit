@@ -64,4 +64,10 @@ public class PostulacionServiceImpl implements PostulacionService {
     public void deletePostulacion(Postulacion postulacion) {
         postulacionRepository.delete(postulacion);
     }
+
+    @Override
+    public void setFinalizada(Postulacion postulacion) {
+        postulacion.setEstadoPostulacion(EstadoPostulacion.FINALIZADA);
+
+    }
 }

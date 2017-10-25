@@ -22,4 +22,6 @@ public interface PostulacionService {
     void editPostulacion(PostulacionForm postulacionForm);
 
     void deletePostulacion(Postulacion postulacion);
+
+    void setFinalizada(Postulacion postulacion);
 }

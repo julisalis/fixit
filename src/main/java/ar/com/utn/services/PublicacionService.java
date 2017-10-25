@@ -42,4 +42,6 @@ public interface PublicacionService {
     Publicacion setContratada(Publicacion publicacion);
 
     List<Publicacion> getDestacados();
+
+    void setFinalizada(Publicacion publicacion);
 }

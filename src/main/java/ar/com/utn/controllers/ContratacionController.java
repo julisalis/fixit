@@ -42,6 +42,8 @@ public class ContratacionController {
     private MoneyFlowService moneyFlowService;
     @Autowired
     private ContratacionRepository contratacionRepository;
+    @Autowired
+    private ContratacionService contratacionService;
 
     @GetMapping(value = "/{postulacionId}")
     public String contratar(@PathVariable(value = "postulacionId") Long postulacionId,WebRequest request, Model model) {
@@ -127,4 +129,63 @@ public class ContratacionController {
         }
         return map;
     }
+
+
+    @PreAuthorize("hasAuthority('TOMADOR')")
+    @PostMapping
+    @Transactional(rollbackFor={Exception.class})
+    public @ResponseBody Map<String, Object> calificarPagar(
+            @RequestParam(value = "contratacionId") Contratacion contratacion,
+             @RequestParam(value = "calificacion") Integer calificacion
+            ,Model model) {
+        HashMap<String, Object> map = new HashMap<>();
+        Usuario usuario = currentSession.getUser();
+        Postulacion postulacion = contratacion.getPostulacion();
+        if (postulacion!=null){
+            Publicacion publicacion = postulacion.getPublicacion();
+
+            try {
+                if(contratacion.getPayMethod().equals(PayMethod.CREDIT_CART)){
+                    String paymentId= contratacionService.efectuarPago(contratacion);
+                    contratacion.setPaymentId(paymentId);
+                }
+                publicacionService.setFinalizada(publicacion);
+                postulacionService.setFinalizada(postulacion);
+//              mailService.sendPostulacionFinalizadaMail(contratacion);
+                map.put("success", true);
+                map.put("msg", "El trabajo ah finalizado con éxito, gracias por confiar en FixIT.");
+            } catch (Exception e) {
+                map.put("success", false);
+                map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
+            }
+        }else {
+            map.put("success", false);
+            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
+
+        }
+
+
+        return map;
+
+    }
+
+    @GetMapping(value = "/{contratacionId}")
+    public String calificar(@PathVariable(value = "contratacionId") Long contratacionId,WebRequest request, Model model) {
+        Contratacion contratacion = contratacionRepository.findOne(contratacionId);
+        if (contratacion!=null){
+            model.addAttribute("contratacion",contratacion);
+            return "calificar-postulacion";
+        }
+        return "redirect:/";
+    }
+
+
+
+
+
+
+
+
+
+
 }

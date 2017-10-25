@@ -134,6 +134,11 @@ public class PublicacionServiceImpl implements PublicacionService {
     }
 
     @Override
+    public void setFinalizada(Publicacion publicacion) {
+        publicacion.setEstadoPublicacion(EstadoPublicacion.FINALIZADA);
+    }
+
+    @Override
     public List<Publicacion> getTrabajosRecomendados(List<TipoTrabajo> tipos) {
         Usuario user = currentSession.getUser();
         List<Publicacion> publicacionList = publicacionRepository.findAllByTipoTrabajoInAndAndEstadoPublicacionEquals(tipos, EstadoPublicacion.NUEVA);
