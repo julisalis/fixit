@@ -133,8 +133,8 @@ public class ContratacionController {
     }
 
 
- /*   @PreAuthorize("hasAuthority('TOMADOR')")
-    @PostMapping
+    @PreAuthorize("hasAuthority('TOMADOR')")
+    @PostMapping(value = "calificarPagar")
     @Transactional(rollbackFor = {Exception.class})
     public @ResponseBody Map<String, Object> calificarPagar(
             @RequestParam(value = "contratacionId") Contratacion contratacion,
@@ -169,9 +169,9 @@ public class ContratacionController {
 
         return map;
 
-    }*/
+    }
 
-    @GetMapping(value = "/{contratacionId}")
+    @GetMapping(value = "calificar/{contratacionId}")
     public String calificar(@PathVariable(value = "contratacionId") Long contratacionId, WebRequest request, Model model) {
         Contratacion contratacion = contratacionRepository.findOne(contratacionId);
         if (contratacion != null) {
