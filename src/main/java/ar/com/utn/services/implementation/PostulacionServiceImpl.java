@@ -70,4 +70,9 @@ public class PostulacionServiceImpl implements PostulacionService {
         postulacion.setEstadoPostulacion(EstadoPostulacion.FINALIZADA);
 
     }
+
+    @Override
+    public Postulacion findByPublicacionAndEstadoPostulacion(Publicacion publicacion, EstadoPostulacion e) {
+        return postulacionRepository.findByPublicacionAndEstadoPostulacion(publicacion,e);
+    }
 }

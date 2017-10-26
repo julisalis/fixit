@@ -3,6 +3,7 @@ package ar.com.utn.services.implementation;
 import ar.com.utn.mercadopago.MercadoPagoApi;
 import ar.com.utn.mercadopago.PaymentMPRepository;
 import ar.com.utn.models.Contratacion;
+import ar.com.utn.models.Postulacion;
 import ar.com.utn.repositories.ContratacionRepository;
 import ar.com.utn.repositories.PostulacionRepository;
 import ar.com.utn.services.ContratacionService;
@@ -30,5 +31,10 @@ public class ContratacionServiceImpl implements ContratacionService {
 
        return mercadoPagoApi.makePayment(contratacion.getPaymentMP());
 
+    }
+
+    @Override
+    public Contratacion findByPostulacion(Postulacion mipostulacion) {
+        return contratacionRepository.findByPostulacion(mipostulacion);
     }
 }

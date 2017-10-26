@@ -19,6 +19,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created by iaruedel on 18/10/17.
@@ -171,13 +172,18 @@ public class ContratacionController {
 
     }
 
-    @GetMapping(value = "calificar/{contratacionId}")
-    public String calificar(@PathVariable(value = "contratacionId") Long contratacionId, WebRequest request, Model model) {
-        Contratacion contratacion = contratacionRepository.findOne(contratacionId);
-        if (contratacion != null) {
-            model.addAttribute("contratacion", contratacion);
-            return "calificar-postulacion";
+    @GetMapping(value = "calificar/{publicacionId}")
+    public String calificar(@PathVariable(value = "publicacionId") Long publicacionId, WebRequest request, Model model) {
+        Publicacion publicacion = publicacionService.findById(publicacionId);
+        Postulacion postulacion = postulacionService.findByPublicacionAndEstadoPostulacion(publicacion,EstadoPostulacion.CONTRATADA);
+        if(postulacion.getEstadoPostulacion().equals(EstadoPostulacion.CONTRATADA)){
+            Contratacion contratacion = contratacionService.findByPostulacion(postulacion);
+            if(contratacion!=null) {
+                model.addAttribute("contratacion",contratacion);
+                return "calificar-postulacion";
+            }
         }
+
         return "redirect:/";
     }
 
