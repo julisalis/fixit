@@ -2,6 +2,7 @@ package ar.com.utn.services.implementation;
 
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.TomadorForm;
+import ar.com.utn.models.Contratacion;
 import ar.com.utn.models.Postulacion;
 import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.Usuario;
@@ -17,9 +18,6 @@ import org.thymeleaf.context.Context;
 
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.logging.Logger;
-
-import static org.apache.axis.i18n.MessagesConstants.locale;
 
 /**
  * Created by mjarabroviski on 12/08/2017.
@@ -111,6 +109,19 @@ public class MailServiceImpl implements MailService {
         }
 
         sendBasicMail("Nueva postulación", dest, "email/postulacion-nueva",ctx);
+    }
+
+    @Override
+    public void sendCalificacionMailToProfesional(Contratacion contratacion, Usuario usuario, Usuario profesional) {
+        final Context ctx = new Context(new Locale("es","AR"));
+        ctx.setVariable("name", profesional.getUsername());
+        ctx.setVariable("calificacion", contratacion.getCalificacionTomador());
+        ctx.setVariable("title", "Postulación finalizada");
+        String dest= profesional.getEmail();
+        if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
+            dest =(environment.getProperty("mail.info"));
+        }
+        sendBasicMail("¡Trabajo finalizado con éxito!", dest, "email/calificacion-to-prestador",ctx);
     }
 
     public void sendBasicMail(String subject,String dest,String html,Context ctx) {

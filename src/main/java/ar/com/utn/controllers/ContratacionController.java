@@ -115,7 +115,7 @@ public class ContratacionController {
         try {
             publicacionService.setContratada(publicacion);
             postulacionService.setContratada(postulacion);
-            if (payMethod.equals(PayMethod.CREDIT_CART)) {
+            if (payMethod.equals(PayMethod.CREDIT_CARD)) {
                 PaymentMP paymentMP = moneyFlowService.makePaymentMP(postulacion, tokenMP, paymentMethodId, usuario);
                 contratacion = new Contratacion(postulacion, payMethod, paymentMP);
 
@@ -148,13 +148,17 @@ public class ContratacionController {
             Publicacion publicacion = postulacion.getPublicacion();
 
             try {
-                if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CART)) {
-                    String paymentId = contratacionService.efectuarPago(contratacion);
-                    contratacion.setPaymentId(paymentId);
+                if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
+                    if(contratacion.getCalificacionPrestador()!=null){
+                        String paymentId = contratacionService.efectuarPago(contratacion);
+                        contratacion.setPaymentId(paymentId);
+                    }
                 }
+                contratacion.setCalificacionTomador(calificacion);
                 publicacionService.setFinalizada(publicacion);
                 postulacionService.setFinalizada(postulacion);
-    //          mailService.sendPostulacionFinalizadaMail(contratacion);
+                Usuario prof = usuarioService.findByPrestador(postulacion.getPrestador());
+                mailService.sendCalificacionMailToProfesional(contratacion,usuario,prof);
                 map.put("success", true);
                 map.put("msg", "El trabajo ah finalizado con éxito, gracias por confiar en FixIT.");
             } catch (Exception e) {

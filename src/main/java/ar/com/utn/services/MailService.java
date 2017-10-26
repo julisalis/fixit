@@ -2,6 +2,7 @@ package ar.com.utn.services;
 
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.TomadorForm;
+import ar.com.utn.models.Contratacion;
 import ar.com.utn.models.Postulacion;
 import ar.com.utn.models.Publicacion;
 import ar.com.utn.models.Usuario;
@@ -19,4 +20,6 @@ public interface MailService {
     void sendPostulacionElegidaMail(Usuario cliente, Usuario prestador, Postulacion postulacion);
 
     void sendPostulacionNuevaMail(Usuario cliente, Usuario prestador, Publicacion publicacion, Postulacion postulacion);
+
+    void sendCalificacionMailToProfesional(Contratacion contratacion, Usuario usuario, Usuario prof);
 }
