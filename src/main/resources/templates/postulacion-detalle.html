@@ -122,6 +122,27 @@
                 </div>
             </div>
 
+            <h6 class="titulo-postulacion">Mensajes</h6>
+            <div class="job-ad-item no-margin-bottom">
+                <div class="talk-bubble tri-right round border btm-right-in mine">
+                    <div class="talktext">
+                        <p>Mensaje propio</p>
+                    </div>
+                </div>
+                <div class="talk-bubble tri-right round border btm-left-in not-mine">
+                    <div class="talktext">
+                        <p>Mensaje ajeno</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1 new-message-box form-inline">
+                    <textarea name="new-message" class="form-control"></textarea>
+                    <button class="btn btn-primary">Enviar</button>
+                </div>
+            </div>
+
+
             <section id="boton-regresar">
                 <div class="regresar">
                     <a href="/postulacion/list" class="regresar-postulaciones" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
