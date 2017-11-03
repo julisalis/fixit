@@ -25,7 +25,7 @@
     <section id="section-publicaciones">
         <div class="container">
             <h3 class="subtitulo-jobs" th:text="${publicacion.titulo}"></h3>
-            <h6 class="titulo-postulacion">Mi Postulación</h6>
+            <h6 class="titulo-postulacion" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">Mi Postulación</h6>
             <div class="job-ad-item">
                 <div class="item-info">
                     <div class="item-image-box col-md-2">
@@ -124,8 +124,12 @@
 
             <section id="boton-regresar">
                 <div class="regresar">
-                    <a href="/postulacion/list" class="regresar-postulaciones">
-                        <h5 class="titulo-postulacion">Mis Postulacines</h5>
+                    <a href="/postulacion/list" class="regresar-postulaciones" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
+                        <h5 class="titulo-postulacion">Mis Postulaciones</h5>
+                        <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                    </a>
+                    <a th:href="'/publicacion/postulaciones/'+${publicacion.id}" class="regresar-postulaciones" sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')">
+                        <h5 class="titulo-postulacion">Ver otras Postulaciones</h5>
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>
                     </a>
                 </div>
