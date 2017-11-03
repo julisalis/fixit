@@ -188,38 +188,33 @@
                 </div>
             </section>
 
-            <section th:if="${user.prestador != null}" id="afipProfile" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
+            <section th:if="${user.prestador != null && user.prestador?.validado}" id="afipProfile" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
                 <div class="form-group mercado-pago afip">
                     <img src='/images/afip.png' alt="Image">
                 </div>
-                        <div class="form-group">
-                            <div class="col-md-4 col-md-offset-4">
-                                <button th:if="${!user.prestador?.validado}" class="submit btn btn-secondary-profile" id="validarAfip" onclick="savePrestadorChanges()">Validarme con AFIP</button>
-                            </div>
-                        </div>
 
                 <div class="form-group">
                     <label class="col-md-3 control-label">CUIT</label>
                     <div class="col-md-6">
-                        <input type="text" disabled value="" id="afip_cuit" class="form-control input-md apiParam"/>
+                        <input type="text" th:value="${user.prestador.cuit}" disabled value="" id="afip_cuit" class="form-control input-md apiParam"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-md-3 control-label">Razón Social</label>
                     <div class="col-md-6">
-                        <input type="text" disabled value="" id="afip_razon" class="form-control input-md apiParam"/>
+                        <input type="text" th:value="${user.apellido + ' ' + user.nombre}" disabled value="" id="afip_razon" class="form-control input-md apiParam"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Fecha Inscipción</label>
+                    <label class="col-md-3 control-label">Fecha Nacimiento</label>
                     <div class="col-md-6">
-                        <input type="text" disabled value="" id="afip_fecha" class="form-control input-md apiParam"/>
+                        <input type="text" th:value="${user.prestador.nacimiento}" disabled value="" id="afip_fecha" class="form-control input-md apiParam"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Actividades</label>
+                    <label class="col-md-3 control-label">Sexo</label>
                     <div class="col-md-6">
-                        <input type="text" disabled value="" id="afip_actividades" class="form-control input-md apiParam"/>
+                        <input type="text" th:value="${user.prestador.sexo}" disabled value="" id="afip_actividades" class="form-control input-md apiParam"/>
                     </div>
                 </div>
 
