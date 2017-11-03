@@ -16,8 +16,8 @@ public class Contratacion extends PersistentEntity {
     private PayMethod payMethod;
     private LocalDateTime fechaCreacion;
     private String paymentId;
-    private Integer calificacionTomador;
-    private Integer calificacionPrestador;
+    private Double calificacionTomador;
+    private Double calificacionPrestador;
 
     @PrePersist
     protected void onCreate() {
@@ -78,19 +78,19 @@ public class Contratacion extends PersistentEntity {
         this.paymentId = paymentId;
     }
 
-    public Integer getCalificacionTomador() {
+    public Double getCalificacionTomador() {
         return calificacionTomador;
     }
 
-    public void setCalificacionTomador(Integer calificacionTomador) {
+    public void setCalificacionTomador(Double calificacionTomador) {
         this.calificacionTomador = calificacionTomador;
     }
 
-    public Integer getCalificacionPrestador() {
+    public Double getCalificacionPrestador() {
         return calificacionPrestador;
     }
 
-    public void setCalificacionPrestador(Integer calificacionPrestador) {
+    public void setCalificacionPrestador(Double calificacionPrestador) {
         this.calificacionPrestador = calificacionPrestador;
     }
 }

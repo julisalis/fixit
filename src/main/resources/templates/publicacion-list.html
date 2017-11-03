@@ -174,26 +174,25 @@
             buttons: [{
                 label: 'Aceptar',
                 action: function (dialog) {
-                    BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
-                    /*if($("#newPrestador_TipoTrabajo").val().length === 0){
-                        swal("Error", "Todos los campos son obligatorios.", "error")
-                    }
+                    //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
+
                     $.ajax({
                         type: 'POST',
-                        url: '/usuario/crearPerfilPrestador',
+                        url: '/contratar/calificarPagarTomador',
                         data: {
-                            id: $("#id").val(),
-                            tiposTrabajo: $("#newPrestador_TipoTrabajo").val()
+                            publicacionId: publicacionId,
+                            calificacion: $("#rateYo").rateYo("rating")
                         },
                         async: true,
                         success: function(message){
                             if(message.success){
-                                redirect("/usuario/perfil");
+                                //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
+                                redirect("/publicacion/list");
                             }else{
                                 swal("Error", message.msg, "error")
                             }
                         }
-                    });*/
+                    });
                 }
             }],
             onshown: function(dialogRef){
@@ -206,6 +205,10 @@
                 });
             },
         });
+    }
+
+    function redirect(redirectURL){
+        window.location.href = redirectURL;
     }
 </script>
 </html>

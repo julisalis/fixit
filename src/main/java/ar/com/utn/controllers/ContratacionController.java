@@ -135,35 +135,88 @@ public class ContratacionController {
 
 
     @PreAuthorize("hasAuthority('TOMADOR')")
-    @PostMapping(value = "calificarPagar")
+    @PostMapping(value = "calificarPagarTomador")
     @Transactional(rollbackFor = {Exception.class})
-    public @ResponseBody Map<String, Object> calificarPagar(
-            @RequestParam(value = "contratacionId") Contratacion contratacion,
-            @RequestParam(value = "calificacion") Integer calificacion
+    public @ResponseBody Map<String, Object> calificarPagarTomador(
+            @RequestParam(value = "publicacionId") Publicacion publicacion,
+            @RequestParam(value = "calificacion") Double calificacion
             , Model model) {
         HashMap<String, Object> map = new HashMap<>();
         Usuario usuario = currentSession.getUser();
-        Postulacion postulacion = contratacion.getPostulacion();
+        Postulacion postulacion = postulacionService.findByPublicacionAndEstadoPostulacion(publicacion,EstadoPostulacion.CONTRATADA);
+        //Postulacion postulacion = contratacion.getPostulacion();
+        if (postulacion != null) {
+            //Publicacion publicacion = postulacion.getPublicacion();
+            Contratacion contratacion = contratacionService.findByPostulacion(postulacion);
+            if(contratacion.getCalificacionTomador() == null){
+                try {
+                    contratacion.setCalificacionTomador(calificacion);
+                    if(contratacion.getCalificacionPrestador()!=null){
+                        if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
+                            String paymentId = contratacionService.efectuarPago(contratacion);
+                            contratacion.setPaymentId(paymentId);
+                        }
+                        publicacionService.setFinalizada(publicacion);
+                        postulacionService.setFinalizada(postulacion);
+                    }
+                    Usuario prof = usuarioService.findByPrestador(postulacion.getPrestador());
+                    mailService.sendCalificacionMailToProfesional(contratacion,usuario,prof);
+                    map.put("success", true);
+                    map.put("msg", "El trabajo ha finalizado con éxito, gracias por confiar en FixIT.");
+                } catch (Exception e) {
+                    map.put("success", false);
+                    map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
+                }
+            } else {
+                map.put("success", false);
+                map.put("msg", "Usted ya ha calificado al profesional.");
+            }
+        } else {
+            map.put("success", false);
+            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
+
+        }
+
+
+        return map;
+
+    }
+
+    @PreAuthorize("hasAuthority('PRESTADOR')")
+    @PostMapping(value = "calificarPagarPrestador")
+    @Transactional(rollbackFor = {Exception.class})
+    public @ResponseBody Map<String, Object> calificarPagarPrestador(
+            @RequestParam(value = "postulacionId") Postulacion postulacion,
+            @RequestParam(value = "calificacion") Double calificacion
+            , Model model) {
+        HashMap<String, Object> map = new HashMap<>();
+        Usuario usuario = currentSession.getUser();
+        //Postulacion postulacion = contratacion.getPostulacion();
         if (postulacion != null) {
             Publicacion publicacion = postulacion.getPublicacion();
-
-            try {
-                if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
-                    if(contratacion.getCalificacionPrestador()!=null){
-                        String paymentId = contratacionService.efectuarPago(contratacion);
-                        contratacion.setPaymentId(paymentId);
+            Contratacion contratacion = contratacionService.findByPostulacion(postulacion);
+            if(contratacion.getCalificacionPrestador() == null) {
+                try {
+                    contratacion.setCalificacionPrestador(calificacion);
+                    if(contratacion.getCalificacionTomador()!=null){
+                        if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
+                            String paymentId = contratacionService.efectuarPago(contratacion);
+                            contratacion.setPaymentId(paymentId);
+                        }
+                        publicacionService.setFinalizada(publicacion);
+                        postulacionService.setFinalizada(postulacion);
                     }
+                    Usuario prof = usuarioService.findByPrestador(postulacion.getPrestador());
+                    mailService.sendCalificacionMailToProfesional(contratacion, usuario, prof);
+                    map.put("success", true);
+                    map.put("msg", "El trabajo ha finalizado con éxito, gracias por confiar en FixIT.");
+                } catch (Exception e) {
+                    map.put("success", false);
+                    map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
                 }
-                contratacion.setCalificacionTomador(calificacion);
-                publicacionService.setFinalizada(publicacion);
-                postulacionService.setFinalizada(postulacion);
-                Usuario prof = usuarioService.findByPrestador(postulacion.getPrestador());
-                mailService.sendCalificacionMailToProfesional(contratacion,usuario,prof);
-                map.put("success", true);
-                map.put("msg", "El trabajo ah finalizado con éxito, gracias por confiar en FixIT.");
-            } catch (Exception e) {
+            } else {
                 map.put("success", false);
-                map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
+                map.put("msg", "Usted ya ha calificado al cliente.");
             }
         } else {
             map.put("success", false);
