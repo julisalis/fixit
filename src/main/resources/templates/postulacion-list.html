@@ -198,7 +198,7 @@
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 <script>
-    function modalCalificar(publicacionId) {
+    function modalCalificar(postulacionId) {
         var $content = $('<div class="row" style="margin-left: 0;">' +
             '            <div class="form-group">' +
             '                <label class="col-sm-3 control-label">Calificación:</label>' +
@@ -212,26 +212,25 @@
             buttons: [{
                 label: 'Aceptar',
                 action: function (dialog) {
-                    BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
-                    /*if($("#newPrestador_TipoTrabajo").val().length === 0){
-                        swal("Error", "Todos los campos son obligatorios.", "error")
-                    }
+                    //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
+
                     $.ajax({
                         type: 'POST',
-                        url: '/usuario/crearPerfilPrestador',
+                        url: '/contratar/calificarPagarPrestador',
                         data: {
-                            id: $("#id").val(),
-                            tiposTrabajo: $("#newPrestador_TipoTrabajo").val()
+                            postulacionId: postulacionId,
+                            calificacion: $("#rateYo").rateYo("rating")
                         },
                         async: true,
                         success: function(message){
                             if(message.success){
-                                redirect("/usuario/perfil");
+                                //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
+                                redirect("/postulacion/list");
                             }else{
                                 swal("Error", message.msg, "error")
                             }
                         }
-                    });*/
+                    });
                 }
             }],
             onshown: function(dialogRef){
@@ -244,6 +243,10 @@
                 });
             },
         });
+    }
+
+    function redirect(redirectURL){
+        window.location.href = redirectURL;
     }
 </script>
 </html>
