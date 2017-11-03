@@ -13,36 +13,14 @@ import java.util.Date;
 @Table(name = "mensajes")
 public class Mensaje extends PersistentEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "tomador", nullable = false)
-    private Tomador tomador;
-
-    @ManyToOne
-    @JoinColumn(name = "prestador", nullable = false)
-    private Prestador prestador;
-
     private String mensaje;
     private Date fecha;
+    private Boolean enviaTomador;
 
     @ManyToOne
-    @JoinColumn(name = "publicacion", nullable = false)
-    private Publicacion publicacion;
+    @JoinColumn(name = "postulacion", nullable = false)
+    private Postulacion postulacion;
 
-    public Tomador getTomador() {
-        return tomador;
-    }
-
-    public void setTomador(Tomador tomador) {
-        this.tomador = tomador;
-    }
-
-    public Prestador getPrestador() {
-        return prestador;
-    }
-
-    public void setPrestador(Prestador prestador) {
-        this.prestador = prestador;
-    }
 
     public String getMensaje() {
         return mensaje;
@@ -60,11 +38,19 @@ public class Mensaje extends PersistentEntity {
         this.fecha = fecha;
     }
 
-    public Publicacion getPublicacion() {
-        return publicacion;
+    public Boolean getEnviaTomador() {
+        return enviaTomador;
     }
 
-    public void setPublicacion(Publicacion publicacion) {
-        this.publicacion = publicacion;
+    public void setEnviaTomador(Boolean enviaTomador) {
+        this.enviaTomador = enviaTomador;
+    }
+
+    public Postulacion getPostulacion() {
+        return postulacion;
+    }
+
+    public void setPostulacion(Postulacion postulacion) {
+        this.postulacion = postulacion;
     }
 }

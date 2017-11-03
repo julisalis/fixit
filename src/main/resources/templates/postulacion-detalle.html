@@ -124,14 +124,29 @@
 
             <h6 class="titulo-postulacion">Mensajes</h6>
             <div class="job-ad-item no-margin-bottom">
-                <div class="talk-bubble tri-right round border btm-right-in mine">
-                    <div class="talktext">
-                        <p>Mensaje propio</p>
+                <!--TODO: Refactor codigo duplicado-->
+                <div th:each="mensaje: ${postulacion.mensajes}" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
+                    <div th:unless="${mensaje.enviaTomador}" class="talk-bubble tri-right round border btm-right-in mine">
+                        <div class="talktext">
+                            <p th:text="${mensaje.mensaje}"></p>
+                        </div>
+                    </div>
+                    <div th:if="${mensaje.enviaTomador}" class="talk-bubble tri-right round border btm-left-in not-mine">
+                        <div class="talktext">
+                            <p th:text="${mensaje.mensaje}"></p>
+                        </div>
                     </div>
                 </div>
-                <div class="talk-bubble tri-right round border btm-left-in not-mine">
-                    <div class="talktext">
-                        <p>Mensaje ajeno</p>
+                <div th:each="mensaje: ${postulacion.mensajes}" sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')">
+                    <div th:if="${mensaje.enviaTomador}" class="talk-bubble tri-right round border btm-right-in mine">
+                        <div class="talktext">
+                            <p th:text="${mensaje.mensaje}"></p>
+                        </div>
+                    </div>
+                    <div th:unless="${mensaje.enviaTomador}" class="talk-bubble tri-right round border btm-left-in not-mine">
+                        <div class="talktext">
+                            <p th:text="${mensaje.mensaje}"></p>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.List;
 
 /**
  * Created by julis on 13/7/2017.
@@ -34,6 +35,9 @@ public class Postulacion extends PersistentEntity {
     @ManyToOne
     @JoinColumn(name = "prestador", nullable = false)
     private Prestador prestador;
+
+    @OneToMany(mappedBy = "postulacion")
+    private List<Mensaje> mensajes;
 
     public Postulacion() {
     }
@@ -126,5 +130,13 @@ public class Postulacion extends PersistentEntity {
 
     public void setEstadoPostulacion(EstadoPostulacion estadoPostulacion) {
         this.estadoPostulacion = estadoPostulacion;
+    }
+
+    public List<Mensaje> getMensajes() {
+        return mensajes;
+    }
+
+    public void setMensajes(List<Mensaje> mensajes) {
+        this.mensajes = mensajes;
     }
 }

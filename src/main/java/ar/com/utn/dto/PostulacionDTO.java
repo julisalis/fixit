@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.List;
+import java.util.ArrayList;
 
 public class PostulacionDTO {
     private Long id;
@@ -19,6 +21,7 @@ public class PostulacionDTO {
     private Boolean elegida;
     private PublicacionDTO publicacion;
     private UsuarioDTO usuarioPrestador;
+    private List<Mensaje> mensajes = new ArrayList<>();
 
     public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario) {
         this.id = postulacion.getId();
@@ -29,6 +32,7 @@ public class PostulacionDTO {
         this.comentarios = postulacion.getComentarios();
         this.estado = postulacion.getEstadoPostulacion();
         this.elegida = postulacion.getElegida();
+        this.mensajes = postulacion.getMensajes();
         this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
         this.usuarioPrestador = new UsuarioDTO(usuario, true);
     }
@@ -114,6 +118,14 @@ public class PostulacionDTO {
 
     public void setUsuarioPrestador(UsuarioDTO usuarioPrestador) {
         this.usuarioPrestador = usuarioPrestador;
+    }
+
+    public List<Mensaje> getMensajes() {
+        return mensajes;
+    }
+
+    public void setMensajes(List<Mensaje> mensajes) {
+        this.mensajes = mensajes;
     }
 }
 
