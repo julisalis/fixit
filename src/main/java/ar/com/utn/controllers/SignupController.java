@@ -208,7 +208,7 @@ import java.util.stream.Collectors;
             }
 
             if(!actividadValida(personaAfip.getActividades())) {
-                logger.error("ERROR: Tipos de trabajo ingresados con coinciden con actividades obtenidas.");
+                logger.error("ERROR: Tipos de trabajo ingresados no coinciden con actividades obtenidas.");
                 return false;
             }
             logger.info("Todos los datos correctos. Validación aceptada.");
