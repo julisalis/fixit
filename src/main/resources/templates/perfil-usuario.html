@@ -108,7 +108,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" for="tipos">Tipos de Trabajo*</label>
                             <div class="col-md-6">
-                                <select id="tipos" class="form-control" data-validation="required" multiple="multiple" th:disabled="${!user.puedeEditarse}">
+                                <select id="tipos" class="apiParam form-control" data-validation="required" multiple="multiple" th:disabled="${!user.puedeEditarse}">
                                     <option th:each="tipoTrabajo:${tiposTrabajo}" th:value="${tipoTrabajo.id}" th:text="${tipoTrabajo.nombre}" th:selected="${user.prestador.tipos.contains(tipoTrabajo)}">Plomeria</option>
                                 </select>
                             </div>
@@ -131,7 +131,7 @@
 
                     <!-- Button -->
                     <div class="form-group submit-profile">
-                            <button class="submit button button-block btn btn-primary" id="submit" onclick="savePrestadorChanges()">Guardar cambios</button>
+                            <button class="submit button button-block btn btn-primary" id="submit" onclick="saveChanges()">Guardar cambios</button>
                     </div>
 
 
@@ -235,7 +235,7 @@
         $("#localidad").load('/usuario/ajax/localidad', "provincia="+$("#provincia").val());
     });
 
-    function savePrestadorChanges(){
+    function saveChanges(){
         $.ajax({
             type: 'POST',
             url: '/usuario/editar',
