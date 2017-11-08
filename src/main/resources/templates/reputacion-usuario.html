@@ -30,7 +30,7 @@
 
                     <div class="user">
                         <h4>Hola, <a th:text="${user.username}"></a>
-                            <img th:if="${user.prestador.validado}" width="20px;" src='/images/validado.png' onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="img-validado">
+                            <img sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" th:if="${user.prestador.validado}" width="20px;" src='/images/validado.png' onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="img-validado">
                         </h4>
                         <h5 th:text="'Usuario de la plataforma desde: '+${user.fechaCreacion}"></h5>
 
