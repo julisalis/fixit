@@ -78,7 +78,7 @@ public class ContratacionController {
             @RequestParam(value = "postulacionId") Postulacion postulacion
             , Model model) {
 
-        return contratarPostu(postulacion, PayMethod.CASH, tokenMP, paymentMethodId);
+        return contratarPostu(postulacion, PayMethod.CREDIT_CARD, tokenMP, paymentMethodId);
     }
 
     @PreAuthorize("hasAuthority('TOMADOR')")
@@ -149,24 +149,24 @@ public class ContratacionController {
             //Publicacion publicacion = postulacion.getPublicacion();
             Contratacion contratacion = contratacionService.findByPostulacion(postulacion);
             if(contratacion.getCalificacionTomador() == null){
-                try {
-                    contratacion.setCalificacionTomador(calificacion);
                     if(contratacion.getCalificacionPrestador()!=null){
-                        if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
-                            String paymentId = contratacionService.efectuarPago(contratacion);
-                            contratacion.setPaymentId(paymentId);
+                        try {
+                            if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
+                                String paymentId = contratacionService.efectuarPago(contratacion);
+                                contratacion.setPaymentId(paymentId);
+                            }
+                        } catch (Exception e) {
+                            map.put("success", false);
+                            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
                         }
                         publicacionService.setFinalizada(publicacion);
                         postulacionService.setFinalizada(postulacion);
                     }
+                    contratacion.setCalificacionTomador(calificacion);
                     Usuario prof = usuarioService.findByPrestador(postulacion.getPrestador());
                     mailService.sendCalificacionMailToProfesional(contratacion,usuario,prof);
                     map.put("success", true);
                     map.put("msg", "El trabajo ha finalizado con éxito, gracias por confiar en FixIT.");
-                } catch (Exception e) {
-                    map.put("success", false);
-                    map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
-                }
             } else {
                 map.put("success", false);
                 map.put("msg", "Usted ya ha calificado al profesional.");
@@ -196,24 +196,25 @@ public class ContratacionController {
             Publicacion publicacion = postulacion.getPublicacion();
             Contratacion contratacion = contratacionService.findByPostulacion(postulacion);
             if(contratacion.getCalificacionPrestador() == null) {
-                try {
-                    contratacion.setCalificacionPrestador(calificacion);
                     if(contratacion.getCalificacionTomador()!=null){
-                        if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
-                            String paymentId = contratacionService.efectuarPago(contratacion);
-                            contratacion.setPaymentId(paymentId);
+                        try {
+                            if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
+                                String paymentId = contratacionService.efectuarPago(contratacion);
+                                contratacion.setPaymentId(paymentId);
+                            }
+                        } catch (Exception e) {
+                            map.put("success", false);
+                            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
+                            return map;
                         }
                         publicacionService.setFinalizada(publicacion);
                         postulacionService.setFinalizada(postulacion);
                     }
+                    contratacion.setCalificacionPrestador(calificacion);
                     Usuario prof = usuarioService.findByPrestador(postulacion.getPrestador());
                     mailService.sendCalificacionMailToProfesional(contratacion, usuario, prof);
                     map.put("success", true);
                     map.put("msg", "El trabajo ha finalizado con éxito, gracias por confiar en FixIT.");
-                } catch (Exception e) {
-                    map.put("success", false);
-                    map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
-                }
             } else {
                 map.put("success", false);
                 map.put("msg", "Usted ya ha calificado al cliente.");

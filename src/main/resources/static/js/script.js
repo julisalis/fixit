@@ -78,10 +78,9 @@ $(function () {
     $("#postular").click(function (e) {
         $.ajax({
             url: "/usuario/validateMercadoPago",
-            async: true,
+            async: false,
             method: "GET",
             success: function( data) {
-                $.LoadingOverlay("hide");
                 if(!data.success) {
                     swal({
                         title: "Error",
@@ -95,12 +94,10 @@ $(function () {
                 }
             },
             error: function ( jqXHR, textStatus, errorThrown){
-                $.LoadingOverlay("hide");
                 e.preventDefault();
                 return false;
             }
         });
-        $.LoadingOverlay("show");
     });
 });
 

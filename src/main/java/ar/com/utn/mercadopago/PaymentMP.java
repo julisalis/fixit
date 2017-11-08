@@ -131,4 +131,5 @@ public class PaymentMP extends PersistentEntity {
     public void setAdditional_info(AdditionalInfoMP additional_info) {
         this.additional_info = additional_info;
     }
+
 }

@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 //import org.codehaus.jettison.json.JSONException;
 //import org.codehaus.jettison.json.JSONObject;
 
@@ -64,7 +66,29 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
     public String makePayment(PaymentMP paymentMP) throws Exception{
         MP mp = getMPInstance();
         Gson gson = new Gson();
-        String paymentMPJson = gson.toJson(paymentMP);
+        Map<String,Object> map = new HashMap<>();
+        map.put("transaction_amount",paymentMP.getTransaction_amount());
+        map.put("token",paymentMP.getToken());
+        map.put("description",paymentMP.getDescription());
+        map.put("installments",paymentMP.getInstallments());
+        map.put("payment_method_id",paymentMP.getPayment_method_id());
+//        map.put("application_fee",paymentMP.getApplication_fee());
+        map.put("binary_mode",paymentMP.isBinary_mode());
+        map.put("status",paymentMP.getStatus());
+        map.put("status_detail",paymentMP.getStatus_detail());
+
+        Map<String,Object> payer = new HashMap<>();
+        payer.put("email",paymentMP.getPayer().getEmail());
+        map.put("payer",payer);
+
+        Map<String,Object> additional_info = new HashMap<>();
+        Map<String,Object> payer_info = new HashMap<>();
+        payer_info.put("first_name",paymentMP.getAdditional_info().getFirst_name());
+        payer_info.put("last_name",paymentMP.getAdditional_info().getLast_name());
+        additional_info.put("payer",payer_info);
+        map.put("additional_info",additional_info);
+
+        String paymentMPJson = gson.toJson(map);
         JSONObject payment = mp.post(PAYMENTS_URL, paymentMPJson);
         controlResponse(payment);
         controlResponsePayment(payment);
