@@ -236,12 +236,14 @@
     });
 
     function saveChanges(){
+        //$.LoadingOverlay("show");
         $.ajax({
             type: 'POST',
             url: '/usuario/editar',
             data: getParamsForAjax("#perfil"),
             async: true,
             success: function(message){
+                //$.LoadingOverlay("hide");
                 if(message.success){
                     swal({
                         title: "Cambios guardados!",
@@ -276,6 +278,7 @@
             },
             async: true,
             success: function(message){
+                $.LoadingOverlay("hide");
                 if(message.success){
                     redirect("/usuario/perfil");
                 }else{
@@ -283,6 +286,7 @@
                 }
             }
         });
+        $.LoadingOverlay("show");
     }
 
     function perfilTomador(exists) {
@@ -295,6 +299,7 @@
                 },
                 async: true,
                 success: function(message){
+                    //$.LoadingOverlay("hide");
                     if(message.success){
                         redirect("/usuario/perfil");
                     }else{
@@ -302,6 +307,7 @@
                     }
                 }
             });
+            //$.LoadingOverlay("show");
         }else {
             cambiarRol("TOMADOR");
         }
@@ -346,6 +352,7 @@
                                         },
                                         async: true,
                                         success: function(message){
+                                            //$.LoadingOverlay("hide");
                                             if(message.success){
                                                 redirect("/usuario/perfil");
                                             }else{
@@ -353,6 +360,7 @@
                                             }
                                         }
                                     });
+                                    //$.LoadingOverlay("show");
                                 }
                             }],
                             onshown: function(dialogRef){

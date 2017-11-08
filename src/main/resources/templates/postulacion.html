@@ -105,8 +105,9 @@
             type: 'POST',
             url: form.attr('action'),
             data: form.serialize(),
-            async:false,
+            async:true,
             success: function(message){
+                $.LoadingOverlay("hide");
                 if(message.success){
                     swal({
                         title: "Postulación guardada!",
@@ -120,9 +121,11 @@
                 }
             },
             error: function ( message){
+                $.LoadingOverlay("hide");
                 swal("Error", message.msg, "error");
             }
         });
+        $.LoadingOverlay("show");
         e.preventDefault();
     });
 

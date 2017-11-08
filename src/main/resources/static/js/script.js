@@ -21,6 +21,7 @@ $(function () {
 
     //*******************Form de register***********************
     $("#signup form .btn-aceptar").click(function(){
+        $.LoadingOverlay("show");
         $(this).prop('disabled',true);
         var form = $(this).closest( "form" );
 
@@ -31,6 +32,7 @@ $(function () {
 
         $.get(form.attr('action') , form.serialize() )
             .done(function( data ) {
+                $.LoadingOverlay("hide");
                 if(data.success) {
                     if(typeof(data.url) != 'undefined'){
                         window.location=data.url;
@@ -66,6 +68,7 @@ $(function () {
                 }
             })
             .fail(function( data ) {
+                $.LoadingOverlay("hide");
                 var result = $(data);
 
             });
@@ -75,9 +78,10 @@ $(function () {
     $("#postular").click(function (e) {
         $.ajax({
             url: "/usuario/validateMercadoPago",
-            async: false,
+            async: true,
             method: "GET",
             success: function( data) {
+                $.LoadingOverlay("hide");
                 if(!data.success) {
                     swal({
                         title: "Error",
@@ -91,11 +95,12 @@ $(function () {
                 }
             },
             error: function ( jqXHR, textStatus, errorThrown){
+                $.LoadingOverlay("hide");
                 e.preventDefault();
                 return false;
             }
         });
-
+        $.LoadingOverlay("show");
     });
 });
 
