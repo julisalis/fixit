@@ -2,10 +2,7 @@ package ar.com.utn.services;
 
 import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.form.PublicacionForm;
-import ar.com.utn.models.EstadoPublicacion;
-import ar.com.utn.models.Publicacion;
-import ar.com.utn.models.PublicacionPhoto;
-import ar.com.utn.models.TipoTrabajo;
+import ar.com.utn.models.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -44,4 +41,6 @@ public interface PublicacionService {
     List<Publicacion> getDestacados();
 
     void setFinalizada(Publicacion publicacion);
+
+    Contratacion findContratacionForPublicacion(Publicacion publicacion);
 }
