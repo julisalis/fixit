@@ -30,7 +30,6 @@ public class PublicacionDTO {
     private Integer cantidadPostulaciones;
     private boolean prestadorPuedePostularse = true;
 
-    //private boolean prestadorPuedeCalificar = true;
     private boolean tomadorPuedeCalificar = true;
 
     public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage) {
