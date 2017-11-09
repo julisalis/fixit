@@ -15,10 +15,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ContratacionServiceImpl implements ContratacionService {
-
-    @Autowired
-    PaymentMPRepository paymentMPRepository;
-
     @Autowired
     ContratacionRepository contratacionRepository;
     @Autowired
@@ -44,7 +40,6 @@ public class ContratacionServiceImpl implements ContratacionService {
     @Override
     public PaymentMP completePayment(Postulacion postulacion, String tokenMP, String paymentMethodId, Usuario tomador) {
         PaymentMP paymentMP =  moneyFlowService.makePaymentMP(postulacion,tokenMP,paymentMethodId,tomador);
-        paymentMPRepository.save(paymentMP);
         return paymentMP;
     }
 }

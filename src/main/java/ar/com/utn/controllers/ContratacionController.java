@@ -6,6 +6,7 @@ import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.mercadopago.MercadoPagoApi;
 import ar.com.utn.mercadopago.MoneyFlowService;
 import ar.com.utn.mercadopago.PaymentMP;
+import ar.com.utn.mercadopago.PaymentMPRepository;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.ContratacionRepository;
 import ar.com.utn.services.*;
@@ -44,6 +45,9 @@ public class ContratacionController {
     private ContratacionRepository contratacionRepository;
     @Autowired
     private ContratacionService contratacionService;
+    @Autowired
+    PaymentMPRepository paymentMPRepository;
+
 
     @GetMapping(value = "/{postulacionId}")
     public String contratar(@PathVariable(value = "postulacionId") Long postulacionId, WebRequest request, Model model) {
@@ -107,6 +111,7 @@ public class ContratacionController {
         try {
             if (payMethod.equals(PayMethod.CREDIT_CARD)) {
                 PaymentMP paymentMP = contratacionService.completePayment(postulacion, tokenMP, paymentMethodId,tomador);
+                paymentMPRepository.save(paymentMP);
                 contratacion = new Contratacion(postulacion, payMethod, paymentMP);
             } else {
                 contratacion = new Contratacion(postulacion, payMethod);

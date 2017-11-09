@@ -18,6 +18,9 @@ public class AdditionalInfoMP {
     @Embedded
     private UserAdditionalInfoMP payer;
 
+    public AdditionalInfoMP() {
+    }
+
     public AdditionalInfoMP(Usuario usuario) {
         this.payer = new UserAdditionalInfoMP(usuario);
     }
