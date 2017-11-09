@@ -2386,7 +2386,6 @@ a:focus {
 
 #contratacion-mas {
     background-color: rgba(211, 211, 211, 0.58);
-    padding-bottom: 50px;
 }
 
 .post-resume .section {
@@ -2432,6 +2431,44 @@ a:focus {
 
 #contratacion-mas .job-ad-item .ad-meta.detalle-iconos li{
     margin-right: 20px;
+}
+
+.contratacion-contratacion  img {
+    width: 40%;
+    margin-left: 15px;
+}
+
+.contratacion-contratacion  h5 {
+    display: inline-block;
+    font-size: 16px;
+    margin-left: 15px;
+}
+
+.contratacion-contratacion  li {
+    position: relative;
+    color: #707070;
+    margin-bottom: 15px;
+    font-size: 16px;
+    margin-left: -20px;
+    font-weight: bold;
+}
+
+.contratacion-contratacion  ul{
+    list-style: none;
+}
+
+.contratacion-contratacion span.icon {
+    font-size: 18px;
+    color: #FFD700;
+    letter-spacing: 10px;
+}
+
+.contratacion-contratacion .estrellas li {
+    text-align: center;
+}
+
+.contratacion-contratacion .logo-pago {
+    display: inline;
 }
 
 

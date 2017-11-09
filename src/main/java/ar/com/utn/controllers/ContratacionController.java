@@ -1,5 +1,6 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.dto.ContratacionDTO;
 import ar.com.utn.dto.PostulacionDTO;
 import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.exception.MercadoPagoException;
@@ -247,7 +248,7 @@ public class ContratacionController {
             if(contratacion!=null) {
                 model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion),usuarioService.findByPrestador(mipostulacion.getPrestador())));
                 model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
-                model.addAttribute("contratacion",contratacion);
+                model.addAttribute("contratacion",new ContratacionDTO(contratacion));
                 return "contratacion-detalle";
             }
         }

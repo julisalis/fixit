@@ -4,17 +4,21 @@ import ar.com.utn.models.Contratacion;
 import ar.com.utn.models.PayMethod;
 import ar.com.utn.models.Postulacion;
 
+import java.time.LocalDate;
+
 public class ContratacionDTO {
 
     private Postulacion postulacion;
     private PayMethod payMethod;
     private String paymentId;
+    private LocalDate fechaCreacion;
     private Double calificacionTomador;
     private Double calificacionPrestador;
 
     public ContratacionDTO(Contratacion contratacion) {
         this.postulacion = contratacion.getPostulacion();
         this.payMethod = contratacion.getPayMethod();
+        this.fechaCreacion = contratacion.getFechaCreacion().toLocalDate();
         this.calificacionTomador = contratacion.getCalificacionTomador();
         this.calificacionPrestador = contratacion.getCalificacionPrestador();
     }
@@ -44,6 +48,14 @@ public class ContratacionDTO {
 
     public void setPaymentId(String paymentId) {
         this.paymentId = paymentId;
+    }
+
+    public LocalDate getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDate fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public Double getCalificacionTomador() {
