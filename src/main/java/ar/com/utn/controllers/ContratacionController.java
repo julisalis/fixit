@@ -166,7 +166,7 @@ public class ContratacionController {
                     Usuario prof = usuarioService.findByPrestador(postulacion.getPrestador());
                     mailService.sendCalificacionMailToProfesional(contratacion,usuario,prof);
                     map.put("success", true);
-                    map.put("msg", "El trabajo ha finalizado con éxito, gracias por confiar en FixIT.");
+                    map.put("msg", "La calificación ha sido guardada.");
             } else {
                 map.put("success", false);
                 map.put("msg", "Usted ya ha calificado al profesional.");
