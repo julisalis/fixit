@@ -1,10 +1,13 @@
 package ar.com.utn.controllers;
 
 import ar.com.utn.dto.PostulacionDTO;
+import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.exception.MercadoPagoException;
 import ar.com.utn.form.PublicacionFotoForm;
+import ar.com.utn.mercadopago.MercadoPagoApi;
 import ar.com.utn.mercadopago.MoneyFlowService;
 import ar.com.utn.mercadopago.PaymentMP;
+import ar.com.utn.mercadopago.PaymentMPRepository;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.ContratacionRepository;
 import ar.com.utn.services.*;
@@ -40,11 +43,12 @@ public class ContratacionController {
     @Autowired
     private MailService mailService;
     @Autowired
-    private MoneyFlowService moneyFlowService;
-    @Autowired
     private ContratacionRepository contratacionRepository;
     @Autowired
     private ContratacionService contratacionService;
+    @Autowired
+    PaymentMPRepository paymentMPRepository;
+
 
     @GetMapping(value = "/{postulacionId}")
     public String contratar(@PathVariable(value = "postulacionId") Long postulacionId, WebRequest request, Model model) {
@@ -77,7 +81,6 @@ public class ContratacionController {
             @RequestParam(required = false) String paymentMethodId,
             @RequestParam(value = "postulacionId") Postulacion postulacion
             , Model model) {
-
         return contratarPostu(postulacion, PayMethod.CREDIT_CARD, tokenMP, paymentMethodId);
     }
 
@@ -102,30 +105,24 @@ public class ContratacionController {
 
     private HashMap<String, Object> contratarPostu(Postulacion postulacion, PayMethod payMethod, String tokenMP, String paymentMethodId) {
         Publicacion publicacion = postulacion.getPublicacion();
-        Usuario usuario = currentSession.getUser();
         HashMap<String, Object> map = new HashMap<>();
         Contratacion contratacion;
-        Usuario usuarioPostulacion = usuarioService.findByPrestador(postulacion.getPrestador());
-        if (usuario.getTomador() != publicacion.getTomador()) {
-            map.put("success", false);
-            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
-            return map;
-        }
-
+        Usuario prestador = usuarioService.findByPrestador(postulacion.getPrestador());
+        Usuario tomador = usuarioService.findByTomador(publicacion.getTomador());
         try {
-            publicacionService.setContratada(publicacion);
-            postulacionService.setContratada(postulacion);
             if (payMethod.equals(PayMethod.CREDIT_CARD)) {
-                PaymentMP paymentMP = moneyFlowService.makePaymentMP(postulacion, tokenMP, paymentMethodId, usuario);
+                PaymentMP paymentMP = contratacionService.completePayment(postulacion, tokenMP, paymentMethodId,tomador);
+                paymentMPRepository.save(paymentMP);
                 contratacion = new Contratacion(postulacion, payMethod, paymentMP);
-
             } else {
                 contratacion = new Contratacion(postulacion, payMethod);
             }
+            publicacionService.setContratada(publicacion);
+            postulacionService.setContratada(postulacion);
             contratacionRepository.save(contratacion);
-            mailService.sendPostulacionElegidaMail(usuario, usuarioPostulacion, postulacion);
+            mailService.sendPostulacionElegidaMail(tomador, prestador, postulacion);
             map.put("success", true);
-            map.put("msg", "Ha contratado a " + usuarioPostulacion.getUsername() + " correctamente.");
+            map.put("msg", "Ha contratado a " + prestador.getUsername() + " correctamente.");
         } catch (Exception e) {
             map.put("success", false);
             map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
@@ -144,15 +141,13 @@ public class ContratacionController {
         HashMap<String, Object> map = new HashMap<>();
         Usuario usuario = currentSession.getUser();
         Postulacion postulacion = postulacionService.findByPublicacionAndEstadoPostulacion(publicacion,EstadoPostulacion.CONTRATADA);
-        //Postulacion postulacion = contratacion.getPostulacion();
         if (postulacion != null) {
-            //Publicacion publicacion = postulacion.getPublicacion();
             Contratacion contratacion = contratacionService.findByPostulacion(postulacion);
             if(contratacion.getCalificacionTomador() == null){
                     if(contratacion.getCalificacionPrestador()!=null){
                         try {
                             if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
-                                String paymentId = contratacionService.efectuarPago(contratacion);
+                                String paymentId =  contratacionService.efectuarPago(contratacion.getPaymentMP(),postulacion.getPrestador());
                                 contratacion.setPaymentId(paymentId);
                             }
                         } catch (Exception e) {
@@ -174,12 +169,8 @@ public class ContratacionController {
         } else {
             map.put("success", false);
             map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
-
         }
-
-
         return map;
-
     }
 
     @PreAuthorize("hasAuthority('PRESTADOR')")
@@ -191,7 +182,6 @@ public class ContratacionController {
             , Model model) {
         HashMap<String, Object> map = new HashMap<>();
         Usuario usuario = currentSession.getUser();
-        //Postulacion postulacion = contratacion.getPostulacion();
         if (postulacion != null) {
             Publicacion publicacion = postulacion.getPublicacion();
             Contratacion contratacion = contratacionService.findByPostulacion(postulacion);
@@ -199,7 +189,7 @@ public class ContratacionController {
                     if(contratacion.getCalificacionTomador()!=null){
                         try {
                             if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
-                                String paymentId = contratacionService.efectuarPago(contratacion);
+                                String paymentId =  contratacionService.efectuarPago(contratacion.getPaymentMP(),postulacion.getPrestador());
                                 contratacion.setPaymentId(paymentId);
                             }
                         } catch (Exception e) {
@@ -239,6 +229,24 @@ public class ContratacionController {
             if(contratacion!=null) {
                 model.addAttribute("contratacion",contratacion);
                 return "calificar-postulacion";
+            }
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping(value="/detalle/{publicacionId}")
+    public String detalleContratacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
+        Publicacion mipublicacion = publicacionService.findById(publicacionId);
+        Postulacion mipostulacion = postulacionService.findByPublicacionAndEstadoPostulacion(mipublicacion, EstadoPostulacion.CONTRATADA);
+
+        if(mipostulacion.getEstadoPostulacion().equals(EstadoPostulacion.CONTRATADA)){
+            Contratacion contratacion = contratacionService.findByPostulacion(mipostulacion);
+            if(contratacion!=null) {
+                model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion),usuarioService.findByPrestador(mipostulacion.getPrestador())));
+                model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+                model.addAttribute("contratacion",contratacion);
+                return "contratacion-detalle";
             }
         }
 

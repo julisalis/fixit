@@ -2,13 +2,22 @@ package ar.com.utn.mercadopago.model;
 
 import ar.com.utn.models.Usuario;
 
+import javax.persistence.Access;
+import javax.persistence.AccessType;
+import javax.persistence.Embeddable;
+
 /**
  * Created by julian on 12/10/17.
  */
+@Embeddable
+@Access(AccessType.FIELD)
 public class UserAdditionalInfoMP {
 
     private String first_name;
     private String last_name;
+
+    public UserAdditionalInfoMP() {
+    }
 
     public UserAdditionalInfoMP(Usuario user) {
         this.first_name = user.getNombre();
