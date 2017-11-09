@@ -7,19 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
-
 @Service
 public class MoneyFlowServiceImpl implements MoneyFlowService {
 
     @Value("${app.mercadopago.application_fee}")
-    private BigDecimal commission;
+    private double commission;
 
     @Autowired
     private MercadoPagoApi mercadoPagoApi;
-
-    @Autowired
-    private PaymentMPRepository paymentMPRepository;
 
 
     @Override
@@ -27,7 +22,6 @@ public class MoneyFlowServiceImpl implements MoneyFlowService {
         UserMP userMP = mercadoPagoApi.buildUserMP(usuario);
         AdditionalInfoMP additionalInfoMP = mercadoPagoApi.buildAdditionalInfoMP(usuario);
         PaymentMP paymentMP = mercadoPagoApi.buildPaymentMP(postulacion.getPresupAprox(), tokenMP,"Contratación FiIT",1, paymentMethodId, userMP,additionalInfoMP,commission);
-        paymentMPRepository.save(paymentMP);
         return paymentMP;
     }
 }

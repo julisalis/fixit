@@ -103,8 +103,10 @@
                                         <img th:src="@{/images/}+${contratada.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${contratada.tipoTrabajo.nombre}">asdasd</span>
                                     </div>
+
                                     <a th:href="'/contratar/detalle/'+${contratada.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
-                                    <a th:onclick="${'modalCalificar('+contratada.id+')'}" class="btn btn-primary tam-boton-100">Calificar</a>
+                                    <a th:if="${contratada.tomadorPuedeCalificar}" th:onclick="${'modalCalificar('+contratada.id+')'}" class="btn btn-primary tam-boton-100">Calificar</a>
+                                    <a th:unless="${contratada.tomadorPuedeCalificar}" class="btn btn-primary tam-boton-100" disabled="disabled">Ya calificó</a>
                                     <a href="#" class="btn btn-primary tam-boton-100">Código de Seguridad</a>
                                 </div>
                             </div><!-- item-info -->
@@ -184,14 +186,23 @@
                         },
                         async: true,
                         success: function(message){
+                            $.LoadingOverlay("hide");
                             if(message.success){
+                                swal({
+                                    title: "Calificación",
+                                    text: message.msg,
+                                    type: "success",
+                                },function (e) {
+                                    redirect("/publicacion/list");
+                                });
                                 //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
-                                redirect("/publicacion/list");
                             }else{
                                 swal("Error", message.msg, "error")
                             }
                         }
                     });
+
+                    $.LoadingOverlay("show");
                 }
             }],
             onshown: function(dialogRef){

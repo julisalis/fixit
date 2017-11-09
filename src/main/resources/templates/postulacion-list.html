@@ -223,6 +223,7 @@
                         },
                         async: true,
                         success: function(message){
+                            $.LoadingOverlay("hide");
                             if(message.success){
                                 //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
                                 redirect("/postulacion/list");
@@ -231,6 +232,8 @@
                             }
                         }
                     });
+
+                    $.LoadingOverlay("show");
                 }
             }],
             onshown: function(dialogRef){

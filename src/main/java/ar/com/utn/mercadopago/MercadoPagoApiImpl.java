@@ -46,8 +46,8 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
     }
 
     @Override
-    public PaymentMP buildPaymentMP(BigDecimal presupAprox, String tokenMP, String title, int installments, String paymentMethodId, UserMP userMP, AdditionalInfoMP additionalInfoMP, BigDecimal commission) {
-        PaymentMP paymentMP = new PaymentMP( presupAprox, tokenMP, title,installments, paymentMethodId, userMP,additionalInfoMP,commission);
+    public PaymentMP buildPaymentMP(BigDecimal presupAprox, String tokenMP, String title, int installments, String paymentMethodId, UserMP userMP, AdditionalInfoMP additionalInfoMP, double commission) {
+        PaymentMP paymentMP = new PaymentMP(presupAprox.doubleValue(), tokenMP, title,installments, paymentMethodId, userMP,additionalInfoMP,commission);
         return paymentMP;
     }
 
@@ -72,22 +72,9 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
         map.put("description",paymentMP.getDescription());
         map.put("installments",paymentMP.getInstallments());
         map.put("payment_method_id",paymentMP.getPayment_method_id());
-//        map.put("application_fee",paymentMP.getApplication_fee());
         map.put("binary_mode",paymentMP.isBinary_mode());
-        map.put("status",paymentMP.getStatus());
-        map.put("status_detail",paymentMP.getStatus_detail());
-
-        Map<String,Object> payer = new HashMap<>();
-        payer.put("email",paymentMP.getPayer().getEmail());
-        map.put("payer",payer);
-
-        Map<String,Object> additional_info = new HashMap<>();
-        Map<String,Object> payer_info = new HashMap<>();
-        payer_info.put("first_name",paymentMP.getAdditional_info().getFirst_name());
-        payer_info.put("last_name",paymentMP.getAdditional_info().getLast_name());
-        additional_info.put("payer",payer_info);
-        map.put("additional_info",additional_info);
-
+        map.put("payer",paymentMP.getPayer());
+        map.put("additional_info",paymentMP.getAdditional_info());
         String paymentMPJson = gson.toJson(map);
         JSONObject payment = mp.post(PAYMENTS_URL, paymentMPJson);
         controlResponse(payment);

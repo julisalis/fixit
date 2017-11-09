@@ -31,7 +31,7 @@ public class PublicacionDTO {
     private boolean prestadorPuedePostularse = true;
 
     //private boolean prestadorPuedeCalificar = true;
-    //private boolean tomadorPuedeCalificar = true;
+    private boolean tomadorPuedeCalificar = true;
 
     public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage) {
         this.id = publicacion.getId();
@@ -49,6 +49,13 @@ public class PublicacionDTO {
         this.publicacionFotoForms = buildFotoForms(publicacion.getMultimedia());
         this.canEdit = buildCanEdit(publicacion.getPostulaciones());
         this.cantidadPostulaciones = publicacion.getPostulaciones().size();
+    }
+
+    public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage, Contratacion contratacion) {
+        this(publicacion,primaryImage);
+        if(contratacion != null) {
+            tomadorPuedeCalificar = contratacion.getCalificacionTomador() == null;
+        }
     }
 
     public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage, Usuario user) {
@@ -219,4 +226,11 @@ public class PublicacionDTO {
         this.prestadorPuedePostularse = prestadorPuedePostularse;
     }
 
+    public boolean isTomadorPuedeCalificar() {
+        return tomadorPuedeCalificar;
+    }
+
+    public void setTomadorPuedeCalificar(boolean tomadorPuedeCalificar) {
+        this.tomadorPuedeCalificar = tomadorPuedeCalificar;
+    }
 }

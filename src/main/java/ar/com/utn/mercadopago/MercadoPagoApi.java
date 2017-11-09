@@ -12,7 +12,7 @@ public interface MercadoPagoApi {
 
 //    String makePayment(PaymentMP paymentMP) throws Exception;
 
-    PaymentMP buildPaymentMP(BigDecimal presupAprox, String tokenMP, String title, int installments, String paymentMethodId, UserMP userMP, AdditionalInfoMP additionalInfoMP, BigDecimal commission);
+    PaymentMP buildPaymentMP(BigDecimal presupAprox, String tokenMP, String title, int installments, String paymentMethodId, UserMP userMP, AdditionalInfoMP additionalInfoMP, double commission);
 
     void setAccessToken(String accessToken);
 
