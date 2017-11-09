@@ -26,7 +26,6 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
 
     private final String PAYMENTS_URL = "/v1/payments";
 
-    @Value("${app.mercadopago.access_token}")
     private String accessToken;
 
     private MP getMPInstance(){

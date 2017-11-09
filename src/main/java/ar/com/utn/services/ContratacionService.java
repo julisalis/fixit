@@ -7,9 +7,5 @@ import ar.com.utn.models.Prestador;
 import ar.com.utn.models.Usuario;
 
 public interface ContratacionService {
-    String efectuarPago(PaymentMP paymentMP, Prestador prestador) throws Exception;
-
     Contratacion findByPostulacion(Postulacion mipostulacion);
-
-    PaymentMP completePayment(Postulacion postulacion, String tokenMP, String paymentMethodId, Usuario tomador);
 }

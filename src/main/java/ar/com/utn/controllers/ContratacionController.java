@@ -47,6 +47,8 @@ public class ContratacionController {
     private ContratacionService contratacionService;
     @Autowired
     PaymentMPRepository paymentMPRepository;
+    @Autowired
+    private MoneyFlowService moneyFlowService;
 
 
     @GetMapping(value = "/{postulacionId}")
@@ -110,7 +112,7 @@ public class ContratacionController {
         Usuario tomador = usuarioService.findByTomador(publicacion.getTomador());
         try {
             if (payMethod.equals(PayMethod.CREDIT_CARD)) {
-                PaymentMP paymentMP = contratacionService.completePayment(postulacion, tokenMP, paymentMethodId,tomador);
+                PaymentMP paymentMP = moneyFlowService.completePayment(postulacion, tokenMP, paymentMethodId,tomador);
                 paymentMPRepository.save(paymentMP);
                 contratacion = new Contratacion(postulacion, payMethod, paymentMP);
             } else {
@@ -146,7 +148,7 @@ public class ContratacionController {
                     if(contratacion.getCalificacionPrestador()!=null){
                         try {
                             if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
-                                String paymentId =  contratacionService.efectuarPago(contratacion.getPaymentMP(),postulacion.getPrestador());
+                                String paymentId =  moneyFlowService.efectuarPago(contratacion.getPaymentMP(),postulacion.getPrestador());
                                 contratacion.setPaymentId(paymentId);
                             }
                         } catch (Exception e) {
@@ -188,7 +190,7 @@ public class ContratacionController {
                     if(contratacion.getCalificacionTomador()!=null){
                         try {
                             if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
-                                String paymentId =  contratacionService.efectuarPago(contratacion.getPaymentMP(),postulacion.getPrestador());
+                                String paymentId =  moneyFlowService.efectuarPago(contratacion.getPaymentMP(),postulacion.getPrestador());
                                 contratacion.setPaymentId(paymentId);
                             }
                         } catch (Exception e) {

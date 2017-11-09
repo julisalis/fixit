@@ -2,6 +2,7 @@ package ar.com.utn.mercadopago;
 
 import ar.com.utn.mercadopago.model.UserMP;
 import ar.com.utn.models.Postulacion;
+import ar.com.utn.models.Prestador;
 import ar.com.utn.models.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,11 +17,15 @@ public class MoneyFlowServiceImpl implements MoneyFlowService {
     @Autowired
     private MercadoPagoApi mercadoPagoApi;
 
-
     @Override
-    public PaymentMP makePaymentMP(Postulacion postulacion, String tokenMP, String paymentMethodId, Usuario usuario) {
-        UserMP userMP = mercadoPagoApi.buildUserMP(usuario);
-        AdditionalInfoMP additionalInfoMP = mercadoPagoApi.buildAdditionalInfoMP(usuario);
+    public String efectuarPago(PaymentMP paymentMP, Prestador prestador) throws Exception {
+        mercadoPagoApi.setAccessToken(prestador.getMpPrestador().getAccessToken());
+        return mercadoPagoApi.makePayment(paymentMP);
+    }
+    @Override
+    public PaymentMP completePayment(Postulacion postulacion, String tokenMP, String paymentMethodId, Usuario tomador) {
+        UserMP userMP = mercadoPagoApi.buildUserMP(tomador);
+        AdditionalInfoMP additionalInfoMP = mercadoPagoApi.buildAdditionalInfoMP(tomador);
         PaymentMP paymentMP = mercadoPagoApi.buildPaymentMP(postulacion.getPresupAprox(), tokenMP,"Contratación FiIT",1, paymentMethodId, userMP,additionalInfoMP,commission);
         return paymentMP;
     }

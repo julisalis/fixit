@@ -17,29 +17,11 @@ import org.springframework.stereotype.Service;
 public class ContratacionServiceImpl implements ContratacionService {
     @Autowired
     ContratacionRepository contratacionRepository;
-    @Autowired
-    MoneyFlowService moneyFlowService;
-
-    @Value("${app.mercadopago.application_fee}")
-    private Double commission;
-
-    @Autowired
-    private MercadoPagoApi mercadoPagoApi;
-
-    @Override
-    public String efectuarPago(PaymentMP paymentMP,Prestador prestador) throws Exception {
-      mercadoPagoApi.setAccessToken(prestador.getMpPrestador().getAccessToken());
-      return mercadoPagoApi.makePayment(paymentMP);
-    }
 
     @Override
     public Contratacion findByPostulacion(Postulacion mipostulacion) {
         return contratacionRepository.findByPostulacion(mipostulacion);
     }
 
-    @Override
-    public PaymentMP completePayment(Postulacion postulacion, String tokenMP, String paymentMethodId, Usuario tomador) {
-        PaymentMP paymentMP =  moneyFlowService.makePaymentMP(postulacion,tokenMP,paymentMethodId,tomador);
-        return paymentMP;
-    }
+
 }
