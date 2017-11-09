@@ -5,7 +5,9 @@ import ar.com.utn.exception.PublicacionException;
 import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.models.*;
 import ar.com.utn.repositories.*;
+import ar.com.utn.services.ContratacionService;
 import ar.com.utn.services.MultimediaService;
+import ar.com.utn.services.PostulacionService;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,10 @@ public class PublicacionServiceImpl implements PublicacionService {
     private PublicacionPhotoRepository publicacionPhotoRepository;
     @Autowired
     private MultimediaService multimediaService;
+    @Autowired
+    private PostulacionService postulacionService;
+    @Autowired
+    private ContratacionService contratacionService;
 
     @Override
     public List<TipoTrabajo> getTipostrabajos() {
@@ -136,6 +142,18 @@ public class PublicacionServiceImpl implements PublicacionService {
     @Override
     public void setFinalizada(Publicacion publicacion) {
         publicacion.setEstadoPublicacion(EstadoPublicacion.FINALIZADA);
+    }
+
+    @Override
+    public Contratacion findContratacionForPublicacion(Publicacion publicacion) {
+        Postulacion p = postulacionService.findByPublicacionAndEstadoPostulacion(publicacion, EstadoPostulacion.CONTRATADA);
+        if(p != null){
+            Contratacion c = contratacionService.findByPostulacion(p);
+            if(c != null){
+                return c;
+            }
+        }
+        return null;
     }
 
     @Override

@@ -93,7 +93,7 @@
                                         <ul>
                                             <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${contratada.publicacion.localidad.nombre}+', '+${contratada.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
                                             <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${contratada.presupAprox}+' '+${contratada.currency}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${contratada.duracionAprox}" class="btn-price-AR"></small>
+                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${contratada.duracionAprox}+ ' Horas'" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
                                 </div><!-- ad-info -->
@@ -103,7 +103,9 @@
                                         <img th:src="@{/images/}+${contratada.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${contratada.publicacion.tipoTrabajo.nombre}">asdasd</span>
                                     </div>
-                                    <a th:href="'/postulacion/detalle/'+${contratada.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                    <a th:href="'/contratar/detalle/'+${contratada.publicacion.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                    <a th:if="${contratada.prestadorPuedeCalificar}" th:onclick="${'modalCalificar('+contratada.id+')'}" class="btn btn-primary tam-boton-100">Calificar</a>
+                                    <a th:unless="${contratada.prestadorPuedeCalificar}" disabled="disabled" class="btn btn-primary tam-boton-100">Ya calificó</a>
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->
@@ -196,4 +198,65 @@
 
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
+<script>
+    function modalCalificar(postulacionId) {
+        var $content = $('<div class="row" style="margin-left: 0;">' +
+            '            <div class="form-group">' +
+            '                <label class="col-sm-3 control-label">Calificación:</label>' +
+            '<div class="col-sm-8"><div id="rateYo"></div></div>' +
+            '            </div>' +
+            '        </div>');
+
+        BootstrapDialog.show({
+            title: 'Calificar cliente',
+            message: $content,
+            buttons: [{
+                label: 'Aceptar',
+                action: function (dialog) {
+                    //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/contratar/calificarPagarPrestador',
+                        data: {
+                            postulacionId: postulacionId,
+                            calificacion: $("#rateYo").rateYo("rating")
+                        },
+                        async: true,
+                        success: function(message){
+                            $.LoadingOverlay("hide");
+                            if(message.success){
+                                //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
+                                swal({
+                                    title: "Calificación",
+                                    text: message.msg,
+                                    type: "success",
+                                },function (e) {
+                                    redirect("/postulacion/list");
+                                });
+                            }else{
+                                swal("Error", message.msg, "error")
+                            }
+                        }
+                    });
+
+                    $.LoadingOverlay("show");
+                }
+            }],
+            onshown: function(dialogRef){
+                dialogRef.getModalBody().find('#rateYo').rateYo({
+                    halfStar: true,
+                    spacing: "5px",
+                    ratedFill: "#3ac58f",
+                    normalFill: "#dddddd",
+                    "starSvg": "<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'><path d='M24 13.616v-3.232c-1.651-.587-2.694-.752-3.219-2.019v-.001c-.527-1.271.1-2.134.847-3.707l-2.285-2.285c-1.561.742-2.433 1.375-3.707.847h-.001c-1.269-.526-1.435-1.576-2.019-3.219h-3.232c-.582 1.635-.749 2.692-2.019 3.219h-.001c-1.271.528-2.132-.098-3.707-.847l-2.285 2.285c.745 1.568 1.375 2.434.847 3.707-.527 1.271-1.584 1.438-3.219 2.02v3.232c1.632.58 2.692.749 3.219 2.019.53 1.282-.114 2.166-.847 3.707l2.285 2.286c1.562-.743 2.434-1.375 3.707-.847h.001c1.27.526 1.436 1.579 2.019 3.219h3.232c.582-1.636.75-2.69 2.027-3.222h.001c1.262-.524 2.12.101 3.698.851l2.285-2.286c-.744-1.563-1.375-2.433-.848-3.706.527-1.271 1.588-1.44 3.221-2.021zm-12 2.384c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4z'/></svg>"
+                });
+            },
+        });
+    }
+
+    function redirect(redirectURL){
+        window.location.href = redirectURL;
+    }
+</script>
 </html>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head lang="en">
+    <title>FixIT</title>
+    <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
+    <script type="text/javascript" th:src="@{/js/index.js}"></script>
+</head>
+<body>
+<div id="contratacion-mas">
+    <!--/*/ <th:block th:include="fragments/header-static :: header"></th:block> /*/-->
+
+    <!-- Modal logIn-->
+    <!--/*/ <th:block th:include="modals/login :: login"></th:block> /*/-->
+
+    <!-- Foto inicial -->
+    <section id="section-foto">
+        <div class="jumbotron-categoria3 text-center">
+            <div class="container">
+                <h1 class="titulo-prin-static">DETALLE CONTRATACIÓN</h1>
+            </div>
+        </div>
+    </section>
+
+    <section id="section-contratacion">
+        <div class="container">
+            <div class="job-postdetails post-resume">
+                <div class="row2">
+                    <div class="col-md-8 clearfix">
+                            <fieldset>
+                                <div class="section contratacion-publicacion">
+                                    <h2 th:text="${publicacion.titulo}"></h2>
+
+                                    <!-- Datos Publicacion -->
+                                    <section id="datos-publicacion">
+                                        <div class="pregunta">
+                                            <div class="icons-publicacion-detalle"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
+                                            <h4 class="preguntas-publicacion">Qué hay que hacer?</h4>
+                                        </div>
+                                        <h3 class="modal-descripcion publicaciones" th:text="${publicacion.descripcion}"></h3>
+                                        <div class="pregunta">
+                                            <div class="icons-publicacion-detalle"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
+                                            <h4 class="preguntas-publicacion">Dónde?</h4>
+                                        </div>
+                                        <h3 class="modal-ubicacion publicaciones"  th:text="${publicacion.localidad.nombre+', '+publicacion.provincia.nombre}" ></h3>
+                                        <div class="pregunta">
+                                            <div class="icons-publicacion-detalle"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
+                                            <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="preguntas-publicacion"  >Cuánto quiere gastar?</h4>
+                                            <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="preguntas-publicacion"  >Cuánto quiero gastar?</h4>
+                                        </div>
+                                        <h3 class="modal-precio publicaciones" th:text="${'Hasta '+publicacion.presupMax+' '+publicacion.currency}"></h3>
+                                        <div th:if="${publicacion.fecha != null}">
+                                            <div class="pregunta">
+                                                <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="preguntas-publicacion">Cuándo lo necesita?</h4>
+                                                <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="preguntas-publicacion">Cuándo lo necesito?</h4>
+                                            </div>
+                                            <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.fecha.dayOfMonth+'/'+publicacion.fecha.monthValue+'/'+publicacion.fecha.year}"></h3>
+                                        </div>
+                                        <div th:if="${publicacion.fecha == null}">
+                                            <div class="pregunta">
+                                                <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
+                                                <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="preguntas-publicacion">Cuándo lo necesita?</h4>
+                                                <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="preguntas-publicacion">Cuándo lo necesito?</h4>
+                                            </div>
+                                            <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.urgencia}"></h3>
+                                        </div>
+                                    </section>
+
+                                </div>
+
+
+                                <div class="section contratacion-postulacion">
+                                    <h2>Postulación Seleccionada</h2>
+
+                                    <div class="job-ad-item">
+                                        <div class="item-info">
+
+                                            <div class="item-image-box col-md-3">
+                                                <div class="item-image detalle">
+                                                    <img th:src="@{/images/}+${publicacion.tipoTrabajo.imagen}"
+                                                         onerror="this.src='/images/publicaciones/not-found.png'"
+                                                         alt="Image" class="img-tipotrabajo">
+                                                </div><!-- item-image -->
+                                            </div>
+
+                                            <div class="ad-info fixit-job-box postulacion-desc col-md-9">
+                                                <p class="installationType">
+                                                    <span><strong th:text="${#strings.capitalize(postulacion.descripcion)}"></strong></span>
+                                                </p>
+                                                <span th:text="'Comentarios: ' +${postulacion.comentarios}"></span>
+                                                <span th:text="'Categoría: ' +${publicacion.tipoTrabajo.nombre}"></span>
+                                            </div>
+
+                                        </div>
+
+                                            <div class="ad-meta detalle-iconos">
+                                                <ul>
+                                                    <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${publicacion.localidad.nombre}+', '+${publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
+                                                    <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Desde '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
+                                                    <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${postulacion.duracionAprox} + ' Horas'" class="btn-price-AR"></small>
+                                                </ul>
+                                            </div>
+
+                                    </div>
+
+                                </div>
+                            </fieldset>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="section quick-rules">
+                            <h2>Contratación</h2>
+                            <ul>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <section id="boton-regresar">
+        <div sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="regresar">
+            <a href="/postulacion/list" class="regresar-postulaciones">
+                <h5 class="titulo-postulacion">Mis Postulacines</h5>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </a>
+        </div>
+        <div sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="regresar">
+            <a href="/publicacion/list" class="regresar-postulaciones">
+                <h5 class="titulo-postulacion">Mis Publicaciones</h5>
+                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </a>
+        </div>
+    </section>
+
+    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
+
+</div>
+</body>
+</html>

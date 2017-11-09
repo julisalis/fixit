@@ -17,8 +17,8 @@ public class PaymentMP extends PersistentEntity {
     private boolean binary_mode;
     private String status;
     private String status_detail;
-    private BigDecimal application_fee;
-    private BigDecimal transaction_amount;
+    private double application_fee;
+    private double transaction_amount;
     private String token;
     private String description;
     private int installments;
@@ -32,7 +32,7 @@ public class PaymentMP extends PersistentEntity {
 
     }
 
-    public PaymentMP(BigDecimal presupAprox, String tokenMP, String title, int installments, String paymentMethodId, UserMP userMP, AdditionalInfoMP additionalInfoMP, BigDecimal commission) {
+    public PaymentMP(double presupAprox, String tokenMP, String title, int installments, String paymentMethodId, UserMP userMP, AdditionalInfoMP additionalInfoMP, double commission) {
         this.transaction_amount = presupAprox;
         this.token = tokenMP;
         this.description = title;
@@ -41,7 +41,7 @@ public class PaymentMP extends PersistentEntity {
         this.payer = userMP;
         this.additional_info = additionalInfoMP;
         this.binary_mode = true;
-        this.application_fee = commission.multiply(transaction_amount);
+        this.application_fee = commission * transaction_amount;
     }
 
     public boolean isBinary_mode() {
@@ -68,19 +68,19 @@ public class PaymentMP extends PersistentEntity {
         this.status_detail = status_detail;
     }
 
-    public BigDecimal getApplication_fee() {
+    public double getApplication_fee() {
         return application_fee;
     }
 
-    public void setApplication_fee(BigDecimal application_fee) {
+    public void setApplication_fee(double application_fee) {
         this.application_fee = application_fee;
     }
 
-    public BigDecimal getTransaction_amount() {
+    public double getTransaction_amount() {
         return transaction_amount;
     }
 
-    public void setTransaction_amount(BigDecimal transaction_amount) {
+    public void setTransaction_amount(double transaction_amount) {
         this.transaction_amount = transaction_amount;
     }
 
@@ -131,4 +131,5 @@ public class PaymentMP extends PersistentEntity {
     public void setAdditional_info(AdditionalInfoMP additional_info) {
         this.additional_info = additional_info;
     }
+
 }

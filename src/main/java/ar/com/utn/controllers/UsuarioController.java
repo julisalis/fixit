@@ -154,7 +154,7 @@ public class UsuarioController {
                 map.put("msg","Los cambios han sido guardados correctamente.");
             }else{
                 map.put("success", false);
-                map.put("errors", result.getAllErrors());
+                map.put("msg", result.getAllErrors());
             }
         }catch (Exception e) {
             map.put("success", false);
@@ -174,12 +174,13 @@ public class UsuarioController {
                                             @RequestParam(value = "documento") String documento,
                                             @RequestParam(value = "codArea") String codArea,
                                             @RequestParam(value = "telefono") String telefono,
-                                            @RequestParam(value = "localidad") Localidad localidad){
+                                            @RequestParam(value = "localidad") Localidad localidad,
+                                            @RequestParam(value = "tipos", required = false) List<TipoTrabajo> tipos){
         HashMap<String,Object> map = new HashMap<>();
         try{
             if(nombre.isEmpty() || apellido.isEmpty() || email.isEmpty() || documento.isEmpty() || codArea.isEmpty() || telefono.isEmpty() || localidad == null){
                 map.put("success", false);
-                map.put("errors", "Todos los campos son obilgatorios");
+                map.put("msg", "Todos los campos son obilgatorios");
             }else{
                 if(!usuarioService.emailUnique(email)) {
                     map.put("success", false);
@@ -195,6 +196,19 @@ public class UsuarioController {
                 tel.setTelefono(telefono);
                 Ubicacion u = usuario.getUbicacion();
                 u.setLocalidad(localidad);
+                if(tipos!=null){
+                    if(tipos.size() > 0){
+                        Prestador p = currentSession.getUser().getPrestador();
+                        if(p!=null){
+                            p.setTipos(tipos);
+                            prestadorRepository.save(p);
+                        }
+                    }else{
+                        map.put("success", false);
+                        map.put("msg", "Todos los campos son obilgatorios.");
+                        return map;
+                    }
+                }
                 usuarioRepository.save(usuario);
                 map.put("success", true);
                 map.put("msg","Los cambios han sido guardados correctamente.");
@@ -216,7 +230,7 @@ public class UsuarioController {
         try{
             if(tipos.isEmpty() || tipos==null){
                 map.put("success", false);
-                map.put("errors", "Todos los campos son obligatorios.");
+                map.put("msg", "Todos los campos son obligatorios.");
             }else{
                 Prestador p = new Prestador(tipos);
                 p=prestadorRepository.save(p);
