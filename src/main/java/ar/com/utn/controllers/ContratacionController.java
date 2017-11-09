@@ -1,6 +1,7 @@
 package ar.com.utn.controllers;
 
 import ar.com.utn.dto.PostulacionDTO;
+import ar.com.utn.dto.PublicacionDTO;
 import ar.com.utn.exception.MercadoPagoException;
 import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.mercadopago.MercadoPagoApi;
@@ -230,6 +231,24 @@ public class ContratacionController {
             if(contratacion!=null) {
                 model.addAttribute("contratacion",contratacion);
                 return "calificar-postulacion";
+            }
+        }
+
+        return "redirect:/";
+    }
+
+    @GetMapping(value="/detalle/{publicacionId}")
+    public String detalleContratacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
+        Publicacion mipublicacion = publicacionService.findById(publicacionId);
+        Postulacion mipostulacion = postulacionService.findByPublicacionAndEstadoPostulacion(mipublicacion, EstadoPostulacion.CONTRATADA);
+
+        if(mipostulacion.getEstadoPostulacion().equals(EstadoPostulacion.CONTRATADA)){
+            Contratacion contratacion = contratacionService.findByPostulacion(mipostulacion);
+            if(contratacion!=null) {
+                model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion),usuarioService.findByPrestador(mipostulacion.getPrestador())));
+                model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+                model.addAttribute("contratacion",contratacion);
+                return "contratacion-detalle";
             }
         }
 

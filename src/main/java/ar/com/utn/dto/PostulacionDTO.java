@@ -20,6 +20,8 @@ public class PostulacionDTO {
     private PublicacionDTO publicacion;
     private UsuarioDTO usuarioPrestador;
 
+    private boolean prestadorPuedeCalificar = true;
+
     public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario) {
         this.id = postulacion.getId();
         this.descripcion = postulacion.getDescripcion();
@@ -31,6 +33,13 @@ public class PostulacionDTO {
         this.elegida = postulacion.getElegida();
         this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
         this.usuarioPrestador = new UsuarioDTO(usuario, true);
+    }
+
+    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario, Contratacion contratacion) {
+        this(postulacion,primaryImage,usuario);
+        if(contratacion != null) {
+            prestadorPuedeCalificar = contratacion.getCalificacionPrestador() == null;
+        }
     }
 
     public PostulacionDTO() {
@@ -114,6 +123,14 @@ public class PostulacionDTO {
 
     public void setUsuarioPrestador(UsuarioDTO usuarioPrestador) {
         this.usuarioPrestador = usuarioPrestador;
+    }
+
+    public boolean isPrestadorPuedeCalificar() {
+        return prestadorPuedeCalificar;
+    }
+
+    public void setPrestadorPuedeCalificar(boolean prestadorPuedeCalificar) {
+        this.prestadorPuedeCalificar = prestadorPuedeCalificar;
     }
 }
 
