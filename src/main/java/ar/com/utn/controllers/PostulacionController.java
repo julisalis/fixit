@@ -7,10 +7,7 @@ import ar.com.utn.form.PostulacionForm;
 import ar.com.utn.form.PublicacionForm;
 import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.models.*;
-import ar.com.utn.services.MailService;
-import ar.com.utn.services.PostulacionService;
-import ar.com.utn.services.PublicacionService;
-import ar.com.utn.services.UsuarioService;
+import ar.com.utn.services.*;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -47,6 +44,9 @@ public class PostulacionController {
 
     @Autowired
     private MailService mailService;
+
+    @Autowired
+    private ContratacionService contratacionService;
 
     @GetMapping(value = "/new")
     public String newPostulacion(@RequestParam(value = "publicacionId") Publicacion publicacion, WebRequest request, Model model) {
@@ -158,7 +158,7 @@ public class PostulacionController {
     @GetMapping(value="/list")
     public String listPostulaciones(WebRequest request, Model model) {
         Usuario user = currentSession.getUser();
-        List<PostulacionDTO> misPostulaciones = user.getPrestador().getPostulaciones().stream().map(postulacion -> new PostulacionDTO(postulacion, getCover(publicacionService.findById(postulacion.getPublicacion().getId())), user)).collect(Collectors.toList());
+        List<PostulacionDTO> misPostulaciones = user.getPrestador().getPostulaciones().stream().map(postulacion -> new PostulacionDTO(postulacion, getCover(publicacionService.findById(postulacion.getPublicacion().getId())), user, contratacionService.findByPostulacion(postulacion))).collect(Collectors.toList());
         model.addAttribute("postulacionesNuevas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.NUEVA)).collect(Collectors.toList()));
         model.addAttribute("postulacionesContratadas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.CONTRATADA)).collect(Collectors.toList()));
         model.addAttribute("postulacionesFinalizadas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.FINALIZADA)).collect(Collectors.toList()));

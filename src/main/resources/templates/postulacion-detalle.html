@@ -25,7 +25,8 @@
     <section id="section-publicaciones">
         <div class="container">
             <h3 class="subtitulo-jobs" th:text="${publicacion.titulo}"></h3>
-            <h6 class="titulo-postulacion" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">Mi Postulación</h6>
+            <h6 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')"  class="titulo-postulacion">Mi Postulación</h6>
+            <h6 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')"  class="titulo-postulacion">Su Postulación</h6>
             <div class="job-ad-item">
                 <div class="item-info">
                     <div class="item-image-box col-md-2">
@@ -101,20 +102,23 @@
                         <h3 class="modal-ubicacion publicaciones"  th:text="${publicacion.localidad.nombre+', '+publicacion.provincia.nombre}" ></h3>
                         <div class="pregunta">
                             <div class="icons-publicacion-detalle"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
-                            <h4 class="preguntas-publicacion"  >Cuánto quiere gastar?</h4>
+                            <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="preguntas-publicacion"  >Cuánto quiere gastar?</h4>
+                            <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="preguntas-publicacion"  >Cuánto quiero gastar?</h4>
                         </div>
                         <h3 class="modal-precio publicaciones" th:text="${'Hasta '+publicacion.presupMax+' '+publicacion.currency}"></h3>
                         <div th:if="${publicacion.fecha != null}">
                             <div class="pregunta">
                                 <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                                <h4 class="preguntas-publicacion">Cuándo lo necesita?</h4>
+                                <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="preguntas-publicacion">Cuándo lo necesita?</h4>
+                                <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="preguntas-publicacion">Cuándo lo necesito?</h4>
                             </div>
                             <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.fecha.dayOfMonth+'/'+publicacion.fecha.monthValue+'/'+publicacion.fecha.year}"></h3>
                         </div>
                         <div th:if="${publicacion.fecha == null}">
                             <div class="pregunta">
                                 <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
-                                <h4 class="preguntas-publicacion">Cuándo lo necesita?</h4>
+                                <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="preguntas-publicacion">Cuándo lo necesita?</h4>
+                                <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="preguntas-publicacion">Cuándo lo necesito?</h4>
                             </div>
                             <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.urgencia}"></h3>
                         </div>
@@ -158,19 +162,21 @@
             </div>
 
 
+            
             <section id="boton-regresar">
-                <div class="regresar">
-                    <a href="/postulacion/list" class="regresar-postulaciones" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
-                        <h5 class="titulo-postulacion">Mis Postulaciones</h5>
+                <div sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="regresar">
+                    <a href="/postulacion/list" class="regresar-postulaciones">
+                        <h5 class="titulo-postulacion">Mis Postulacines</h5>
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>
                     </a>
-                    <a th:href="'/publicacion/postulaciones/'+${publicacion.id}" class="regresar-postulaciones" sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')">
-                        <h5 class="titulo-postulacion">Ver otras Postulaciones</h5>
+                </div>
+                <div sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="regresar">
+                    <a href="/publicacion/list" class="regresar-postulaciones">
+                        <h5 class="titulo-postulacion">Mis Publicaciones</h5>
                         <i class="fa fa-arrow-left" aria-hidden="true"></i>
                     </a>
                 </div>
             </section>
-
         </div>
     </section>
 

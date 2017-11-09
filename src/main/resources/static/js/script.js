@@ -21,6 +21,7 @@ $(function () {
 
     //*******************Form de register***********************
     $("#signup form .btn-aceptar").click(function(){
+        $.LoadingOverlay("show");
         $(this).prop('disabled',true);
         var form = $(this).closest( "form" );
 
@@ -31,6 +32,7 @@ $(function () {
 
         $.get(form.attr('action') , form.serialize() )
             .done(function( data ) {
+                $.LoadingOverlay("hide");
                 if(data.success) {
                     if(typeof(data.url) != 'undefined'){
                         window.location=data.url;
@@ -66,6 +68,7 @@ $(function () {
                 }
             })
             .fail(function( data ) {
+                $.LoadingOverlay("hide");
                 var result = $(data);
 
             });
@@ -95,7 +98,6 @@ $(function () {
                 return false;
             }
         });
-
     });
 });
 

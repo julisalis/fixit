@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 //import org.codehaus.jettison.json.JSONException;
 //import org.codehaus.jettison.json.JSONObject;
 
@@ -24,7 +26,6 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
 
     private final String PAYMENTS_URL = "/v1/payments";
 
-    @Value("${app.mercadopago.access_token}")
     private String accessToken;
 
     private MP getMPInstance(){
@@ -44,8 +45,8 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
     }
 
     @Override
-    public PaymentMP buildPaymentMP(BigDecimal presupAprox, String tokenMP, String title, int installments, String paymentMethodId, UserMP userMP, AdditionalInfoMP additionalInfoMP, BigDecimal commission) {
-        PaymentMP paymentMP = new PaymentMP( presupAprox, tokenMP, title,installments, paymentMethodId, userMP,additionalInfoMP,commission);
+    public PaymentMP buildPaymentMP(BigDecimal presupAprox, String tokenMP, String title, int installments, String paymentMethodId, UserMP userMP, AdditionalInfoMP additionalInfoMP, double commission) {
+        PaymentMP paymentMP = new PaymentMP(presupAprox.doubleValue(), tokenMP, title,installments, paymentMethodId, userMP,additionalInfoMP,commission);
         return paymentMP;
     }
 
@@ -64,7 +65,16 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
     public String makePayment(PaymentMP paymentMP) throws Exception{
         MP mp = getMPInstance();
         Gson gson = new Gson();
-        String paymentMPJson = gson.toJson(paymentMP);
+        Map<String,Object> map = new HashMap<>();
+        map.put("transaction_amount",paymentMP.getTransaction_amount());
+        map.put("token",paymentMP.getToken());
+        map.put("description",paymentMP.getDescription());
+        map.put("installments",paymentMP.getInstallments());
+        map.put("payment_method_id",paymentMP.getPayment_method_id());
+        map.put("binary_mode",paymentMP.isBinary_mode());
+        map.put("payer",paymentMP.getPayer());
+        map.put("additional_info",paymentMP.getAdditional_info());
+        String paymentMPJson = gson.toJson(map);
         JSONObject payment = mp.post(PAYMENTS_URL, paymentMPJson);
         controlResponse(payment);
         controlResponsePayment(payment);

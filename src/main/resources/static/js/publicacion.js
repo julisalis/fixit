@@ -59,6 +59,7 @@ function saveFunction(form){
         data: form.serialize(),
         method: "POST",
         success: function( data, textStatus, jqXHR) {
+            $.LoadingOverlay("hide");
             if (data.publicacion.id != null && typeof(data.publicacion.id) != 'undefined') {
                 $("#publicacionId").val(data.publicacion.id);
                 uploadFiles();
@@ -67,9 +68,11 @@ function saveFunction(form){
             }
         },
         error: function ( jqXHR, textStatus, errorThrown){
+            $.LoadingOverlay("hide");
             errorMessage();
         }
     });
+    $.LoadingOverlay("show");
 }
 
 function firstAvailableDate() {

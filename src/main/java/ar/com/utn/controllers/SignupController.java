@@ -11,6 +11,8 @@ import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.*;
 import ar.com.utn.services.PrestadorService;
 import ar.com.utn.services.UsuarioService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.text.Normalizer;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -57,6 +60,8 @@ import java.util.stream.Collectors;
         private String p12pass;
         @Value("${app.afip.ws.ticketTime}")
         private Long ticketTime;
+
+        private final Logger logger = LoggerFactory.getLogger("afip-log");
         //AFIP//
 
         @GetMapping(value="/prestador")
@@ -141,12 +146,14 @@ import java.util.stream.Collectors;
 
                 if(!result.hasErrors()){
                     if(prestadorForm.getValidar()){
+                        logger.info("Usuario quiere validar con AFIP. CUIT ingresada: {}",prestadorForm.getCuit().toString());
                         AutenticadorConfig autConfig =
                                 new AutenticadorConfig(p12file, p12pass,
                                         signer, dstdn, AfipWs.PADRON_CUATRO.getText(), ticketTime, endpoint);
                         AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l, prestadorService, autConfig);
                         Persona personaAfip = afip.getPersona(prestadorForm.getCuit());
                         String actividades = !personaAfip.getActividades().isEmpty()?personaAfip.getActividades().get(0).getDescripcionActividad():"Ninguna";
+                        logger.info("Datos encontrados:"+System.lineSeparator()+"CUIT: {}."+System.lineSeparator()+"Nombre y apellido: {}."+System.lineSeparator()+"Fecha nacimiento: {}."+System.lineSeparator()+"Actividad: {}."+System.lineSeparator()+"Direccion: {}.",personaAfip.getIdPersona().toString(),personaAfip.getNombreCompleto(),personaAfip.getNacimiento().toString(),actividades,(personaAfip.getDomicilio().get(0)==null)?"Ninguno":personaAfip.getDomicilio().get(0).getDireccion());
                         if(!validarPersonaConAfip(personaAfip,prestadorForm)) {
                             map.put("success", false);
                             map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados o deseleccione la validación.\n" +
@@ -186,21 +193,25 @@ import java.util.stream.Collectors;
 
         private boolean validarPersonaConAfip(Persona personaAfip, PrestadorForm pf) {
             if(!normalizarTexto(personaAfip.getNombreCompleto()).equalsIgnoreCase(normalizarTexto(pf.getApellido().trim() + " " +pf.getNombre().trim()))) {
+                logger.error("ERROR: Nombre y apellido no coinciden. Ingresado: {}. Obtenido AFIP: {}",pf.getApellido().trim() + " " +pf.getNombre().trim(),personaAfip.getNombreCompleto());
                 return false;
             }
 
             if(!personaAfip.getNacimiento().equals(pf.getNacimiento())) {
+                logger.error("ERROR: Fecha nacimiento no coincide. Ingresado: {}. Obtenido AFIP: {}",pf.getNacimiento().toString(),personaAfip.getNacimiento().toString());
                 return false;
             }
 
             if(!pf.getSexo().equalsAfip(personaAfip.getSexo())) {
+                logger.error("ERROR: Sexo no coincide. Ingresado: {}. Obtenido AFIP: {}",pf.getSexo().getName(),personaAfip.getSexo().getName());
                 return false;
             }
 
             if(!actividadValida(personaAfip.getActividades())) {
+                logger.error("ERROR: Tipos de trabajo ingresados no coinciden con actividades obtenidas.");
                 return false;
             }
-
+            logger.info("Todos los datos correctos. Validación aceptada.");
             return true;
         }
 

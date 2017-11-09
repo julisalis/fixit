@@ -23,6 +23,8 @@ public class PostulacionDTO {
     private UsuarioDTO usuarioPrestador;
     private List<Mensaje> mensajes = new ArrayList<>();
 
+    private boolean prestadorPuedeCalificar = true;
+
     public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario) {
         this.id = postulacion.getId();
         this.descripcion = postulacion.getDescripcion();
@@ -35,6 +37,13 @@ public class PostulacionDTO {
         this.mensajes = postulacion.getMensajes();
         this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
         this.usuarioPrestador = new UsuarioDTO(usuario, true);
+    }
+
+    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario, Contratacion contratacion) {
+        this(postulacion,primaryImage,usuario);
+        if(contratacion != null) {
+            prestadorPuedeCalificar = contratacion.getCalificacionPrestador() == null;
+        }
     }
 
     public PostulacionDTO() {
@@ -126,6 +135,14 @@ public class PostulacionDTO {
 
     public void setMensajes(List<Mensaje> mensajes) {
         this.mensajes = mensajes;
+    }
+
+    public boolean isPrestadorPuedeCalificar() {
+        return prestadorPuedeCalificar;
+    }
+
+    public void setPrestadorPuedeCalificar(boolean prestadorPuedeCalificar) {
+        this.prestadorPuedeCalificar = prestadorPuedeCalificar;
     }
 }
 

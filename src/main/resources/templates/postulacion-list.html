@@ -93,7 +93,7 @@
                                         <ul>
                                             <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${contratada.publicacion.localidad.nombre}+', '+${contratada.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
                                             <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${contratada.presupAprox}+' '+${contratada.currency}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${contratada.duracionAprox}" class="btn-price-AR"></small>
+                                            <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${contratada.duracionAprox}+ ' Horas'" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
                                 </div><!-- ad-info -->
@@ -103,8 +103,9 @@
                                         <img th:src="@{/images/}+${contratada.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${contratada.publicacion.tipoTrabajo.nombre}">asdasd</span>
                                     </div>
-                                    <a th:href="'/postulacion/detalle/'+${contratada.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
-                                    <a th:onclick="${'modalCalificar('+contratada.id+')'}" class="btn btn-primary tam-boton-100">Calificar</a>
+                                    <a th:href="'/contratar/detalle/'+${contratada.publicacion.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                    <a th:if="${contratada.prestadorPuedeCalificar}" th:onclick="${'modalCalificar('+contratada.id+')'}" class="btn btn-primary tam-boton-100">Calificar</a>
+                                    <a th:unless="${contratada.prestadorPuedeCalificar}" disabled="disabled" class="btn btn-primary tam-boton-100">Ya calificó</a>
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->
@@ -198,7 +199,7 @@
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 <script>
-    function modalCalificar(publicacionId) {
+    function modalCalificar(postulacionId) {
         var $content = $('<div class="row" style="margin-left: 0;">' +
             '            <div class="form-group">' +
             '                <label class="col-sm-3 control-label">Calificación:</label>' +
@@ -212,26 +213,34 @@
             buttons: [{
                 label: 'Aceptar',
                 action: function (dialog) {
-                    BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
-                    /*if($("#newPrestador_TipoTrabajo").val().length === 0){
-                        swal("Error", "Todos los campos son obligatorios.", "error")
-                    }
+                    //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
+
                     $.ajax({
                         type: 'POST',
-                        url: '/usuario/crearPerfilPrestador',
+                        url: '/contratar/calificarPagarPrestador',
                         data: {
-                            id: $("#id").val(),
-                            tiposTrabajo: $("#newPrestador_TipoTrabajo").val()
+                            postulacionId: postulacionId,
+                            calificacion: $("#rateYo").rateYo("rating")
                         },
                         async: true,
                         success: function(message){
+                            $.LoadingOverlay("hide");
                             if(message.success){
-                                redirect("/usuario/perfil");
+                                //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
+                                swal({
+                                    title: "Calificación",
+                                    text: message.msg,
+                                    type: "success",
+                                },function (e) {
+                                    redirect("/postulacion/list");
+                                });
                             }else{
                                 swal("Error", message.msg, "error")
                             }
                         }
-                    });*/
+                    });
+
+                    $.LoadingOverlay("show");
                 }
             }],
             onshown: function(dialogRef){
@@ -244,6 +253,10 @@
                 });
             },
         });
+    }
+
+    function redirect(redirectURL){
+        window.location.href = redirectURL;
     }
 </script>
 </html>
