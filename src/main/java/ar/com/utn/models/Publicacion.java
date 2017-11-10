@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Currency;
 import java.util.Date;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -42,8 +41,6 @@ public class Publicacion extends PersistentEntity {
     private TiempoPublicacion tiempoPublicacion;
     @OneToMany(mappedBy = "publicacion")
     private Set<Postulacion> postulaciones;
-    @OneToMany(mappedBy = "publicacion")
-    private List<Mensaje> mensajes;
     @ManyToOne
     @JoinColumn(name = "tomador", nullable = false)
     private Tomador tomador;
@@ -114,14 +111,6 @@ public class Publicacion extends PersistentEntity {
 
     public void setTipoTrabajo(TipoTrabajo tipoTrabajo) {
         this.tipoTrabajo = tipoTrabajo;
-    }
-
-    public List<Mensaje> getMensajes() {
-        return mensajes;
-    }
-
-    public void setMensajes(List<Mensaje> mensajes) {
-        this.mensajes = mensajes;
     }
 
     public Tomador getTomador() {

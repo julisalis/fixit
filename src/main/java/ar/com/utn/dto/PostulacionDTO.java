@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
 import java.util.Currency;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class PostulacionDTO {
     private Long id;
@@ -19,9 +22,11 @@ public class PostulacionDTO {
     private Boolean elegida;
     private PublicacionDTO publicacion;
     private UsuarioDTO usuarioPrestador;
+    private List<MensajeDTO> mensajes = new ArrayList<>();
 
     private boolean prestadorPuedeCalificar = true;
 
+    //prestador
     public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario) {
         this.id = postulacion.getId();
         this.descripcion = postulacion.getDescripcion();
@@ -33,6 +38,28 @@ public class PostulacionDTO {
         this.elegida = postulacion.getElegida();
         this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
         this.usuarioPrestador = new UsuarioDTO(usuario, true);
+    }
+
+    //generico
+    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Boolean isTomador) {
+        this.id = postulacion.getId();
+        this.descripcion = postulacion.getDescripcion();
+        this.presupAprox = postulacion.getPresupAprox();
+        this.currency = postulacion.getCurrency();
+        this.duracionAprox = postulacion.getDuracionAprox();
+        this.comentarios = postulacion.getComentarios();
+        this.estado = postulacion.getEstadoPostulacion();
+        this.elegida = postulacion.getElegida();
+        this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
+        this.mensajes = buildMensajes(postulacion.getMensajes(),isTomador);
+    }
+
+
+    private List<MensajeDTO> buildMensajes(List<Mensaje> mensajes, Boolean isTomador) {
+        return mensajes.stream().map(mensaje ->
+                new MensajeDTO(mensaje.getMensaje(),
+                        mensaje.getFecha(),
+                        (isTomador && mensaje.getEnviaTomador()) || (!isTomador && !mensaje.getEnviaTomador()))).collect(Collectors.toList());
     }
 
     public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario, Contratacion contratacion) {
@@ -123,6 +150,14 @@ public class PostulacionDTO {
 
     public void setUsuarioPrestador(UsuarioDTO usuarioPrestador) {
         this.usuarioPrestador = usuarioPrestador;
+    }
+
+    public List<MensajeDTO> getMensajes() {
+        return mensajes;
+    }
+
+    public void setMensajes(List<MensajeDTO> mensajes) {
+        this.mensajes = mensajes;
     }
 
     public boolean isPrestadorPuedeCalificar() {

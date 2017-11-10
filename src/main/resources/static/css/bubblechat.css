@@ -1,0 +1,87 @@
+/* CSS talk bubble */
+.talk-bubble {
+    margin: 20px 40px;
+    display: inline-block;
+    position: relative;
+    width: 200px;
+    height: auto;
+}
+.border{
+    border: 2px solid #666;
+}
+.round{
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+}
+.mine {
+    float: right;
+    clear: left;
+    background-color: #3ac58f;
+}
+.not-mine {
+    float: left;
+    clear: right;
+}
+
+/*Right triangle, placed bottom left side slightly in*/
+.tri-right.border.btm-left-in:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 31px;
+    right: auto;
+    top: auto;
+    bottom: -25px;
+    border: 12px solid;
+    border-color: #666 transparent transparent #666;
+}
+.tri-right.btm-left-in:after{
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 33px;
+    right: auto;
+    top: auto;
+    bottom: -20px;
+    border: 12px solid;
+    border-color: white transparent transparent white;
+}
+
+/*Right triangle, placed bottom right side slightly in*/
+.tri-right.border.btm-right-in:before {
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: 30px;
+    bottom: -25px;
+    border: 12px solid;
+    border-color: #666 #666 transparent transparent;
+}
+.tri-right.btm-right-in:after{
+    content: ' ';
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: auto;
+    right: 32px;
+    bottom: -20px;
+    border: 10px solid;
+    border-color: #3ac58f #3ac58f transparent transparent;
+}
+
+/* talk bubble contents */
+.talktext{
+  padding: 1em;
+    text-align: left;
+  line-height: 1.5em;
+}
+.talktext p{
+  /* remove webkit p margins */
+  -webkit-margin-before: 0em;
+  -webkit-margin-after: 0em;
+}

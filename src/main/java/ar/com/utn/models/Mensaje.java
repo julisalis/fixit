@@ -1,9 +1,7 @@
 package ar.com.utn.models;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -13,35 +11,25 @@ import java.util.Date;
 @Table(name = "mensajes")
 public class Mensaje extends PersistentEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "tomador", nullable = false)
-    private Tomador tomador;
-
-    @ManyToOne
-    @JoinColumn(name = "prestador", nullable = false)
-    private Prestador prestador;
-
     private String mensaje;
-    private Date fecha;
-
+    private LocalDateTime fecha;
+    private Boolean enviaTomador;
     @ManyToOne
-    @JoinColumn(name = "publicacion", nullable = false)
-    private Publicacion publicacion;
+    @JoinColumn(name = "postulacion", nullable = false)
+    private Postulacion postulacion;
 
-    public Tomador getTomador() {
-        return tomador;
+    @PrePersist
+    protected void onCreate() {
+        this.fecha = LocalDateTime.now();
     }
 
-    public void setTomador(Tomador tomador) {
-        this.tomador = tomador;
+    public Mensaje() {
     }
 
-    public Prestador getPrestador() {
-        return prestador;
-    }
-
-    public void setPrestador(Prestador prestador) {
-        this.prestador = prestador;
+    public Mensaje(String mensaje, Boolean enviaTomador, Postulacion postulacion) {
+        this.mensaje = mensaje;
+        this.enviaTomador = enviaTomador;
+        this.postulacion = postulacion;
     }
 
     public String getMensaje() {
@@ -52,19 +40,27 @@ public class Mensaje extends PersistentEntity {
         this.mensaje = mensaje;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 
-    public Publicacion getPublicacion() {
-        return publicacion;
+    public Boolean getEnviaTomador() {
+        return enviaTomador;
     }
 
-    public void setPublicacion(Publicacion publicacion) {
-        this.publicacion = publicacion;
+    public void setEnviaTomador(Boolean enviaTomador) {
+        this.enviaTomador = enviaTomador;
+    }
+
+    public Postulacion getPostulacion() {
+        return postulacion;
+    }
+
+    public void setPostulacion(Postulacion postulacion) {
+        this.postulacion = postulacion;
     }
 }
