@@ -4,6 +4,8 @@ import ar.com.utn.mercadopago.model.UserMP;
 import ar.com.utn.models.Postulacion;
 import ar.com.utn.models.Prestador;
 import ar.com.utn.models.Usuario;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ public class MoneyFlowServiceImpl implements MoneyFlowService {
     private MercadoPagoApi mercadoPagoApi;
 
     @Override
-    public String efectuarPago(PaymentMP paymentMP, Prestador prestador) throws Exception {
+    public JSONObject efectuarPago(PaymentMP paymentMP, Prestador prestador) throws Exception {
         mercadoPagoApi.setAccessToken(prestador.getMpPrestador().getAccessToken());
         return mercadoPagoApi.makePayment(paymentMP);
     }
@@ -28,5 +30,15 @@ public class MoneyFlowServiceImpl implements MoneyFlowService {
         AdditionalInfoMP additionalInfoMP = mercadoPagoApi.buildAdditionalInfoMP(tomador);
         PaymentMP paymentMP = mercadoPagoApi.buildPaymentMP(postulacion.getPresupAprox(), tokenMP,"Contrato profesional FixIT",1, paymentMethodId, userMP,additionalInfoMP,commission);
         return paymentMP;
+    }
+
+    @Override
+    public String getPaymentId(JSONObject payment) throws JSONException {
+       return mercadoPagoApi.getPaymentMPId(payment);
+    }
+
+    @Override
+    public String getDescription(JSONObject payment) throws JSONException {
+        return mercadoPagoApi.getDescription(payment);
     }
 }

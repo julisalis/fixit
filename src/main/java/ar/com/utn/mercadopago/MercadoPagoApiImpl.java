@@ -8,7 +8,6 @@ import com.mercadopago.MP;
 import org.apache.log4j.Logger;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -56,13 +55,13 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
         this.accessToken = accessToken;
     }
 
-
-    private String getPaymentMPId(JSONObject jsonObject) throws JSONException {
+    @Override
+    public String getPaymentMPId(JSONObject jsonObject) throws JSONException {
         return jsonObject.getJSONObject("response").getString("id");
     }
 
     @Override
-    public String makePayment(PaymentMP paymentMP) throws Exception{
+    public JSONObject makePayment(PaymentMP paymentMP) throws Exception{
         MP mp = getMPInstance();
         Gson gson = new Gson();
         Map<String,Object> map = new HashMap<>();
@@ -78,7 +77,19 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
         JSONObject payment = mp.post(PAYMENTS_URL, paymentMPJson);
         controlResponse(payment);
         controlResponsePayment(payment);
-        return getPaymentMPId(payment);
+        return payment;
+    }
+
+    @Override
+    public String getDescription(JSONObject payment) throws JSONException {
+        return "La calificación se ha generado con éxito y su pago de  "
+                + payment.getJSONObject("response").getJSONObject("transaction_details").getString("total_paid_amount")
+                + " ARS, mediante su tarjeta "
+                +payment.getJSONObject("response").getString("payment_method_id").toUpperCase()
+                + " finalizada en "
+                +payment.getJSONObject("response").getJSONObject("card").getString("last_four_digits")
+                +" ya se acreditó en la cuenta del profesional.\nPara más información acceder a "
+                +payment.getJSONObject("response").getString("statement_descriptor");
     }
 
     private void controlResponsePayment(JSONObject jsonObject)throws Exception{

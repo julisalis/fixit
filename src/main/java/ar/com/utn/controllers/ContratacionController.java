@@ -13,6 +13,7 @@ import ar.com.utn.models.*;
 import ar.com.utn.repositories.ContratacionRepository;
 import ar.com.utn.services.*;
 import ar.com.utn.utils.CurrentSession;
+import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -144,27 +145,35 @@ public class ContratacionController {
         HashMap<String, Object> map = new HashMap<>();
         Usuario usuario = currentSession.getUser();
         Postulacion postulacion = postulacionService.findByPublicacionAndEstadoPostulacion(publicacion,EstadoPostulacion.CONTRATADA);
+        String description = "La calificación se ha generado con éxito.";
         if (postulacion != null) {
             Contratacion contratacion = contratacionService.findByPostulacion(postulacion);
             if(contratacion.getCalificacionTomador() == null){
                     if(contratacion.getCalificacionPrestador()!=null){
                         try {
                             if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
-                                String paymentId =  moneyFlowService.efectuarPago(contratacion.getPaymentMP(),postulacion.getPrestador());
+                                JSONObject payment =  moneyFlowService.efectuarPago(contratacion.getPaymentMP(),postulacion.getPrestador());
+                                String paymentId = moneyFlowService.getPaymentId(payment);
+                                description = moneyFlowService.getDescription(payment);
                                 contratacion.setPaymentId(paymentId);
                             }
+
                         } catch (Exception e) {
                             map.put("success", false);
                             map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
                         }
                         publicacionService.setFinalizada(publicacion);
                         postulacionService.setFinalizada(postulacion);
+                    }else{
+                        if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
+                            description = "La calificación se ha generado con éxito, el pago se efectuará cuando el Profesional califique.";
+                        }
                     }
                     contratacion.setCalificacionTomador(calificacion);
                     Usuario prof = usuarioService.findByPrestador(postulacion.getPrestador());
                     mailService.sendCalificacionMailToProfesional(contratacion,usuario,prof);
                     map.put("success", true);
-                    map.put("msg", "La calificación ha sido guardada.");
+                    map.put("msg",description);
             } else {
                 map.put("success", false);
                 map.put("msg", "Usted ya ha calificado al profesional.");
@@ -185,6 +194,7 @@ public class ContratacionController {
             , Model model) {
         HashMap<String, Object> map = new HashMap<>();
         Usuario usuario = currentSession.getUser();
+        String description = "";
         if (postulacion != null) {
             Publicacion publicacion = postulacion.getPublicacion();
             Contratacion contratacion = contratacionService.findByPostulacion(postulacion);
@@ -192,7 +202,8 @@ public class ContratacionController {
                     if(contratacion.getCalificacionTomador()!=null){
                         try {
                             if (contratacion.getPayMethod().equals(PayMethod.CREDIT_CARD)) {
-                                String paymentId =  moneyFlowService.efectuarPago(contratacion.getPaymentMP(),postulacion.getPrestador());
+                                JSONObject payment =  moneyFlowService.efectuarPago(contratacion.getPaymentMP(),postulacion.getPrestador());
+                                String paymentId = moneyFlowService.getPaymentId(payment);
                                 contratacion.setPaymentId(paymentId);
                             }
                         } catch (Exception e) {
