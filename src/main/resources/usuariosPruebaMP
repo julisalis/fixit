@@ -2,12 +2,14 @@
 AT=`curl -s -X POST -H 'content-type: application/x-www-form-urlencoded' 'https://api.mercadopago.com/oauth/token' -d 'grant_type=client_credentials' -d 'client_id=721654308644323' -d 'client_secret=tpl1fFuLIEUitI342zKF87jEckovxE1O'`
 
 
-{"access_token":"APP_USR-721654308644323-101616-b50cd31789dcd6e82133b120de24aa98__G_E__-278315026",
-"refresh_token":"TG-59e51afae4b03acbec75ece4-278315026",
-"live_mode":true,"user_id":278315026,"token_type":"bearer",
-"expires_in":21600,"scope":"offline_access read write"}
+{"access_token":"APP_USR-721654308644323-111016-f26521ab2bad2e9110445924313f22ab__L_K__-278315026"
+,"refresh_token":"TG-5a06106de4b0e6edfb2111b4-278315026"
+,"live_mode":true,"user_id":278315026
+,"token_type":"bearer"
+,"expires_in":21600
+,"scope":"offline_access payments read write"}
 
-curl -X POST -H "Content-Type: application/json" "https://api.mercadopago.com/users/test_user?access_token=APP_USR-721654308644323-101616-b50cd31789dcd6e82133b120de24aa98__G_E__-278315026" -d '{"site_id":"MLA"}'
+curl -X POST -H "Content-Type: application/json" "https://api.mercadopago.com/users/test_user?access_token=APP_USR-721654308644323-111016-f26521ab2bad2e9110445924313f22ab__L_K__-278315026" -d '{"site_id":"MLA"}'
 
 usuario para crear la app:
 {"id":278594985,"nickname":"TESTHBJYGMJN","password":"qatest8550","site_status":"active","email":"test_user_57908191@testuser.com"}
@@ -15,3 +17,11 @@ usuario para crear la app:
 usuarios:
 {"id":278593063,"nickname":"TETE4720641","password":"qatest7329","site_status":"active","email":"test_user_6851491@testuser.com"}
 {"id":278593083,"nickname":"TETE4025511","password":"qatest998","site_status":"active","email":"test_user_32051530@testuser.com"}
+
+{"id":282971990,"nickname":"TETE8488336","password":"qatest7482","site_status":"active","email":"test_user_95711942@testuser.com"}
+{"id":282969157,"nickname":"TETE2710221","password":"qatest1495","site_status":"active","email":"test_user_98247209@testuser.com"}
+{"id":282973779,"nickname":"TESTAN7V4FGL","password":"qatest6095","site_status":"active","email":"test_user_68217211@testuser.com"}
+{"id":282973887,"nickname":"TETE8986288","password":"qatest3531","site_status":"active","email":"test_user_63300176@testuser.com"}
+{"id":282975261,"nickname":"TETE8996923","password":"qatest5951","site_status":"active","email":"test_user_6197343@testuser.com"}
+{"id":282975265,"nickname":"TETE2256218","password":"qatest8166","site_status":"active","email":"test_user_40293333@testuser.com"}
+{"id":282972207,"nickname":"TETE4855156","password":"qatest7307","site_status":"active","email":"test_user_94744871@testuser.com"}
