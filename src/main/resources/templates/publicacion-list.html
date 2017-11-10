@@ -249,14 +249,16 @@
                         success: function(message){
                             $.LoadingOverlay("hide");
                             if(message.success){
-                                swal({
-                                    title: "Calificación",
-                                    text: message.msg,
-                                    type: "success",
-                                },function (e) {
-                                    redirect("/publicacion/list");
+                                BootstrapDialog.show({
+                                    title: 'Calificación Exitosa',
+                                    message:  message.msg,
+                                    buttons: [{
+                                        label: 'Ok',
+                                        action: function (e) {
+                                            redirect("/publicacion/list");
+                                        }
+                                    }]
                                 });
-                                //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
                             }else{
                                 swal("Error", message.msg, "error")
                             }

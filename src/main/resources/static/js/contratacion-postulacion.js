@@ -78,7 +78,7 @@ function callbackSuccessCreditCard(){
             type: "success",
             showCancelButton: true,
             closeOnConfirm: false,
-            showLoaderOnConfirm: true
+            showLoaderOnConfirm: false
         },
         function(){
             setTimeout(function(){

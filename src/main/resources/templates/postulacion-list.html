@@ -213,8 +213,6 @@
             buttons: [{
                 label: 'Aceptar',
                 action: function (dialog) {
-                    //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
-
                     $.ajax({
                         type: 'POST',
                         url: '/contratar/calificarPagarPrestador',
@@ -226,13 +224,15 @@
                         success: function(message){
                             $.LoadingOverlay("hide");
                             if(message.success){
-                                //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
-                                swal({
-                                    title: "Calificación",
-                                    text: message.msg,
-                                    type: "success",
-                                },function (e) {
-                                    redirect("/postulacion/list");
+                                BootstrapDialog.show({
+                                    title: 'Calificación Exitosa ',
+                                    message:  message.msg,
+                                    buttons: [{
+                                        label: 'Ok',
+                                        action: function (e) {
+                                            redirect("/postulacion/list");
+                                         }
+                                    }]
                                 });
                             }else{
                                 swal("Error", message.msg, "error")
