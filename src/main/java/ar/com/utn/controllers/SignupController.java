@@ -152,6 +152,12 @@ import java.util.stream.Collectors;
                                         signer, dstdn, AfipWs.PADRON_CUATRO.getText(), ticketTime, endpoint);
                         AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l, prestadorService, autConfig);
                         Persona personaAfip = afip.getPersona(prestadorForm.getCuit());
+                        if(personaAfip == null) {
+                            logger.info("AFIP no encuentra persona con CUIT: {}",prestadorForm.getCuit().toString());
+                            map.put("success", false);
+                            map.put("msg","AFIP no ha encontrado una persona con ese CUIT.");
+                            return map;
+                        }
                         String actividades = !personaAfip.getActividades().isEmpty()?personaAfip.getActividades().get(0).getDescripcionActividad():"Ninguna";
                         logger.info("Datos encontrados:"+System.lineSeparator()+"CUIT: {}."+System.lineSeparator()+"Nombre y apellido: {}."+System.lineSeparator()+"Fecha nacimiento: {}."+System.lineSeparator()+"Actividad: {}."+System.lineSeparator()+"Direccion: {}.",personaAfip.getIdPersona().toString(),personaAfip.getNombreCompleto(),personaAfip.getNacimiento().toString(),actividades,(personaAfip.getDomicilio().get(0)==null)?"Ninguno":personaAfip.getDomicilio().get(0).getDireccion());
                         if(!validarPersonaConAfip(personaAfip,prestadorForm)) {
