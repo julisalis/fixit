@@ -106,7 +106,7 @@
 
                                     <a th:href="'/contratar/detalle/'+${contratada.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                     <a th:if="${contratada.tomadorPuedeCalificar}" th:onclick="${'modalCalificar('+contratada.id+')'}" class="btn btn-primary tam-boton-100">Calificar</a>
-                                    <a th:unless="${contratada.tomadorPuedeCalificar}" class="btn btn-primary tam-boton-100" disabled="disabled">Ya calificó</a>
+                                    <a th:unless="${contratada.tomadorPuedeCalificar}" class="btn btn-primary tam-boton-100" disabled="disabled" th:text="${'Ya calificaste ('+contratada.contratacion?.calificacionTomador+')'}">Ya calificó</a>
                                     <a class="btn btn-primary tam-boton-100" th:onclick="${'modalCodigoSeguridad('+contratada.id+')'}" >Código de Seguridad</a>
                                 </div>
                             </div><!-- item-info -->

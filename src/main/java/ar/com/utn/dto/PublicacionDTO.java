@@ -31,6 +31,7 @@ public class PublicacionDTO {
     private boolean prestadorPuedePostularse = true;
 
     private boolean tomadorPuedeCalificar = true;
+    private Contratacion contratacion;
 
     public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage) {
         this.id = publicacion.getId();
@@ -52,6 +53,7 @@ public class PublicacionDTO {
 
     public PublicacionDTO(Publicacion publicacion, PublicacionFotoForm primaryImage, Contratacion contratacion) {
         this(publicacion,primaryImage);
+        this.contratacion = contratacion;
         if(contratacion != null) {
             tomadorPuedeCalificar = contratacion.getCalificacionTomador() == null;
         }
@@ -231,5 +233,13 @@ public class PublicacionDTO {
 
     public void setTomadorPuedeCalificar(boolean tomadorPuedeCalificar) {
         this.tomadorPuedeCalificar = tomadorPuedeCalificar;
+    }
+
+    public Contratacion getContratacion() {
+        return contratacion;
+    }
+
+    public void setContratacion(Contratacion contratacion) {
+        this.contratacion = contratacion;
     }
 }
