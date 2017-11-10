@@ -41,7 +41,7 @@ public class PublicacionForm {
     private Urgencia urgencia;
     private List<PublicacionFotoForm> publicacionFotoForms = new ArrayList<>();
     @Temporal(TemporalType.DATE)
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="MM-dd-yyyy")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE,pattern="dd/MM/yyyy")
     private LocalDate fecha;
 
     public PublicacionForm() {
