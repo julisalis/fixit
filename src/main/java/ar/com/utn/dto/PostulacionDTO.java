@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.Currency;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 public class PostulacionDTO {
     private Long id;
@@ -21,7 +22,7 @@ public class PostulacionDTO {
     private Boolean elegida;
     private PublicacionDTO publicacion;
     private UsuarioDTO usuarioPrestador;
-    private List<Mensaje> mensajes = new ArrayList<>();
+    private List<MensajeDTO> mensajes = new ArrayList<>();
 
     private boolean prestadorPuedeCalificar = true;
 
@@ -34,9 +35,16 @@ public class PostulacionDTO {
         this.comentarios = postulacion.getComentarios();
         this.estado = postulacion.getEstadoPostulacion();
         this.elegida = postulacion.getElegida();
-        this.mensajes = postulacion.getMensajes();
+        this.mensajes = buildMensajes(postulacion.getMensajes());
         this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
         this.usuarioPrestador = new UsuarioDTO(usuario, true);
+    }
+
+    private List<MensajeDTO> buildMensajes(List<Mensaje> mensajes) {
+        return mensajes.stream().map(mensaje ->
+                new MensajeDTO(mensaje.getMensaje(),
+                        mensaje.getFecha(),
+                        !mensaje.getEnviaTomador())).collect(Collectors.toList());
     }
 
     public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario, Contratacion contratacion) {
@@ -129,11 +137,11 @@ public class PostulacionDTO {
         this.usuarioPrestador = usuarioPrestador;
     }
 
-    public List<Mensaje> getMensajes() {
+    public List<MensajeDTO> getMensajes() {
         return mensajes;
     }
 
-    public void setMensajes(List<Mensaje> mensajes) {
+    public void setMensajes(List<MensajeDTO> mensajes) {
         this.mensajes = mensajes;
     }
 

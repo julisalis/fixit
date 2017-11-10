@@ -5,6 +5,7 @@
     <title>FixIT</title>
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
     <script type="text/javascript" th:src="@{/js/index.js}"></script>
+    <script type="text/javascript" th:src="@{/js/postulacion-detalle.js}"></script>
 </head>
 <body>
 <div id="postulacion-mas">
@@ -128,26 +129,8 @@
 
             <h6 class="titulo-postulacion">Mensajes</h6>
             <div class="job-ad-item no-margin-bottom">
-                <!--TODO: Refactor codigo duplicado-->
-                <div th:each="mensaje: ${postulacion.mensajes}" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
-                    <div th:unless="${mensaje.enviaTomador}" class="talk-bubble tri-right round border btm-right-in mine">
-                        <div class="talktext">
-                            <p th:text="${mensaje.mensaje}"></p>
-                        </div>
-                    </div>
-                    <div th:if="${mensaje.enviaTomador}" class="talk-bubble tri-right round border btm-left-in not-mine">
-                        <div class="talktext">
-                            <p th:text="${mensaje.mensaje}"></p>
-                        </div>
-                    </div>
-                </div>
-                <div th:each="mensaje: ${postulacion.mensajes}" sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')">
-                    <div th:if="${mensaje.enviaTomador}" class="talk-bubble tri-right round border btm-right-in mine">
-                        <div class="talktext">
-                            <p th:text="${mensaje.mensaje}"></p>
-                        </div>
-                    </div>
-                    <div th:unless="${mensaje.enviaTomador}" class="talk-bubble tri-right round border btm-left-in not-mine">
+                <div th:each="mensaje: ${postulacion.mensajes}" sec:authorize="isAuthenticated()">
+                    <div th:classappend="${mensaje.isMine} ? 'btm-right-in mine' : 'btm-left-in not-mine'" class="talk-bubble tri-right round border">
                         <div class="talktext">
                             <p th:text="${mensaje.mensaje}"></p>
                         </div>
@@ -155,10 +138,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-10 col-md-offset-1 new-message-box form-inline">
-                    <textarea name="new-message" class="form-control"></textarea>
-                    <button class="btn btn-primary">Enviar</button>
-                </div>
+                <form id="message-form" th:action="@{/mensajes/new}">
+                    <input type="hidden" id=postulacionId name="postulacioId" th:value="${postulacion.id}" data-validation="required"/>
+                    <div class="col-md-10 col-md-offset-1 new-message-box form-inline">
+                        <textarea id="new-message" name="new-message" data-validation="required length" data-validation-length="max500" class="form-control"></textarea>
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                    </div>
+                </form>
             </div>
 
 

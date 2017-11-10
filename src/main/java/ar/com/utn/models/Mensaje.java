@@ -1,9 +1,7 @@
 package ar.com.utn.models;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 /**
@@ -14,13 +12,22 @@ import java.util.Date;
 public class Mensaje extends PersistentEntity {
 
     private String mensaje;
-    private Date fecha;
+    private LocalDateTime fecha;
     private Boolean enviaTomador;
-
     @ManyToOne
     @JoinColumn(name = "postulacion", nullable = false)
     private Postulacion postulacion;
 
+    @PrePersist
+    protected void onCreate() {
+        this.fecha = LocalDateTime.now();
+    }
+
+    public Mensaje(String mensaje, Boolean enviaTomador, Postulacion postulacion) {
+        this.mensaje = mensaje;
+        this.enviaTomador = enviaTomador;
+        this.postulacion = postulacion;
+    }
 
     public String getMensaje() {
         return mensaje;
@@ -30,11 +37,11 @@ public class Mensaje extends PersistentEntity {
         this.mensaje = mensaje;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

@@ -26,7 +26,7 @@ public class MoneyFlowServiceImpl implements MoneyFlowService {
     public PaymentMP completePayment(Postulacion postulacion, String tokenMP, String paymentMethodId, Usuario tomador) {
         UserMP userMP = mercadoPagoApi.buildUserMP(tomador);
         AdditionalInfoMP additionalInfoMP = mercadoPagoApi.buildAdditionalInfoMP(tomador);
-        PaymentMP paymentMP = mercadoPagoApi.buildPaymentMP(postulacion.getPresupAprox(), tokenMP,"Contratación FiIT",1, paymentMethodId, userMP,additionalInfoMP,commission);
+        PaymentMP paymentMP = mercadoPagoApi.buildPaymentMP(postulacion.getPresupAprox(), tokenMP,"Contrato profesional FixIT",1, paymentMethodId, userMP,additionalInfoMP,commission);
         return paymentMP;
     }
 }
