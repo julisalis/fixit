@@ -41,7 +41,7 @@ public class PostulacionDTO {
     }
 
     //generico
-    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario, Boolean isTomador) {
+    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Boolean isTomador) {
         this.id = postulacion.getId();
         this.descripcion = postulacion.getDescripcion();
         this.presupAprox = postulacion.getPresupAprox();
@@ -51,7 +51,6 @@ public class PostulacionDTO {
         this.estado = postulacion.getEstadoPostulacion();
         this.elegida = postulacion.getElegida();
         this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
-        this.usuarioPrestador = new UsuarioDTO(usuario, !isTomador);
         this.mensajes = buildMensajes(postulacion.getMensajes(),isTomador);
     }
 
@@ -60,7 +59,7 @@ public class PostulacionDTO {
         return mensajes.stream().map(mensaje ->
                 new MensajeDTO(mensaje.getMensaje(),
                         mensaje.getFecha(),
-                        isTomador && mensaje.getEnviaTomador())).collect(Collectors.toList());
+                        (isTomador && mensaje.getEnviaTomador()) || (!isTomador && !mensaje.getEnviaTomador()))).collect(Collectors.toList());
     }
 
     public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario, Contratacion contratacion) {

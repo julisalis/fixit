@@ -25,14 +25,14 @@
 
     <section id="section-publicaciones">
         <div class="container">
-            <h3 class="subtitulo-jobs" th:text="${publicacion.titulo}"></h3>
+            <h3 class="subtitulo-jobs" th:text="${postulacion.publicacion.titulo}"></h3>
             <h6 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')"  class="titulo-postulacion">Mi Postulación</h6>
             <h6 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')"  class="titulo-postulacion">Su Postulación</h6>
             <div class="job-ad-item">
                 <div class="item-info">
                     <div class="item-image-box col-md-2">
                         <div class="item-image detalle">
-                                <img th:src="@{/images/}+${publicacion.tipoTrabajo.imagen}"
+                                <img th:src="@{/images/}+${postulacion.publicacion.tipoTrabajo.imagen}"
                                      onerror="this.src='/images/publicaciones/not-found.png'"
                                      alt="Image" class="img-tipotrabajo">
                         </div><!-- item-image -->
@@ -43,11 +43,11 @@
                             <span><strong th:text="${#strings.capitalize(postulacion.descripcion)}"></strong></span>
                         </p>
                         <span th:text="'Comentarios: ' +${postulacion.comentarios}"></span>
-                        <span th:text="'Categoría: ' +${publicacion.tipoTrabajo.nombre}"></span>
+                        <span th:text="'Categoría: ' +${postulacion.publicacion.tipoTrabajo.nombre}"></span>
                     </div>
                         <div class="ad-meta col-md-3 detalle-iconos">
                             <ul>
-                                <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${publicacion.localidad.nombre}+', '+${publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
+                                <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${postulacion.publicacion.localidad.nombre}+', '+${postulacion.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
                                 <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Desde '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
                                 <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${postulacion.duracionAprox} + ' Horas'" class="btn-price-AR"></small>
                             </ul>
@@ -63,10 +63,10 @@
                             <div class="row">
                                 <div id="ifix-carousel-howitworks" class="carousel slide publicaciones" data-ride="carousel">
                                     <ol class="carousel-indicators">
-                                        <li th:each="image,iterStat : ${publicacion.publicacionFotoForms}" data-target="#ifix-carousel-howitworks" th:attr="data-slide-to =${iterStat.index}"  th:class="${iterStat.index == 0}? 'active' : ''" ></li>
+                                        <li th:each="image,iterStat : ${postulacion.publicacion.publicacionFotoForms}" data-target="#ifix-carousel-howitworks" th:attr="data-slide-to =${iterStat.index}"  th:class="${iterStat.index == 0}? 'active' : ''" ></li>
                                     </ol>
                                     <div id="imagenes-carrousel" class="carousel-inner" role="listbox">
-                                        <div class="item "  th:classappend="${iterStat.index == 0}? 'active' : ''" th:each="image,iterStat : ${publicacion.publicacionFotoForms}">
+                                        <div class="item "  th:classappend="${iterStat.index == 0}? 'active' : ''" th:each="image,iterStat : ${postulacion.publicacion.publicacionFotoForms}">
                                             <div class="row">
                                                 <div class="fixit-publicacion-image">
                                                     <img th:src="'/multimedia/image/'+${image.id}" onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="modal-imagenes img-responsive">
@@ -95,42 +95,45 @@
                             <div class="icons-publicacion-detalle"><i class="fa fa-question-circle" aria-hidden="true"></i></div>
                             <h4 class="preguntas-publicacion">Qué hay que hacer?</h4>
                         </div>
-                        <h3 class="modal-descripcion publicaciones" th:text="${publicacion.descripcion}"></h3>
+                        <h3 class="modal-descripcion publicaciones" th:text="${postulacion.publicacion.descripcion}"></h3>
                         <div class="pregunta">
                             <div class="icons-publicacion-detalle"><i class="fa fa-map-marker" aria-hidden="true"></i></div>
                             <h4 class="preguntas-publicacion">Dónde?</h4>
                         </div>
-                        <h3 class="modal-ubicacion publicaciones"  th:text="${publicacion.localidad.nombre+', '+publicacion.provincia.nombre}" ></h3>
+                        <h3 class="modal-ubicacion publicaciones"  th:text="${postulacion.publicacion.localidad.nombre+', '+postulacion.publicacion.provincia.nombre}" ></h3>
                         <div class="pregunta">
                             <div class="icons-publicacion-detalle"><i class="fa fa-credit-card" aria-hidden="true"></i></div>
                             <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="preguntas-publicacion"  >Cuánto quiere gastar?</h4>
                             <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="preguntas-publicacion"  >Cuánto quiero gastar?</h4>
                         </div>
-                        <h3 class="modal-precio publicaciones" th:text="${'Hasta '+publicacion.presupMax+' '+publicacion.currency}"></h3>
-                        <div th:if="${publicacion.fecha != null}">
+                        <h3 class="modal-precio publicaciones" th:text="${'Hasta '+postulacion.publicacion.presupMax+' '+postulacion.publicacion.currency}"></h3>
+                        <div th:if="${postulacion.publicacion.fecha != null}">
                             <div class="pregunta">
                                 <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
                                 <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="preguntas-publicacion">Cuándo lo necesita?</h4>
                                 <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="preguntas-publicacion">Cuándo lo necesito?</h4>
                             </div>
-                            <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.fecha.dayOfMonth+'/'+publicacion.fecha.monthValue+'/'+publicacion.fecha.year}"></h3>
+                            <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${postulacion.publicacion.fecha.dayOfMonth+'/'+postulacion.publicacion.fecha.monthValue+'/'+postulacion.publicacion.fecha.year}"></h3>
                         </div>
-                        <div th:if="${publicacion.fecha == null}">
+                        <div th:if="${postulacion.publicacion.fecha == null}">
                             <div class="pregunta">
                                 <div class="icons-publicacion-detalle"><i class="fa fa-calendar" aria-hidden="true"></i></div>
                                 <h4 sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="preguntas-publicacion">Cuándo lo necesita?</h4>
                                 <h4 sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="preguntas-publicacion">Cuándo lo necesito?</h4>
                             </div>
-                            <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${publicacion.urgencia}"></h3>
+                            <h3 class="modal-urgencia modal-fecha publicaciones"  th:text="${postulacion.publicacion.urgencia}"></h3>
                         </div>
                     </section>
                 </div>
             </div>
 
             <h6 class="titulo-postulacion">Mensajes</h6>
-            <div  th:if="${#lists.isEmpty(postulacion.mensajes)}"  sec:authorize="isAuthenticated()" class="job-ad-item no-margin-bottom">
+            <div sec:authorize="isAuthenticated()" class="job-ad-item no-margin-bottom">
+                <div th:if="${#lists.isEmpty(postulacion.mensajes)}">
+                    <h5 style="text-transform: uppercase;font-size: 13px;letter-spacing: 4px;">No hay Mensajes hasta el momento</h5>
+                </div>
                 <div th:each="mensaje: ${postulacion.mensajes}">
-                    <div th:classappend="${mensaje.isMine} ? 'btm-right-in mine' : 'btm-left-in not-mine'" class="talk-bubble tri-right round border">
+                    <div th:classappend="${mensaje.getMine()} ? 'btm-right-in mine' : 'btm-left-in not-mine'" class="talk-bubble tri-right round border">
                         <div class="talktext">
                             <p th:text="${mensaje.mensaje}"></p>
                         </div>
@@ -138,8 +141,8 @@
                 </div>
             </div>
             <div class="row">
-                <form id="message-form" th:action="@{/mensajes/new}">
-                    <input type="hidden" id=postulacionId name="postulacioId" th:value="${postulacion.id}" data-validation="required"/>
+                <form id="message-form" th:action="@{/mensaje/new}">
+                    <input type="hidden" id=postulacionId name="postulacionId" th:value="${postulacion.id}" data-validation="required"/>
                     <div class="col-md-10 col-md-offset-1 new-message-box form-inline">
                         <textarea id="new-message" name="new-message" data-validation="required length" data-validation-length="max500" class="form-control"></textarea>
                         <button type="submit" class="btn btn-primary">Enviar</button>

@@ -23,6 +23,9 @@ public class Mensaje extends PersistentEntity {
         this.fecha = LocalDateTime.now();
     }
 
+    public Mensaje() {
+    }
+
     public Mensaje(String mensaje, Boolean enviaTomador, Postulacion postulacion) {
         this.mensaje = mensaje;
         this.enviaTomador = enviaTomador;

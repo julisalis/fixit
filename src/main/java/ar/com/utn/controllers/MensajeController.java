@@ -27,7 +27,8 @@ import java.util.Map;
 public class MensajeController {
     @Autowired
     private MensajeService mensajeService;
-
+    @Autowired
+    private PostulacionService postulacionService;
     @Autowired
     private CurrentSession currentSession;
 
@@ -36,17 +37,16 @@ public class MensajeController {
 
     @PostMapping(value = "/new")
     @Transactional
-    public @ResponseBody Map<String,Object> newMensaje(@RequestParam(value = "postulacionId") Postulacion postulacion,@RequestParam(value = "new-message") String message ) {
+    public @ResponseBody Map<String,Object> newMensaje(@RequestParam(value = "postulacionId") Long postulacionId,@RequestParam(value = "new-message") String message ) {
         HashMap<String,Object> map = new HashMap<>();
         Boolean enviaTomador = currentSession.getActualRol().stream().anyMatch(o -> o.getAuthority().equalsIgnoreCase("TOMADOR"));
+        Postulacion postulacion = postulacionService.findById(postulacionId);
         if(postulacion!=null && message!=null && !message.isEmpty()) {
             mensajeService.createMensaje(postulacion,message,enviaTomador);
-    //      mailService.sendPostulacionNuevaMail(cliente,prof,publicacion,postulacion);
+    //      mailService.sendConsulta(cliente,prof,publicacion,postulacion);
             map.put("success", true);
-            map.put("msg","La postulación ha sido creada con éxito!");
         }else{
                 map.put("success", false);
-                map.put("msg","Complete todos los campos obligatorios.");
         }
 
         return map;

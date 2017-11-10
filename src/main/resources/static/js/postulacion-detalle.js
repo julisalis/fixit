@@ -9,16 +9,14 @@ $(function () {
     });
 
     $("#message-form").submit(function (e) {
-        e.preventDefault();
-        $.LoadingOverlay("show");
         var form = $(this);
-        enviarMensaje(form)
+        enviarMensaje(form,e)
 
     })
 });
 
 
-function enviarMensaje(form){
+function enviarMensaje(form,e){
     swal({
             title: "Enviar mensaje",
             text: "Se enviará el mensaje al destinatario",
@@ -28,6 +26,7 @@ function enviarMensaje(form){
             closeOnConfirm: false,
         },
         function(){
+            $.LoadingOverlay("show");
             $.post(form.attr('action'),form.serialize())
                 .done(function( data ) {
                     $.LoadingOverlay("hide");
@@ -49,4 +48,5 @@ function enviarMensaje(form){
                 });
 
         });
+    e.preventDefault();
 }

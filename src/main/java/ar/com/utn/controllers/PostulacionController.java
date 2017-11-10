@@ -172,8 +172,7 @@ public class PostulacionController {
        Postulacion mipostulacion = postulacionService.findById(postulacionId);
         Publicacion mipublicacion = publicacionService.findById(mipostulacion.getPublicacion().getId());
         if(mipostulacion!=null){
-            model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion),usuarioService.findByPrestador(mipostulacion.getPrestador()),isTomador));
-            model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
+            model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion),isTomador));
             return "postulacion-detalle";
         }
         return "redirect:/";
