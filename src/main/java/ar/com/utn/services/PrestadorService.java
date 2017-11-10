@@ -3,12 +3,10 @@ package ar.com.utn.services;
 import ar.com.utn.afip.TicketAcceso;
 import ar.com.utn.exception.MercadoPagoException;
 import ar.com.utn.mercadopago.model.ClientCredentials;
-import ar.com.utn.models.ActividadAfip;
-import ar.com.utn.models.Prestador;
-import ar.com.utn.models.TipoTrabajo;
-import ar.com.utn.models.Usuario;
+import ar.com.utn.models.*;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface PrestadorService {
@@ -26,4 +24,6 @@ public interface PrestadorService {
     void completeCredentials(ClientCredentials clientCredentials);
 
     Usuario findByPrestadorRenewMP(Prestador prestador) throws MercadoPagoException;
+
+    void validarDatosAfip(Prestador prestador, Long cuitL, LocalDate fecha_nac, Sexo sexo);
 }

@@ -1,6 +1,11 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.afip.AfipHandler;
+import ar.com.utn.afip.AutenticadorConfig;
+import ar.com.utn.afip.domain.Persona;
+import ar.com.utn.afip.enums.AfipWs;
 import ar.com.utn.exception.MercadoPagoException;
+import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.SelectorForm;
 import ar.com.utn.form.TelefonoForm;
 import ar.com.utn.form.TomadorForm;
@@ -16,8 +21,11 @@ import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
 import com.mercadopago.MP;
 import org.codehaus.jettison.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -25,11 +33,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import sr.puc.server.ws.soap.a4.Actividad;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.text.Normalizer;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -69,6 +80,23 @@ public class UsuarioController {
     private MercadoPagoAdapter mercadoPagoAdapter;
     @Autowired
     private PrestadorService prestadorService;
+
+    //AFIP//
+    @Value("${app.afip.ws.endpoint}")
+    private String endpoint;
+    @Value("${app.afip.ws.dstdn}")
+    private String dstdn;
+    @Value("${app.afip.ws.p12file}")
+    private String p12file;
+    @Value("${app.afip.ws.signer}")
+    private String signer;
+    @Value("${app.afip.ws.p12pass}")
+    private String p12pass;
+    @Value("${app.afip.ws.ticketTime}")
+    private Long ticketTime;
+
+    private final Logger logger = LoggerFactory.getLogger("afip-log");
+    //AFIP//
 
     @GetMapping(path="/add") // Map ONLY GET Requests
     public @ResponseBody String addNewUser (@RequestParam String name
@@ -248,6 +276,108 @@ public class UsuarioController {
             map.put("msg","Ha surgido un error, pruebe nuevamente más tarde.");
         }
         return map;
+    }
+
+    @RequestMapping(value = "/validarPerfilAfip", method = RequestMethod.POST)
+    @ResponseBody
+    public Map<String,Object> validarPerfilAfip(HttpSession session,
+                                                @RequestParam(value = "id") Usuario usuario,
+                                                @RequestParam(value = "cuit") String cuit,
+                                                @RequestParam(value = "fecha_nac") @DateTimeFormat(pattern="dd/MM/yyyy") LocalDate fecha_nac,
+                                                @RequestParam(value = "sexo") Sexo sexo){
+        HashMap<String,Object> map = new HashMap<>();
+        try{
+            Long cuitL = Long.parseLong(cuit);
+            //boolean cuitUnique = prestadorService.cuitUnique(cuitL);
+            boolean cuitUnique = true;
+            if(!cuitUnique){
+                map.put("success", false);
+                map.put("msg","El CUIT ingresado ya existe.");
+                return map;
+            }
+
+            logger.info("Usuario quiere validar con AFIP. CUIT ingresada: {}",cuit);
+            AutenticadorConfig autConfig =
+                    new AutenticadorConfig(p12file, p12pass,
+                            signer, dstdn, AfipWs.PADRON_CUATRO.getText(), ticketTime, endpoint);
+            AfipHandler afip = new AfipHandler(AfipWs.PADRON_CUATRO,20389962237l, prestadorService, autConfig);
+            Persona personaAfip = afip.getPersona(cuitL);
+            if(personaAfip == null) {
+                logger.info("AFIP no encuentra persona con CUIT: {}",cuit);
+                map.put("success", false);
+                map.put("msg","AFIP no ha encontrado una persona con ese CUIT.");
+                return map;
+            }
+            String actividades = !personaAfip.getActividades().isEmpty()?personaAfip.getActividades().get(0).getDescripcionActividad():"Ninguna";
+            logger.info("Datos encontrados:"+System.lineSeparator()+"CUIT: {}."+System.lineSeparator()+"Nombre y apellido: {}."+System.lineSeparator()+"Fecha nacimiento: {}."+System.lineSeparator()+"Actividad: {}."+System.lineSeparator()+"Direccion: {}.",personaAfip.getIdPersona().toString(),personaAfip.getNombreCompleto(),personaAfip.getNacimiento().toString(),actividades,(personaAfip.getDomicilio().get(0)==null)?"Ninguno":personaAfip.getDomicilio().get(0).getDireccion());
+            if(!validarPersonaConAfip(personaAfip,usuario,cuitL,sexo,fecha_nac)) {
+                map.put("success", false);
+                map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados.\n" +
+                        "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
+                        "Cuit: "+personaAfip.getIdPersona().toString()+"\n"+
+                        "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
+                        "Sexo: "+personaAfip.getSexo().getName()+"\n" +
+                        "Actividad Principal: "+actividades+"\n"+
+                        "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
+            }else{
+                prestadorService.validarDatosAfip(usuario.getPrestador(),cuitL,fecha_nac,sexo);
+                map.put("success", true);
+                map.put("msg","El usuario ha sido validado con exito!.\n" +
+                        "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
+                        "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
+                        "Sexo: "+personaAfip.getSexo().getName()+"\n" +
+                        "Actividad Principal: "+actividades+"\n"+
+                        "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
+            }
+        }catch (Exception e){
+            map.put("success", false);
+            map.put("msg","Ha surgido un error, pruebe nuevamente más tarde");
+            e.printStackTrace();
+        }
+
+        return map;
+    }
+
+    private boolean validarPersonaConAfip(Persona personaAfip, Usuario usuario, Long cuit, Sexo sexo, LocalDate fechaNac) {
+        if(!normalizarTexto(personaAfip.getNombreCompleto()).equalsIgnoreCase(normalizarTexto(usuario.getApellido().trim() + " " +usuario.getNombre().trim()))) {
+            logger.error("ERROR: Nombre y apellido no coinciden. Ingresado: {}. Obtenido AFIP: {}",usuario.getApellido().trim() + " " +usuario.getNombre().trim(),personaAfip.getNombreCompleto());
+            return false;
+        }
+
+        if(!personaAfip.getNacimiento().equals(fechaNac)) {
+            logger.error("ERROR: Fecha nacimiento no coincide. Ingresado: {}. Obtenido AFIP: {}",fechaNac,personaAfip.getNacimiento().toString());
+            return false;
+        }
+
+        if(!sexo.equalsAfip(personaAfip.getSexo())) {
+            logger.error("ERROR: Sexo no coincide. Ingresado: {}. Obtenido AFIP: {}",sexo.getName(),personaAfip.getSexo().getName());
+            return false;
+        }
+
+        if(!actividadValida(personaAfip.getActividades())) {
+            logger.error("ERROR: Tipos de trabajo ingresados no coinciden con actividades obtenidas.");
+            return false;
+        }
+        logger.info("Todos los datos correctos. Validación aceptada.");
+        return true;
+    }
+
+    private String normalizarTexto(String s) {
+        s = Normalizer.normalize(s, Normalizer.Form.NFD);
+        s = s.replaceAll("[^\\p{ASCII}]", "");
+        s = s.replaceAll("[^-a-zA-Z0-9]", "");
+        s = s.replaceAll("[AEIOUaeiou]", "");
+        return s;
+    }
+
+    private boolean actividadValida(List<Actividad> actividades) {
+        Boolean valido = false;
+        for (Actividad a : actividades) {
+            if (prestadorService.getActividadesAfip().stream().anyMatch(af -> af.getDescripcion().trim().equalsIgnoreCase(a.getDescripcionActividad().trim()))) {
+                valido = true;
+            }
+        }
+        return valido;
     }
 
     @RequestMapping(value = "/crearPerfilTomador", method = RequestMethod.POST)

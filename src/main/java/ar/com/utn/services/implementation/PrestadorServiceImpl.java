@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -103,6 +104,16 @@ public class PrestadorServiceImpl implements PrestadorService {
             this.completeCredentials(credentials);
         }
         return  usuario;
+    }
+
+    @Override
+    @Transactional(rollbackFor={Exception.class})
+    public void validarDatosAfip(Prestador prestador, Long cuitL, LocalDate fecha_nac, Sexo sexo) {
+        prestador.setValidado(true);
+        prestador.setCuit(cuitL);
+        prestador.setNacimiento(fecha_nac);
+        prestador.setSexo(sexo);
+        prestadorRepository.save(prestador);
     }
 
 }

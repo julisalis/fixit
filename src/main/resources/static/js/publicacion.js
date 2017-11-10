@@ -40,7 +40,16 @@ $(function () {
     if( $("#urgencia").val()=="FECHA"){
         $("#fecha").attr("disabled",false);
     }
-    $('.datepicker').datepicker({
+
+    $(".datepicker").datepicker({
+        autoclose: true,
+        startDate: "+1d",
+        endDate: "+1y",
+        format: "dd/mm/yyyy",
+        language: "es"
+    });
+
+    /*$('.datepicker').datepicker({
         autoclose: true,
         dateFormat: "mm-dd-yy",
         maxDate: '+1Y',
@@ -48,8 +57,7 @@ $(function () {
         changeYear: true,
         showButtonPanel:true,
         minDate:firstAvailableDate(),
-        });
-    
+        });*/
 
 });
 

@@ -188,35 +188,43 @@
                 </div>
             </section>
 
-            <section th:if="${user.prestador != null && user.prestador?.validado}" id="afipProfile" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
+            <section id="afipProfile" sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')">
                 <div class="form-group mercado-pago afip">
                     <img src='/images/afip.png' alt="Image">
                 </div>
 
-                <div class="form-group">
-                    <label class="col-md-3 control-label">CUIT</label>
-                    <div class="col-md-6">
-                        <input type="text" th:value="${user.prestador.cuit}" disabled value="" id="afip_cuit" class="form-control input-md apiParam"/>
+                <section th:unless="${user.prestador.validado}">
+                    <div class="form-group submit-profile">
+                        <button class="submit button button-block btn btn-primary" id="validarAfip" th:onclick="${'modalValidarAfip('+(user.id)+')'}">Validar Perfil</button>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Razón Social</label>
-                    <div class="col-md-6">
-                        <input type="text" th:value="${user.apellido + ' ' + user.nombre}" disabled value="" id="afip_razon" class="form-control input-md apiParam"/>
+                </section>
+
+                <section th:if="${user.prestador.validado}">
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">CUIT</label>
+                        <div class="col-md-6">
+                            <input type="text" th:value="${user.prestador.cuit}" disabled value="" id="afip_cuit" class="form-control input-md apiParam"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Fecha Nacimiento</label>
-                    <div class="col-md-6">
-                        <input type="text" th:value="${user.prestador.nacimiento}" disabled value="" id="afip_fecha" class="form-control input-md apiParam"/>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Razón Social</label>
+                        <div class="col-md-6">
+                            <input type="text" th:value="${user.apellido + ' ' + user.nombre}" disabled value="" id="afip_razon" class="form-control input-md apiParam"/>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Sexo</label>
-                    <div class="col-md-6">
-                        <input type="text" th:value="${user.prestador.sexo}" disabled value="" id="afip_actividades" class="form-control input-md apiParam"/>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Fecha Nacimiento</label>
+                        <div class="col-md-6">
+                            <input type="text" th:value="${user.prestador.nacimiento}" disabled value="" id="afip_fecha" class="form-control input-md apiParam"/>
+                        </div>
                     </div>
-                </div>
+                    <div class="form-group">
+                        <label class="col-md-3 control-label">Sexo</label>
+                        <div class="col-md-6">
+                            <input type="text" th:value="${user.prestador.sexo}" disabled value="" id="afip_actividades" class="form-control input-md apiParam"/>
+                        </div>
+                    </div>
+                </section>
 
             </section>
 
@@ -228,12 +236,86 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
 <script>
+    $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+    $.fn.datepicker.defaults.language = "es";
+
     $("#tipos").select2();
 
     $("#localidad").load('/usuario/ajax/localidad', "provincia="+$("#provincia").val());
     $('#provincia').on('change', function() {
         $("#localidad").load('/usuario/ajax/localidad', "provincia="+$("#provincia").val());
     });
+    
+    function modalValidarAfip(userId) {
+        var $content = $('<div class="row" style="margin-left: 0;">' +
+            '            <div class="form-group">' +
+            '                <label class="col-sm-4 control-label">CUIT:</label>' +
+            '                <div class="col-sm-6">' +
+            '                   <input type="text" value="" id="validar_cuit" class="form-control input-md"/>' +
+            '                </div>' +
+            '                <label class="col-sm-4 control-label">Fecha de nacimiento:</label>' +
+            '                <div class="col-sm-6">' +
+            '                   <input type="text" value="" id="validar_fecha_nac" class="form-control input-md"/>' +
+            '                </div>' +
+            '                <label class="col-sm-4 control-label">Sexo:</label>' +
+            '                <div class="col-sm-6">' +
+            '                    <select id="validar_sexo" class="form-control">' +
+            '                       <option value="MASCULINO">Masculino</option>' +
+            '                       <option value="FEMENINO">Femenino</option>' +
+            '                    </select>' +
+            '                </div>' +
+            '            </div>' +
+            '        </div>');
+
+        BootstrapDialog.show({
+            title: 'Validar con AFIP',
+            message: $content,
+            buttons: [{
+                label: 'Aceptar',
+                action: function (dialog) {
+                    if($("#validar_cuit").val() == "" || $("#validar_fecha_nac").val() == ""){
+                        swal("Error", "Todos los campos son obligatorios.", "error");
+                        //dialog.preventDefault();
+                    }else{
+                        $.ajax({
+                            type: 'POST',
+                            url: '/usuario/validarPerfilAfip',
+                            data: {
+                                id: userId,
+                                cuit: $("#validar_cuit").val(),
+                                fecha_nac: $("#validar_fecha_nac").val(),
+                                sexo: $("#validar_sexo").val()
+                            },
+                            async: true,
+                            success: function(message){
+                                //$.LoadingOverlay("hide");
+                                if(message.success){
+                                    swal({
+                                        title: "Perfil validado!",
+                                        text: message.msg,
+                                        type: "success",
+                                    },function (e) {
+                                        redirect("/usuario/perfil");
+                                    });
+                                }else{
+                                    swal("Error", message.msg, "error");
+                                }
+                            }
+                        });
+                        //$.LoadingOverlay("show");
+                    }
+                }
+            }],
+            onshown: function(dialogRef){
+                $("#validar_sexo").select2();
+
+                $("#validar_fecha_nac").datepicker({
+                    autoclose: true,
+                    endDate: "-18y"
+                });
+            },
+        });
+    }
 
     function saveChanges(){
         //$.LoadingOverlay("show");
