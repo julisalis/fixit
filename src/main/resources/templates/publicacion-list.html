@@ -107,7 +107,7 @@
                                     <a th:href="'/contratar/detalle/'+${contratada.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                     <a th:if="${contratada.tomadorPuedeCalificar}" th:onclick="${'modalCalificar('+contratada.id+')'}" class="btn btn-primary tam-boton-100">Calificar</a>
                                     <a th:unless="${contratada.tomadorPuedeCalificar}" class="btn btn-primary tam-boton-100" disabled="disabled">Ya calificó</a>
-                                    <a href="#" class="btn btn-primary tam-boton-100">Código de Seguridad</a>
+                                    <a class="btn btn-primary tam-boton-100" th:onclick="${'modalCodigoSeguridad('+contratada.id+')'}" >Código de Seguridad</a>
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->
@@ -161,6 +161,67 @@
 <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 <script>
+    function modalCodigoSeguridad(publicacionId) {
+        var $content = $('<div class="row" style="margin-left: 0;">' +
+            '            <span style="padding-left:15px;padding-bottom:15px;display:block;">¿Cuando lo quiere obtener?</span>' +
+            '            <div class="form-group">' +
+            '                <label class="col-sm-4 control-label">Fecha:</label>' +
+            '                <div class="col-sm-6">' +
+            '                   <input type="text" value="" id="codigo_fecha" class="form-control input-md"/>' +
+            '                </div>' +
+            '            </div>' +
+            '        </span>');
+
+        BootstrapDialog.show({
+            title: 'Obtener codigo de seguridad',
+            message: $content,
+            buttons: [{
+                label: 'Aceptar',
+                action: function (dialog) {
+                    //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
+                    if($("#codigo_fecha").val() == "") {
+                        swal("Error", "Todos los campos son obligatorios.", "error");
+                    }else{
+                        $.ajax({
+                            type: 'POST',
+                            url: '/contratar/generarCodigoSeguridad',
+                            data: {
+                                publicacionId: publicacionId,
+                                fecha: $("#codigo_fecha").val()
+                            },
+                            async: true,
+                            success: function(message){
+                                $.LoadingOverlay("hide");
+                                if(message.success){
+                                    swal({
+                                        title: "Codigo de Seguridad",
+                                        text: message.msg,
+                                        type: "success",
+                                    },function (e) {
+                                        redirect("/publicacion/list");
+                                    });
+                                    //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
+                                }else{
+                                    swal("Error", message.msg, "error")
+                                }
+                            }
+                        });
+
+                        $.LoadingOverlay("show");
+                    }
+                }
+            }],
+            onshown: function(dialogRef){
+                $("#codigo_fecha").datepicker({
+                    autoclose: true,
+                    startDate: "+1d",
+                    format: "dd/mm/yyyy",
+                    language: "es"
+                });
+            },
+        });
+    }
+
     function modalCalificar(publicacionId) {
         var $content = $('<div class="row" style="margin-left: 0;">' +
             '            <div class="form-group">' +
