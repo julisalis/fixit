@@ -108,11 +108,24 @@
                             </fieldset>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="contratacion-contratacion col-md-4">
                         <div class="section quick-rules">
                             <h2>Contratación</h2>
                             <ul>
+                                <li>Fecha Contratación:<h5 class="modal-urgencia modal-fecha publicaciones"  th:text="${contratacion.fechaCreacion}"></h5> </li>
+                                <li>Forma de Pago:
+                                    <div th:switch="${contratacion.payMethod.toString()}" class="logo-pago">
+                                    <img th:case="${'CASH'}" src="/images/cash.png" onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="img-tipotrabajo">
+                                    <img th:case="${'CREDIT_CARD'}" src="/images/credit.png" onerror="this.src='/images/publicaciones/not-found.png'" alt="Image" class="img-tipotrabajo">
+                                    </div>
+                                </li>
 
+                                <div class="estrellas">
+                                    <li><span class="icon"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></span></li>
+                                </div>
+
+                                <li>Calificación Cliente:<h5 class="modal-urgencia modal-fecha publicaciones"  th:text="${contratacion.calificacionTomador}"></h5> </li>
+                                <li>Calificación Profesional:<h5 class="modal-urgencia modal-fecha publicaciones"  th:text="${contratacion.calificacionPrestador}"></h5> </li>
                             </ul>
                         </div>
                     </div>
