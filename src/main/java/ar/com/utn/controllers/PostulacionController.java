@@ -168,10 +168,11 @@ public class PostulacionController {
 
     @GetMapping(value="/detalle/{postulacionId}")
     public String detallePostulacion(@PathVariable Long postulacionId, WebRequest request, Model model) {
-        Postulacion mipostulacion = postulacionService.findById(postulacionId);
+       Boolean isTomador = currentSession.getActualRol().stream().anyMatch(o -> o.getAuthority().equalsIgnoreCase("TOMADOR"));
+       Postulacion mipostulacion = postulacionService.findById(postulacionId);
         Publicacion mipublicacion = publicacionService.findById(mipostulacion.getPublicacion().getId());
         if(mipostulacion!=null){
-            model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion),usuarioService.findByPrestador(mipostulacion.getPrestador())));
+            model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion),usuarioService.findByPrestador(mipostulacion.getPrestador()),isTomador));
             model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
             return "postulacion-detalle";
         }

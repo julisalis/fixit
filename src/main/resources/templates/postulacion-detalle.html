@@ -128,8 +128,8 @@
             </div>
 
             <h6 class="titulo-postulacion">Mensajes</h6>
-            <div class="job-ad-item no-margin-bottom">
-                <div th:each="mensaje: ${postulacion.mensajes}" sec:authorize="isAuthenticated()">
+            <div  th:if="${#lists.isEmpty(postulacion.mensajes)}"  sec:authorize="isAuthenticated()" class="job-ad-item no-margin-bottom">
+                <div th:each="mensaje: ${postulacion.mensajes}">
                     <div th:classappend="${mensaje.isMine} ? 'btm-right-in mine' : 'btm-left-in not-mine'" class="talk-bubble tri-right round border">
                         <div class="talktext">
                             <p th:text="${mensaje.mensaje}"></p>

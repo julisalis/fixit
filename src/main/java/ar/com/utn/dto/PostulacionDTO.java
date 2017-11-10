@@ -26,6 +26,7 @@ public class PostulacionDTO {
 
     private boolean prestadorPuedeCalificar = true;
 
+    //prestador
     public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario) {
         this.id = postulacion.getId();
         this.descripcion = postulacion.getDescripcion();
@@ -35,16 +36,31 @@ public class PostulacionDTO {
         this.comentarios = postulacion.getComentarios();
         this.estado = postulacion.getEstadoPostulacion();
         this.elegida = postulacion.getElegida();
-        this.mensajes = buildMensajes(postulacion.getMensajes());
         this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
         this.usuarioPrestador = new UsuarioDTO(usuario, true);
     }
 
-    private List<MensajeDTO> buildMensajes(List<Mensaje> mensajes) {
+    //generico
+    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario, Boolean isTomador) {
+        this.id = postulacion.getId();
+        this.descripcion = postulacion.getDescripcion();
+        this.presupAprox = postulacion.getPresupAprox();
+        this.currency = postulacion.getCurrency();
+        this.duracionAprox = postulacion.getDuracionAprox();
+        this.comentarios = postulacion.getComentarios();
+        this.estado = postulacion.getEstadoPostulacion();
+        this.elegida = postulacion.getElegida();
+        this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
+        this.usuarioPrestador = new UsuarioDTO(usuario, !isTomador);
+        this.mensajes = buildMensajes(postulacion.getMensajes(),isTomador);
+    }
+
+
+    private List<MensajeDTO> buildMensajes(List<Mensaje> mensajes, Boolean isTomador) {
         return mensajes.stream().map(mensaje ->
                 new MensajeDTO(mensaje.getMensaje(),
                         mensaje.getFecha(),
-                        !mensaje.getEnviaTomador())).collect(Collectors.toList());
+                        isTomador && mensaje.getEnviaTomador())).collect(Collectors.toList());
     }
 
     public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario, Contratacion contratacion) {
