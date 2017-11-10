@@ -82,11 +82,11 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
 
     @Override
     public String getDescription(JSONObject payment) throws JSONException {
-        return "La calificación se ha generado con éxito y su pago de  "
+        return "La calificación se ha generado con éxito.\nSu pago de  "
                 + payment.getJSONObject("response").getJSONObject("transaction_details").getString("total_paid_amount")
                 + " ARS, mediante su tarjeta "
                 +payment.getJSONObject("response").getString("payment_method_id").toUpperCase()
-                + " finalizada en "
+                + " **** "
                 +payment.getJSONObject("response").getJSONObject("card").getString("last_four_digits")
                 +" ya se acreditó en la cuenta del profesional.\nPara más información acceder a "
                 +payment.getJSONObject("response").getString("statement_descriptor");

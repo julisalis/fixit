@@ -15,6 +15,7 @@ import ar.com.utn.services.*;
 import ar.com.utn.utils.CurrentSession;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,6 +53,8 @@ public class ContratacionController {
     PaymentMPRepository paymentMPRepository;
     @Autowired
     private MoneyFlowService moneyFlowService;
+    @Value("${app.mercadopago.public_key}")
+    private String publicKey;
 
 
     @GetMapping(value = "/{postulacionId}")
@@ -68,8 +71,7 @@ public class ContratacionController {
                 return "redirect:/";
             }
             PostulacionDTO postulacionDTO = new PostulacionDTO(postulacion, getCover(postulacion.getPublicacion()), usuario);
-            model.addAttribute("MPPublicKey", postulacion.getPrestador().getMpPrestador().getPublicKey());
-
+            model.addAttribute("MPPublicKey", publicKey);
             model.addAttribute("postulacion", postulacionDTO);
             return "contratacion-postulacion";
         }
