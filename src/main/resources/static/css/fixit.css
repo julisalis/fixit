@@ -2494,6 +2494,20 @@ a:focus {
 .contratacion-contratacion .logo-pago {
     display: inline;
 }
+.mine .talktext p.message  {
+    font-weight: bold;
+    color: white;
+    font-size:  16px;
+}
+
+.not-mine .talktext p.message  {
+    font-weight: bold;
+    color: #3ac58f;
+    font-size: 16px;
+}
+.talktext p{
+    font-size: 11px;
+}
 
 .datos-personales h2 {
     margin-top: 65px;
@@ -2501,6 +2515,18 @@ a:focus {
 
 .datos-personales h5 {
     font-size: 14px;
+}
+
+.mine {
+    clear: both !important;
+}
+
+.not-mine {
+    clear: both !important;
+}
+
+textarea {
+    resize: none;
 }
 
 
