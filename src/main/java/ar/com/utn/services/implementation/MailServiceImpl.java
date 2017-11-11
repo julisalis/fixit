@@ -124,6 +124,29 @@ public class MailServiceImpl implements MailService {
         sendBasicMail("¡Trabajo finalizado con éxito!", dest, "email/calificacion-to-prestador",ctx);
     }
 
+    @Override
+    public void sendCodigoSeguridad(Contratacion contratacion, Publicacion publicacion, Usuario currentUser, Usuario profesional) {
+        Context ctx = new Context(new Locale("es","AR"));
+        ctx.setVariable("name", currentUser.getUsername());
+        ctx.setVariable("codigo", contratacion.getCodigoSeguridad());
+        ctx.setVariable("title", "Codigo de Seguridad");
+        String dest= currentUser.getEmail();
+        if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
+            dest =(environment.getProperty("mail.info"));
+        }
+        sendBasicMail("Código de seguridad", dest, "email/codigo-seguridad-tomador",ctx);
+
+        ctx = new Context(new Locale("es","AR"));
+        ctx.setVariable("name", profesional.getUsername());
+        ctx.setVariable("codigo", contratacion.getCodigoSeguridad());
+        ctx.setVariable("title", "Codigo de Seguridad");
+        dest = profesional.getEmail();
+        if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
+            dest =(environment.getProperty("mail.info"));
+        }
+        sendBasicMail("Código de seguridad", dest, "email/codigo-seguridad-prestador",ctx);
+    }
+
     public void sendBasicMail(String subject,String dest,String html,Context ctx) {
         ctx.setVariable("principal_url", environment.getProperty("application.url"));
         ctx.setVariable("facebook_url", environment.getProperty("facebook.url"));
