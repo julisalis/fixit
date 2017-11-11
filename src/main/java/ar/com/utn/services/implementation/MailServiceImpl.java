@@ -92,7 +92,7 @@ public class MailServiceImpl implements MailService {
             dest =(environment.getProperty("mail.info"));
         }
 
-        sendBasicMail("¡Tu postulación ha sido elegida!", dest, "email/postulacion-elegida",ctx);
+        sendBasicMail("FixIT - Tu postulación ha sido elegida", dest, "email/postulacion-elegida",ctx);
     }
 
     @Override
@@ -108,7 +108,7 @@ public class MailServiceImpl implements MailService {
             dest =(environment.getProperty("mail.info"));
         }
 
-        sendBasicMail("Nueva postulación", dest, "email/postulacion-nueva",ctx);
+        sendBasicMail("FixIT - Nueva postulación", dest, "email/postulacion-nueva",ctx);
     }
 
     @Override
@@ -121,7 +121,22 @@ public class MailServiceImpl implements MailService {
         if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
             dest =(environment.getProperty("mail.info"));
         }
-        sendBasicMail("¡Trabajo finalizado con éxito!", dest, "email/calificacion-to-prestador",ctx);
+        sendBasicMail("FixIT - Trabajo finalizado con éxito", dest, "email/calificacion-to-prestador",ctx);
+    }
+
+    @Override
+    public void sendConsultaPostulacion(Usuario usuarioOrigen, Usuario usuarioDestino, Postulacion postulacion, String message) {
+        final Context ctx = new Context(new Locale("es","AR"));
+        ctx.setVariable("name", usuarioDestino.getUsername());
+        ctx.setVariable("nameOrigen", usuarioOrigen.getUsername());
+        ctx.setVariable("message", message);
+        ctx.setVariable("title", "Nuevo Mensaje");
+        String email= usuarioDestino.getEmail();
+        if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
+            email =(environment.getProperty("mail.info"));
+        }
+        sendBasicMail("FixIT - Nuevo Mensaje", email, "email/nuevo-mensaje",ctx);
+
     }
 
     public void sendBasicMail(String subject,String dest,String html,Context ctx) {

@@ -31,7 +31,8 @@ public class MensajeController {
     private PostulacionService postulacionService;
     @Autowired
     private CurrentSession currentSession;
-
+    @Autowired
+    private UsuarioService usuarioService;
     @Autowired
     private MailService mailService;
 
@@ -39,11 +40,21 @@ public class MensajeController {
     @Transactional
     public @ResponseBody Map<String,Object> newMensaje(@RequestParam(value = "postulacionId") Long postulacionId,@RequestParam(value = "new-message") String message ) {
         HashMap<String,Object> map = new HashMap<>();
+
         Boolean enviaTomador = currentSession.getActualRol().stream().anyMatch(o -> o.getAuthority().equalsIgnoreCase("TOMADOR"));
         Postulacion postulacion = postulacionService.findById(postulacionId);
+
+        Usuario usuarioOrigen = currentSession.getUser();
+        Usuario usuarioDestino;
+        if(enviaTomador){
+            usuarioDestino = usuarioService.findByPrestador(postulacion.getPrestador());
+        }else{
+            usuarioDestino = usuarioService.findByTomador(postulacion.getPublicacion().getTomador());
+        }
+
         if(postulacion!=null && message!=null && !message.isEmpty()) {
             mensajeService.createMensaje(postulacion,message,enviaTomador);
-    //      mailService.sendConsulta(cliente,prof,publicacion,postulacion);
+            mailService.sendConsultaPostulacion(usuarioOrigen,usuarioDestino,postulacion,message);
             map.put("success", true);
         }else{
                 map.put("success", false);

@@ -22,4 +22,6 @@ public interface MailService {
     void sendPostulacionNuevaMail(Usuario cliente, Usuario prestador, Publicacion publicacion, Postulacion postulacion);
 
     void sendCalificacionMailToProfesional(Contratacion contratacion, Usuario usuario, Usuario prof);
+
+    void sendConsultaPostulacion(Usuario usuarioOrigen, Usuario usuarioDestino, Postulacion postulacion, String message);
 }

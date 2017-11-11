@@ -27,8 +27,9 @@ public class MensajeDTO{
         this.mensaje = mensaje;
     }
 
-    public LocalDateTime getFecha() {
-        return fecha;
+    public String getFecha() {
+
+        return fecha.toLocalDate().toString() +" "+ fecha.toLocalTime().toString();
     }
 
     public void setFecha(LocalDateTime fecha) {

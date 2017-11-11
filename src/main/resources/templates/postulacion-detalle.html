@@ -135,7 +135,8 @@
                 <div th:each="mensaje: ${postulacion.mensajes}">
                     <div th:classappend="${mensaje.getMine()} ? 'btm-right-in mine' : 'btm-left-in not-mine'" class="talk-bubble tri-right round border">
                         <div class="talktext">
-                            <p th:text="${mensaje.mensaje}"></p>
+                            <p th:text="${mensaje.fecha}"></p>
+                            <p th:text="${mensaje.mensaje}" class="message"></p>
                         </div>
                     </div>
                 </div>
@@ -144,7 +145,7 @@
                 <form id="message-form" th:action="@{/mensaje/new}">
                     <input type="hidden" id=postulacionId name="postulacionId" th:value="${postulacion.id}" data-validation="required"/>
                     <div class="col-md-10 col-md-offset-1 new-message-box form-inline">
-                        <textarea id="new-message" name="new-message" data-validation="required length" data-validation-length="max500" class="form-control"></textarea>
+                        <textarea rows="5" id="new-message" name="new-message" data-validation="required length" data-validation-length="max500" class="form-control"></textarea>
                         <button type="submit" class="btn btn-primary">Enviar</button>
                     </div>
                 </form>
