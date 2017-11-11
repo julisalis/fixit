@@ -1,5 +1,6 @@
 package ar.com.utn.services.implementation;
 
+import ar.com.utn.dto.PostulacionDTO;
 import ar.com.utn.form.PrestadorForm;
 import ar.com.utn.form.TomadorForm;
 import ar.com.utn.models.Contratacion;
@@ -97,7 +98,7 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Transactional(readOnly=true)
-    public void sendPostulacionNuevaMail(Usuario cliente, Usuario profesional, Postulacion postulacion) {
+    public void sendPostulacionNuevaMail(Usuario cliente, Usuario profesional, PostulacionDTO postulacion) {
         final Context ctx = new Context(new Locale("es","AR"));
         ctx.setVariable("name", cliente.getUsername());
         ctx.setVariable("profesionalName", profesional.getUsername());
@@ -105,7 +106,7 @@ public class MailServiceImpl implements MailService {
         ctx.setVariable("postulacion", postulacion);
         String link = urlBuilder.makeOfflineAbsolutePathLink("/publicacion/postulaciones/"+postulacion.getPublicacion().getId());
         ctx.setVariable("linkPostulaciones", link);
-        ctx.setVariable("title", "Postulación elegida");
+        ctx.setVariable("title", "Nueva postulación");
 
         String dest= cliente.getEmail();
         if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){

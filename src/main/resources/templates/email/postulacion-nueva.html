@@ -72,7 +72,7 @@
                     <p th:text="'Estimado '+${name}+','" style="padding: 20px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;">
 
                     </p>
-                    <p th:text="'Tienes una nueva postulación de '+${profesionalName}+' en la publicación '+${publicacion.getTitulo()}+'.A continuación se encuentra la información provista por el profesional, en caso de que cumpla con sus requisito podrá llevar a cabo la contratación del mismo. '" style="padding: 13px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;"/>
+                    <p th:text="'Tienes una nueva postulación de '+${profesionalName}+' en la publicación '+${publicacion.titulo}+'.A continuación se encuentra la información provista por el profesional, en caso de que cumpla con sus requisito podrá llevar a cabo la contratación del mismo. '" style="padding: 13px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;"/>
                 </td>
             </tr>
 
@@ -80,7 +80,12 @@
                 <td style="padding: 0;">
                     <table style="padding: 0; width: 78%; margin: 40px auto; text-align: center; background-color: #efeff0; border-spacing: 0;">
 
-
+                        <tr style="padding: 0;">
+                            <td style="padding: 0; width: 100%;">
+                                <h2 style="color:#231f20; font-size: 18px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; margin-bottom: 15px; padding: 0 30px; letter-spacing: -0.75px;" th:text="${publicacion.localidad.nombre+', '+publicacion.provincia.nombre}"/>
+                                <h2 style="color:#231f20; font-size: 18px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; margin-bottom: 15px; padding: 0 30px; letter-spacing: -0.75px;"th:text="${publicacion.titulo}" />
+                            </td>
+                        </tr>
 
                         <tr>
                             <td>
@@ -106,7 +111,7 @@
                                                                                 style="-webkit-margin-before: 0; -webkit-margin-after: 0; text-align: left; color: #231f20; font-weight: 700; font-size: 18px; margin: 0; letter-spacing: -0.2px; margin-top: 10px; margin-bottom: 10px;">
                                                                             Valor de la Visita:</h6>
                                                                         <h6
-                                                                                style="background-color: #231f20; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #fff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.getPresupAprox()}"/>
+                                                                                style="background-color: #231f20; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #fff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.presupAprox}"/>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -130,7 +135,7 @@
                                                                                 style="-webkit-margin-before: 0; -webkit-margin-after: 0; text-align: left; color: #231f20; font-weight: 700; font-size: 18px; margin: 0; letter-spacing: -0.2px; margin-top: 10px; margin-bottom: 10px;">
                                                                             Presupuesto del Trabajo:</h6>
                                                                         <h6
-                                                                                style="background-color: #231f20; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #fff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.}"/>
+                                                                                style="background-color: #231f20; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #fff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.presupTrabajo}"/>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -148,14 +153,13 @@
                             </td>
                         </tr>
 
-
-
                         <tr>
                             <td>
                                 <a style="margin: 15px auto 30px; width: 250px; color: #fff; font-weight: 400; border: 1px solid #f04e69; background-color: #f04e69; font-size: 25px; text-decoration: none; padding: 10px 6px; display: inline-block;"
                                    th:href="${linkPostulaciones}">Ver Postulación</a><br>
                             </td>
                         </tr>
+
                     </table>
                 </td>
             </tr>
