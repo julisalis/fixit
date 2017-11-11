@@ -3,6 +3,7 @@ package ar.com.utn.models;
 import ar.com.utn.mercadopago.PaymentMP;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,6 +19,11 @@ public class Contratacion extends PersistentEntity {
     private String paymentId;
     private Double calificacionTomador;
     private Double calificacionPrestador;
+
+    private LocalDate fechaCodigo;
+    private Long codigoSeguridad;
+    @Column(columnDefinition="boolean default false", nullable = false)
+    private Boolean codigoEnviado;
 
     @PrePersist
     protected void onCreate() {
@@ -92,5 +98,29 @@ public class Contratacion extends PersistentEntity {
 
     public void setCalificacionPrestador(Double calificacionPrestador) {
         this.calificacionPrestador = calificacionPrestador;
+    }
+
+    public LocalDate getFechaCodigo() {
+        return fechaCodigo;
+    }
+
+    public void setFechaCodigo(LocalDate fechaCodigo) {
+        this.fechaCodigo = fechaCodigo;
+    }
+
+    public Long getCodigoSeguridad() {
+        return codigoSeguridad;
+    }
+
+    public void setCodigoSeguridad(Long codigoSeguridad) {
+        this.codigoSeguridad = codigoSeguridad;
+    }
+
+    public Boolean getCodigoEnviado() {
+        return codigoEnviado;
+    }
+
+    public void setCodigoEnviado(Boolean codigoEnviado) {
+        this.codigoEnviado = codigoEnviado;
     }
 }

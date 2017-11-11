@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FixIT - Register</title>
+    <!--[if (gte mso 9)|(IE)]>
+    <style type="text/css">
+        table {border-collapse: collapse;}
+    </style>
+    <![endif]-->
+    <style type="text/css">
+        @-ms-viewport {
+            width: device-width;
+        }
+        html,body{
+            font-size:14px;
+        }
+        @media only screen and (max-width: 480px){
+            h1{
+                font-size:20px !important;
+            }
+        }
+    </style>
+</head>
+
+<body style="margin: 0; padding: 0; min-width: 100%; ">
+<center style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
+    <div style="max-width: 600px;">
+        <!--[if (gte mso 9)|(IE)]>
+        <table width="600" align="center" cellpadding="0" cellspacing="0" border="0">
+            <tr>
+                <td>
+        <![endif]-->
+        <table cellspacing="0" class="outer" align="center" style="background-color: #fff; border-spacing: 0; font-family: sans-serif; color: #000; Margin: 10px auto 30px; width: 100%; max-width: 600px; border-collapse:collapse;">
+
+
+
+            <tr cellspacing="0">
+                <td cellspacing="0" th:background="${images_url}+'/header-image.png'" bgcolor="#09183F" valign="top" style="width: 100%;border-spacing: 0; min-height: 248px; max-height: 248px; border-collapse:collapse; padding: 0; background-size: auto; background-position: 50%; ">
+                    <!--[if gte mso 9]>
+                    <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:120px;height:92px;"><v:fill type="tile" th:src="${images_url}+'/header-image.png'" color="#7bceeb" /><v:textbox inset="0,0,0,0">
+                    <![endif]-->
+                    <div>
+                        <table style="border-spacing: 0;" width="100%">
+                            <tr>
+                                <td th:background="${images_url}+'/logo-white.png'" style="border-bottom:1px solid rgba(255,255,255,0.5);background-repeat:no-repeat;background-position:13px 50%;background-size:contain;background-size:auto 80%;">
+                                    <p style="-webkit-margin-before: 0; -webkit-margin-after: 0; color: #fff; font-size: 12px; display: inline; text-align: right; float: right; padding: 10px 13px; margin-bottom: 0px;margin-top: 0px;">La solución que necesitas al alcance de un click</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <img style="padding-top:15px;width: 15%;" th:src="${images_url}+'/logo.png'">
+                                    <h1 style="color: #fff; line-height:40px; font-weight: normal; width: 80%; margin: 15px auto;" th:text="${title}">
+                                    </h1>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--[if gte mso 9]>
+                    </v:textbox>
+                    </v:rect>
+                    <![endif]-->
+                </td>
+            </tr>
+
+
+
+            <tr>
+                <td>
+                    <p th:text="'Estimado '+${name}+','" style="padding: 20px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;">
+
+                    </p>
+                    <p style="padding: 13px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;" th:text="'El codigo de seguridad es: '+${codigo}+'. El cliente se lo pedirá para comprobar su identidad.'">
+                        El tomador te ha calificado!
+                    </p>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="background-color: #efeff0; padding: 0px;">
+                    <table style="border-spacing: 0; margin: 0 auto; width: 95%; max-width: 540px;">
+                        <tr>
+                            <td style="padding: 0; text-align: center; font-size: 0;">
+                                <!--[if (gte mso 9)|(IE)]>
+                                <table width="100%">
+                                    <tr>
+                                        <td width="120" valign="top">
+                                <![endif]-->
+                                <div style="width: 100%; max-width: 120px; display: inline-block; vertical-align: top;">
+                                    <table style="border-spacing: 0; width: 100%; font-size: 14px; text-align: center;">
+                                        <tr>
+                                            <td style="padding: 0;">
+                                                <a th:href="${principal_url}" style="text-decoration: none; color: #a6a8ab; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; font-weight: 400; font-size: 9px; margin: 0; letter-spacing: -0.2px; line-height: 64px;">
+                                                    Copyright 2017 - FixIT
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!--[if (gte mso 9)|(IE)]>
+                                <table width="100%">
+                                    <tr>
+                                        <td width="300" valign="top">
+                                <![endif]-->
+                                <div style="width: 100%; max-width: 300px; display: inline-block; vertical-align: top;">
+                                    <table style="border-spacing: 0; width: 100%; font-size: 14px; text-align: left;">
+                                        <tr>
+                                            <td style="padding: 0;">
+                                                <h6 style="color: #a6a8ab; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; font-weight: 700; font-size: 12px; margin: 0; letter-spacing: -0.2px; padding-top: 10px; padding-bottom: 15px;">
+                                                    Seguinos
+                                                </h6>
+                                                <div style="text-align: center; letter-spacing: 10px; padding-bottom:10px;">
+                                                    <a th:href="${facebook_url}"><img th:src="${images_url}+'/social-facebook.png'"></a>
+                                                    <a th:href="${instagram_url}"><img th:src="${images_url}+'/social-instagram.png'"></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <!--[if (gte mso 9)|(IE)]>
+                                <table width="100%">
+                                    <tr>
+                                        <td width="120" valign="top">
+                                <![endif]-->
+                                <div style="width: 100%; max-width: 120px; display: inline-block; vertical-align: top;">
+                                    <table style="border-spacing: 0; width: 100%; font-size: 14px; text-align: center;">
+                                        <tr>
+                                            <td style="padding: 0;">
+                                                <a th:href="${terms_cond_url}" style="text-decoration: none; color: #a6a8ab; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; font-weight: 400; font-size: 9px; margin: 0; letter-spacing: -0.2px; line-height: 64px;">
+                                                    Términos y Condiciones
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!--[if (gte mso 9)|(IE)]>
+                                </td>
+                                </tr>
+                                </table>
+                                <![endif]-->
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+
+
+        </table>
+        <!--[if (gte mso 9)|(IE)]>
+        </td>
+        </tr>
+        </table>
+        <![endif]-->
+    </div>
+</center>
+</body>
+</html>

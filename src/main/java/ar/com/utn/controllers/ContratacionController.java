@@ -1,5 +1,6 @@
 package ar.com.utn.controllers;
 
+import ar.com.utn.configuration.ThreadPoolTaskSchedulerConfig;
 import ar.com.utn.dto.ContratacionDTO;
 import ar.com.utn.dto.PostulacionDTO;
 import ar.com.utn.dto.PublicacionDTO;
@@ -16,6 +17,8 @@ import ar.com.utn.utils.CurrentSession;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,8 +26,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 /**
@@ -53,6 +59,8 @@ public class ContratacionController {
     PaymentMPRepository paymentMPRepository;
     @Autowired
     private MoneyFlowService moneyFlowService;
+    @Autowired
+    private ThreadPoolTaskSchedulerConfig taskScheduler;
     @Value("${app.mercadopago.public_key}")
     private String publicKey;
 
@@ -100,6 +108,65 @@ public class ContratacionController {
 
         return contratarPostu(postulacion, PayMethod.CASH, null, null);
     }
+
+    @PreAuthorize("hasAuthority('TOMADOR')")
+    @PostMapping(value = "/generarCodigoSeguridad")
+    public @ResponseBody Map<String, Object> generarCodigoSeguridad(
+            @RequestParam(value = "publicacionId") Publicacion publicacion,
+            @RequestParam(value = "fecha") @DateTimeFormat(pattern="dd/MM/yyyy") LocalDate fecha,
+            Model model) {
+        HashMap<String, Object> map = new HashMap<>();
+
+        Postulacion postulacion = postulacionService.findByPublicacionAndEstadoPostulacion(publicacion,EstadoPostulacion.CONTRATADA);
+        Contratacion contratacion = contratacionService.findByPostulacion(postulacion);
+        if(fecha.isAfter(LocalDate.now())) {
+            contratacion.setFechaCodigo(fecha);
+            contratacionRepository.save(contratacion);
+            Usuario usuario = currentSession.getUser();
+            //System.CurrentTimeInMilis() es ahora. se le suman milisegundos. 1000 ms = 1 s.
+            taskScheduler.threadPoolTaskScheduler().schedule(new RunnableTask(contratacion,publicacion,usuario),new Date(System.currentTimeMillis()+(1000*60*5))); //Enviar codigo en 5 minutos
+            map.put("success", true);
+            map.put("msg", "Su codigo será enviado en 1 minuto.");
+        }else{
+            map.put("success", false);
+            map.put("msg", "La fecha tiene que ser posterior a hoy.");
+            return map;
+        }
+
+        return map;
+        //return contratarPostu(postulacion, PayMethod.CASH, null, null);
+    }
+
+    //MAIL PARA ENVIAR CODIGO DE SEGURIDAD
+    class RunnableTask implements Runnable{
+        private Contratacion contratacion;
+        private Publicacion publicacion;
+        private Usuario currentUser;
+
+        public RunnableTask(Contratacion contratacion, Publicacion publicacion, Usuario currentUser){
+            this.contratacion = contratacion;
+            this.publicacion = publicacion;
+            this.currentUser = currentUser;
+        }
+
+        @Override
+        public void run() {
+            generarCodigoYEnviar(contratacion, publicacion, currentUser);
+            System.out.println("Enviando mails de codigo de seguridad. Codigo: "+contratacion.getCodigoSeguridad());
+        }
+    }
+
+    private void generarCodigoYEnviar(Contratacion contratacion, Publicacion publicacion, Usuario currentUser) {
+        Long leftLimit = 1L;
+        Long rightLimit = 999999L;
+        Long generatedLong = leftLimit +  (long)(Math.random() * (rightLimit - leftLimit));
+        contratacion.setCodigoSeguridad(generatedLong);
+        Usuario prestador = usuarioService.findByPrestador(contratacion.getPostulacion().getPrestador());
+        mailService.sendCodigoSeguridad(contratacion, publicacion, currentUser, prestador);
+        contratacion.setCodigoEnviado(true);
+        contratacionRepository.save(contratacion);
+    }
+
 
     private PublicacionFotoForm getCover(Publicacion publicacion) {
         PublicacionPhoto publicacionPhoto = publicacionService.getCover(publicacion);

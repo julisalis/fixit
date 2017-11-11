@@ -24,4 +24,7 @@ public interface MailService {
     void sendCalificacionMailToProfesional(Contratacion contratacion, Usuario usuario, Usuario prof);
 
     void sendConsultaPostulacion(Usuario usuarioOrigen, Usuario usuarioDestino, Postulacion postulacion, String message);
+
+    void sendCodigoSeguridad(Contratacion contratacion, Publicacion publicacion, Usuario currentUser, Usuario profesional);
+
 }

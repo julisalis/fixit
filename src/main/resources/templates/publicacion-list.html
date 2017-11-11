@@ -163,7 +163,7 @@
 <script>
     function modalCodigoSeguridad(publicacionId) {
         var $content = $('<div class="row" style="margin-left: 0;">' +
-            '            <span style="padding-left:15px;padding-bottom:15px;display:block;">¿Cuando lo quiere obtener?</span>' +
+            '            <span style="padding-left:15px;padding-bottom:15px;display:block;">¿Qué día quiere recibir el codigo?</span>' +
             '            <div class="form-group">' +
             '                <label class="col-sm-4 control-label">Fecha:</label>' +
             '                <div class="col-sm-6">' +
@@ -204,6 +204,10 @@
                                 }else{
                                     swal("Error", message.msg, "error")
                                 }
+                            },
+                            error: function ( jqXHR, textStatus, errorThrown){
+                                $.LoadingOverlay("hide");
+                                swal("Error", "Ha surgido un error, intente de nuevo más tarde.", "error");
                             }
                         });
 
