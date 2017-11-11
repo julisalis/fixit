@@ -2376,8 +2376,13 @@ a:focus{
     width: 200px;
 }
 #contratacion .select-pay-method .col-md-6{
-    padding-top: 50px;
+    margin-top: 30px;
 }
+
+#contratacion .shadow-box{
+    border: none;
+}
+
 #contratacion .select-pay-method .col-md-6 p{
     margin-top: 10px;
     color: #3ac58f;
