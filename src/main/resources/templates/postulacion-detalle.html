@@ -48,6 +48,7 @@
                         <div class="ad-meta col-md-3 detalle-iconos">
                             <ul>
                                 <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${postulacion.publicacion.localidad.nombre}+', '+${postulacion.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
+                                <li><i class="fa fa-money" aria-hidden="true"></i> <small th:text="'Presup: ' + ${postulacion.presupTrabajo}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
                                 <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Visita: ' + ${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
                                 <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${postulacion.duracionAprox} + ' Horas'" class="btn-price-AR"></small>
                             </ul>

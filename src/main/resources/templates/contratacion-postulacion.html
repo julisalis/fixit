@@ -58,7 +58,8 @@
                             <span><strong th:text="${postulacion.descripcion}"></strong></span>
                             <span th:text="${postulacion.comentarios}"></span>
                             <div class="ad-meta">
-                                <div class="iconos-postulacion"><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Valor Visita: '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></div>
+                                <div class="iconos-postulacion"><i class="fa fa-money" aria-hidden="true"></i> <small th:text="'Presup. Aprox: '+${postulacion.presupTrabajo}+' '+${postulacion.currency}" class="btn-price-AR"></small></div>
+                                <div class="iconos-postulacion valor-a-cobrar"><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Valor Visita: '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></div>
                                 <div class="iconos-postulacion"><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="'Duración: '+${postulacion.duracionAprox}+ ' Horas'" class="btn-price-AR"></small></div>
                             </div>
                         </div>
@@ -149,7 +150,7 @@
                         </form>
                     </div>
 
-                    <p style="text-align: left;color: #b1afaf;font-size: 11px;">*No se efectuarán cargos sobre su tarjeta hasta que el trabajo finalice y ambas partes hayan confirmado. En caso de reclamos comunicarse mediante nuestro correo y estaremos dispuesto a ayudarlo.</p>
+                    <p style="text-align: left;color: #b1afaf;font-size: 11px;">*El monto a cobrar será el valor de la visita. No se efectuarán cargos sobre su tarjeta hasta que el trabajo finalice y ambas partes hayan confirmado. En caso de reclamos comunicarse mediante correo electrónico y estaremos dispuesto a ayudarlo.</p>
                     <section id="boton-regresar">
                         <div class="regresar">
                             <a class="regresar-postulaciones" href="#" id="return-payMethod">

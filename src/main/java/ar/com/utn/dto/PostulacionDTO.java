@@ -16,6 +16,7 @@ public class PostulacionDTO {
     private Long id;
     private String descripcion;
     private BigDecimal presupAprox;
+    private BigDecimal presupTrabajo;
     private Currency currency;
     private BigDecimal duracionAprox;
     private String comentarios;
@@ -36,6 +37,7 @@ public class PostulacionDTO {
         this.id = postulacion.getId();
         this.descripcion = postulacion.getDescripcion();
         this.presupAprox = postulacion.getPresupAprox();
+        this.presupTrabajo = postulacion.getPresupTrabajo();
         this.currency = postulacion.getCurrency();
         this.duracionAprox = postulacion.getDuracionAprox();
         this.comentarios = postulacion.getComentarios();
@@ -56,6 +58,7 @@ public class PostulacionDTO {
         this.id = postulacion.getId();
         this.descripcion = postulacion.getDescripcion();
         this.presupAprox = postulacion.getPresupAprox();
+        this.presupTrabajo = postulacion.getPresupTrabajo();
         this.currency = postulacion.getCurrency();
         this.duracionAprox = postulacion.getDuracionAprox();
         this.comentarios = postulacion.getComentarios();
@@ -194,6 +197,14 @@ public class PostulacionDTO {
 
     public void setCalificacionPrestador(Double calificacionPrestador) {
         this.calificacionPrestador = calificacionPrestador;
+    }
+
+    public BigDecimal getPresupTrabajo() {
+        return presupTrabajo;
+    }
+
+    public void setPresupTrabajo(BigDecimal presupTrabajo) {
+        this.presupTrabajo = presupTrabajo;
     }
 }
 

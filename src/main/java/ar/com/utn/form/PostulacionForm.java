@@ -23,6 +23,8 @@ public class PostulacionForm {
     @NotNull
     private BigDecimal presupAprox;
     @NotNull
+    private BigDecimal presupTrabajo;
+    @NotNull
     private String currencyCode;
     @NotNull
     private BigDecimal duracionAprox;
@@ -34,6 +36,7 @@ public class PostulacionForm {
     public PostulacionForm(Postulacion postulacion) {
         this.descripcion = postulacion.getDescripcion();
         this.presupAprox = postulacion.getPresupAprox();
+        this.presupTrabajo = postulacion.getPresupTrabajo();
         this.currencyCode = postulacion.getCurrency().getCurrencyCode();
         this.duracionAprox = postulacion.getDuracionAprox();
         this.comentarios = postulacion.getComentarios();
@@ -86,5 +89,13 @@ public class PostulacionForm {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public BigDecimal getPresupTrabajo() {
+        return presupTrabajo;
+    }
+
+    public void setPresupTrabajo(BigDecimal presupTrabajo) {
+        this.presupTrabajo = presupTrabajo;
     }
 }
