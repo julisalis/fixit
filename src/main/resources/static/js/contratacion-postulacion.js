@@ -78,7 +78,7 @@ function callbackSuccessCreditCard(){
             type: "success",
             showCancelButton: true,
             closeOnConfirm: false,
-            showLoaderOnConfirm: false
+            showLoaderOnConfirm: true
         },
         function(){
             setTimeout(function(){
@@ -108,7 +108,6 @@ function contratarCash() {
         },
         async: true,
         success: function(message){
-            $.LoadingOverlay("hide");
             if(message.success){
                 swal({
                     title: "Postulación contratada!",
@@ -122,7 +121,6 @@ function contratarCash() {
             }
         }
     });
-    $.LoadingOverlay("show");
 }
 
 function contratar() {
@@ -135,7 +133,6 @@ function contratar() {
         data: data,
         async: true,
         success: function(message){
-            $.LoadingOverlay("hide");
             if(message.success){
                 swal({
                     title: "Postulación contratada!",
@@ -149,7 +146,6 @@ function contratar() {
             }
         }
     });
-    $.LoadingOverlay("show");
 }
 function extractCardForm(data){
     data.creditCardPayed = true;
