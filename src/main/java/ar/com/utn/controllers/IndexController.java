@@ -8,8 +8,11 @@ import ar.com.utn.repositories.implementation.PublicacionSearch;
 import ar.com.utn.services.PublicacionService;
 import ar.com.utn.services.UsuarioService;
 import ar.com.utn.utils.CurrentSession;
+import jdk.management.resource.ResourceRequestDeniedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ResourceNotFoundException;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -61,4 +64,8 @@ public class IndexController {
         }else return null;
     }
 
+    @RequestMapping(value="/pageNotFound",method=RequestMethod.GET)
+    public String pageNotFound(){
+        return "404-not-found";
+    }
 }
