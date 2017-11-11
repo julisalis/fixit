@@ -126,7 +126,6 @@ import java.util.stream.Collectors;
                 validarTelefono(prestadorForm.getTelefono());
                 boolean userUnique = usuarioService.usernameUnique(prestadorForm.getUsername());
                 boolean mailUnique = usuarioService.emailUnique(prestadorForm.getEmail());
-                boolean cuitUnique = prestadorService.cuitUnique(prestadorForm.getCuit());
                 if(!userUnique){
                     result.rejectValue("username","username.repeat","El nombre de usuario ingresado ya existe");
                 }
@@ -137,11 +136,12 @@ import java.util.stream.Collectors;
                 if(prestadorForm.getValidar()) {
                     if(prestadorForm.getCuit()==null || prestadorForm.getNacimiento() == null || prestadorForm.getSexo() == null) {
                         result.rejectValue("validar","validar.campos", "Todos los campos obligatorios");
-                    }
-                }
+                    } else {
 
-                if (prestadorForm.getCuit()!=null && !cuitUnique){
-                    result.rejectValue("cuit","cuit.repeat","El cuit ingresado ya existe");
+                        if (!prestadorService.cuitUnique(prestadorForm.getCuit())) {
+                            result.rejectValue("cuit", "cuit.repeat", "El cuit ingresado ya existe");
+                        }
+                    }
                 }
 
                 if(!result.hasErrors()){

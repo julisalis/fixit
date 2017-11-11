@@ -94,10 +94,11 @@
 
                                         </div>
 
-                                            <div class="ad-meta detalle-iconos">
+                                            <div class="ad-meta">
                                                 <ul>
                                                     <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${publicacion.localidad.nombre}+', '+${publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
-                                                    <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
+                                                    <li><i class="fa fa-money" aria-hidden="true"></i> <small th:text="'Presup: ' +${postulacion.presupTrabajo}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
+                                                    <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Visita: ' + ${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
                                                     <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${postulacion.duracionAprox} + ' Horas'" class="btn-price-AR"></small>
                                                 </ul>
                                             </div>

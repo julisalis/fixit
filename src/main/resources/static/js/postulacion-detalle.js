@@ -24,12 +24,11 @@ function enviarMensaje(form,e){
             showCancelButton: true,
             confirmButtonText: "Enviar",
             closeOnConfirm: false,
+            showLoaderOnConfirm: true
         },
         function(){
-            $.LoadingOverlay("show");
             $.post(form.attr('action'),form.serialize())
                 .done(function( data ) {
-                    $.LoadingOverlay("hide");
                     if(data.success){
                         swal({
                             title: "Enviado",
@@ -43,7 +42,6 @@ function enviarMensaje(form,e){
                     }
                 })
                 .fail(function () {
-                    $.LoadingOverlay("hide");
                     swal("Error", "No ha sido posible enviar el mensaje", "error");
                 });
 

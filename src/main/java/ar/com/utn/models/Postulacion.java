@@ -17,6 +17,7 @@ public class Postulacion extends PersistentEntity {
     @Type(type="text")
     private String descripcion;
     private BigDecimal presupAprox;
+    private BigDecimal presupTrabajo;
     private Currency currency;
     private BigDecimal duracionAprox;
     //private String recursos;
@@ -45,6 +46,7 @@ public class Postulacion extends PersistentEntity {
     public Postulacion(PostulacionForm postulacionForm, Prestador prestador, Publicacion publicacion) {
         this.descripcion = postulacionForm.getDescripcion();
         this.presupAprox = postulacionForm.getPresupAprox();
+        this.presupTrabajo = postulacionForm.getPresupTrabajo();
         this.currency = Currency.getInstance(postulacionForm.getCurrencyCode())!=null? Currency.getInstance(postulacionForm.getCurrencyCode()) : Currency.getInstance("ARS") ;
         this.duracionAprox = postulacionForm.getDuracionAprox();
         this.publicacion = publicacion;
@@ -55,6 +57,7 @@ public class Postulacion extends PersistentEntity {
     public void update(PostulacionForm postulacionForm) {
         this.descripcion = postulacionForm.getDescripcion();
         this.presupAprox = postulacionForm.getPresupAprox();
+        this.presupTrabajo = postulacionForm.getPresupTrabajo();
         this.currency = Currency.getInstance(postulacionForm.getCurrencyCode())!=null? Currency.getInstance(postulacionForm.getCurrencyCode()) : Currency.getInstance("ARS") ;
         this.duracionAprox = postulacionForm.getDuracionAprox();
         this.comentarios = postulacionForm.getComentarios();
@@ -138,5 +141,13 @@ public class Postulacion extends PersistentEntity {
 
     public void setMensajes(List<Mensaje> mensajes) {
         this.mensajes = mensajes;
+    }
+
+    public BigDecimal getPresupTrabajo() {
+        return presupTrabajo;
+    }
+
+    public void setPresupTrabajo(BigDecimal presupTrabajo) {
+        this.presupTrabajo = presupTrabajo;
     }
 }
