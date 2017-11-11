@@ -20,7 +20,7 @@ public class PrestadorDTO {
         this.validado = prestador.getValidado();
         this.postulaciones = prestador.getPostulaciones();
         this.mpPrestador = prestador.getMpPrestador();
-        this.cantContrataciones = prestador.getPostulaciones().stream().filter(postulacion -> postulacion.getEstadoPostulacion() == EstadoPostulacion.CONTRATADA).collect(Collectors.toList()).size();
+        this.cantContrataciones = prestador.getPostulaciones().stream().filter(postulacion -> (postulacion.getEstadoPostulacion() == EstadoPostulacion.CONTRATADA) || (postulacion.getEstadoPostulacion() == EstadoPostulacion.FINALIZADA)).collect(Collectors.toList()).size();
     }
 
     public PrestadorDTO() {

@@ -3,6 +3,7 @@ package ar.com.utn.dto;
 import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.models.*;
 import ar.com.utn.services.PublicacionService;
+import ar.com.utn.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
@@ -28,6 +29,8 @@ public class PostulacionDTO {
 
     private Contratacion contratacion;
 
+    private Double calificacionPrestador;
+
     //prestador
     public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario) {
         this.id = postulacion.getId();
@@ -40,6 +43,12 @@ public class PostulacionDTO {
         this.elegida = postulacion.getElegida();
         this.publicacion = new PublicacionDTO(postulacion.getPublicacion(), primaryImage);
         this.usuarioPrestador = new UsuarioDTO(usuario, true);
+    }
+
+    //calificacion
+    public PostulacionDTO(Postulacion postulacion, PublicacionFotoForm primaryImage, Usuario usuario, Double calificacion) {
+        this(postulacion, primaryImage, usuario);
+        this.calificacionPrestador = calificacion;
     }
 
     //generico
@@ -177,6 +186,14 @@ public class PostulacionDTO {
 
     public void setContratacion(Contratacion contratacion) {
         this.contratacion = contratacion;
+    }
+
+    public Double getCalificacionPrestador() {
+        return calificacionPrestador;
+    }
+
+    public void setCalificacionPrestador(Double calificacionPrestador) {
+        this.calificacionPrestador = calificacionPrestador;
     }
 }
 

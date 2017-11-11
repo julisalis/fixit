@@ -144,7 +144,7 @@
                                     <div class="tipo-trabajo-postulacion">
                                         <img th:src="@{/images/}+${finalizada.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${finalizada.tipoTrabajo.nombre}">asdasd</span>
-                                    <a href="#" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                    <a th:href="'/contratar/detalle/'+${finalizada.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                     <!--<a href="#" class="btn btn-primary tam-boton-100">Calificar</a>-->
                                 </div>
                             </div><!-- item-info -->

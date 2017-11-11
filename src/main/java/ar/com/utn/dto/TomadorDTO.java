@@ -19,13 +19,13 @@ public class TomadorDTO {
 
     public TomadorDTO(Tomador tomador) {
         this.publicaciones = tomador.getPublicaciones();
-        this.cantContrataciones = tomador.getPublicaciones().stream().filter(publicacion -> publicacion.getEstadoPublicacion() == EstadoPublicacion.CONTRATADA).collect(Collectors.toList()).size();
+        this.cantContrataciones = tomador.getPublicaciones().stream().filter(publicacion -> (publicacion.getEstadoPublicacion() == EstadoPublicacion.CONTRATADA) || (publicacion.getEstadoPublicacion() == EstadoPublicacion.FINALIZADA)).collect(Collectors.toList()).size();
         this.cantPublicaciones = tomador.getPublicaciones().size();
     }
 
     public TomadorDTO(Usuario usuario) {
         this.publicaciones = usuario.getTomador().getPublicaciones();
-        this.cantContrataciones = usuario.getTomador().getPublicaciones().stream().filter(publicacion -> publicacion.getEstadoPublicacion() == EstadoPublicacion.CONTRATADA).collect(Collectors.toList()).size();
+        this.cantContrataciones = usuario.getTomador().getPublicaciones().stream().filter(publicacion -> (publicacion.getEstadoPublicacion() == EstadoPublicacion.CONTRATADA) || (publicacion.getEstadoPublicacion() == EstadoPublicacion.FINALIZADA)).collect(Collectors.toList()).size();
         this.cantPublicaciones = usuario.getTomador().getPublicaciones().size();
     }
 

@@ -19,7 +19,7 @@
                     <form id="postulacion-data"  th:action="@{/postulacion/}+${form_action}" th:object="${postulacion}" method="post" role="form">
                         <input type="hidden" th:field="*{id}" class="apiParam">
                         <div class="form-group col-md-8 price">
-                            <label for="presupAprox">Presupuesto Aproximado *</label>
+                            <label for="presupAprox">Valor de la Visita *</label>
                             <input type="number" th:field="*{presupAprox}"
                                    id="presupAprox"
                                    class="form-control input-md apiParam"
@@ -29,7 +29,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-8">
-                            <label for="duracionAprox">Duración Aproximada *</label>
+                            <label for="duracionAprox">Duración Aproximada del Trabajo *</label>
                             <div class="input-group">
                                 <input type="number" th:field="*{duracionAprox}"
                                        id="duracionAprox"

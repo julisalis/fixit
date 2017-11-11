@@ -25,6 +25,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
@@ -57,6 +58,15 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
     @Autowired
     private TelefonoRepository telefonoRepository;
 
+    @Autowired
+    private ContratacionRepository contratacionRepository;
+
+    @Autowired
+    private PostulacionRepository postulacionRepository;
+
+    @Autowired
+    private PublicacionRepository publicacionRepository;
+
     //@Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -86,6 +96,29 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
     @Override
     public Usuario findByTomador(Tomador tomador) {
         return usuarioRepository.findByTomador(tomador);
+    }
+
+    @Override
+    public Double calcularCalificacionPromedio(Prestador prestador) {
+        List<EstadoPostulacion> e = new ArrayList<>();
+        e.add(EstadoPostulacion.CONTRATADA);
+        e.add(EstadoPostulacion.FINALIZADA);
+        List<Postulacion> postulaciones = postulacionRepository.findByPrestadorAndEstadoPostulacionIsIn(prestador, e);
+        List<Contratacion> contrataciones = contratacionRepository.findAllByPostulacionIsInAndCalificacionPrestadorNotNull(postulaciones);
+        Double calificacion = contrataciones.stream().mapToDouble(value -> value.getCalificacionPrestador()).average().orElse(0);
+        return  calificacion;
+    }
+
+    @Override
+    public Double calcularCalificacionPromedio(Tomador tomador) {
+        List<EstadoPostulacion> e = new ArrayList<>();
+        e.add(EstadoPostulacion.CONTRATADA);
+        e.add(EstadoPostulacion.FINALIZADA);
+        List<Publicacion> publicaciones = publicacionRepository.findByTomador(tomador);
+        List<Postulacion> postulaciones = postulacionRepository.findByPublicacionIsInAndEstadoPostulacionIsIn(publicaciones, e);
+        List<Contratacion> contrataciones = contratacionRepository.findAllByPostulacionIsInAndCalificacionTomadorNotNull(postulaciones);
+        Double calificacion = contrataciones.stream().mapToDouble(value -> value.getCalificacionTomador()).average().orElse(0);
+        return  calificacion;
     }
 
     /*@Override

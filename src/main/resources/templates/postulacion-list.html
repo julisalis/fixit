@@ -49,7 +49,7 @@
                                     <div class="ad-meta">
                                         <ul>
                                             <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${nueva.publicacion.localidad.nombre}+', '+${nueva.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Desde '+${nueva.presupAprox}+' '+${nueva.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="${nueva.presupAprox}+' '+${nueva.currency}" class="btn-price-AR"></small></li>
                                             <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${nueva.duracionAprox} + ' Horas'" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
@@ -92,7 +92,7 @@
                                     <div class="ad-meta">
                                         <ul>
                                             <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${contratada.publicacion.localidad.nombre}+', '+${contratada.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${contratada.presupAprox}+' '+${contratada.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="${contratada.presupAprox}+' '+${contratada.currency}" class="btn-price-AR"></small></li>
                                             <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${contratada.duracionAprox}+ ' Horas'" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
@@ -133,7 +133,7 @@
                                     <div class="ad-meta">
                                         <ul>
                                             <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${finalizada.publicacion.localidad.nombre}+', '+${finalizada.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${finalizada.presupAprox}+' '+${finalizada.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="${finalizada.presupAprox}+' '+${finalizada.currency}" class="btn-price-AR"></small></li>
                                             <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${finalizada.duracionAprox}" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
@@ -144,7 +144,7 @@
                                         <img th:src="@{/images/}+${finalizada.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${finalizada.publicacion.tipoTrabajo.nombre}">asdasd</span>
                                     </div>
-                                    <a th:href="'/postulacion/detalle/'+${finalizada.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                    <a th:href="'/contratar/detalle/'+${finalizada.publicacion.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->
@@ -172,7 +172,7 @@
                                     <div class="ad-meta">
                                         <ul>
                                             <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${rechazada.publicacion.localidad.nombre}+', '+${rechazada.publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
-                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Hasta '+${rechazada.presupAprox}+' '+${rechazada.currency}" class="btn-price-AR"></small></li>
+                                            <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="${rechazada.presupAprox}+' '+${rechazada.currency}" class="btn-price-AR"></small></li>
                                             <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${rechazada.duracionAprox}" class="btn-price-AR"></small>
                                         </ul>
                                     </div><!-- ad-meta -->
@@ -183,7 +183,6 @@
                                         <img th:src="@{/images/}+${rechazada.publicacion.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${rechazada.publicacion.tipoTrabajo.nombre}">asdasd</span>
                                     </div>
-                                    <a  th:href="'/postulacion/detalle/'+${rechazada.id}"  class="btn btn-primary tam-boton-100">Ver Detalle</a>
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->

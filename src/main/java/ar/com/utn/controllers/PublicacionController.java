@@ -209,7 +209,7 @@ public class PublicacionController {
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
         if(mipublicacion!=null){
             List<Postulacion> postulaciones = postulacionService.findByPublicacion(mipublicacion);
-            List<PostulacionDTO> postulacionDTOS = postulaciones.stream().map(postulacion -> new PostulacionDTO(postulacion, getCover(publicacionService.findById(postulacion.getPublicacion().getId())), usuarioService.findByPrestador(postulacion.getPrestador()))).collect(Collectors.toList());
+            List<PostulacionDTO> postulacionDTOS = postulaciones.stream().map(postulacion -> new PostulacionDTO(postulacion, getCover(publicacionService.findById(postulacion.getPublicacion().getId())), usuarioService.findByPrestador(postulacion.getPrestador()), usuarioService.calcularCalificacionPromedio(postulacion.getPrestador()))).collect(Collectors.toList());
             model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
             model.addAttribute("postulaciones",postulacionDTOS);
             return "publicacion-postulaciones";

@@ -23,7 +23,7 @@ public class Contratacion extends PersistentEntity {
     private LocalDate fechaCodigo;
     private Long codigoSeguridad;
     @Column(columnDefinition="boolean default false", nullable = false)
-    private Boolean codigoEnviado;
+    private Boolean codigoEnviado = false;
 
     @PrePersist
     protected void onCreate() {

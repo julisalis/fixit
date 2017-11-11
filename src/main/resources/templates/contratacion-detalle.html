@@ -97,7 +97,7 @@
                                             <div class="ad-meta detalle-iconos">
                                                 <ul>
                                                     <li><i class="fa fa-map-marker" aria-hidden="true"></i> <small th:text="${publicacion.localidad.nombre}+', '+${publicacion.provincia.nombre}" class="btn-price-AR"></small></li>
-                                                    <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Desde '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
+                                                    <li><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></li>
                                                     <li><i class="fa fa-clock-o" aria-hidden="true"></i><small th:text="${postulacion.duracionAprox} + ' Horas'" class="btn-price-AR"></small>
                                                 </ul>
                                             </div>
@@ -124,9 +124,34 @@
                                     <li><span class="icon"><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i></span></li>
                                 </div>
 
-                                <li>Calificación Cliente:<h5 class="modal-urgencia modal-fecha publicaciones"  th:text="${contratacion.calificacionTomador}"></h5> </li>
-                                <li>Calificación Profesional:<h5 class="modal-urgencia modal-fecha publicaciones"  th:text="${contratacion.calificacionPrestador}"></h5> </li>
+                                <li>Calificación Cliente:
+                                    <h5 th:if="${contratacion.calificacionTomador == null}" class="modal-urgencia modal-fecha publicaciones">No calificó</h5>
+                                    <h5 th:if="${contratacion.calificacionTomador != null}" class="modal-urgencia modal-fecha publicaciones"  th:text="${contratacion.calificacionTomador}"></h5>
+                                </li>
+                                <li>Calificación Profesional:
+                                    <h5 th:if="${contratacion.calificacionPrestador == null}" class="modal-urgencia modal-fecha publicaciones">No calificó</h5>
+                                    <h5 th:if="${contratacion.calificacionPrestador != null}" class="modal-urgencia modal-fecha publicaciones"  th:text="${contratacion.calificacionPrestador}"></h5>
+                                </li>
                             </ul>
+
+                            <div class="datos-personales">
+                                <h2>DATOS PERSONALES</h2>
+                                <ul>
+                                    <li><i class="fa fa-user-circle" aria-hidden="true"></i>
+                                        <h5 class="modal-urgencia modal-fecha publicaciones"  th:text="${usuario.nombre + ' ' + usuario.apellido}"></h5>
+                                    </li>
+
+                                    <li><i class="fa fa-phone" aria-hidden="true"></i>
+                                        <h5 class="modal-urgencia modal-fecha publicaciones"  th:text="${'+54 ' + usuario.telefono.codArea + ' ' + usuario.telefono.telefono}"></h5>
+                                    </li>
+
+                                    <li><i class="fa fa-envelope-o" aria-hidden="true"></i>
+                                        <h5 class="modal-urgencia modal-fecha publicaciones"  th:text="${usuario.email}"></h5>
+                                    </li>
+
+
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

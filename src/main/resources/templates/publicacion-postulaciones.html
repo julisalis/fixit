@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="calificacion-user">
                                         <i class="fa fa-star" aria-hidden="true"></i>
-                                        <span th:text="${postulacion.usuarioPrestador.calificacionPromedio}"></span>
+                                        <span th:text="${postulacion.calificacionPrestador}"></span>
                                     </div>
                                     <div class="historia-prestador">
                                         <span th:text="'Trabajos Realizados: '+${postulacion.usuarioPrestador.prestador.cantContrataciones}"></span>
@@ -54,7 +54,7 @@
                                     </p>
                                     <span th:text="${postulacion.comentarios}"></span>
                                     <div class="ad-meta">
-                                        <div class="iconos-postulacion"><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Desde '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></div>
+                                        <div class="iconos-postulacion"><i class="fa fa-credit-card" aria-hidden="true"></i> <small th:text="'Valor Visita '+${postulacion.presupAprox}+' '+${postulacion.currency}" class="btn-price-AR"></small></div>
                                         <div class="iconos-postulacion"><i class="fa fa-calendar" aria-hidden="true"></i><small th:text="'Duración: '+${postulacion.duracionAprox}+ ' Horas'" class="btn-price-AR"></small></div>
                                     </div><!-- ad-meta -->
                                 </div><!-- ad-info -->

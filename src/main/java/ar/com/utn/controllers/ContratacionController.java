@@ -4,6 +4,7 @@ import ar.com.utn.configuration.ThreadPoolTaskSchedulerConfig;
 import ar.com.utn.dto.ContratacionDTO;
 import ar.com.utn.dto.PostulacionDTO;
 import ar.com.utn.dto.PublicacionDTO;
+import ar.com.utn.dto.UsuarioDTO;
 import ar.com.utn.exception.MercadoPagoException;
 import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.mercadopago.MercadoPagoApi;
@@ -14,6 +15,7 @@ import ar.com.utn.models.*;
 import ar.com.utn.repositories.ContratacionRepository;
 import ar.com.utn.services.*;
 import ar.com.utn.utils.CurrentSession;
+import javafx.geometry.Pos;
 import org.codehaus.jettison.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,10 +29,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -321,16 +320,27 @@ public class ContratacionController {
     @GetMapping(value="/detalle/{publicacionId}")
     public String detalleContratacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
-        Postulacion mipostulacion = postulacionService.findByPublicacionAndEstadoPostulacion(mipublicacion, EstadoPostulacion.CONTRATADA);
+        List<Postulacion> postulaciones = postulacionService.findByPublicacion(mipublicacion);
+        if (postulaciones != null) {
+            Postulacion mipostulacion = postulaciones.stream().filter(postulacion -> postulacion.getEstadoPostulacion() == EstadoPostulacion.CONTRATADA || postulacion.getEstadoPostulacion() == EstadoPostulacion.FINALIZADA).collect(Collectors.toList()).get(0);
 
-        if(mipostulacion.getEstadoPostulacion().equals(EstadoPostulacion.CONTRATADA)){
-            Contratacion contratacion = contratacionService.findByPostulacion(mipostulacion);
-            if(contratacion!=null) {
-                model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion),usuarioService.findByPrestador(mipostulacion.getPrestador())));
-                model.addAttribute("publicacion",new PublicacionDTO(mipublicacion,getCover(mipublicacion)));
-                model.addAttribute("contratacion",new ContratacionDTO(contratacion));
-                return "contratacion-detalle";
+            Boolean usuarioEsPrestador = currentSession.getActualRol().stream().anyMatch(o -> o.getAuthority().equalsIgnoreCase("PRESTADOR"));
+            UsuarioDTO usuario;
+
+            if (!usuarioEsPrestador) {
+                usuario = new UsuarioDTO(usuarioService.findByPrestador(mipostulacion.getPrestador()), true);
+            } else {
+                usuario = new UsuarioDTO(usuarioService.findByTomador(mipublicacion.getTomador()), false);
             }
+
+                Contratacion contratacion = contratacionService.findByPostulacion(mipostulacion);
+                if (contratacion != null) {
+                    model.addAttribute("postulacion", new PostulacionDTO(mipostulacion, getCover(mipublicacion), usuarioService.findByPrestador(mipostulacion.getPrestador())));
+                    model.addAttribute("publicacion", new PublicacionDTO(mipublicacion, getCover(mipublicacion)));
+                    model.addAttribute("contratacion", new ContratacionDTO(contratacion));
+                    model.addAttribute("usuario", usuario);
+                    return "contratacion-detalle";
+                }
         }
 
         return "redirect:/";

@@ -2352,6 +2352,12 @@ a:focus{
     color:#FFD700;
 }
 
+.engranajes-reputacion h6 {
+    display: inline-block;
+    font-size: 24px;
+    color: #FFD700;
+}
+
 #contratacion .jumbotron-categoria2 {
     background-image: url("../images/contratacion.jpg");
 }
@@ -2459,7 +2465,7 @@ a:focus {
 .contratacion-contratacion  h5 {
     display: inline-block;
     font-size: 16px;
-    margin-left: 15px;
+    margin-left: 10px;
 }
 
 .contratacion-contratacion  li {
@@ -2467,7 +2473,7 @@ a:focus {
     color: #707070;
     margin-bottom: 15px;
     font-size: 16px;
-    margin-left: -20px;
+    margin-left: -40px;
     font-weight: bold;
 }
 
@@ -2489,8 +2495,13 @@ a:focus {
     display: inline;
 }
 
+.datos-personales h2 {
+    margin-top: 65px;
+}
 
-
+.datos-personales h5 {
+    font-size: 14px;
+}
 
 
 

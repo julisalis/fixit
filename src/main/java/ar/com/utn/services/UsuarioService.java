@@ -16,6 +16,10 @@ public interface UsuarioService {
 
     //Usuario registrarPrestador(PrestadorForm prestadorForm, Prestador prestador);
 
+    Double calcularCalificacionPromedio(Prestador prestador);
+
+    Double calcularCalificacionPromedio(Tomador tomador);
+
     Usuario registrarPrestador(PrestadorForm prestadorForm);
 
     Usuario registrarTomador(TomadorForm tomadorForm);
