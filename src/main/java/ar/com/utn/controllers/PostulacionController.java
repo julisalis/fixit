@@ -104,7 +104,7 @@ public class PostulacionController {
                             && postulacionForm.getDuracionAprox().doubleValue() > 0){
                         Postulacion postulacion = new Postulacion(postulacionForm,prestador,publicacion);
                         postulacionService.createPostulacion(postulacion);
-                        mailService.sendPostulacionNuevaMail(cliente,prof,publicacion,postulacion);
+                        mailService.sendPostulacionNuevaMail(cliente,prof,postulacion);
                         map.put("success", true);
                         map.put("msg","La postulación ha sido creada con éxito!");
                     }else{

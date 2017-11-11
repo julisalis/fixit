@@ -40,7 +40,7 @@
             <tr cellspacing="0">
                 <td cellspacing="0" th:background="${images_url}+'/header-image.png'" bgcolor="#09183F" valign="top" style="width: 100%;border-spacing: 0; min-height: 248px; max-height: 248px; border-collapse:collapse; padding: 0; background-size: auto; background-position: 50%; ">
                     <!--[if gte mso 9]>
-                    <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:120px;height:92px;"><v:fill type="tile" th:src="${images_url}+'/header-image.png'" color="#7bceeb" /><v:textbox inset="0,0,0,0">
+                    <v:rect xmlns:v="urn:schemas-microsoft-com:vml" fill="true" stroke="false" style="width:120px;height:92px;"><v:fill type="tile" th:src="${images_url}+'/plumber-blur.jpg'" color="#7bceeb" /><v:textbox inset="0,0,0,0">
                     <![endif]-->
                     <div>
                         <table style="border-spacing: 0;" width="100%">
@@ -72,9 +72,91 @@
                     <p th:text="'Estimado '+${name}+','" style="padding: 20px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;">
 
                     </p>
-                    <p style="padding: 13px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;">
-                        Tu publicación tiene una nueva postulación.
-                    </p>
+                    <p th:text="'Tienes una nueva postulación de '+${profesionalName}+' en la publicación '+${publicacion.getTitulo()}+'.A continuación se encuentra la información provista por el profesional, en caso de que cumpla con sus requisito podrá llevar a cabo la contratación del mismo. '" style="padding: 13px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;"/>
+                </td>
+            </tr>
+
+            <tr style="padding: 0;">
+                <td style="padding: 0;">
+                    <table style="padding: 0; width: 78%; margin: 40px auto; text-align: center; background-color: #efeff0; border-spacing: 0;">
+
+
+
+                        <tr>
+                            <td>
+                                <table
+                                        style="border-spacing: 0; margin: 0 auto; width: 86%; max-width: 420px;">
+                                    <tr>
+                                        <td style="padding: 15px 0 0; text-align: center; font-size: 0;">
+                                            <!--[if (gte mso 9)|(IE)]>
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="50%" valign="top">
+                                            <![endif]-->
+                                            <div style="width: 100%; max-width: 200px; display: inline-block; vertical-align: top;">
+                                                <table width="100%" style="border-spacing: 0;">
+                                                    <tr>
+                                                        <td style="padding: 0;">
+                                                            <table
+                                                                    style="border-spacing: 0; width: 97%; max-width: 198px; font-size: 14px; text-align: left;">
+                                                                <tr>
+                                                                    <td
+                                                                            style="padding: 0; padding-top: 10px; padding-bottom: 10px;">
+                                                                        <h6
+                                                                                style="-webkit-margin-before: 0; -webkit-margin-after: 0; text-align: left; color: #231f20; font-weight: 700; font-size: 18px; margin: 0; letter-spacing: -0.2px; margin-top: 10px; margin-bottom: 10px;">
+                                                                            Valor de la Visita:</h6>
+                                                                        <h6
+                                                                                style="background-color: #231f20; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #fff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.getPresupAprox()}"/>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div> <!--[if (gte mso 9)|(IE)]>
+                                            </td><td width="50%" valign="top">
+                                            <![endif]-->
+                                            <div
+                                                    style="width: 100%; max-width: 200px; display: inline-block; vertical-align: top;">
+                                                <table width="100%" style="border-spacing: 0;">
+                                                    <tr>
+                                                        <td style="padding: 0;">
+                                                            <table
+                                                                    style="border-spacing: 0; width: 97%; max-width: 198px; font-size: 14px; text-align: left;">
+                                                                <tr>
+                                                                    <td
+                                                                            style="padding: 0; padding-top: 10px; padding-bottom: 10px;">
+                                                                        <h6
+                                                                                style="-webkit-margin-before: 0; -webkit-margin-after: 0; text-align: left; color: #231f20; font-weight: 700; font-size: 18px; margin: 0; letter-spacing: -0.2px; margin-top: 10px; margin-bottom: 10px;">
+                                                                            Presupuesto del Trabajo:</h6>
+                                                                        <h6
+                                                                                style="background-color: #231f20; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #fff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.}"/>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div> <!--[if (gte mso 9)|(IE)]>
+                                            </td>
+                                            </tr>
+                                            </table>
+                                            <![endif]-->
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+
+
+
+                        <tr>
+                            <td>
+                                <a style="margin: 15px auto 30px; width: 250px; color: #fff; font-weight: 400; border: 1px solid #f04e69; background-color: #f04e69; font-size: 25px; text-decoration: none; padding: 10px 6px; display: inline-block;"
+                                   th:href="${linkPostulaciones}">Ver Postulación</a><br>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
             </tr>
 

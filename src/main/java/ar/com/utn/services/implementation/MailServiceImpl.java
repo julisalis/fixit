@@ -97,10 +97,14 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Transactional(readOnly=true)
-    public void sendPostulacionNuevaMail(Usuario cliente, Usuario profesional, Publicacion publicacion, Postulacion postulacion) {
+    public void sendPostulacionNuevaMail(Usuario cliente, Usuario profesional, Postulacion postulacion) {
         final Context ctx = new Context(new Locale("es","AR"));
         ctx.setVariable("name", cliente.getUsername());
-        //ctx.setVariable("linkConfirm", link);
+        ctx.setVariable("profesionalName", profesional.getUsername());
+        ctx.setVariable("publicacion", postulacion.getPublicacion());
+        ctx.setVariable("postulacion", postulacion);
+        String link = urlBuilder.makeOfflineAbsolutePathLink("/publicacion/postulaciones/"+postulacion.getPublicacion().getId());
+        ctx.setVariable("linkPostulaciones", link);
         ctx.setVariable("title", "Postulación elegida");
 
         String dest= cliente.getEmail();

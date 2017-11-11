@@ -19,7 +19,7 @@ public interface MailService {
 
     void sendPostulacionElegidaMail(Usuario cliente, Usuario prestador, Postulacion postulacion);
 
-    void sendPostulacionNuevaMail(Usuario cliente, Usuario prestador, Publicacion publicacion, Postulacion postulacion);
+    void sendPostulacionNuevaMail(Usuario cliente, Usuario prestador, Postulacion postulacion);
 
     void sendCalificacionMailToProfesional(Contratacion contratacion, Usuario usuario, Usuario prof);
 
