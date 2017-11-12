@@ -27,6 +27,8 @@ public class PrestadorForm {
     @NotBlank
     private String password;
     @NotBlank
+    private String repeatPassword;
+    @NotBlank
     private String nombre;
     @NotBlank
     private String apellido;
@@ -172,5 +174,13 @@ public class PrestadorForm {
 
     public void setSexo(Sexo sexo) {
         this.sexo = sexo;
+    }
+
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
+
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
     }
 }

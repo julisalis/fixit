@@ -2547,3 +2547,7 @@ textarea {
     margin-bottom: 15px !important;
 }
 
+.job-ad-item.img-publicacion-list img {
+    width: 100%;
+}
+

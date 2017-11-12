@@ -29,7 +29,7 @@
                         <div th:if="${#lists.isEmpty(publicacionesNuevas)}">
                             <h3>No hay publicaciones nuevas</h3>
                         </div>
-                        <div class="job-ad-item" th:each="nueva : ${publicacionesNuevas}">
+                        <div class="job-ad-item img-publicacion-list" th:each="nueva : ${publicacionesNuevas}">
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
@@ -59,9 +59,8 @@
                                     <div class="tipo-trabajo-postulacion">
                                         <img th:src="@{/images/}+${nueva.tipoTrabajo.imagen}" class="img-responsive icon-tipotrabajo">
                                         <span th:text="${nueva.tipoTrabajo.nombre}"></span>
-                                        <span class="category-quantity" th:text="'('+${nueva.cantidadPostulaciones}+')'"/>
                                     </div>
-                                    <a th:href="'/publicacion/postulaciones/'+${nueva.id}" class="btn btn-primary tam-boton-100">Ver Postulaciones</a>
+                                    <a th:href="'/publicacion/postulaciones/'+${nueva.id}" class="btn btn-primary tam-boton-100" th:text="'Ver Postulaciones '+'('+${nueva.cantidadPostulaciones}+')'">Ver Postulaciones</a>
                                     <div class="edit-delete">
                                         <a th:hidden="${!nueva.canEdit}" th:href="'/publicacion/edit/'+${nueva.id}"><i class="fa fa-pencil" aria-hidden="true"></i> Editar </a>
                                         <a class="deletePublicacion" th:href="'/publicacion/delete/'+${nueva.id}"><i class="fa fa-trash-o" aria-hidden="true"></i> Eliminar </a>
@@ -75,7 +74,7 @@
                         <div th:if="${#lists.isEmpty(publicacionesContratadas)}">
                             <h3>No hay publicaciones contratadas</h3>
                         </div>
-                        <div class="job-ad-item" th:each="contratada : ${publicacionesContratadas}">
+                        <div class="job-ad-item img-publicacion-list" th:each="contratada : ${publicacionesContratadas}">
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
@@ -117,7 +116,7 @@
                         <div th:if="${#lists.isEmpty(publicacionesFinalizadas)}">
                             <h3>No hay publicaciones finalizadas</h3>
                         </div>
-                        <div class="job-ad-item" th:each="finalizada : ${publicacionesFinalizadas}">
+                        <div class="job-ad-item img-publicacion-list" th:each="finalizada : ${publicacionesFinalizadas}">
                             <div class="item-info">
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">

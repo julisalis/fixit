@@ -6,7 +6,13 @@
     <!--/*/ <th:block th:include="fragments/head :: head"></th:block> /*/-->
    </head>
 <body class="body-background">
-<div class="signup" id="signup">
+
+    <!--/*/ <th:block th:include="fragments/header-static :: header"></th:block> /*/-->
+
+    <!-- Modal logIn-->
+    <!--/*/ <th:block th:include="modals/login :: login"></th:block> /*/-->
+
+    <div class="signup" id="signup">
 
     <h3 class="title">Registrate en FixIT</h3>
 
@@ -121,6 +127,13 @@
             </div>
 
             <div class="form-group">
+                <label class="col-md-4 control-label" for="password">Repetir Contraseña*</label>
+                <div class="col-md-6">
+                    <input type="password" id="repeatPassword" th:field="*{repeatPassword}" class="form-control" required="required" autocomplete="new-password" />
+                </div>
+            </div>
+
+            <div class="form-group">
                 <label class="col-md-4 control-label" for="tipos">Tipos de Trabajo*</label>
                 <div class="col-md-6">
                     <select th:field="*{tipos}" id="tipos" class="form-control" data-validation="required" multiple="multiple">
@@ -196,6 +209,8 @@
         </div>
     </div>
 </div>
+
+    <!--/*/ <th:block th:include="fragments/footer :: footer"></th:block> /*/-->
 </body>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
