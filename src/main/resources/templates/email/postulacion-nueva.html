@@ -52,7 +52,7 @@
                             <tr>
                                 <td style="text-align: center;">
                                     <img style="padding-top:15px;width: 15%;" th:src="${images_url}+'/logo.png'">
-                                    <h1 style="color: #fff; line-height:40px; font-weight: normal; width: 80%; margin: 15px auto;" th:text="${title}">
+                                    <h1 style="color: #fff; line-height:40px; font-weight: normal; width: 80%; margin: 15px auto;" th:text="${#strings.capitalize(title)}">
                                     </h1>
                                 </td>
                             </tr>
@@ -68,10 +68,10 @@
 
             <tr>
                 <td>
-                    <p th:text="'Estimado '+${name}+','" style="padding: 20px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;">
+                    <p th:text="'Estimado '+${#strings.capitalize(name)}+','" style="padding: 20px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;">
 
                     </p>
-                    <p th:text="'Tienes una nueva postulación de '+${profesionalName}+' en la publicación '+${publicacion.titulo}+'.'" style="padding: 0px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;"/>
+                    <p th:text="'Tienes una nueva postulación de '+${#strings.capitalize(profesionalName)}+' en la publicación '+${#strings.capitalize(publicacion.titulo)}+ '.'" style="padding: 0px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;"/>
                     <p th:text="'A continuación se encuentra la información provista por el profesional, en caso de que cumpla con sus requisito podrá llevar a cabo la contratación del mismo. '" style="padding: 0px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;"/>
 
                 </td>

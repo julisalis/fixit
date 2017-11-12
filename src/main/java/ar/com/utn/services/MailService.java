@@ -18,7 +18,7 @@ public interface MailService {
 
     void sendRegistrationMailPrestador(PrestadorForm user, String link);
 
-    void sendPostulacionElegidaMail(Usuario cliente, Usuario prestador, Postulacion postulacion);
+    void sendPostulacionElegidaMail(Usuario cliente, Usuario prestador, PostulacionDTO postulacion);
 
     void sendPostulacionNuevaMail(Usuario cliente, Usuario prestador, PostulacionDTO postulacion);
 

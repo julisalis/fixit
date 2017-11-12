@@ -82,11 +82,15 @@ public class MailServiceImpl implements MailService {
 
     @Override
     @Transactional(readOnly=true)
-    public void sendPostulacionElegidaMail(Usuario cliente, Usuario profesional, Postulacion postulacion) {
+    public void sendPostulacionElegidaMail(Usuario cliente, Usuario profesional, PostulacionDTO postulacion) {
         final Context ctx = new Context(new Locale("es","AR"));
-        ctx.setVariable("name", profesional.getUsername());
-        //ctx.setVariable("linkConfirm", link);
-        ctx.setVariable("title", "Postulación elegida");
+        ctx.setVariable("tomadorName", cliente.getUsername());
+        String link = urlBuilder.makeOfflineAbsolutePathLink("/contratar/detalle/"+postulacion.getPublicacion().getId());
+        ctx.setVariable("linkPostulaciones", link);
+        ctx.setVariable("profesionalName", profesional.getUsername());
+        ctx.setVariable("publicacion", postulacion.getPublicacion());
+        ctx.setVariable("postulacion", postulacion);
+        ctx.setVariable("title", "Tu postulación ha sido elegida");
 
         String dest= profesional.getEmail();
         if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){

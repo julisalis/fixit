@@ -189,7 +189,8 @@ public class ContratacionController {
             publicacionService.setContratada(publicacion);
             postulacionService.setContratada(postulacion);
             contratacionRepository.save(contratacion);
-            mailService.sendPostulacionElegidaMail(tomador, prestador, postulacion);
+            PostulacionDTO postulacionDTO =  new PostulacionDTO(postulacion,getCover(publicacion),true);
+            mailService.sendPostulacionElegidaMail(tomador, prestador, postulacionDTO);
             map.put("success", true);
             map.put("msg", "Ha contratado a " + prestador.getUsername() + " correctamente.");
         } catch (Exception e) {
