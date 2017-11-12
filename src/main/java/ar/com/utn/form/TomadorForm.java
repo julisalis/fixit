@@ -12,6 +12,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -25,6 +26,8 @@ public class TomadorForm {
     private String email;
     @NotBlank
     private String password;
+    @NotBlank
+    private String repeatPassword;
     @NotBlank
     private String nombre;
     @NotBlank
@@ -138,5 +141,11 @@ public class TomadorForm {
         this.localidad = localidad;
     }
 
+    public String getRepeatPassword() {
+        return repeatPassword;
+    }
 
+    public void setRepeatPassword(String repeatPassword) {
+        this.repeatPassword = repeatPassword;
+    }
 }

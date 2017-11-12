@@ -132,6 +132,10 @@ import java.util.stream.Collectors;
                 if (!mailUnique){
                     result.rejectValue("email","email.repeat","El email ingresado ya existe");
                 }
+                if (!prestadorForm.getPassword().equals(prestadorForm.getRepeatPassword())){
+                    result.rejectValue("repeatPassword","repeatPassword.repeat","Las contraseñas no coinciden");
+                    result.rejectValue("password","password.repeat","Las contraseñas no coinciden");
+                }
 
                 if(prestadorForm.getValidar()) {
                     if(prestadorForm.getCuit()==null || prestadorForm.getNacimiento() == null || prestadorForm.getSexo() == null) {
@@ -282,6 +286,10 @@ import java.util.stream.Collectors;
                 }
                 if (!mailUnique){
                     result.rejectValue("email","email.repeat","El email ingresado ya existe");
+                }
+                if (!tomadorForm.getPassword().equals(tomadorForm.getRepeatPassword())){
+                    result.rejectValue("repeatPassword","repeatPassword.repeat","Las contraseñas no coinciden");
+                    result.rejectValue("password","password.repeat","Las contraseñas no coinciden");
                 }
                 if(!result.hasErrors()){
                     usuarioService.registrarTomador(tomadorForm);

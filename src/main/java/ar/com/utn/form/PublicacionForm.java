@@ -137,14 +137,6 @@ public class PublicacionForm {
         this.urgencia = urgencia;
     }
 
-//    public LocalDate getFecha() {
-//        return fecha;
-//    }
-//
-//    public void setFecha(LocalDate fecha) {
-//        this.fecha = fecha;
-//    }
-
     public String getCurrencyCode() {
         return currencyCode;
     }
