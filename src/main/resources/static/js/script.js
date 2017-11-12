@@ -37,10 +37,14 @@ $(function () {
                     if(typeof(data.url) != 'undefined'){
                         window.location=data.url;
                     }else if(typeof(data.msg) != 'undefined'){
-                        var msg_modal = $('.modal .modal-dialog .modal-content');
-                        $('h3',msg_modal).append(data.msg);
-                        $('#modalSuccess .modal-dialog').append(msg_modal);
-                        $('#modalSuccess').modal('toggle');
+                        swal({
+                            title: "Registro exitoso",
+                            text: data.msg,
+                            type: "success",
+                        },function (e) {
+                            window.location="/";
+                        });
+
                     }
                 } else {
                     //Manejo de errores en json 
