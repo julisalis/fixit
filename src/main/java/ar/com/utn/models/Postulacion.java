@@ -5,6 +5,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Currency;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class Postulacion extends PersistentEntity {
     private Prestador prestador;
 
     @OneToMany(mappedBy = "postulacion")
-    private List<Mensaje> mensajes;
+    private List<Mensaje> mensajes = new ArrayList<>();
 
     public Postulacion() {
     }
