@@ -28,4 +28,5 @@ public interface MailService {
 
     void sendCodigoSeguridad(Contratacion contratacion, Publicacion publicacion, Usuario currentUser, Usuario profesional);
 
+    void sendCalificacionMailToTomador(Contratacion contratacion, Usuario usuario, Usuario prof);
 }

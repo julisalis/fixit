@@ -84,13 +84,14 @@ public class MailServiceImpl implements MailService {
     @Transactional(readOnly=true)
     public void sendPostulacionElegidaMail(Usuario cliente, Usuario profesional, PostulacionDTO postulacion) {
         final Context ctx = new Context(new Locale("es","AR"));
+
         ctx.setVariable("tomadorName", cliente.getUsername());
-        String link = urlBuilder.makeOfflineAbsolutePathLink("/contratar/detalle/"+postulacion.getPublicacion().getId());
-        ctx.setVariable("linkPostulaciones", link);
         ctx.setVariable("profesionalName", profesional.getUsername());
         ctx.setVariable("publicacion", postulacion.getPublicacion());
         ctx.setVariable("postulacion", postulacion);
         ctx.setVariable("title", "Tu postulación ha sido elegida");
+        String link = urlBuilder.makeOfflineAbsolutePathLink("/contratar/detalle/"+postulacion.getPublicacion().getId());
+        ctx.setVariable("linkPostulaciones", link);
 
         String dest= profesional.getEmail();
         if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
@@ -104,6 +105,7 @@ public class MailServiceImpl implements MailService {
     @Transactional(readOnly=true)
     public void sendPostulacionNuevaMail(Usuario cliente, Usuario profesional, PostulacionDTO postulacion) {
         final Context ctx = new Context(new Locale("es","AR"));
+
         ctx.setVariable("name", cliente.getUsername());
         ctx.setVariable("profesionalName", profesional.getUsername());
         ctx.setVariable("publicacion", postulacion.getPublicacion());
@@ -121,16 +123,48 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendCalificacionMailToProfesional(Contratacion contratacion, Usuario usuario, Usuario profesional) {
+    public void sendCalificacionMailToProfesional(Contratacion contratacion, Usuario cliente, Usuario profesional) {
         final Context ctx = new Context(new Locale("es","AR"));
-        ctx.setVariable("name", profesional.getUsername());
+
+        ctx.setVariable("tomadorName", cliente.getUsername());
+        ctx.setVariable("profesionalName", profesional.getUsername());
+        ctx.setVariable("publicacion", contratacion.getPostulacion().getPublicacion());
+        ctx.setVariable("postulacion", contratacion.getPostulacion());
         ctx.setVariable("calificacion", contratacion.getCalificacionTomador());
-        ctx.setVariable("title", "Postulación finalizada");
+        ctx.setVariable("title", "El profesional te ha calificado");
+
+
+        String link = urlBuilder.makeOfflineAbsolutePathLink("/contratar/detalle/"+contratacion.getPostulacion().getPublicacion().getId());
+        ctx.setVariable("linkPostulaciones", link);
+
         String dest= profesional.getEmail();
         if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
             dest =(environment.getProperty("mail.info"));
         }
-        sendBasicMail("FixIT - Trabajo finalizado con éxito", dest, "email/calificacion-to-prestador",ctx);
+        sendBasicMail("FixIT - El cliente te ha calificado", dest, "email/calificacion-to-prestador",ctx);
+    }
+
+    @Override
+    public void sendCalificacionMailToTomador(Contratacion contratacion, Usuario cliente, Usuario profesional) {
+        final Context ctx = new Context(new Locale("es","AR"));
+
+        ctx.setVariable("tomadorName", cliente.getUsername());
+        ctx.setVariable("profesionalName", profesional.getUsername());
+        ctx.setVariable("publicacion", contratacion.getPostulacion().getPublicacion());
+        ctx.setVariable("postulacion", contratacion.getPostulacion());
+        ctx.setVariable("calificacion", contratacion.getCalificacionPrestador());
+        ctx.setVariable("title", "El profesional te ha calificado");
+
+
+        String link = urlBuilder.makeOfflineAbsolutePathLink("/contratar/detalle/"+contratacion.getPostulacion().getPublicacion().getId());
+        ctx.setVariable("linkPostulaciones", link);
+
+        String dest= cliente.getEmail();
+        if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
+            dest =(environment.getProperty("mail.info"));
+        }
+
+        sendBasicMail("FixIT - El profesional te ha calificado", dest, "email/calificacion-to-tomador",ctx);
     }
 
     @Override
