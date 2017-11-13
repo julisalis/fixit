@@ -3,6 +3,7 @@ package ar.com.utn.dto;
 import ar.com.utn.form.PublicacionFotoForm;
 import ar.com.utn.models.*;
 
+import java.beans.Transient;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
@@ -88,6 +89,22 @@ public class PublicacionDTO {
     }
 
     public PublicacionDTO() {
+    }
+
+    @Transient
+    public Boolean getYaPidioCodigo(){
+        if(this.getContratacion() != null){
+            return getContratacion().getFechaCodigo() != null;
+        }
+        return false;
+    }
+
+    @Transient
+    public Boolean getYaGeneroCodigo(){
+        if(this.getContratacion() != null){
+            return getContratacion().getCodigoEnviado();
+        }
+        return false;
     }
 
     private List<PublicacionFotoForm> buildFotoForms(PublicacionMultimedia multimedia) {

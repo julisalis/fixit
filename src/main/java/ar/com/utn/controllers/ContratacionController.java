@@ -122,7 +122,7 @@ public class ContratacionController {
             //System.CurrentTimeInMilis() es ahora. se le suman milisegundos. 1000 ms = 1 s.
             taskScheduler.threadPoolTaskScheduler().schedule(new RunnableTask(contratacion,publicacion,usuario),new Date(System.currentTimeMillis()+(1000*60*5))); //Enviar codigo en 5 minutos
             map.put("success", true);
-            map.put("msg", "Su codigo será enviado en 1 minuto.");
+            map.put("msg", "Su codigo será enviado en la fecha solicitada.");
         }else{
             map.put("success", false);
             map.put("msg", "La fecha tiene que ser posterior a hoy.");
