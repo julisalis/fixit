@@ -37,14 +37,24 @@ $(function () {
                     if(typeof(data.url) != 'undefined'){
                         window.location=data.url;
                     }else if(typeof(data.msg) != 'undefined'){
-                        swal({
-                            title: "Registro exitoso",
-                            text: data.msg,
-                            type: "success",
-                        },function (e) {
-                            window.location="/";
-                        });
-
+                        if(typeof(data.nombre_afip) != 'undefined'){
+                            swal({
+                                title: "Registro exitoso",
+                                text: 'You can use <b>bold text</b>, <a href="//github.com">links</a> and other HTML tags',
+                                html: true,
+                                type: "success",
+                            },function (e) {
+                                window.location="/";
+                            });
+                        }else{
+                            swal({
+                                title: "Registro exitoso",
+                                type: "success",
+                                text: data.msg,
+                            },function (e) {
+                                window.location="/";
+                            });
+                        }
                     }
                 } else {
                     //Manejo de errores en json 

@@ -1,5 +1,5 @@
 package ar.com.utn.models;
 
 public enum EstadoPublicacion {
-    NUEVA, CONTRATADA, FINALIZADA, ELIMINADA;
+    NUEVA, CONTRATADA, FINALIZADA, ELIMINADA, REVISION;
 }

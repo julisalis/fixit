@@ -1,5 +1,5 @@
 package ar.com.utn.models;
 
 public enum EstadoPostulacion {
-    NUEVA, CONTRATADA, FINALIZADA, ELIMINADA, RECHAZADA;
+    NUEVA, CONTRATADA, FINALIZADA, ELIMINADA, RECHAZADA, REVISION;
 }

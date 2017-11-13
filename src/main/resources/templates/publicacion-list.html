@@ -239,10 +239,41 @@
             title: 'Calificar trabajo realizado',
             message: $content,
             buttons: [{
+                label: 'No realizado',
+                title: 'Marcar trabajo como no realizado',
+                cssClass: 'btn-danger',
+                action: function (dialog) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/contratar/marcarNoRealizado',
+                        data: {
+                            publicacionId: publicacionId
+                        },
+                        async: true,
+                        success: function(message){
+                            $.LoadingOverlay("hide");
+                            if(message.success){
+                                BootstrapDialog.show({
+                                    title: 'Calificación no Realizada',
+                                    message:  message.msg,
+                                    buttons: [{
+                                        label: 'Ok',
+                                        action: function (e) {
+                                            redirect("/publicacion/list");
+                                        }
+                                    }]
+                                });
+                            }else{
+                                swal("Error", message.msg, "error")
+                            }
+                        }
+                    });
+
+                    $.LoadingOverlay("show");
+                }
+            },{
                 label: 'Aceptar',
                 action: function (dialog) {
-                    //BootstrapDialog.show({title: 'Calificacion',message: $("#rateYo").rateYo("rating")});
-
                     $.ajax({
                         type: 'POST',
                         url: '/contratar/calificarPagarTomador',
