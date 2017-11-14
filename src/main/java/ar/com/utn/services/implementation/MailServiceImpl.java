@@ -183,26 +183,26 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public void sendCodigoSeguridad(Contratacion contratacion, Publicacion publicacion, Usuario currentUser, Usuario profesional) {
+    public void sendCodigoSeguridad(Contratacion contratacion, Publicacion publicacion, Usuario cliente, Usuario profesional) {
         Context ctx = new Context(new Locale("es","AR"));
-        ctx.setVariable("name", currentUser.getUsername());
         ctx.setVariable("codigo", contratacion.getCodigoSeguridad());
-        ctx.setVariable("title", "Codigo de Seguridad");
-        String dest= currentUser.getEmail();
+        ctx.setVariable("tomadorName", cliente.getUsername());
+        ctx.setVariable("profesionalName", profesional.getUsername());
+        ctx.setVariable("publicacion", contratacion.getPostulacion().getPublicacion());
+        ctx.setVariable("postulacion", contratacion.getPostulacion());
+        ctx.setVariable("calificacion", contratacion.getCalificacionPrestador());
+
+        String dest= cliente.getEmail();
         if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
             dest =(environment.getProperty("mail.info"));
         }
-        sendBasicMail("Código de seguridad", dest, "email/codigo-seguridad-tomador",ctx);
+        sendBasicMail("FixIT - Código de seguridad", dest, "email/codigo-seguridad-tomador",ctx);
 
-        ctx = new Context(new Locale("es","AR"));
-        ctx.setVariable("name", profesional.getUsername());
-        ctx.setVariable("codigo", contratacion.getCodigoSeguridad());
-        ctx.setVariable("title", "Codigo de Seguridad");
         dest = profesional.getEmail();
         if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
             dest =(environment.getProperty("mail.info"));
         }
-        sendBasicMail("Código de seguridad", dest, "email/codigo-seguridad-prestador",ctx);
+        sendBasicMail("FixIT - Código de seguridad", dest, "email/codigo-seguridad-prestador",ctx);
     }
 
     public void sendBasicMail(String subject,String dest,String html,Context ctx) {
