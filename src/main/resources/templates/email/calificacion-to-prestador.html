@@ -71,8 +71,8 @@
                     <p th:text="'Estimado '+${#strings.capitalize(profesionalName)}+','" style="padding: 20px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;">
 
                     </p>
-                    <p th:text="${#strings.capitalize(tomadorName)}+' te ah calificado por el trabajo '+${#strings.capitalize(publicacion.titulo)}+' realizado.'" style="padding: 0px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;"/>
-                    <p th:text="'A continuación podrás ver la calificación que te otorgaron y un link para acceder tu reputación. '" style="padding: 0px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;"/>
+                    <p th:text="${#strings.capitalize(tomadorName)}+' te ah calificado en '+${#strings.capitalize(publicacion.titulo)}+'.'" style="padding: 0px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;"/>
+                    <p th:text="'Una vez que ambos califiquen el trabajo, el mismo pasará a finalizado y en caso de que el cliente haya optado por pago con Tarjeta de Crédito se acreditará el valor de la visita en tu cuenta de Mercado Pago. A continuación podrás ver la calificación que te otorgaron y un link para acceder al detalle de la contratación. '" style="padding: 0px 13px 0 13px; font-size: 14px; color: #58595b; -webkit-margin-before: 0; -webkit-margin-after: 0; font-weight: 400;"/>
 
                 </td>
             </tr>
@@ -83,16 +83,86 @@
                         <tr style="padding: 0;">
                             <td style="padding: 0; width: 100%;">
                                 <h2 style="color:#231f20; font-size: 18px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; margin-bottom: 15px; padding: 0 30px; letter-spacing: -0.75px;" th:text="${publicacion.localidad.nombre+', '+publicacion.provincia.nombre}"></h2>
-                                <h2 style="color:#231f20; font-size: 18px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; margin-bottom: 15px; padding: 0 30px; letter-spacing: -0.75px;"th:text="${publicacion.titulo}"></h2>
+                                <h2 style="color:#231f20; font-size: 18px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; margin-bottom: 15px; padding: 0 30px; letter-spacing: -0.75px;"th:text="${#strings.capitalize(publicacion.titulo)}"></h2>
                             </td>
                         </tr>
-<!--agregar calificacion-->
+                        <tr style="padding: 0px;">
+                            <td style="padding: 0; width: 100%;">
+                                <h4 style="-webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #6d7373; font-weight: 700; font-size: 25px; margin: 0; letter-spacing: -0.2px; margin-top: 10px; margin-bottom: 10px;">
+                                    Calificación</h4>
+                                <div style="border: 2px solid #dadada;background-color: white;padding: 10px;margin: 20px auto;">
+                                    <h3 style="padding-left: 50px; width: 100%; color:#FFD700; font-size: 40px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; padding: 0 5px; letter-spacing: 0px;"th:text="${calificacion}"></h3>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <table
+                                        style="border-spacing: 0; margin: 0 auto; width: 86%; max-width: 420px;">
+                                    <tr>
+                                        <td style="padding: 15px 0 0; text-align: center; font-size: 0;">
+                                            <!--[if (gte mso 9)|(IE)]>
+                                            <table width="100%">
+                                                <tr>
+                                                    <td width="50%" valign="top">
+                                            <![endif]-->
+                                            <div style="width: 100%; max-width: 200px; display: inline-block; vertical-align: top;">
+                                                <table width="100%" style="border-spacing: 0;">
+                                                    <tr>
+                                                        <td style="padding: 0;">
+                                                            <table
+                                                                    style="border-spacing: 0; width: 97%; max-width: 198px; font-size: 14px; text-align: left;">
+                                                                <tr>
+                                                                    <td
+                                                                            style="padding: 0; padding-top: 10px; padding-bottom: 10px;">
+                                                                        <h6 style="-webkit-margin-before: 0; -webkit-margin-after: 0; text-align: left; color: #6d7373; font-weight: 700; font-size: 18px; margin: 0; letter-spacing: -0.2px; margin-top: 10px; margin-bottom: 10px;">
+                                                                            Valor de la Visita:</h6>
+                                                                        <h6 style=" border: 2px solid #6d7373; background-color: #6d7373; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #f9ffff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.presupAprox}+' ARS'"></h6>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div> <!--[if (gte mso 9)|(IE)]>
+                                            </td><td width="50%" valign="top">
+                                            <![endif]-->
+                                            <div
+                                                    style="width: 100%; max-width: 200px; display: inline-block; vertical-align: top;">
+                                                <table width="100%" style="border-spacing: 0;">
+                                                    <tr>
+                                                        <td style="padding: 0;">
+                                                            <table
+                                                                    style="border-spacing: 0; width: 97%; max-width: 198px; font-size: 14px; text-align: left;">
+                                                                <tr>
+                                                                    <td
+                                                                            style="padding: 0; padding-top: 10px; padding-bottom: 10px;">
+                                                                        <h6
+                                                                                style="-webkit-margin-before: 0; -webkit-margin-after: 0; text-align: left; color: #6d7373; font-weight: 700; font-size: 18px; margin: 0; letter-spacing: -0.2px; margin-top: 10px; margin-bottom: 10px;">
+                                                                            Presup. del Trabajo:</h6>
+                                                                        <h6
+                                                                                style="border: 2px solid #6d7373; background-color: #6d7373; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #f9ffff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.presupTrabajo}+' ARS'"/>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </div> <!--[if (gte mso 9)|(IE)]>
+                                            </td>
+                                            </tr>
+                                            </table>
+                                            <![endif]-->
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
                         <tr>
                             <td style="text-align: center">
-                                <a style="margin: 15px 0 30px; width: 150px; color: #fff; font-weight: 400;border-radius: 4px; border: 1px solid #09183f; background-color: #09183f; font-size: 14px; text-decoration: none; padding: 6px; display: inline-block;" th:href="${linkPostulaciones}">Ver Reputación</a><br>
+                                <a style="margin: 15px 0 30px; width: 150px; color: #f9ffff; font-weight: 400;border-radius: 4px; border: 1px solid #3bbd76; background-color: #3bbd76; font-size: 17px; text-decoration: none; padding: 10px; display: inline-block;" th:href="${linkPostulaciones}">Ver Calificación</a><br>
                             </td>
                         </tr>
-
                     </table>
                 </td>
             </tr>

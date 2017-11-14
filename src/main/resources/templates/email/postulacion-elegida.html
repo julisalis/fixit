@@ -83,7 +83,7 @@
                         <tr style="padding: 0;">
                             <td style="padding: 0; width: 100%;">
                                 <h2 style="color:#231f20; font-size: 18px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; margin-bottom: 15px; padding: 0 30px; letter-spacing: -0.75px;" th:text="${publicacion.localidad.nombre+', '+publicacion.provincia.nombre}"></h2>
-                                <h2 style="color:#231f20; font-size: 18px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; margin-bottom: 15px; padding: 0 30px; letter-spacing: -0.75px;"th:text="${publicacion.titulo}"></h2>
+                                <h2 style="color:#231f20; font-size: 18px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; margin-bottom: 15px; padding: 0 30px; letter-spacing: -0.75px;"th:text="${#strings.capitalize(publicacion.titulo)}"></h2>
                             </td>
                         </tr>
 
@@ -107,11 +107,9 @@
                                                                 <tr>
                                                                     <td
                                                                             style="padding: 0; padding-top: 10px; padding-bottom: 10px;">
-                                                                        <h6
-                                                                                style="-webkit-margin-before: 0; -webkit-margin-after: 0; text-align: left; color: #231f20; font-weight: 700; font-size: 18px; margin: 0; letter-spacing: -0.2px; margin-top: 10px; margin-bottom: 10px;">
+                                                                        <h6 style="-webkit-margin-before: 0; -webkit-margin-after: 0; text-align: left; color: #6d7373; font-weight: 700; font-size: 18px; margin: 0; letter-spacing: -0.2px; margin-top: 10px; margin-bottom: 10px;">
                                                                             Valor de la Visita:</h6>
-                                                                        <h6
-                                                                                style="background-color: #231f20; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #fff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.presupAprox}+' ARS'"/>
+                                                                        <h6 style=" border: 2px solid #6d7373; background-color: #6d7373; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #f9ffff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.presupAprox}+' ARS'"></h6>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -132,10 +130,10 @@
                                                                     <td
                                                                             style="padding: 0; padding-top: 10px; padding-bottom: 10px;">
                                                                         <h6
-                                                                                style="-webkit-margin-before: 0; -webkit-margin-after: 0; text-align: left; color: #231f20; font-weight: 700; font-size: 18px; margin: 0; letter-spacing: -0.2px; margin-top: 10px; margin-bottom: 10px;">
+                                                                                style="-webkit-margin-before: 0; -webkit-margin-after: 0; text-align: left; color: #6d7373; font-weight: 700; font-size: 18px; margin: 0; letter-spacing: -0.2px; margin-top: 10px; margin-bottom: 10px;">
                                                                             Presup. del Trabajo:</h6>
                                                                         <h6
-                                                                                style="background-color: #231f20; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #fff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.presupTrabajo}+' ARS'"/>
+                                                                                style="border: 2px solid #6d7373; background-color: #6d7373; -webkit-margin-before: 0; -webkit-margin-after: 0; text-align: center; color: #f9ffff; font-weight: 700; font-size: 30px; margin: 0; letter-spacing: -0.2px; padding: 10px 0;" th:text="${postulacion.presupTrabajo}+' ARS'"/>
                                                                     </td>
                                                                 </tr>
                                                             </table>
@@ -154,10 +152,9 @@
                         </tr>
                         <tr>
                             <td style="text-align: center">
-                                <a style="margin: 15px 0 30px; width: 150px; color: #fff; font-weight: 400;border-radius: 4px; border: 1px solid #09183f; background-color: #09183f; font-size: 14px; text-decoration: none; padding: 6px; display: inline-block;" th:href="${linkPostulaciones}">Ver Contratación</a><br>
+                                <a style="margin: 15px 0 30px; width: 150px; color: #f9ffff; font-weight: 400;border-radius: 4px; border: 1px solid #3bbd76; background-color: #3bbd76; font-size: 17px; text-decoration: none; padding: 10px; display: inline-block;" th:href="${linkPostulaciones}">Ver Contratación</a><br>
                             </td>
                         </tr>
-
                     </table>
                 </td>
             </tr>
