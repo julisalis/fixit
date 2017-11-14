@@ -105,7 +105,7 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         e.add(EstadoPostulacion.FINALIZADA);
         List<Postulacion> postulaciones = postulacionRepository.findByPrestadorAndEstadoPostulacionIsIn(prestador, e);
         List<Contratacion> contrataciones = contratacionRepository.findAllByPostulacionIsInAndCalificacionPrestadorNotNull(postulaciones);
-        Double calificacion = contrataciones.stream().mapToDouble(value -> value.getCalificacionPrestador()).average().orElse(0);
+        Double calificacion = contrataciones.stream().mapToDouble(value -> value.getCalificacionTomador()).average().orElse(0);
         return  calificacion;
     }
 
@@ -117,7 +117,7 @@ public class UsuarioServiceImpl extends BaseService  implements UsuarioService, 
         List<Publicacion> publicaciones = publicacionRepository.findByTomador(tomador);
         List<Postulacion> postulaciones = postulacionRepository.findByPublicacionIsInAndEstadoPostulacionIsIn(publicaciones, e);
         List<Contratacion> contrataciones = contratacionRepository.findAllByPostulacionIsInAndCalificacionTomadorNotNull(postulaciones);
-        Double calificacion = contrataciones.stream().mapToDouble(value -> value.getCalificacionTomador()).average().orElse(0);
+        Double calificacion = contrataciones.stream().mapToDouble(value -> value.getCalificacionPrestador()).average().orElse(0);
         return  calificacion;
     }
 
