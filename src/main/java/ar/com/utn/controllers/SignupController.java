@@ -166,22 +166,30 @@ import java.util.stream.Collectors;
                         logger.info("Datos encontrados:"+System.lineSeparator()+"CUIT: {}."+System.lineSeparator()+"Nombre y apellido: {}."+System.lineSeparator()+"Fecha nacimiento: {}."+System.lineSeparator()+"Actividad: {}."+System.lineSeparator()+"Direccion: {}.",personaAfip.getIdPersona().toString(),personaAfip.getNombreCompleto(),personaAfip.getNacimiento().toString(),actividades,(personaAfip.getDomicilio().get(0)==null)?"Ninguno":personaAfip.getDomicilio().get(0).getDireccion());
                         if(!validarPersonaConAfip(personaAfip,prestadorForm)) {
                             map.put("success", false);
-                            map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados o deseleccione la validación.\n" +
+                            map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados o deseleccione la validación.");
+                            /*map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados o deseleccione la validación.\n" +
                                     "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
                                     "Cuit: "+personaAfip.getIdPersona().toString()+"\n"+
                                     "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
                                     "Sexo: "+personaAfip.getSexo().getName()+"\n" +
                                     "Actividad Principal: "+actividades+"\n"+
-                                    "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
+                                    "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());*/
                         }else{
                             usuarioService.registrarPrestador(prestadorForm);
                             map.put("success", true);
-                            map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.\n" +
-                                    "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
-                                    "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
-                                    "Sexo: "+personaAfip.getSexo().getName()+"\n" +
-                                    "Actividad Principal: "+actividades+"\n"+
-                                    "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
+                            map.put("msg","El usuario ha sido creado con éxito! Se ha enviado un correo electrónico a su cuenta con el link de activación.");
+
+                            map.put("nombre_afip",personaAfip.getNombreCompleto());
+                            map.put("cuit_afip",personaAfip.getIdPersona());
+                            map.put("nacimiento_afip",personaAfip.getNacimiento().toString());
+                            map.put("sexo_afip",personaAfip.getSexo().getName());
+                            map.put("actividad_afip",actividades);
+
+                            if(!personaAfip.getDomicilio().isEmpty()){
+                                map.put("domicilio_afip",personaAfip.getDomicilio().get(0).getDireccion());
+                            }else{
+                                map.put("domicilio_afip","");
+                            }
                         }
                     }else{
                         usuarioService.registrarPrestador(prestadorForm);

@@ -40,7 +40,7 @@ $(function () {
                         if(typeof(data.nombre_afip) != 'undefined'){
                             swal({
                                 title: "Registro exitoso",
-                                text: 'You can use <b>bold text</b>, <a href="//github.com">links</a> and other HTML tags',
+                                text: data.msg + '<br>' + '<div style="font-size:14px;">' + 'Estos son sus datos que encontramos en AFIP: '+'<br>' + '<b>Nombre: </b>' + data.nombre_afip + '<br>' + '<b>Fecha Nacimiento: </b>' + data.nacimiento_afip + '<br>' + '<b>CUIT: </b>' + data.cuit_afip + '<br>' + '<b>Sexo: </b>' + data.sexo_afip + '<br>' + '<b>Actividad: </b>' + data.actividad_afip +'</div>',
                                 html: true,
                                 type: "success",
                             },function (e) {
