@@ -131,7 +131,7 @@ public class MailServiceImpl implements MailService {
         ctx.setVariable("publicacion", contratacion.getPostulacion().getPublicacion());
         ctx.setVariable("postulacion", contratacion.getPostulacion());
         ctx.setVariable("calificacion", contratacion.getCalificacionTomador());
-        ctx.setVariable("title", "El profesional te ha calificado");
+        ctx.setVariable("title", "El cliente te ha calificado");
 
 
         String link = urlBuilder.makeOfflineAbsolutePathLink("/contratar/detalle/"+contratacion.getPostulacion().getPublicacion().getId());
