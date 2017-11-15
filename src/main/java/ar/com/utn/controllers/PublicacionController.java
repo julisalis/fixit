@@ -65,7 +65,7 @@ public class PublicacionController {
         Usuario user = currentSession.getUser();
         List<PublicacionDTO> misPublicaciones = user.getTomador().getPublicaciones().stream().map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion),publicacionService.findContratacionForPublicacion(publicacion))).collect(Collectors.toList());
         model.addAttribute("publicacionesNuevas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.NUEVA)).collect(Collectors.toList()));
-        model.addAttribute("publicacionesContratadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.CONTRATADA)).collect(Collectors.toList()));
+        model.addAttribute("publicacionesContratadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && (publicacion.getEstado().equals(EstadoPublicacion.CONTRATADA) || publicacion.getEstado().equals(EstadoPublicacion.REVISION))).collect(Collectors.toList()));
         model.addAttribute("publicacionesFinalizadas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.FINALIZADA)).collect(Collectors.toList()));
         return "publicacion-list";
     }
