@@ -10,6 +10,7 @@ import ar.com.utn.models.*;
 import ar.com.utn.services.*;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +49,7 @@ public class PostulacionController {
     @Autowired
     private ContratacionService contratacionService;
 
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @GetMapping(value = "/new")
     public String newPostulacion(@RequestParam(value = "publicacionId") Publicacion publicacion, WebRequest request, Model model) {
         addModelAttributes(model,new PostulacionForm(),"new?publicacionId="+publicacion.getId());
@@ -55,7 +57,7 @@ public class PostulacionController {
         model.addAttribute("publicacion", new PublicacionDTO(publicacion,getCover(publicacion)));
         return "postulacion";
     }
-
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @GetMapping(value = "/edit/{postulacionId}")
     public String editPostulacion(@PathVariable Long postulacionId, WebRequest request, Model model) {
         Postulacion postulacion = postulacionService.findById(postulacionId);
@@ -82,6 +84,7 @@ public class PostulacionController {
         }else return null;
     }
 
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @PostMapping(value = "/new")
     public @ResponseBody Map<String,Object> newPostulacion(@RequestParam(value = "publicacionId") Publicacion publicacion,@Valid @ModelAttribute("postulacion") PostulacionForm postulacionForm,BindingResult result) {
         HashMap<String,Object> map = new HashMap<>();
@@ -123,7 +126,7 @@ public class PostulacionController {
         }
         return map;
     }
-
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @PostMapping(value = "/edit")
     public @ResponseBody Map<String,Object> editPostulacion(@Valid @ModelAttribute("postulacion") PostulacionForm postulacionForm,BindingResult result) {
         HashMap<String,Object> map = new HashMap<>();
@@ -155,7 +158,7 @@ public class PostulacionController {
         return map;
     }
 
-
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @GetMapping(value="/list")
     public String listPostulaciones(WebRequest request, Model model) {
         Usuario user = currentSession.getUser();
@@ -167,10 +170,18 @@ public class PostulacionController {
         return "postulacion-list";
     }
 
-    @GetMapping(value="/detalle/{postulacionId}")
-    public String detallePostulacion(@PathVariable Long postulacionId, WebRequest request, Model model) {
-       Boolean isTomador = currentSession.getActualRol().stream().anyMatch(o -> o.getAuthority().equalsIgnoreCase("TOMADOR"));
-       Postulacion mipostulacion = postulacionService.findById(postulacionId);
+    @GetMapping(value="/detalle/prestador/{postulacionId}")
+    public String detallePostulacionPrestador(@PathVariable Long postulacionId, WebRequest request, Model model) {
+        return detallePostu(postulacionId,false,model);
+    }
+
+    @GetMapping(value="/detalle/tomador/{postulacionId}")
+    public String detallePostulacionTomador(@PathVariable Long postulacionId, WebRequest request, Model model) {
+        return detallePostu(postulacionId,true,model);
+    }
+
+    public String detallePostu(Long postulacionId, Boolean isTomador, Model model){
+        Postulacion mipostulacion = postulacionService.findById(postulacionId);
         Publicacion mipublicacion = publicacionService.findById(mipostulacion.getPublicacion().getId());
         if(mipostulacion!=null){
             model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion),isTomador));
@@ -179,6 +190,7 @@ public class PostulacionController {
         return "redirect:/";
     }
 
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @PostMapping(path="/delete/{postulacionId}")
     public @ResponseBody Map<String,Object> deletePostulacion(@PathVariable Long postulacionId,Model model) {
         HashMap<String,Object> map = new HashMap<>();

@@ -60,7 +60,7 @@ public class ContratacionController {
     @Value("${app.mercadopago.public_key}")
     private String publicKey;
 
-
+    @PreAuthorize("hasAuthority('TOMADOR')")
     @GetMapping(value = "/{postulacionId}")
     public String contratar(@PathVariable(value = "postulacionId") Long postulacionId, WebRequest request, Model model) {
         Postulacion postulacion = postulacionService.findById(postulacionId);

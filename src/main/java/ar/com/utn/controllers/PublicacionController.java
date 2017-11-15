@@ -59,9 +59,9 @@ public class PublicacionController {
     @Autowired
     private PublicacionSearch publicacionSearch;
 
+    @PreAuthorize("hasAuthority('TOMADOR')")
     @GetMapping(value="/list")
     public String listPublicaciones(WebRequest request, Model model) {
-        //todo add en security permisos solo para el tomaddor
         Usuario user = currentSession.getUser();
         List<PublicacionDTO> misPublicaciones = user.getTomador().getPublicaciones().stream().map(publicacion -> new PublicacionDTO(publicacion,getCover(publicacion),publicacionService.findContratacionForPublicacion(publicacion))).collect(Collectors.toList());
         model.addAttribute("publicacionesNuevas", misPublicaciones.stream().filter(publicacion -> publicacion.getEstado()!= null && publicacion.getEstado().equals(EstadoPublicacion.NUEVA)).collect(Collectors.toList()));
@@ -70,12 +70,14 @@ public class PublicacionController {
         return "publicacion-list";
     }
 
+    @PreAuthorize("hasAuthority('TOMADOR')")
     @GetMapping(value="/new")
     public String newPublicacion(WebRequest request, Model model) {
         addModelAttributes(model,new PublicacionForm(),"new");
         return "publicacion-new-edit";
     }
 
+    @PreAuthorize("hasAuthority('TOMADOR')")
     @GetMapping(value="/edit/{publicacionId}")
     public String editPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
         Publicacion publicacion = publicacionService.findById(publicacionId);
@@ -92,6 +94,7 @@ public class PublicacionController {
 
     }
 
+    @PreAuthorize("hasAuthority('TOMADOR')")
     @PostMapping(path="/new")
     public @ResponseBody Map<String,Object> newPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm, BindingResult result, Model model) {
         HashMap<String,Object> map = new HashMap<>();
@@ -116,6 +119,7 @@ public class PublicacionController {
         return map;
     }
 
+    @PreAuthorize("hasAuthority('TOMADOR')")
     @PostMapping(path="/edit")
     public String editPublicacion(@Valid @ModelAttribute("publicacion") PublicacionForm publicacionForm,@RequestParam Long primaryImage, BindingResult result, Model model, WebRequest webRequest, HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -174,6 +178,7 @@ public class PublicacionController {
 
     }
 
+    @PreAuthorize("hasAuthority('TOMADOR')")
     @PostMapping(path="/delete/{publicacionId}")
     public @ResponseBody Map<String,Object> deletePublicacion(@PathVariable Long publicacionId,Model model) {
         HashMap<String,Object> map = new HashMap<>();
@@ -187,6 +192,7 @@ public class PublicacionController {
         return map;
     }
 
+    @PreAuthorize("hasAuthority('TOMADOR')")
     @GetMapping(value="/mas/{publicacionId}")
     public String masPublicacion(@PathVariable Long publicacionId, WebRequest request, Model model) {
         Usuario user = currentSession.getUser();
@@ -204,6 +210,7 @@ public class PublicacionController {
 
     }
 
+    @PreAuthorize("hasAuthority('TOMADOR')")
     @GetMapping(value="/postulaciones/{publicacionId}")
     public String verPostulaciones(@PathVariable Long publicacionId, WebRequest request, Model model) {
         Publicacion mipublicacion = publicacionService.findById(publicacionId);
@@ -217,6 +224,7 @@ public class PublicacionController {
         return "redirect:/";
     }
 
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @GetMapping(value="/recomendados")
     public String listRecomendados(WebRequest request, Model model) {
         Usuario usuario = currentSession.getUser();

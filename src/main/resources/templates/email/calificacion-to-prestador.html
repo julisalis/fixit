@@ -82,7 +82,7 @@
                     <table style="padding: 0; width: 78%; margin: 40px auto; text-align: center; background-color: #efeff0; border-spacing: 0;">
                         <tr style="padding: 0;">
                             <td style="padding: 0; width: 100%;">
-                                <h2 style="color:#231f20; font-size: 18px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; margin-bottom: 15px; padding: 0 30px; letter-spacing: -0.75px;" th:text="${publicacion.localidad.nombre+', '+publicacion.provincia.nombre}"></h2>
+                                <h2 style="color:#231f20; font-size: 18px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; margin-bottom: 15px; padding: 0 30px; letter-spacing: -0.75px;" th:text="${publicacion.localidad.nombre+', '+publicacion.localidad.provincia.nombre}"></h2>
                                 <h2 style="color:#231f20; font-size: 18px; font-weight: 700; -webkit-margin-before: 0; -webkit-margin-after: 0; margin-bottom: 15px; padding: 0 30px; letter-spacing: -0.75px;"th:text="${#strings.capitalize(publicacion.titulo)}"></h2>
                             </td>
                         </tr>
