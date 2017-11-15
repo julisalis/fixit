@@ -312,13 +312,7 @@ public class UsuarioController {
             logger.info("Datos encontrados:"+System.lineSeparator()+"CUIT: {}."+System.lineSeparator()+"Nombre y apellido: {}."+System.lineSeparator()+"Fecha nacimiento: {}."+System.lineSeparator()+"Actividad: {}."+System.lineSeparator()+"Direccion: {}.",personaAfip.getIdPersona().toString(),personaAfip.getNombreCompleto(),personaAfip.getNacimiento().toString(),actividades,(personaAfip.getDomicilio().get(0)==null)?"Ninguno":personaAfip.getDomicilio().get(0).getDireccion());
             if(!validarPersonaConAfip(personaAfip,usuario,cuitL,sexo,fecha_nac)) {
                 map.put("success", false);
-                map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados.\n" +
-                        "Nombre: "+personaAfip.getNombreCompleto()+"\n" +
-                        "Cuit: "+personaAfip.getIdPersona().toString()+"\n"+
-                        "Fecha Nac: "+personaAfip.getNacimiento().toString()+"\n" +
-                        "Sexo: "+personaAfip.getSexo().getName()+"\n" +
-                        "Actividad Principal: "+actividades+"\n"+
-                        "Domicilio: "+personaAfip.getDomicilio().get(0).getDireccion());
+                map.put("msg","Los datos de AFIP no coinciden. Por favor, revise los datos ingresados.");
             }else{
                 prestadorService.validarDatosAfip(usuario.getPrestador(),cuitL,fecha_nac,sexo);
                 map.put("success", true);
