@@ -98,6 +98,9 @@ public class PostulacionController {
             }else if(prof.getTomador()!=null && prof.getTomador().getPublicaciones().contains(publicacion)){
                 map.put("success", false);
                 map.put("msg", "No se puede postular a una publicación propia.");
+            }else if (!prestador.getTipos().stream().anyMatch(tt -> tt.equals(publicacion.getTipoTrabajo()))) {
+                map.put("success", false);
+                map.put("msg", "No se puede postular a una publicación de una especialidad que usted no tiene registrada.");
             }else if(prestador.getMpPrestador()==null){
                 map.put("success", false);
                 map.put("msg", "Ingrese a su perfil para Iniciar Sesión con Mercado Pago.");
