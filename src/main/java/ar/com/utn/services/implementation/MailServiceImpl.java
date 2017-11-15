@@ -191,6 +191,7 @@ public class MailServiceImpl implements MailService {
         ctx.setVariable("publicacion", contratacion.getPostulacion().getPublicacion());
         ctx.setVariable("postulacion", contratacion.getPostulacion());
         ctx.setVariable("calificacion", contratacion.getCalificacionPrestador());
+        ctx.setVariable("titulo", "Código de seguridad");
 
         String dest= cliente.getEmail();
         if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
