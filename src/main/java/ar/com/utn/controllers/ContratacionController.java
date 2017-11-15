@@ -200,6 +200,50 @@ public class ContratacionController {
         return map;
     }
 
+    @PreAuthorize("hasAuthority('TOMADOR')")
+    @PostMapping(value = "marcarNoRealizadoTomador")
+    @Transactional(rollbackFor = {Exception.class})
+    public @ResponseBody Map<String, Object> marcarNoRealizadoTomador(
+            @RequestParam(value = "publicacionId") Publicacion publicacion, Model model){
+        HashMap<String, Object> map = new HashMap<>();
+        Usuario usuario = currentSession.getUser();
+        try {
+            Postulacion postulacion = postulacionService.findByPublicacionAndEstadoPostulacion(publicacion,EstadoPostulacion.CONTRATADA);
+            if(postulacion != null){
+                publicacion.setEstadoPublicacion(EstadoPublicacion.REVISION);
+                postulacion.setEstadoPostulacion(EstadoPostulacion.REVISION);
+                map.put("success", true);
+                map.put("msg", "Has marcado el trabajo como no realizado. Revisaremos lo sucedido.");
+            }
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
+        }
+        return map;
+    }
+
+    @PreAuthorize("hasAuthority('PRESTADOR')")
+    @PostMapping(value = "marcarNoRealizadoPrestador")
+    @Transactional(rollbackFor = {Exception.class})
+    public @ResponseBody Map<String, Object> marcarNoRealizadoPrestador(
+            @RequestParam(value = "postulacionId") Postulacion postulacion, Model model){
+        HashMap<String, Object> map = new HashMap<>();
+        Usuario usuario = currentSession.getUser();
+        try {
+            Publicacion publicacion = postulacion.getPublicacion();
+            if(publicacion != null){
+                publicacion.setEstadoPublicacion(EstadoPublicacion.REVISION);
+                postulacion.setEstadoPostulacion(EstadoPostulacion.REVISION);
+                map.put("success", true);
+                map.put("msg", "Has marcado el trabajo como no realizado. Revisaremos lo sucedido.");
+            }
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
+        }
+        return map;
+    }
+
 
     @PreAuthorize("hasAuthority('TOMADOR')")
     @PostMapping(value = "calificarPagarTomador")

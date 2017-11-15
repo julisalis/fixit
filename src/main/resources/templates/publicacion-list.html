@@ -76,6 +76,9 @@
                         </div>
                         <div class="job-ad-item img-publicacion-list" th:each="contratada : ${publicacionesContratadas}">
                             <div class="item-info">
+                                <div class="row" th:if="${contratada.estado.name() == 'REVISION'}">
+                                    <div class="col-md-9" style="width: auto;"><span class="label label-danger">Estamos revisando la publicación.</span></div>
+                                </div>
                                 <div class="item-image-box col-md-2">
                                     <div class="item-image">
                                         <img th:src="'/multimedia/image/'+${contratada.primaryImage?.id}" alt="Image" class="img-responsive">
@@ -103,12 +106,14 @@
                                         <span th:text="${contratada.tipoTrabajo.nombre}">asdasd</span>
                                     </div>
 
-                                    <a th:href="'/contratar/detalle/'+${contratada.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
-                                    <a th:if="${contratada.tomadorPuedeCalificar}" th:onclick="${'modalCalificar('+contratada.id+')'}" class="btn btn-primary tam-boton-100">Calificar</a>
-                                    <a th:unless="${contratada.tomadorPuedeCalificar}" class="btn btn-primary tam-boton-100" disabled="disabled" th:text="${'Ya calificaste ('+contratada.contratacion?.calificacionTomador+')'}">Ya calificó</a>
-                                    <a th:unless="${contratada.yaPidioCodigo}" class="btn btn-primary tam-boton-100" th:onclick="${'modalCodigoSeguridad('+contratada.id+')'}" >Código de Seguridad</a>
-                                    <a th:if="${contratada.yaPidioCodigo and not contratada.yaGeneroCodigo}" class="btn btn-primary tam-boton-100" disabled="disabled">Esperando codigo</a>
-                                    <a th:if="${contratada.yaPidioCodigo and contratada.yaGeneroCodigo}" class="btn btn-primary tam-boton-100" disabled="disabled" th:text="${'Código: '+contratada.contratacion.codigoSeguridad}">Codigo:</a>
+                                    <div th:if="${contratada.estado.name() == 'CONTRATADA'}">
+                                        <a th:href="'/contratar/detalle/'+${contratada.id}" class="btn btn-primary tam-boton-100">Ver Detalle</a>
+                                        <a th:if="${contratada.tomadorPuedeCalificar}" th:onclick="${'modalCalificar('+contratada.id+')'}" class="btn btn-primary tam-boton-100">Calificar</a>
+                                        <a th:unless="${contratada.tomadorPuedeCalificar}" class="btn btn-primary tam-boton-100" disabled="disabled" th:text="${'Ya calificaste ('+contratada.contratacion?.calificacionTomador+')'}">Ya calificó</a>
+                                        <a th:unless="${contratada.yaPidioCodigo}" class="btn btn-primary tam-boton-100" th:onclick="${'modalCodigoSeguridad('+contratada.id+')'}" >Código de Seguridad</a>
+                                        <a th:if="${contratada.yaPidioCodigo and not contratada.yaGeneroCodigo}" class="btn btn-primary tam-boton-100" disabled="disabled">Esperando codigo</a>
+                                        <a th:if="${contratada.yaPidioCodigo and contratada.yaGeneroCodigo}" class="btn btn-primary tam-boton-100" disabled="disabled" th:text="${'Código: '+contratada.contratacion.codigoSeguridad}">Codigo:</a>
+                                    </div>
                                 </div>
                             </div><!-- item-info -->
                         </div><!-- ad-item -->
@@ -245,7 +250,7 @@
                 action: function (dialog) {
                     $.ajax({
                         type: 'POST',
-                        url: '/contratar/marcarNoRealizado',
+                        url: '/contratar/marcarNoRealizadoTomador',
                         data: {
                             publicacionId: publicacionId
                         },
@@ -253,7 +258,14 @@
                         success: function(message){
                             $.LoadingOverlay("hide");
                             if(message.success){
-                                BootstrapDialog.show({
+                                swal({
+                                    title: "Trabajo no realizado",
+                                    text: message.msg,
+                                    type: "success",
+                                },function (e) {
+                                    redirect("/publicacion/list");
+                                });
+                                /*BootstrapDialog.show({
                                     title: 'Calificación no Realizada',
                                     message:  message.msg,
                                     buttons: [{
@@ -262,7 +274,7 @@
                                             redirect("/publicacion/list");
                                         }
                                     }]
-                                });
+                                });*/
                             }else{
                                 swal("Error", message.msg, "error")
                             }
@@ -285,7 +297,14 @@
                         success: function(message){
                             $.LoadingOverlay("hide");
                             if(message.success){
-                                BootstrapDialog.show({
+                                swal({
+                                    title: "Calificación exitosa",
+                                    text: message.msg,
+                                    type: "success",
+                                },function (e) {
+                                    redirect("/publicacion/list");
+                                });
+                                /*BootstrapDialog.show({
                                     title: 'Calificación Exitosa',
                                     message:  message.msg,
                                     buttons: [{
@@ -294,7 +313,7 @@
                                             redirect("/publicacion/list");
                                         }
                                     }]
-                                });
+                                });*/
                             }else{
                                 swal("Error", message.msg, "error")
                             }
