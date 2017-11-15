@@ -98,6 +98,9 @@ public class PostulacionController {
             }else if(prof.getTomador()!=null && prof.getTomador().getPublicaciones().contains(publicacion)){
                 map.put("success", false);
                 map.put("msg", "No se puede postular a una publicación propia.");
+            }else if (!prestador.getTipos().stream().anyMatch(tt -> tt.equals(publicacion.getTipoTrabajo()))) {
+                map.put("success", false);
+                map.put("msg", "No se puede postular a una publicación de una especialidad que usted no tiene registrada.");
             }else if(prestador.getMpPrestador()==null){
                 map.put("success", false);
                 map.put("msg", "Ingrese a su perfil para Iniciar Sesión con Mercado Pago.");
@@ -170,17 +173,9 @@ public class PostulacionController {
         return "postulacion-list";
     }
 
-    @GetMapping(value="/detalle/prestador/{postulacionId}")
-    public String detallePostulacionPrestador(@PathVariable Long postulacionId, WebRequest request, Model model) {
-        return detallePostu(postulacionId,false,model);
-    }
-
-    @GetMapping(value="/detalle/tomador/{postulacionId}")
-    public String detallePostulacionTomador(@PathVariable Long postulacionId, WebRequest request, Model model) {
-        return detallePostu(postulacionId,true,model);
-    }
-
-    public String detallePostu(Long postulacionId, Boolean isTomador, Model model){
+    @GetMapping(value="/detalle/{postulacionId}")
+    public String detallePostulacion(@PathVariable Long postulacionId, WebRequest request, Model model) {
+        Boolean isTomador = currentSession.getActualRol().stream().anyMatch(o -> o.getAuthority().equalsIgnoreCase("TOMADOR"));
         Postulacion mipostulacion = postulacionService.findById(postulacionId);
         Publicacion mipublicacion = publicacionService.findById(mipostulacion.getPublicacion().getId());
         if(mipostulacion!=null){

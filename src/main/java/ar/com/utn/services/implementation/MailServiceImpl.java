@@ -175,6 +175,10 @@ public class MailServiceImpl implements MailService {
         ctx.setVariable("message", message);
         ctx.setVariable("title", "Nuevo Mensaje");
         String email= usuarioDestino.getEmail();
+
+        String link = urlBuilder.makeOfflineAbsolutePathLink("/postulacion/detalle/"+postulacion.getId());
+        ctx.setVariable("linkPostulaciones", link);
+
         if(environment.acceptsProfiles("dev") || environment.acceptsProfiles("test")){
             email =(environment.getProperty("mail.info"));
         }
