@@ -120,7 +120,7 @@ public class ContratacionController {
             contratacionRepository.save(contratacion);
             Usuario usuario = currentSession.getUser();
             //System.CurrentTimeInMilis() es ahora. se le suman milisegundos. 1000 ms = 1 s.
-            taskScheduler.threadPoolTaskScheduler().schedule(new RunnableTask(contratacion,publicacion,usuario),new Date(System.currentTimeMillis()+(1000*60*5))); //Enviar codigo en 5 minutos
+            taskScheduler.threadPoolTaskScheduler().schedule(new RunnableTask(contratacion,publicacion,usuario),new Date(System.currentTimeMillis()+(1000*60*2))); //Enviar codigo en 2 minutos
             map.put("success", true);
             map.put("msg", "Su codigo será enviado en la fecha solicitada.");
         }else{
