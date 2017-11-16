@@ -60,7 +60,7 @@ public class ContratacionController {
     @Value("${app.mercadopago.public_key}")
     private String publicKey;
 
-
+    @PreAuthorize("hasAuthority('TOMADOR')")
     @GetMapping(value = "/{postulacionId}")
     public String contratar(@PathVariable(value = "postulacionId") Long postulacionId, WebRequest request, Model model) {
         Postulacion postulacion = postulacionService.findById(postulacionId);
@@ -120,7 +120,7 @@ public class ContratacionController {
             contratacionRepository.save(contratacion);
             Usuario usuario = currentSession.getUser();
             //System.CurrentTimeInMilis() es ahora. se le suman milisegundos. 1000 ms = 1 s.
-            taskScheduler.threadPoolTaskScheduler().schedule(new RunnableTask(contratacion,publicacion,usuario),new Date(System.currentTimeMillis()+(1000*60*5))); //Enviar codigo en 5 minutos
+            taskScheduler.threadPoolTaskScheduler().schedule(new RunnableTask(contratacion,publicacion,usuario),new Date(System.currentTimeMillis()+(1000*60*2))); //Enviar codigo en 2 minutos
             map.put("success", true);
             map.put("msg", "Su codigo será enviado en la fecha solicitada.");
         }else{
@@ -193,6 +193,50 @@ public class ContratacionController {
             mailService.sendPostulacionElegidaMail(tomador, prestador, postulacionDTO);
             map.put("success", true);
             map.put("msg", "Ha contratado a " + prestador.getUsername() + " correctamente.");
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
+        }
+        return map;
+    }
+
+    @PreAuthorize("hasAuthority('TOMADOR')")
+    @PostMapping(value = "marcarNoRealizadoTomador")
+    @Transactional(rollbackFor = {Exception.class})
+    public @ResponseBody Map<String, Object> marcarNoRealizadoTomador(
+            @RequestParam(value = "publicacionId") Publicacion publicacion, Model model){
+        HashMap<String, Object> map = new HashMap<>();
+        Usuario usuario = currentSession.getUser();
+        try {
+            Postulacion postulacion = postulacionService.findByPublicacionAndEstadoPostulacion(publicacion,EstadoPostulacion.CONTRATADA);
+            if(postulacion != null){
+                publicacion.setEstadoPublicacion(EstadoPublicacion.REVISION);
+                postulacion.setEstadoPostulacion(EstadoPostulacion.REVISION);
+                map.put("success", true);
+                map.put("msg", "Has marcado el trabajo como no realizado. Revisaremos lo sucedido.");
+            }
+        } catch (Exception e) {
+            map.put("success", false);
+            map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");
+        }
+        return map;
+    }
+
+    @PreAuthorize("hasAuthority('PRESTADOR')")
+    @PostMapping(value = "marcarNoRealizadoPrestador")
+    @Transactional(rollbackFor = {Exception.class})
+    public @ResponseBody Map<String, Object> marcarNoRealizadoPrestador(
+            @RequestParam(value = "postulacionId") Postulacion postulacion, Model model){
+        HashMap<String, Object> map = new HashMap<>();
+        Usuario usuario = currentSession.getUser();
+        try {
+            Publicacion publicacion = postulacion.getPublicacion();
+            if(publicacion != null){
+                publicacion.setEstadoPublicacion(EstadoPublicacion.REVISION);
+                postulacion.setEstadoPostulacion(EstadoPostulacion.REVISION);
+                map.put("success", true);
+                map.put("msg", "Has marcado el trabajo como no realizado. Revisaremos lo sucedido.");
+            }
         } catch (Exception e) {
             map.put("success", false);
             map.put("msg", "Ha surgido un error, pruebe nuevamente más tarde.");

@@ -10,6 +10,7 @@ import ar.com.utn.models.*;
 import ar.com.utn.services.*;
 import ar.com.utn.utils.CurrentSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,6 +49,7 @@ public class PostulacionController {
     @Autowired
     private ContratacionService contratacionService;
 
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @GetMapping(value = "/new")
     public String newPostulacion(@RequestParam(value = "publicacionId") Publicacion publicacion, WebRequest request, Model model) {
         addModelAttributes(model,new PostulacionForm(),"new?publicacionId="+publicacion.getId());
@@ -55,7 +57,7 @@ public class PostulacionController {
         model.addAttribute("publicacion", new PublicacionDTO(publicacion,getCover(publicacion)));
         return "postulacion";
     }
-
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @GetMapping(value = "/edit/{postulacionId}")
     public String editPostulacion(@PathVariable Long postulacionId, WebRequest request, Model model) {
         Postulacion postulacion = postulacionService.findById(postulacionId);
@@ -82,6 +84,7 @@ public class PostulacionController {
         }else return null;
     }
 
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @PostMapping(value = "/new")
     public @ResponseBody Map<String,Object> newPostulacion(@RequestParam(value = "publicacionId") Publicacion publicacion,@Valid @ModelAttribute("postulacion") PostulacionForm postulacionForm,BindingResult result) {
         HashMap<String,Object> map = new HashMap<>();
@@ -95,6 +98,9 @@ public class PostulacionController {
             }else if(prof.getTomador()!=null && prof.getTomador().getPublicaciones().contains(publicacion)){
                 map.put("success", false);
                 map.put("msg", "No se puede postular a una publicación propia.");
+            }else if (!prestador.getTipos().stream().anyMatch(tt -> tt.equals(publicacion.getTipoTrabajo()))) {
+                map.put("success", false);
+                map.put("msg", "No se puede postular a una publicación de una especialidad que usted no tiene registrada.");
             }else if(prestador.getMpPrestador()==null){
                 map.put("success", false);
                 map.put("msg", "Ingrese a su perfil para Iniciar Sesión con Mercado Pago.");
@@ -123,7 +129,7 @@ public class PostulacionController {
         }
         return map;
     }
-
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @PostMapping(value = "/edit")
     public @ResponseBody Map<String,Object> editPostulacion(@Valid @ModelAttribute("postulacion") PostulacionForm postulacionForm,BindingResult result) {
         HashMap<String,Object> map = new HashMap<>();
@@ -155,13 +161,13 @@ public class PostulacionController {
         return map;
     }
 
-
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @GetMapping(value="/list")
     public String listPostulaciones(WebRequest request, Model model) {
         Usuario user = currentSession.getUser();
         List<PostulacionDTO> misPostulaciones = user.getPrestador().getPostulaciones().stream().map(postulacion -> new PostulacionDTO(postulacion, getCover(publicacionService.findById(postulacion.getPublicacion().getId())), user, contratacionService.findByPostulacion(postulacion))).collect(Collectors.toList());
         model.addAttribute("postulacionesNuevas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.NUEVA)).collect(Collectors.toList()));
-        model.addAttribute("postulacionesContratadas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.CONTRATADA)).collect(Collectors.toList()));
+        model.addAttribute("postulacionesContratadas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && (postulacion.getEstado().equals(EstadoPostulacion.CONTRATADA) || postulacion.getEstado().equals(EstadoPostulacion.REVISION))).collect(Collectors.toList()));
         model.addAttribute("postulacionesFinalizadas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.FINALIZADA)).collect(Collectors.toList()));
         model.addAttribute("postulacionesRechazadas", misPostulaciones.stream().filter(postulacion -> postulacion.getEstado()!= null && postulacion.getEstado().equals(EstadoPostulacion.RECHAZADA)).collect(Collectors.toList()));
         return "postulacion-list";
@@ -169,8 +175,8 @@ public class PostulacionController {
 
     @GetMapping(value="/detalle/{postulacionId}")
     public String detallePostulacion(@PathVariable Long postulacionId, WebRequest request, Model model) {
-       Boolean isTomador = currentSession.getActualRol().stream().anyMatch(o -> o.getAuthority().equalsIgnoreCase("TOMADOR"));
-       Postulacion mipostulacion = postulacionService.findById(postulacionId);
+        Boolean isTomador = currentSession.getActualRol().stream().anyMatch(o -> o.getAuthority().equalsIgnoreCase("TOMADOR"));
+        Postulacion mipostulacion = postulacionService.findById(postulacionId);
         Publicacion mipublicacion = publicacionService.findById(mipostulacion.getPublicacion().getId());
         if(mipostulacion!=null){
             model.addAttribute("postulacion",new PostulacionDTO(mipostulacion,getCover(mipublicacion),isTomador));
@@ -179,6 +185,7 @@ public class PostulacionController {
         return "redirect:/";
     }
 
+    @PreAuthorize("hasAuthority('PRESTADOR')")
     @PostMapping(path="/delete/{postulacionId}")
     public @ResponseBody Map<String,Object> deletePostulacion(@PathVariable Long postulacionId,Model model) {
         HashMap<String,Object> map = new HashMap<>();

@@ -73,6 +73,7 @@ public class MercadoPagoApiImpl implements MercadoPagoApi {
         map.put("binary_mode",paymentMP.isBinary_mode());
         map.put("payer",paymentMP.getPayer());
         map.put("additional_info",paymentMP.getAdditional_info());
+        map.put("application_fee",paymentMP.getApplication_fee());
         String paymentMPJson = gson.toJson(map);
         JSONObject payment = mp.post(PAYMENTS_URL, paymentMPJson);
         controlResponse(payment);
