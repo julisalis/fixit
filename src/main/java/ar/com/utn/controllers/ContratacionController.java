@@ -325,8 +325,8 @@ public class ContratacionController {
                         postulacionService.setFinalizada(postulacion);
                     }
                     contratacion.setCalificacionPrestador(calificacion);
-                    Usuario prof = usuarioService.findByPrestador(postulacion.getPrestador());
-                    mailService.sendCalificacionMailToTomador(contratacion, usuario, prof);
+                    Usuario cli = usuarioService.findByTomador(publicacion.getTomador());
+                    mailService.sendCalificacionMailToTomador(contratacion, cli, usuario);
                     map.put("success", true);
                     map.put("msg", "El trabajo ha finalizado con éxito, gracias por confiar en FixIT.");
             } else {
