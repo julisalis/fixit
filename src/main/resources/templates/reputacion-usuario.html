@@ -41,7 +41,7 @@
                     </div>
 
                     <div sec:authorize="isAuthenticated() and hasAuthority('TOMADOR')" class="favorites-user">
-                        <div class="my-ads">
+                        <div class="cant-publicaciones">
                             <a th:text="${user.tomador.cantPublicaciones}"></a><small>Publicaciones</small>
                         </div>
                         <div class="favorites">
@@ -50,7 +50,7 @@
                     </div>
 
                     <div sec:authorize="isAuthenticated() and hasAuthority('PRESTADOR')" class="favorites-user">
-                        <div class="my-ads">
+                        <div class="cant-publicaciones">
                             <a th:text="${user.prestador.postulaciones.size()}"></a><small>Postulaciones</small>
                         </div>
                         <div class="favorites">

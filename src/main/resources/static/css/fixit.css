@@ -2310,7 +2310,7 @@ a:focus{
     margin-top: 20px;
 }
 
-.job-profile .my-ads, .job-profile .favorites {
+.job-profile .cant-publicaciones, .job-profile .favorites {
     float: left;
     padding: 30px 40px;
     text-align: center;
